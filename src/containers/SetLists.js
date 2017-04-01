@@ -3,14 +3,7 @@
 import React, {Component} from 'react';
 import { StyleSheet, View, Text, TouchableHighlight } from 'react-native';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F8ECC2'
-  }
-});
+import layoutStyles from '../stylesheets/layoutStyles';
 
 export default class Jokes extends Component {
   constructor(props) {
@@ -20,10 +13,10 @@ export default class Jokes extends Component {
   render() {
     const { setVisiblePane } = this.props;
     return (
-      <View style={styles.container}>
+      <View style={layoutStyles.container}>
         <Text>Set Lists</Text>
-        <TouchableHighlight onPress={() => setVisiblePane('jokes')}>
-          <Text>Go To Jokes</Text>
+        <TouchableHighlight onPress={() => setVisiblePane('shows')}>
+          <Text>Go To Shows</Text>
         </TouchableHighlight>
       </View>
     );

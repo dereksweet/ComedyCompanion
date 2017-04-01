@@ -6,17 +6,11 @@ import { StyleSheet, View, Text, TouchableHighlight } from 'react-native';
 import * as routingActions from '../actions/routingActions';
 import { connect } from 'react-redux';
 
+import layoutStyles from '../stylesheets/layoutStyles';
+
 import Jokes from './Jokes.js'
 import SetLists from './SetLists.js'
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F8ECC2'
-  }
-});
+import Shows from './Shows.js'
 
 class MainApp extends Component {
   constructor(props) {
@@ -26,10 +20,11 @@ class MainApp extends Component {
   render() {
     const { state, actions } = this.props;
     return (
-      <View style={styles.container}>
+      <View style={layoutStyles.container}>
         <Text>Comedy Companion</Text>
         {state.visible_pane == 'jokes' && <Jokes {...actions} />}
         {state.visible_pane == 'set_lists' && <SetLists {...actions} />}
+        {state.visible_pane == 'shows' && <Shows {...actions} />}
       </View>
     );
   }
