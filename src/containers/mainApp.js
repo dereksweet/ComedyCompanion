@@ -24,9 +24,9 @@ class MainApp extends Component {
     return (
       <View style={layoutStyles.container}>
         <StatusBar />
-        {state.visible_pane == 'jokes' && <Jokes {...actions} />}
-        {state.visible_pane == 'set_lists' && <SetLists {...actions} />}
-        {state.visible_pane == 'shows' && <Shows {...actions} />}
+        {state.visible_pane == 'jokes' && <Jokes />}
+        {state.visible_pane == 'set_lists' && <SetLists />}
+        {state.visible_pane == 'shows' && <Shows />}
       </View>
     );
   }

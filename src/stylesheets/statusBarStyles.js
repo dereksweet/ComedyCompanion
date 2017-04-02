@@ -14,6 +14,15 @@ export default statusBarStyles = StyleSheet.create({
     height: 40,
     backgroundColor: '#EEFFEE',
     borderBottomColor: '#DDDDDD',
-    borderBottomWidth: 1
+    borderBottomWidth: 1,
+    flexDirection : 'row'
+  },
+  navLink: {
+    flex: 1,
+    alignItems: 'center'
+  },
+  navLinkText: {
+    paddingTop: 10,
+    paddingBottom: 10
   }
 });

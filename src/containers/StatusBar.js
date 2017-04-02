@@ -2,7 +2,7 @@
 
 import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableHighlight } from 'react-native';
 import Hamburger from 'react-native-hamburger';
 import { connect } from 'react-redux';
 
@@ -18,24 +18,49 @@ class StatusBar extends Component {
   }
 
   render() {
-    const { state, actions } = this.props;
+    const { state, statusBarActions, routingActions } = this.props;
+
+    const clickNavLink = (pane) => {
+      routingActions.setVisiblePane(pane);
+      statusBarActions.toggleHamburgerActive();
+      this.hamburger._animate();
+    };
+
     return (
       <View>
         <View style={layoutStyles.statusBarBuffer} />
         <View style={layoutStyles.statusBar}>
           <View style={statusBarStyles.hamburger}>
-            <Hamburger active={state.hamburger_active}
+            <Hamburger ref={hamburger => { this.hamburger = hamburger }}
+                       active={state.hamburger_active}
                        type="spinCross"
                        color="black"
-                       onPress={() => actions.toggleHamburgerActive()}
+                       onPress={() => statusBarActions.toggleHamburgerActive()}
             />
           </View>
           <View style={statusBarStyles.title}>
             <Text>Comedy Companion</Text>
           </View>
         </View>
-        <View style={[statusBarStyles.navBar, { height: state.hamburger_active ? 40 : 0 }] }>
-
+        <View style={ [statusBarStyles.navBar, { height: state.hamburger_active ? 40 : 0 }] }>
+          <TouchableHighlight style={ [statusBarStyles.navLink, { borderRightColor: '#CCCCCC', borderRightWidth: 1}] }
+                              onPress={() => clickNavLink('jokes')}>
+            <View >
+              <Text style={statusBarStyles.navLinkText}>Jokes</Text>
+            </View>
+          </TouchableHighlight>
+          <TouchableHighlight style={ [statusBarStyles.navLink, { borderRightColor: '#CCCCCC', borderRightWidth: 1}] }
+                              onPress={() => clickNavLink('set_lists')}>
+            <View>
+              <Text style={statusBarStyles.navLinkText}>Set Lists</Text>
+            </View>
+          </TouchableHighlight>
+          <TouchableHighlight style={statusBarStyles.navLink}
+                              onPress={() => clickNavLink('shows')}>
+            <View>
+              <Text style={statusBarStyles.navLinkText}>Shows</Text>
+            </View>
+          </TouchableHighlight>
         </View>
       </View>
     );
@@ -46,6 +71,7 @@ export default connect(state => ({
   state: state.statusBar
 }),
 (dispatch) => ({
-  actions: bindActionCreators(statusBarActions, dispatch)
+  statusBarActions: bindActionCreators(statusBarActions, dispatch),
+  routingActions: bindActionCreators(routingActions, dispatch)
 })
 )(StatusBar);
