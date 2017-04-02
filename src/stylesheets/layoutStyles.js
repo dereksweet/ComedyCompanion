@@ -14,12 +14,11 @@ export default layoutStyles = StyleSheet.create({
   statusBar: {
     height: 40,
     backgroundColor: '#EEEEFF',
-    padding: 10,
     width: '100%',
-    alignItems: 'center',
     borderBottomColor: '#DDDDDD',
     borderBottomWidth: 1,
     borderTopColor: '#DDDDDD',
-    borderTopWidth: 1
+    borderTopWidth: 1,
+    flexDirection: 'row'
   }
 });
