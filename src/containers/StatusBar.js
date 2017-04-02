@@ -34,6 +34,9 @@ class StatusBar extends Component {
             <Text>Comedy Companion</Text>
           </View>
         </View>
+        <View style={[statusBarStyles.navBar, { height: state.hamburger_active ? 40 : 0 }] }>
+
+        </View>
       </View>
     );
   }

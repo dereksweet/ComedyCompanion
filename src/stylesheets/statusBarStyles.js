@@ -9,5 +9,11 @@ export default statusBarStyles = StyleSheet.create({
   title: {
     marginTop: 10,
     marginLeft: 10
+  },
+  navBar: {
+    height: 40,
+    backgroundColor: '#EEFFEE',
+    borderBottomColor: '#DDDDDD',
+    borderBottomWidth: 1
   }
 });
