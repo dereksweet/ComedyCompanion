@@ -18,7 +18,7 @@ class StatusBar extends Component {
   }
 
   render() {
-    const { state, statusBarActions, routingActions } = this.props;
+    const { statusBarState, routingState, statusBarActions, routingActions } = this.props;
 
     const clickNavLink = (pane) => {
       routingActions.setVisiblePane(pane);
@@ -32,17 +32,17 @@ class StatusBar extends Component {
         <View style={layoutStyles.statusBar}>
           <View style={statusBarStyles.hamburger}>
             <Hamburger ref={hamburger => { this.hamburger = hamburger }}
-                       active={state.hamburger_active}
+                       active={statusBarState.hamburger_active}
                        type="spinCross"
                        color="black"
                        onPress={() => statusBarActions.toggleHamburgerActive()}
             />
           </View>
           <View style={statusBarStyles.title}>
-            <Text>Comedy Companion</Text>
+            <Text>{routingState.title}</Text>
           </View>
         </View>
-        <View style={ [statusBarStyles.navBar, { height: state.hamburger_active ? 40 : 0 }] }>
+        <View style={ [statusBarStyles.navBar, { height: statusBarState.hamburger_active ? 40 : 0 }] }>
           <TouchableHighlight style={ [statusBarStyles.navLink, { borderRightColor: '#CCCCCC', borderRightWidth: 1}] }
                               onPress={() => clickNavLink('jokes')}>
             <View >
@@ -68,7 +68,8 @@ class StatusBar extends Component {
 }
 
 export default connect(state => ({
-  state: state.statusBar
+  statusBarState: state.statusBar,
+  routingState: state.routing
 }),
 (dispatch) => ({
   statusBarActions: bindActionCreators(statusBarActions, dispatch),

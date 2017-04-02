@@ -1,7 +1,8 @@
 import * as types from '../actions/actionTypes';
 
 const initialState = {
-  visible_pane: 'jokes'
+  visible_pane: 'jokes',
+  title: 'Jokes'
 };
 
 export default function routing(state = initialState, action = {}) {
@@ -9,7 +10,8 @@ export default function routing(state = initialState, action = {}) {
     case types.SET_VISIBLE_PANE:
       return {
         ...state,
-        visible_pane: action.visible_pane
+        visible_pane: action.visible_pane,
+        title: action.title
       };
     default:
       return state;
