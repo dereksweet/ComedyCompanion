@@ -16,7 +16,8 @@ export default statusBarStyles = StyleSheet.create({
     backgroundColor: '#EEFFEE',
     borderBottomColor: '#DDDDDD',
     borderBottomWidth: 1,
-    flexDirection : 'row'
+    flexDirection : 'row',
+    overflow: 'hidden'
   },
   navLink: {
     flex: 1,

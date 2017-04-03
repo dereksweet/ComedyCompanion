@@ -6,7 +6,7 @@ import { View, Text, TouchableHighlight } from 'react-native';
 import Hamburger from 'react-native-hamburger';
 import { connect } from 'react-redux';
 
-import FadeInView from '../components/FadeInView';
+import ExpandingView from '../components/ExpandingView';
 
 import * as routingActions from '../actions/routingActions';
 import * as statusBarActions from '../actions/statusBarActions';
@@ -32,13 +32,13 @@ class StatusBar extends Component {
       routingActions.setVisiblePane(pane);
       statusBarActions.toggleHamburgerActive();
       this.hamburger._animate();
-      this.navBarView.performFadeOut();
+      this.navBarView.performShrink();
     };
 
     const clickHamburger = () => {
       statusBarActions.toggleHamburgerActive();
 
-      statusBarState.hamburger_active ? this.navBarView.performFadeOut() : this.navBarView.performFadeIn();
+      statusBarState.hamburger_active ? this.navBarView.performShrink() : this.navBarView.performExpand();
     };
 
     return (
@@ -57,8 +57,9 @@ class StatusBar extends Component {
             <Text style={statusBarStyles.title}>{routingState.title}</Text>
           </View>
         </View>
-        <FadeInView ref={(navBarView) => this.navBarView = navBarView}
-                    style={ [statusBarStyles.navBar, { height: statusBarState.hamburger_active ? 40 : 0 }] }>
+        <ExpandingView ref={(navBarView) => this.navBarView = navBarView}
+                       style={ [statusBarStyles.navBar] }
+                       expandedHeight={40}>
           <TouchableHighlight style={ [statusBarStyles.navLink, { borderRightColor: '#CCCCCC', borderRightWidth: 1}] }
                               onPress={() => clickNavLink('jokes')}>
             <View style={ { flexDirection: 'row' } }>
@@ -80,7 +81,7 @@ class StatusBar extends Component {
               <Text style={statusBarStyles.navLinkText}>Shows</Text>
             </View>
           </TouchableHighlight>
-        </FadeInView>
+        </ExpandingView>
       </View>
     );
   }
