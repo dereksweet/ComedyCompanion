@@ -12,6 +12,8 @@ import * as statusBarActions from '../actions/statusBarActions';
 import statusBarStyles from '../stylesheets/statusBarStyles';
 import layoutStyles from '../stylesheets/layoutStyles';
 
+import Icon from 'react-native-vector-icons/MaterialIcons';
+
 class StatusBar extends Component {
   constructor(props) {
     super(props);
@@ -19,6 +21,10 @@ class StatusBar extends Component {
 
   render() {
     const { statusBarState, routingState, statusBarActions, routingActions } = this.props;
+
+    const jokesIcon = (<Icon name="mood" size={25} color="#000" style={ { paddingTop: 6, paddingRight: 10 } } />);
+    const setListsIcon = (<Icon name="list" size={25} color="#000" style={ { paddingTop: 6, paddingRight: 10 } } />);
+    const showsIcon = (<Icon name="assistant" size={25} color="#000" style={ { paddingTop: 6, paddingRight: 10 } } />);
 
     const clickNavLink = (pane) => {
       routingActions.setVisiblePane(pane);
@@ -38,26 +44,29 @@ class StatusBar extends Component {
                        onPress={() => statusBarActions.toggleHamburgerActive()}
             />
           </View>
-          <View style={statusBarStyles.title}>
-            <Text>{routingState.title}</Text>
+          <View style={ { flexDirection: 'row' } }>
+            <Text style={statusBarStyles.title}>{routingState.title}</Text>
           </View>
         </View>
         <View style={ [statusBarStyles.navBar, { height: statusBarState.hamburger_active ? 40 : 0 }] }>
           <TouchableHighlight style={ [statusBarStyles.navLink, { borderRightColor: '#CCCCCC', borderRightWidth: 1}] }
                               onPress={() => clickNavLink('jokes')}>
-            <View >
+            <View style={ { flexDirection: 'row' } }>
+              { jokesIcon }
               <Text style={statusBarStyles.navLinkText}>Jokes</Text>
             </View>
           </TouchableHighlight>
           <TouchableHighlight style={ [statusBarStyles.navLink, { borderRightColor: '#CCCCCC', borderRightWidth: 1}] }
                               onPress={() => clickNavLink('set_lists')}>
-            <View>
+            <View style={ { flexDirection: 'row' } }>
+              { setListsIcon }
               <Text style={statusBarStyles.navLinkText}>Set Lists</Text>
             </View>
           </TouchableHighlight>
           <TouchableHighlight style={statusBarStyles.navLink}
                               onPress={() => clickNavLink('shows')}>
-            <View>
+            <View style={ { flexDirection: 'row' } }>
+              { showsIcon }
               <Text style={statusBarStyles.navLinkText}>Shows</Text>
             </View>
           </TouchableHighlight>

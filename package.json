@@ -10,6 +10,7 @@
     "react": "15.4.2",
     "react-native": "0.42.3",
     "react-native-hamburger": "0.0.2",
+    "react-native-vector-icons": "^4.0.0",
     "react-redux": "4.4.7",
     "redux": "3.6.0",
     "redux-thunk": "2.2.0"
