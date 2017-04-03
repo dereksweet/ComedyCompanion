@@ -6,6 +6,8 @@ import { View, Text, TouchableHighlight } from 'react-native';
 import Hamburger from 'react-native-hamburger';
 import { connect } from 'react-redux';
 
+import FadeInView from '../components/FadeInView';
+
 import * as routingActions from '../actions/routingActions';
 import * as statusBarActions from '../actions/statusBarActions';
 
@@ -30,6 +32,13 @@ class StatusBar extends Component {
       routingActions.setVisiblePane(pane);
       statusBarActions.toggleHamburgerActive();
       this.hamburger._animate();
+      this.navBarView.performFadeOut();
+    };
+
+    const clickHamburger = () => {
+      statusBarActions.toggleHamburgerActive();
+
+      statusBarState.hamburger_active ? this.navBarView.performFadeOut() : this.navBarView.performFadeIn();
     };
 
     return (
@@ -41,14 +50,15 @@ class StatusBar extends Component {
                        active={statusBarState.hamburger_active}
                        type="spinCross"
                        color="black"
-                       onPress={() => statusBarActions.toggleHamburgerActive()}
+                       onPress={() => clickHamburger()}
             />
           </View>
           <View style={ { flexDirection: 'row' } }>
             <Text style={statusBarStyles.title}>{routingState.title}</Text>
           </View>
         </View>
-        <View style={ [statusBarStyles.navBar, { height: statusBarState.hamburger_active ? 40 : 0 }] }>
+        <FadeInView ref={(navBarView) => this.navBarView = navBarView}
+                    style={ [statusBarStyles.navBar, { height: statusBarState.hamburger_active ? 40 : 0 }] }>
           <TouchableHighlight style={ [statusBarStyles.navLink, { borderRightColor: '#CCCCCC', borderRightWidth: 1}] }
                               onPress={() => clickNavLink('jokes')}>
             <View style={ { flexDirection: 'row' } }>
@@ -70,7 +80,7 @@ class StatusBar extends Component {
               <Text style={statusBarStyles.navLinkText}>Shows</Text>
             </View>
           </TouchableHighlight>
-        </View>
+        </FadeInView>
       </View>
     );
   }
