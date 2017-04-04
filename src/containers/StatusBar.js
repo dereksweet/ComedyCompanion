@@ -41,6 +41,26 @@ class StatusBar extends Component {
       statusBarState.hamburger_active ? this.navBarView.performShrink() : this.navBarView.performExpand();
     };
 
+    let renderNavBarButton = (pane, icon, text) => {
+      return  <TouchableHighlight style={ [statusBarStyles.navLink, { borderRightColor: '#CCCCCC', borderRightWidth: 1}] }
+                                  onPress={() => clickNavLink(pane)}>
+                <View style={ { flexDirection: 'row' } }>
+                  { icon }
+                  <Text style={statusBarStyles.navLinkText}>{text}</Text>
+                </View>
+              </TouchableHighlight>
+    };
+
+    let renderNavBar = () => {
+      return  <ExpandingView ref={(navBarView) => this.navBarView = navBarView}
+                                style={ [statusBarStyles.navBar] }
+                                expandedHeight={40}>
+                { renderNavBarButton('jokes', jokesIcon, 'Jokes') }
+                { renderNavBarButton('set_lists', setListsIcon, 'Set Lists') }
+                { renderNavBarButton('shows', showsIcon, 'Shows') }
+              </ExpandingView>
+    };
+
     return (
       <View>
         <View style={layoutStyles.statusBarBuffer} />
@@ -57,31 +77,7 @@ class StatusBar extends Component {
             <Text style={statusBarStyles.title}>{routingState.title}</Text>
           </View>
         </View>
-        <ExpandingView ref={(navBarView) => this.navBarView = navBarView}
-                       style={ [statusBarStyles.navBar] }
-                       expandedHeight={40}>
-          <TouchableHighlight style={ [statusBarStyles.navLink, { borderRightColor: '#CCCCCC', borderRightWidth: 1}] }
-                              onPress={() => clickNavLink('jokes')}>
-            <View style={ { flexDirection: 'row' } }>
-              { jokesIcon }
-              <Text style={statusBarStyles.navLinkText}>Jokes</Text>
-            </View>
-          </TouchableHighlight>
-          <TouchableHighlight style={ [statusBarStyles.navLink, { borderRightColor: '#CCCCCC', borderRightWidth: 1}] }
-                              onPress={() => clickNavLink('set_lists')}>
-            <View style={ { flexDirection: 'row' } }>
-              { setListsIcon }
-              <Text style={statusBarStyles.navLinkText}>Set Lists</Text>
-            </View>
-          </TouchableHighlight>
-          <TouchableHighlight style={statusBarStyles.navLink}
-                              onPress={() => clickNavLink('shows')}>
-            <View style={ { flexDirection: 'row' } }>
-              { showsIcon }
-              <Text style={statusBarStyles.navLinkText}>Shows</Text>
-            </View>
-          </TouchableHighlight>
-        </ExpandingView>
+        { renderNavBar() }
       </View>
     );
   }
