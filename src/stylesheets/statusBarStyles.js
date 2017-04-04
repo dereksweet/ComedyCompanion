@@ -26,5 +26,9 @@ export default statusBarStyles = StyleSheet.create({
   navLinkText: {
     paddingTop: 10,
     paddingBottom: 10
+  },
+  navLinkIcon: {
+    paddingTop: 6,
+    paddingRight: 10
   }
 });

@@ -24,9 +24,9 @@ class StatusBar extends Component {
   render() {
     const { statusBarState, routingState, statusBarActions, routingActions } = this.props;
 
-    const jokesIcon = (<Icon name="mood" size={25} color="#000" style={ { paddingTop: 6, paddingRight: 10 } } />);
-    const setListsIcon = (<Icon name="list" size={25} color="#000" style={ { paddingTop: 6, paddingRight: 10 } } />);
-    const showsIcon = (<Icon name="assistant" size={25} color="#000" style={ { paddingTop: 6, paddingRight: 10 } } />);
+    const jokesIcon = (<Icon name="mood" size={25} color="#000" style={statusBarStyles.navLinkIcon} />);
+    const setListsIcon = (<Icon name="list" size={25} color="#000" style={statusBarStyles.navLinkIcon} />);
+    const showsIcon = (<Icon name="assistant" size={25} color="#000" style={statusBarStyles.navLinkIcon} />);
 
     const clickNavLink = (pane) => {
       routingActions.setVisiblePane(pane);
@@ -41,8 +41,8 @@ class StatusBar extends Component {
       statusBarState.hamburger_active ? this.navBarView.performShrink() : this.navBarView.performExpand();
     };
 
-    let renderNavBarButton = (pane, icon, text) => {
-      return  <TouchableHighlight style={ [statusBarStyles.navLink, { borderRightColor: '#CCCCCC', borderRightWidth: 1}] }
+    let renderNavBarButton = (pane, icon, text, styles) => {
+      return  <TouchableHighlight style={ [statusBarStyles.navLink, styles] }
                                   onPress={() => clickNavLink(pane)}>
                 <View style={ { flexDirection: 'row' } }>
                   { icon }
@@ -55,8 +55,8 @@ class StatusBar extends Component {
       return  <ExpandingView ref={(navBarView) => this.navBarView = navBarView}
                                 style={ [statusBarStyles.navBar] }
                                 expandedHeight={40}>
-                { renderNavBarButton('jokes', jokesIcon, 'Jokes') }
-                { renderNavBarButton('set_lists', setListsIcon, 'Set Lists') }
+                { renderNavBarButton('jokes', jokesIcon, 'Jokes', { borderRightColor: '#CCCCCC', borderRightWidth: 1 }) }
+                { renderNavBarButton('set_lists', setListsIcon, 'Set Lists', { borderRightColor: '#CCCCCC', borderRightWidth: 1 }) }
                 { renderNavBarButton('shows', showsIcon, 'Shows') }
               </ExpandingView>
     };
