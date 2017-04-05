@@ -20,5 +20,19 @@ export default layoutStyles = StyleSheet.create({
     borderTopColor: '#DDDDDD',
     borderTopWidth: 1,
     flexDirection: 'row'
+  },
+  button: {
+    borderColor: '#999999',
+    borderWidth: 2,
+    backgroundColor: '#EEEEEE',
+    paddingLeft: 30,
+    paddingRight: 30,
+    paddingBottom: 10,
+    paddingTop: 10
+  },
+  buttonText: {
+    color: '#FFFFFF',
+    paddingLeft: 10,
+    paddingTop: 4
   }
 });

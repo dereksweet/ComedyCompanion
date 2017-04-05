@@ -14,7 +14,7 @@ import * as statusBarActions from '../actions/statusBarActions';
 import statusBarStyles from '../stylesheets/statusBarStyles';
 import layoutStyles from '../stylesheets/layoutStyles';
 
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import {jokesIcon, setListsIcon, showsIcon} from '../helpers/icons';
 
 class StatusBar extends Component {
   constructor(props) {
@@ -23,10 +23,6 @@ class StatusBar extends Component {
 
   render() {
     const { statusBarState, routingState, statusBarActions, routingActions } = this.props;
-
-    const jokesIcon = (<Icon name="mood" size={25} color="#000" style={statusBarStyles.navLinkIcon} />);
-    const setListsIcon = (<Icon name="list" size={25} color="#000" style={statusBarStyles.navLinkIcon} />);
-    const showsIcon = (<Icon name="assistant" size={25} color="#000" style={statusBarStyles.navLinkIcon} />);
 
     const clickNavLink = (pane) => {
       routingActions.setVisiblePane(pane);
