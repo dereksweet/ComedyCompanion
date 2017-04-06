@@ -63,7 +63,7 @@ class StatusBar extends Component {
     };
 
     return (
-      <View onLayout={(event) => measureView(event)}>
+      <View>
         <View style={layoutStyles.statusBarBuffer} />
         <View style={layoutStyles.statusBar}>
           <View style={statusBarStyles.hamburger}>
