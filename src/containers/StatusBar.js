@@ -57,8 +57,12 @@ class StatusBar extends Component {
               </ExpandingView>
     };
 
+    let measureView = (event) => {
+      statusBarActions.setStatusBarHeight(event.nativeEvent.layout.height);
+    };
+
     return (
-      <View>
+      <View onLayout={(event) => measureView(event)}>
         <View style={layoutStyles.statusBarBuffer} />
         <View style={layoutStyles.statusBar}>
           <View style={statusBarStyles.hamburger}>
