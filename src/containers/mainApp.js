@@ -7,6 +7,8 @@ import * as routingActions from '../actions/routingActions';
 import { connect } from 'react-redux';
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 
+import SlidingPane from '../components/SlidingPane';
+
 import layoutStyles from '../stylesheets/layoutStyles';
 
 import StatusBar from './StatusBar.js';
@@ -20,6 +22,11 @@ class MainApp extends Component {
     super(props);
   }
 
+  componentDidMount() {
+    this.setListsPane.warpRight();
+    this.showsPane.warpRight();
+  }
+
   render() {
     const { state, actions } = this.props;
 
@@ -31,7 +38,9 @@ class MainApp extends Component {
     const handleSwipeLeft = () => {
       switch (state.visible_pane) {
         case 'jokes':
-          actions.setVisiblePane('set_lists');
+          this.jokesPane.slideLeft();
+          this.setListsPane.slideCenter();
+          // actions.setVisiblePane('set_lists');
           break;
         case 'set_lists':
           actions.setVisiblePane('shows');
@@ -70,9 +79,24 @@ class MainApp extends Component {
             onSwipe={(direction, state) => onSwipe(direction, state)}
             config={swipe_config}>
           <StatusBar />
-          {state.visible_pane == 'jokes' && <Jokes />}
-          {state.visible_pane == 'set_lists' && <SetLists />}
-          {state.visible_pane == 'shows' && <Shows />}
+          {
+            <SlidingPane style={[{flex: 1, borderColor: 'black', borderWidth: 1}]}
+                         ref={ (jokesPane) => this.jokesPane = jokesPane}>
+                <Jokes />
+            </SlidingPane>
+          }
+          {
+            <SlidingPane style={[{flex: 1, borderColor: 'black', borderWidth: 1}]}
+                         ref={ (setListsPane) => this.setListsPane = setListsPane}>
+              <SetLists />
+            </SlidingPane>
+          }
+          {
+            <SlidingPane style={[{flex: 1, borderColor: 'black', borderWidth: 1}]}
+                         ref={ (showsPane) => this.showsPane = showsPane}>
+              <Shows />
+            </SlidingPane>
+          }
         </GestureRecognizer>
       </View>
     );
