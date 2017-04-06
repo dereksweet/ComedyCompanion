@@ -1,7 +1,7 @@
 import * as types from '../actions/actionTypes';
 
 const initialState = {
-  visible_panes: ['jokes'],
+  visible_panes: ['jokes', 'set_lists', 'shows'],
   title: 'Jokes'
 };
 

@@ -23,8 +23,8 @@ class MainApp extends Component {
   }
 
   componentDidMount() {
-    // this.setListsPane.warpRight();
-    // this.showsPane.warpRight();
+    this.setListsPane.warpRight();
+    this.showsPane.warpRight();
   }
 
   render() {
@@ -40,27 +40,31 @@ class MainApp extends Component {
         case 'Jokes':
           this.jokesPane.slideLeft();
           this.setListsPane.slideCenter();
-          actions.setVisiblePanes(['set_lists']);
+          actions.setTitle('set_lists');
+          // actions.setVisiblePanes(['set_lists']);
           break;
         case 'Set Lists':
           this.setListsPane.slideLeft();
           this.showsPane.slideCenter();
-          actions.setVisiblePanes(['shows']);
+          actions.setTitle('shows');
+          // actions.setVisiblePanes(['shows']);
           break;
       }
     };
 
     const handleSwipeRight = () => {
-      switch (routingState.visible_pane) {
+      switch (routingState.title) {
         case 'Set Lists':
           this.setListsPane.slideRight();
           this.jokesPane.slideCenter();
-          actions.setVisiblePanes(['jokes']);
+          actions.setTitle('jokes');
+          // actions.setVisiblePanes(['jokes']);
           break;
         case 'Shows':
           this.showsPane.slideRight();
           this.setListsPane.slideCenter();
-          actions.setVisiblePanes(['set_lists']);
+          actions.setTitle('set_lists');
+          // actions.setVisiblePanes(['set_lists']);
           break;
       }
     };
