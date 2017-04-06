@@ -10,9 +10,9 @@ import layoutStyles from '../stylesheets/layoutStyles';
 
 import StatusBar from './StatusBar.js';
 
-import Jokes from './Jokes.js';
-import SetLists from './SetLists.js';
-import Shows from './Shows.js';
+import Jokes from './panes/Jokes.js';
+import SetLists from './panes/SetLists.js';
+import Shows from './panes/Shows.js';
 
 class MainApp extends Component {
   constructor(props) {

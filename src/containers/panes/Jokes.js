@@ -4,9 +4,9 @@ import React, {Component} from 'react';
 import { View, Text, TouchableHighlight } from 'react-native';
 import {Button} from 'react-native-ui-xg';
 
-import layoutStyles from '../stylesheets/layoutStyles';
+import layoutStyles from '../../stylesheets/layoutStyles';
 
-import {largeJokesIcon, addJokeIcon} from '../helpers/icons';
+import {largeJokesIcon, addJokeIcon} from '../../helpers/icons';
 
 export default class Jokes extends Component {
   constructor(props) {
