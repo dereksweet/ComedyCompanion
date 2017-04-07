@@ -139,21 +139,21 @@ class MainApp extends Component {
           <View style={{flex: 1}}>
             {
               (routingState.visible_panes.indexOf('jokes') != -1) &&
-              <SlidingPane style={[{position: 'absolute', width: width, height: paneHeight, borderColor: 'gray', borderWidth: 1}]}
+              <SlidingPane style={[{position: 'absolute', width: width, height: paneHeight, borderColor: '#DDDDDD', borderWidth: 1}]}
                            ref={ (jokesPane) => this.jokesPane = jokesPane}>
                   <Jokes />
               </SlidingPane>
             }
             {
               (routingState.visible_panes.indexOf('set_lists') != -1) &&
-              <SlidingPane style={[{position: 'absolute', width: width, height: paneHeight, borderColor: 'gray', borderWidth: 1}]}
+              <SlidingPane style={[{position: 'absolute', width: width, height: paneHeight, borderColor: '#DDDDDD', borderWidth: 1}]}
                            ref={ (setListsPane) => this.setListsPane = setListsPane}>
                 <SetLists />
               </SlidingPane>
             }
             {
               (routingState.visible_panes.indexOf('shows') != -1) &&
-              <SlidingPane style={[{position: 'absolute', width: width, height: paneHeight, borderColor: 'gray', borderWidth: 1}]}
+              <SlidingPane style={[{position: 'absolute', width: width, height: paneHeight, borderColor: '#DDDDDD', borderWidth: 1}]}
                            ref={ (showsPane) => this.showsPane = showsPane}>
                 <Shows />
               </SlidingPane>
