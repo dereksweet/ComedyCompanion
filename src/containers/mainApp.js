@@ -93,30 +93,72 @@ class MainApp extends Component {
       this.setState({ statusBarHeight: height});
     };
 
+    const setActivePane = (pane) => {
+      switch (pane) {
+        case 'jokes':
+          switch (routingState.title) {
+            case 'Set Lists':
+              this.setListsPane.slideRight();
+              break;
+            case 'Shows':
+              this.showsPane.slideRight();
+              break;
+          }
+
+          this.jokesPane.slideCenter();
+          break;
+        case 'set_lists':
+          switch (routingState.title) {
+            case 'Jokes':
+              this.jokesPane.slideLeft();
+              break;
+            case 'Shows':
+              this.showsPane.slideRight();
+              break;
+          }
+
+          this.setListsPane.slideCenter();
+          break;
+        case 'shows':
+          switch (routingState.title) {
+            case 'Jokes':
+              this.jokesPane.slideLeft();
+              break;
+            case 'Set Lists':
+              this.setListsPane.slideLeft();
+              break;
+          }
+
+          this.showsPane.slideCenter();
+          break;
+      }
+      actions.setTitle(pane);
+    };
+
     return (
       <View style={layoutStyles.container}>
         <GestureRecognizer
             onSwipe={(direction, state) => onSwipe(direction, state)}
             config={swipe_config}>
-          <StatusBar setStatusBarHeight={setStatusBarHeight} />
+          <StatusBar setActivePane={setActivePane} setStatusBarHeight={setStatusBarHeight} />
           <View style={{flex: 1, justifyContent: 'flex-end'}}>
             {
               (routingState.visible_panes.indexOf('jokes') != -1) &&
-              <SlidingPane style={[{position: 'absolute', width: width, height: paneHeight, borderColor: 'red', borderWidth: 1}]}
+              <SlidingPane style={[{position: 'absolute', width: width, height: paneHeight, borderColor: 'gray', borderWidth: 1}]}
                            ref={ (jokesPane) => this.jokesPane = jokesPane}>
                   <Jokes />
               </SlidingPane>
             }
             {
               (routingState.visible_panes.indexOf('set_lists') != -1) &&
-              <SlidingPane style={[{position: 'absolute', width: width, height: paneHeight, borderColor: 'black', borderWidth: 1}]}
+              <SlidingPane style={[{position: 'absolute', width: width, height: paneHeight, borderColor: 'gray', borderWidth: 1}]}
                            ref={ (setListsPane) => this.setListsPane = setListsPane}>
                 <SetLists />
               </SlidingPane>
             }
             {
               (routingState.visible_panes.indexOf('shows') != -1) &&
-              <SlidingPane style={[{position: 'absolute', width: width, height: paneHeight, borderColor: 'black', borderWidth: 1}]}
+              <SlidingPane style={[{position: 'absolute', width: width, height: paneHeight, borderColor: 'gray', borderWidth: 1}]}
                            ref={ (showsPane) => this.showsPane = showsPane}>
                 <Shows />
               </SlidingPane>
