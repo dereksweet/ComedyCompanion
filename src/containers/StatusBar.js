@@ -19,14 +19,6 @@ import {jokesIcon, setListsIcon, showsIcon} from '../helpers/icons';
 class StatusBar extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      height: 0
-    }
-
-    this.testFunc = () => {
-      console.log("!!!! StatusBar: ");
-      console.log(this.state);
-    }
   }
 
   render() {
@@ -67,7 +59,6 @@ class StatusBar extends Component {
     };
 
     let measureView = (event) => {
-      // statusBarActions.setStatusBarHeight(event.nativeEvent.layout.height);
       this.props.setStatusBarHeight(event.nativeEvent.layout.height);
     };
 

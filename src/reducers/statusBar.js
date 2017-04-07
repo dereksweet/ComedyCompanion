@@ -13,12 +13,6 @@ export default function statusBar(state = initialState, action = {}) {
         hamburger_active: !state.hamburger_active
       };
       break;
-    case types.SET_STATUS_BAR_HEIGHT:
-      return {
-        ...state,
-        height: action.height
-      };
-      break;
     default:
       return state;
   }
