@@ -20,9 +20,6 @@ import Shows from './panes/Shows.js';
 class MainApp extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      statusBarHeight: 0
-    }
   }
 
   componentDidMount() {
@@ -87,11 +84,7 @@ class MainApp extends Component {
     };
 
     let {height, width} = Dimensions.get('window');
-    const paneHeight = height - this.state.statusBarHeight;
-
-    const setStatusBarHeight = (height) => {
-      this.setState({ statusBarHeight: height});
-    };
+    const paneHeight = height - 61;
 
     const setActivePane = (pane) => {
       switch (pane) {
@@ -140,8 +133,8 @@ class MainApp extends Component {
         <GestureRecognizer
             onSwipe={(direction, state) => onSwipe(direction, state)}
             config={swipe_config}>
-          <StatusBar setActivePane={setActivePane} setStatusBarHeight={setStatusBarHeight} />
-          <View style={{flex: 1, justifyContent: 'flex-end'}}>
+          <StatusBar setActivePane={setActivePane} />
+          <View style={{flex: 1}}>
             {
               (routingState.visible_panes.indexOf('jokes') != -1) &&
               <SlidingPane style={[{position: 'absolute', width: width, height: paneHeight, borderColor: 'gray', borderWidth: 1}]}
