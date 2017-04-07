@@ -94,6 +94,7 @@ class MainApp extends Component {
               this.setListsPane.slideRight();
               break;
             case 'Shows':
+              this.setListsPane.warpRight();
               this.showsPane.slideRight();
               break;
           }
@@ -115,6 +116,7 @@ class MainApp extends Component {
         case 'shows':
           switch (routingState.title) {
             case 'Jokes':
+              this.setListsPane.warpLeft();
               this.jokesPane.slideLeft();
               break;
             case 'Set Lists':
