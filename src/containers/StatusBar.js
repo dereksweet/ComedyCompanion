@@ -25,8 +25,7 @@ class StatusBar extends Component {
     const { statusBarState, routingState, statusBarActions, routingActions } = this.props;
 
     const clickNavLink = (pane) => {
-      routingActions.setTitle(pane);
-      // routingActions.setVisiblePanes([pane]);
+      routingActions.setPane(pane);
       this.props.setActivePane(pane);
       statusBarActions.toggleHamburgerActive();
       this.hamburger._animate();

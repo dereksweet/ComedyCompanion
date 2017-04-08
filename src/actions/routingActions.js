@@ -1,6 +1,6 @@
 import * as types from './actionTypes';
 
-export function setTitle(pane) {
+export function setPane(pane) {
     let title = '';
 
     switch(pane) {
@@ -18,8 +18,9 @@ export function setTitle(pane) {
     }
 
   return {
-    type: types.SET_TITLE,
-    title
+    type: types.SET_PANE,
+    title,
+    pane
   }
 }
 

@@ -36,31 +36,31 @@ class MainApp extends Component {
     };
 
     const handleSwipeLeft = () => {
-      switch (routingState.title) {
-        case 'Jokes':
+      switch (routingState.pane) {
+        case 'jokes':
           this.jokesPane.slideLeft();
           this.setListsPane.slideCenter();
-          actions.setTitle('set_lists');
+          actions.setPane('set_lists');
           break;
-        case 'Set Lists':
+        case 'set_lists':
           this.setListsPane.slideLeft();
           this.showsPane.slideCenter();
-          actions.setTitle('shows');
+          actions.setPane('shows');
           break;
       }
     };
 
     const handleSwipeRight = () => {
-      switch (routingState.title) {
-        case 'Set Lists':
+      switch (routingState.pane) {
+        case 'set_lists':
           this.setListsPane.slideRight();
           this.jokesPane.slideCenter();
-          actions.setTitle('jokes');
+          actions.setPane('jokes');
           break;
-        case 'Shows':
+        case 'shows':
           this.showsPane.slideRight();
           this.setListsPane.slideCenter();
-          actions.setTitle('set_lists');
+          actions.setPane('set_lists');
           break;
       }
     };
@@ -82,11 +82,11 @@ class MainApp extends Component {
     const setActivePane = (pane) => {
       switch (pane) {
         case 'jokes':
-          switch (routingState.title) {
-            case 'Set Lists':
+          switch (routingState.pane) {
+            case 'set_lists':
               this.setListsPane.slideRight();
               break;
-            case 'Shows':
+            case 'shows':
               this.setListsPane.warpRight();
               this.showsPane.slideRight();
               break;
@@ -95,11 +95,11 @@ class MainApp extends Component {
           this.jokesPane.slideCenter();
           break;
         case 'set_lists':
-          switch (routingState.title) {
-            case 'Jokes':
+          switch (routingState.pane) {
+            case 'jokes':
               this.jokesPane.slideLeft();
               break;
-            case 'Shows':
+            case 'shows':
               this.showsPane.slideRight();
               break;
           }
@@ -107,12 +107,12 @@ class MainApp extends Component {
           this.setListsPane.slideCenter();
           break;
         case 'shows':
-          switch (routingState.title) {
-            case 'Jokes':
+          switch (routingState.pane) {
+            case 'jokes':
               this.setListsPane.warpLeft();
               this.jokesPane.slideLeft();
               break;
-            case 'Set Lists':
+            case 'set_lists':
               this.setListsPane.slideLeft();
               break;
           }
@@ -120,7 +120,7 @@ class MainApp extends Component {
           this.showsPane.slideCenter();
           break;
       }
-      actions.setTitle(pane);
+      actions.setPane(pane);
     };
 
     return (

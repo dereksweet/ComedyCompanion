@@ -1,15 +1,17 @@
 import * as types from '../actions/actionTypes';
 
 const initialState = {
+  pane: 'jokes',
   visible_panes: ['jokes', 'set_lists', 'shows'],
   title: 'Jokes'
 };
 
 export default function routing(state = initialState, action = {}) {
   switch (action.type) {
-    case types.SET_TITLE:
+    case types.SET_PANE:
       return {
         ...state,
+        pane: action.pane,
         title: action.title
       };
     case types.SET_VISIBLE_PANES:
