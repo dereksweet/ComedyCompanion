@@ -28,7 +28,7 @@ class MainApp extends Component {
   }
 
   render() {
-    const { routingState, statusBarState, actions } = this.props;
+    const { routingState, actions } = this.props;
 
     const swipe_config = {
         velocityThreshold: 0.3,
@@ -41,13 +41,11 @@ class MainApp extends Component {
           this.jokesPane.slideLeft();
           this.setListsPane.slideCenter();
           actions.setTitle('set_lists');
-          // actions.setVisiblePanes(['set_lists']);
           break;
         case 'Set Lists':
           this.setListsPane.slideLeft();
           this.showsPane.slideCenter();
           actions.setTitle('shows');
-          // actions.setVisiblePanes(['shows']);
           break;
       }
     };
@@ -58,13 +56,11 @@ class MainApp extends Component {
           this.setListsPane.slideRight();
           this.jokesPane.slideCenter();
           actions.setTitle('jokes');
-          // actions.setVisiblePanes(['jokes']);
           break;
         case 'Shows':
           this.showsPane.slideRight();
           this.setListsPane.slideCenter();
           actions.setTitle('set_lists');
-          // actions.setVisiblePanes(['set_lists']);
           break;
       }
     };
@@ -82,9 +78,6 @@ class MainApp extends Component {
                 break;
         }
     };
-
-    let {height, width} = Dimensions.get('window');
-    const paneHeight = height - 61;
 
     const setActivePane = (pane) => {
       switch (pane) {
@@ -137,27 +130,18 @@ class MainApp extends Component {
             config={swipe_config}>
           <StatusBar setActivePane={setActivePane} />
           <View style={{flex: 1}}>
-            {
-              (routingState.visible_panes.indexOf('jokes') != -1) &&
-              <SlidingPane style={[{position: 'absolute', width: width, height: paneHeight, borderColor: '#DDDDDD', borderWidth: 1}]}
-                           ref={ (jokesPane) => this.jokesPane = jokesPane}>
-                  <Jokes />
-              </SlidingPane>
-            }
-            {
-              (routingState.visible_panes.indexOf('set_lists') != -1) &&
-              <SlidingPane style={[{position: 'absolute', width: width, height: paneHeight, borderColor: '#DDDDDD', borderWidth: 1}]}
-                           ref={ (setListsPane) => this.setListsPane = setListsPane}>
-                <SetLists />
-              </SlidingPane>
-            }
-            {
-              (routingState.visible_panes.indexOf('shows') != -1) &&
-              <SlidingPane style={[{position: 'absolute', width: width, height: paneHeight, borderColor: '#DDDDDD', borderWidth: 1}]}
-                           ref={ (showsPane) => this.showsPane = showsPane}>
-                <Shows />
-              </SlidingPane>
-            }
+            <SlidingPane style={[{borderColor: '#DDDDDD', borderWidth: 1}]}
+                         ref={ (jokesPane) => this.jokesPane = jokesPane}>
+                <Jokes />
+            </SlidingPane>
+            <SlidingPane style={[{borderColor: '#DDDDDD', borderWidth: 1}]}
+                         ref={ (setListsPane) => this.setListsPane = setListsPane}>
+              <SetLists />
+            </SlidingPane>
+            <SlidingPane style={[{borderColor: '#DDDDDD', borderWidth: 1}]}
+                         ref={ (showsPane) => this.showsPane = showsPane}>
+              <Shows />
+            </SlidingPane>
           </View>
         </GestureRecognizer>
       </View>
@@ -166,8 +150,7 @@ class MainApp extends Component {
 }
 
 export default connect(state => ({
-    routingState: state.routing,
-    statusBarState: state.statusBar
+    routingState: state.routing
   }),
   (dispatch) => ({
     actions: bindActionCreators(routingActions, dispatch)

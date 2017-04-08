@@ -9,12 +9,12 @@ export default class SlidingPane extends React.Component {
     };
   }
   warpLeft() {
-    var {height, width} = Dimensions.get('window');
+    var {width} = Dimensions.get('window');
 
     this.setState({leftAnim: new Animated.Value(-width)});
   }
   slideLeft() {
-    var {height, width} = Dimensions.get('window');
+    var {width} = Dimensions.get('window');
 
     Animated.spring(
       this.state.leftAnim,
@@ -28,7 +28,7 @@ export default class SlidingPane extends React.Component {
     ).start();
   }
   slideRight() {
-    var {height, width} = Dimensions.get('window');
+    var {width} = Dimensions.get('window');
 
     Animated.spring(
       this.state.leftAnim,
@@ -36,14 +36,14 @@ export default class SlidingPane extends React.Component {
     ).start();
   }
   warpRight() {
-    var {height, width} = Dimensions.get('window');
+    var {width} = Dimensions.get('window');
 
     this.setState({leftAnim: new Animated.Value(width)});
   }
   render() {
     return (
       <Animated.View
-        style={[...this.props.style, { left: this.state.leftAnim }]}>
+        style={[...this.props.style, { position: 'absolute', width: '100%', height: '100%', left: this.state.leftAnim }]}>
         {this.props.children}
       </Animated.View>
     );
