@@ -21,6 +21,9 @@ export default class SlidingPane extends React.Component {
       {toValue: -width}
     ).start();
   }
+  warpCenter() {
+    this.setState({leftAnim: new Animated.Value(0)});
+  }
   slideCenter() {
     Animated.spring(
       this.state.leftAnim,

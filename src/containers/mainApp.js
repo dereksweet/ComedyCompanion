@@ -7,6 +7,7 @@ import * as routingActions from '../actions/routingActions';
 import { connect } from 'react-redux';
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 
+import SlidingPaneWrapper from '../components/SlidingPaneWrapper';
 import SlidingPane from '../components/SlidingPane';
 
 import layoutStyles from '../stylesheets/layoutStyles';
@@ -23,8 +24,10 @@ class MainApp extends Component {
   }
 
   componentDidMount() {
+    this.jokesPane.warpCenter();
     this.setListsPane.warpRight();
     this.showsPane.warpRight();
+    this.slidingPaneWrapper.childPanes = [this.jokesPane, this.setListsPane, this.showsPane];
   }
 
   render() {
@@ -38,31 +41,25 @@ class MainApp extends Component {
     const handleSwipeLeft = () => {
       switch (routingState.pane) {
         case 'jokes':
-          this.jokesPane.slideLeft();
-          this.setListsPane.slideCenter();
           actions.setPane('set_lists');
           break;
         case 'set_lists':
-          this.setListsPane.slideLeft();
-          this.showsPane.slideCenter();
           actions.setPane('shows');
           break;
       }
+      this.slidingPaneWrapper.slideAllLeft();
     };
 
     const handleSwipeRight = () => {
       switch (routingState.pane) {
         case 'set_lists':
-          this.setListsPane.slideRight();
-          this.jokesPane.slideCenter();
           actions.setPane('jokes');
           break;
         case 'shows':
-          this.showsPane.slideRight();
-          this.setListsPane.slideCenter();
           actions.setPane('set_lists');
           break;
       }
+      this.slidingPaneWrapper.slideAllRight();
     };
 
     const onSwipe = (gestureName, gestureState) => {
@@ -82,42 +79,13 @@ class MainApp extends Component {
     const setActivePane = (pane) => {
       switch (pane) {
         case 'jokes':
-          switch (routingState.pane) {
-            case 'set_lists':
-              this.setListsPane.slideRight();
-              break;
-            case 'shows':
-              this.setListsPane.warpRight();
-              this.showsPane.slideRight();
-              break;
-          }
-
-          this.jokesPane.slideCenter();
+          this.slidingPaneWrapper.setActive(0);
           break;
         case 'set_lists':
-          switch (routingState.pane) {
-            case 'jokes':
-              this.jokesPane.slideLeft();
-              break;
-            case 'shows':
-              this.showsPane.slideRight();
-              break;
-          }
-
-          this.setListsPane.slideCenter();
+          this.slidingPaneWrapper.setActive(1);
           break;
         case 'shows':
-          switch (routingState.pane) {
-            case 'jokes':
-              this.setListsPane.warpLeft();
-              this.jokesPane.slideLeft();
-              break;
-            case 'set_lists':
-              this.setListsPane.slideLeft();
-              break;
-          }
-
-          this.showsPane.slideCenter();
+          this.slidingPaneWrapper.setActive(2);
           break;
       }
       actions.setPane(pane);
@@ -129,20 +97,20 @@ class MainApp extends Component {
             onSwipe={(direction, state) => onSwipe(direction, state)}
             config={swipe_config}>
           <StatusBar setActivePane={setActivePane} />
-          <View style={{flex: 1}}>
+          <SlidingPaneWrapper style={{}} childPanes={ this.childPanes } ref={(slidingPaneWrapper) => { this.slidingPaneWrapper = slidingPaneWrapper }}>
             <SlidingPane style={[{borderColor: '#DDDDDD', borderWidth: 1}]}
-                         ref={ (jokesPane) => this.jokesPane = jokesPane}>
+                         ref={ (jokesPane) => { this.jokesPane = jokesPane} }>
                 <Jokes />
             </SlidingPane>
             <SlidingPane style={[{borderColor: '#DDDDDD', borderWidth: 1}]}
-                         ref={ (setListsPane) => this.setListsPane = setListsPane}>
+                         ref={ (setListsPane) => { this.setListsPane = setListsPane} }>
               <SetLists />
             </SlidingPane>
             <SlidingPane style={[{borderColor: '#DDDDDD', borderWidth: 1}]}
-                         ref={ (showsPane) => this.showsPane = showsPane}>
+                         ref={ (showsPane) => { this.showsPane = showsPane} }>
               <Shows />
             </SlidingPane>
-          </View>
+          </SlidingPaneWrapper>
         </GestureRecognizer>
       </View>
     );
