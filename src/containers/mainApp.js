@@ -7,8 +7,7 @@ import * as routingActions from '../actions/routingActions';
 import { connect } from 'react-redux';
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 
-import SlidingPaneWrapper from '../components/SlidingPaneWrapper';
-import SlidingPane from '../components/SlidingPane';
+import {SlidingPane, SlidingPaneWrapper} from 'react-native-sliding-panes';
 
 import layoutStyles from '../stylesheets/layoutStyles';
 
