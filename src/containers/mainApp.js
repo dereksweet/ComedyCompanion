@@ -24,6 +24,10 @@ class MainApp extends Component {
   }
 
   componentDidMount() {
+    this.setupSlidingPanes();
+  }
+
+  setupSlidingPanes() {
     this.jokesPane.warpCenter();
     this.setListsPane.warpRight();
     this.showsPane.warpRight();
@@ -97,7 +101,7 @@ class MainApp extends Component {
             onSwipe={(direction, state) => onSwipe(direction, state)}
             config={swipe_config}>
           <StatusBar setActivePane={setActivePane} />
-          <SlidingPaneWrapper style={{}} childPanes={ this.childPanes } ref={(slidingPaneWrapper) => { this.slidingPaneWrapper = slidingPaneWrapper }}>
+          <SlidingPaneWrapper style={{}} ref={(slidingPaneWrapper) => { this.slidingPaneWrapper = slidingPaneWrapper }}>
             <SlidingPane style={[{borderColor: '#DDDDDD', borderWidth: 1}]}
                          ref={ (jokesPane) => { this.jokesPane = jokesPane} }>
                 <Jokes />
