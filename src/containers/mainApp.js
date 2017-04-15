@@ -16,8 +16,11 @@ import layoutStyles from '../stylesheets/layoutStyles';
 import StatusBar from './StatusBar.js';
 
 import Jokes from './panes/Jokes.js';
+import EditJoke from './modals/EditJoke.js';
 import SetLists from './panes/SetLists.js';
+import EditSetList from './modals/EditSetList.js';
 import Shows from './panes/Shows.js';
+import EditShow from './modals/EditShow.js';
 
 class MainApp extends Component {
   constructor(props) {
@@ -126,12 +129,10 @@ class MainApp extends Component {
           </SlidingPaneWrapper>
         </GestureRecognizer>
 
-        <Modal style={ layoutStyles.modal }
-               ref={ (modal) => { this.modal = modal; } }>
-          <Text>Basic modal</Text>
-          <Button type="surface" size="large" theme="red" onPress={ closeModal }>
-            <Text>Close</Text>
-          </Button>
+        <Modal style={ layoutStyles.modal } ref={ (modal) => { this.modal = modal; } }>
+          { routingState.pane == 'jokes' && <EditJoke /> }
+          { routingState.pane == 'set_lists' && <EditSetList /> }
+          { routingState.pane == 'shows' && <EditShow /> }
         </Modal>
       </View>
     );
