@@ -20,7 +20,7 @@ export default class Jokes extends Component {
         <Text style={ {paddingTop: 25} }>You do not appear to have any set lists yet!</Text>
         <Text style={ {paddingBottom: 20} }>Click the button below to add one..</Text>
         <View style={ {paddingBottom: 100} }>
-          <Button type="surface" size="large" theme="red" onPress={() => { console.log('add set list') }}>
+          <Button type="surface" size="large" theme="red" onPress={ this.props.openModal }>
             <Text>{addSetListIcon}</Text>
             <Text style={layoutStyles.buttonText}>Add Set List</Text>
           </Button>

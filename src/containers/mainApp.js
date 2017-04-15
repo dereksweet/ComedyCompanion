@@ -6,6 +6,8 @@ import { View, Text, TouchableHighlight, Dimensions } from 'react-native';
 import * as routingActions from '../actions/routingActions';
 import { connect } from 'react-redux';
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
+import {Button} from 'react-native-ui-xg';
+import Modal from 'react-native-modalbox';
 
 import {SlidingPane, SlidingPaneWrapper} from 'react-native-sliding-panes';
 
@@ -94,6 +96,14 @@ class MainApp extends Component {
       actions.setPane(pane);
     };
 
+    const openModal = () => {
+      this.modal.open();
+    };
+
+    const closeModal = () => {
+      this.modal.close();
+    };
+
     return (
       <View style={layoutStyles.container}>
         <GestureRecognizer
@@ -103,18 +113,26 @@ class MainApp extends Component {
           <SlidingPaneWrapper style={{}} ref={(slidingPaneWrapper) => { this.slidingPaneWrapper = slidingPaneWrapper }}>
             <SlidingPane style={[{borderColor: '#DDDDDD', borderWidth: 1}]}
                          ref={ (jokesPane) => { this.jokesPane = jokesPane} }>
-                <Jokes />
+                <Jokes openModal={ openModal } />
             </SlidingPane>
             <SlidingPane style={[{borderColor: '#DDDDDD', borderWidth: 1}]}
                          ref={ (setListsPane) => { this.setListsPane = setListsPane} }>
-              <SetLists />
+              <SetLists openModal={ openModal } />
             </SlidingPane>
             <SlidingPane style={[{borderColor: '#DDDDDD', borderWidth: 1}]}
                          ref={ (showsPane) => { this.showsPane = showsPane} }>
-              <Shows />
+              <Shows openModal={ openModal } />
             </SlidingPane>
           </SlidingPaneWrapper>
         </GestureRecognizer>
+
+        <Modal style={ layoutStyles.modal }
+               ref={ (modal) => { this.modal = modal; } }>
+          <Text>Basic modal</Text>
+          <Button type="surface" size="large" theme="red" onPress={ closeModal }>
+            <Text>Close</Text>
+          </Button>
+        </Modal>
       </View>
     );
   }

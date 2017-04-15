@@ -34,5 +34,11 @@ export default layoutStyles = StyleSheet.create({
     color: '#FFFFFF',
     paddingLeft: 10,
     paddingTop: 4
+  },
+  modal: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100%',
+    backgroundColor: "#EEEEEE"
   }
 });
