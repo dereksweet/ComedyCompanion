@@ -1,11 +1,13 @@
 import { StyleSheet, Platform } from 'react-native';
 
 export default layoutStyles = StyleSheet.create({
-  container: {
+  mainContainer: {
+    backgroundColor: '#F8ECC2'
+  },
+  centeredFlex: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F8ECC2'
+    alignItems: 'center'
   },
   statusBarBuffer: {
     height: (Platform.OS === 'ios') ? 20 : 0,

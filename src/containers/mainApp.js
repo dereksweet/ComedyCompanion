@@ -108,7 +108,7 @@ class MainApp extends Component {
     };
 
     return (
-      <View style={layoutStyles.container}>
+      <View style={[layoutStyles.centeredFlex, layoutStyles.mainContainer]}>
         <GestureRecognizer
             onSwipe={(direction, state) => onSwipe(direction, state)}
             config={swipe_config}>

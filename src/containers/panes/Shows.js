@@ -15,7 +15,7 @@ export default class Jokes extends Component {
 
   render() {
     return (
-      <View style={layoutStyles.container}>
+      <View style={layoutStyles.centeredFlex}>
         {largeShowsIcon}
         <Text style={ {paddingTop: 25} }>You do not appear to have any shows yet!</Text>
         <Text style={ {paddingBottom: 20} }>Click the button below to add one..</Text>

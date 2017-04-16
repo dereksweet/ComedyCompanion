@@ -13,7 +13,7 @@ export default class EditShow extends Component {
 
   render() {
     return (
-      <View style={layoutStyles.container}>
+      <View style={layoutStyles.centeredFlex}>
         <Text>Editing Show</Text>
       </View>
     );

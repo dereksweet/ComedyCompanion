@@ -13,7 +13,7 @@ export default class EditSetList extends Component {
 
   render() {
     return (
-      <View style={layoutStyles.container}>
+      <View style={layoutStyles.centeredFlex}>
         <Text>Editing Set List</Text>
       </View>
     );
