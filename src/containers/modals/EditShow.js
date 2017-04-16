@@ -14,7 +14,10 @@ export default class EditShow extends Component {
   render() {
     return (
       <View style={layoutStyles.centeredFlex}>
-        <Text>Editing Show</Text>
+        <View style={layoutStyles.statusBarBuffer} />
+        <View style={layoutStyles.modalContent}>
+          <Text>Editing Shows</Text>
+        </View>
       </View>
     );
   }

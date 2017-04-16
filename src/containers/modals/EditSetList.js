@@ -14,7 +14,10 @@ export default class EditSetList extends Component {
   render() {
     return (
       <View style={layoutStyles.centeredFlex}>
-        <Text>Editing Set List</Text>
+        <View style={layoutStyles.statusBarBuffer} />
+        <View style={layoutStyles.modalContent}>
+          <Text>Editing Set Lists</Text>
+        </View>
       </View>
     );
   }

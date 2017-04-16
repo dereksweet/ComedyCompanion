@@ -11,7 +11,8 @@ export default layoutStyles = StyleSheet.create({
   },
   statusBarBuffer: {
     height: (Platform.OS === 'ios') ? 20 : 0,
-    backgroundColor: '#FFFFFF'
+    backgroundColor: '#FFFFFF',
+    width: '100%'
   },
   statusBar: {
     height: 40,
@@ -38,10 +39,11 @@ export default layoutStyles = StyleSheet.create({
     paddingTop: 4
   },
   modal: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '100%',
-    width: '100%',
-    backgroundColor: "#EEEEEE"
+    backgroundColor: "#EEEEEE",
+    height: '100%'
+  },
+  modalContent: {
+    flex: 1,
+    marginTop: 10
   }
 });
