@@ -29,7 +29,7 @@ export default class EditJoke extends Component {
     //   console.log(jokes);
     // });
 
-    // Joke.where({ _rating: "lte|0.2" }).then((jokes) => {
+    // Joke.where('AND', { _rating: "eq|0.2", _name: "eq|'Test Name2'" }).then((jokes) => {
     //   console.log(jokes);
     // });
 

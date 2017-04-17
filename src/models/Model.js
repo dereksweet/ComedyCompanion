@@ -81,44 +81,84 @@ Model.all = async function() {
   }
 };
 
-Model.where = async function(hash) {
+Model.where = async function(operation, filter_hash) {
   try {
     let results = [];
-    let keys = Object.keys(hash);
+    let keys = Object.keys(filter_hash);
 
     let all_items = await this.all();
 
     for (let i = 0; i < all_items.length; i++) {
       let item = all_items[i];
+      let add_item = -1;
 
       for (let j = 0; j < keys.length; j++) {
         let key = keys[j];
-        let filter = hash[key];
+        let filter = filter_hash[key];
         let comparator = filter.split('|')[0];
         let value = eval(filter.split('|')[1]);
 
         switch(comparator) {
           case 'eq':
-            if (item[key] == value)
-              results.push(item);
+            if ((item[key] == value) && (results.indexOf(item) == -1)) {
+              if (operation.toUpperCase() == 'OR') {
+                add_item = 1;
+              } else if (add_item != 0) {
+                add_item = 1;
+              }
+            } else if (operation.toUpperCase() == 'AND') {
+              add_item = 0;
+            }
             break;
           case 'gt':
-            if (item[key] > value)
-              results.push(item);
+            if ((item[key] > value) && (results.indexOf(item) == -1)) {
+              if (operation.toUpperCase() == 'OR') {
+                add_item = 1;
+              } else if (add_item != 0) {
+                add_item = 1;
+              }
+            } else if (operation.toUpperCase() == 'AND') {
+              add_item = 0;
+            }
             break;
           case 'gte':
-            if (item[key] >= value)
-              results.push(item);
+            if ((item[key] >= value) && (results.indexOf(item) == -1)) {
+              if (operation.toUpperCase() == 'OR') {
+                add_item = 1;
+              } else if (add_item != 0) {
+                add_item = 1;
+              }
+            } else if (operation.toUpperCase() == 'AND') {
+              add_item = 0;
+            }
             break;
           case 'lt':
-            if (item[key] < value)
-              results.push(item);
+            if ((item[key] < value) && (results.indexOf(item) == -1)) {
+              if (operation.toUpperCase() == 'OR') {
+                add_item = 1;
+              } else if (add_item != 0) {
+                add_item = 1;
+              }
+            } else if (operation.toUpperCase() == 'AND') {
+              add_item = 0;
+            }
             break;
           case 'lte':
-            if (item[key] <= value)
-              results.push(item);
+            if ((item[key] <= value) && (results.indexOf(item) == -1)) {
+              if (operation.toUpperCase() == 'OR') {
+                add_item = 1;
+              } else if (add_item != 0) {
+                add_item = 1;
+              }
+            } else if (operation.toUpperCase() == 'AND') {
+              add_item = 0;
+            }
             break;
         }
+      }
+
+      if (add_item) {
+        results.push(item);
       }
     }
 
