@@ -83,6 +83,7 @@ Model.all = async function() {
 
 Model.where = async function(operation, filter_hash) {
   try {
+    let myOperation = operation.toUpperCase();
     let results = [];
     let keys = Object.keys(filter_hash);
 
@@ -98,59 +99,59 @@ Model.where = async function(operation, filter_hash) {
         let comparator = filter.split('|')[0];
         let value = eval(filter.split('|')[1]);
 
-        switch(comparator) {
-          case 'eq':
+        switch(comparator.toUpperCase()) {
+          case 'EQ':
             if ((item[key] == value) && (results.indexOf(item) == -1)) {
-              if (operation.toUpperCase() == 'OR') {
+              if (myOperation == 'OR') {
                 add_item = 1;
               } else if (add_item != 0) {
                 add_item = 1;
               }
-            } else if (operation.toUpperCase() == 'AND') {
+            } else if (myOperation == 'AND') {
               add_item = 0;
             }
             break;
-          case 'gt':
+          case 'GT':
             if ((item[key] > value) && (results.indexOf(item) == -1)) {
-              if (operation.toUpperCase() == 'OR') {
+              if (myOperation == 'OR') {
                 add_item = 1;
               } else if (add_item != 0) {
                 add_item = 1;
               }
-            } else if (operation.toUpperCase() == 'AND') {
+            } else if (myOperation == 'AND') {
               add_item = 0;
             }
             break;
-          case 'gte':
+          case 'GTE':
             if ((item[key] >= value) && (results.indexOf(item) == -1)) {
-              if (operation.toUpperCase() == 'OR') {
+              if (myOperation == 'OR') {
                 add_item = 1;
               } else if (add_item != 0) {
                 add_item = 1;
               }
-            } else if (operation.toUpperCase() == 'AND') {
+            } else if (myOperation == 'AND') {
               add_item = 0;
             }
             break;
-          case 'lt':
+          case 'LT':
             if ((item[key] < value) && (results.indexOf(item) == -1)) {
-              if (operation.toUpperCase() == 'OR') {
+              if (myOperation == 'OR') {
                 add_item = 1;
               } else if (add_item != 0) {
                 add_item = 1;
               }
-            } else if (operation.toUpperCase() == 'AND') {
+            } else if (myOperation == 'AND') {
               add_item = 0;
             }
             break;
-          case 'lte':
+          case 'LTE':
             if ((item[key] <= value) && (results.indexOf(item) == -1)) {
-              if (operation.toUpperCase() == 'OR') {
+              if (myOperation == 'OR') {
                 add_item = 1;
               } else if (add_item != 0) {
                 add_item = 1;
               }
-            } else if (operation.toUpperCase() == 'AND') {
+            } else if (myOperation == 'AND') {
               add_item = 0;
             }
             break;
