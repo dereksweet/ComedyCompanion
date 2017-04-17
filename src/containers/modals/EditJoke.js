@@ -16,6 +16,7 @@ export default class EditJoke extends Component {
     // testJoke._in_development = true;
     // testJoke._name = 'Test Name1';
     // testJoke._notes = 'Test Notes1';
+    // testJoke._rating = 0.1;
     // testJoke.save();
 
     // Joke.get(1).then((joke) => {
@@ -25,6 +26,10 @@ export default class EditJoke extends Component {
     // });
 
     // Joke.all().then((jokes) => {
+    //   console.log(jokes);
+    // });
+
+    // Joke.where({ _rating: "lte|0.2" }).then((jokes) => {
     //   console.log(jokes);
     // });
 

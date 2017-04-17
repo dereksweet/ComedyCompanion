@@ -26,8 +26,6 @@ export default class Model {
   }
 
   async destroy() {
-    console.log('destroying');
-
     try {
       await AsyncStorage.removeItem('@CCDB:' + this.constructor.tableName() + '/' + this._id.toString());
     } catch (error) {
@@ -36,8 +34,6 @@ export default class Model {
   }
 
   async save() {
-    console.log('saving');
-
     if (this._id == -1) {
       this._id = await this.getNextID();
     }
@@ -81,6 +77,53 @@ Model.all = async function() {
 
     return results;
   } catch (error) {
+    console.log(error);
+  }
+};
+
+Model.where = async function(hash) {
+  try {
+    let results = [];
+    let keys = Object.keys(hash);
+
+    let all_items = await this.all();
+
+    for (let i = 0; i < all_items.length; i++) {
+      let item = all_items[i];
+
+      for (let j = 0; j < keys.length; j++) {
+        let key = keys[j];
+        let filter = hash[key];
+        let comparator = filter.split('|')[0];
+        let value = eval(filter.split('|')[1]);
+
+        switch(comparator) {
+          case 'eq':
+            if (item[key] == value)
+              results.push(item);
+            break;
+          case 'gt':
+            if (item[key] > value)
+              results.push(item);
+            break;
+          case 'gte':
+            if (item[key] >= value)
+              results.push(item);
+            break;
+          case 'lt':
+            if (item[key] < value)
+              results.push(item);
+            break;
+          case 'lte':
+            if (item[key] <= value)
+              results.push(item);
+            break;
+        }
+      }
+    }
+
+    return results;
+  } catch(error) {
     console.log(error);
   }
 };

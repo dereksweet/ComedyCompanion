@@ -7,7 +7,7 @@ export default class Joke extends Model {
     return "jokes";
   }
 
-  constructor(data = { _id: -1, _in_development: false, _name: '', _notes: '' })
+  constructor(data = { _id: -1, _in_development: false, _name: '', _notes: '', rating: 0.0 })
   {
     super();
 
@@ -15,5 +15,6 @@ export default class Joke extends Model {
     this._in_development = data._in_development;
     this._name           = data._name;
     this._notes          = data._notes;
+    this._rating         = data._rating;
   }
 }
