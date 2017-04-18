@@ -158,7 +158,7 @@ Model.where = async function(operation, filter_hash) {
         }
       }
 
-      if (add_item) {
+      if (add_item == 1) {
         results.push(item);
       }
     }
