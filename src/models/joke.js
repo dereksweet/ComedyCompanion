@@ -3,6 +3,10 @@ import { AsyncStorage } from 'react-native';
 import Model from './Model';
 
 export default class Joke extends Model {
+  static DBName() {
+    return "CCDB";
+  }
+
   static tableName() {
     return "jokes";
   }
