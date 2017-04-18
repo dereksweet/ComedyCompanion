@@ -1,7 +1,7 @@
 import { AsyncStorage } from 'react-native';
 
 export default class Model {
-  static DBName() {
+  static databaseName() {
     return "MUST OVERWRITE DBNAME";
   }
 
@@ -18,7 +18,7 @@ export default class Model {
     let max_id = 1;
     allKeys.forEach((key) => {
       let splitKey = key.split('/');
-      if (splitKey[0] === '@' + this.constructor.DBName() + ':' + this.constructor.tableName()) {
+      if (splitKey[0] === '@' + this.constructor.databaseName() + ':' + this.constructor.tableName()) {
         const key_id = parseInt(splitKey[1]);
         if (key_id >= max_id) {
           max_id = key_id + 1;
@@ -31,7 +31,7 @@ export default class Model {
 
   async destroy() {
     try {
-      await AsyncStorage.removeItem('@' + this.constructor.DBName() + ':' + this.constructor.tableName() + '/' + this._id.toString());
+      await AsyncStorage.removeItem('@' + this.constructor.databaseName() + ':' + this.constructor.tableName() + '/' + this._id.toString());
     } catch (error) {
       console.log("Error destroying " + this._id.toString());
     }
@@ -43,7 +43,7 @@ export default class Model {
     }
 
     try {
-      await AsyncStorage.setItem('@' + this.constructor.DBName() + ':' + this.constructor.tableName() + '/' + this._id.toString(), JSON.stringify(this));
+      await AsyncStorage.setItem('@' + this.constructor.databaseName() + ':' + this.constructor.tableName() + '/' + this._id.toString(), JSON.stringify(this));
     } catch (error) {
       console.log("There was an error saving: ", this);
     }
@@ -52,7 +52,7 @@ export default class Model {
 
 Model.get = async function(id) {
   try {
-    const value = await AsyncStorage.getItem('@' + this.DBName() + ':' + this.tableName() + '/' + id.toString());
+    const value = await AsyncStorage.getItem('@' + this.databaseName() + ':' + this.tableName() + '/' + id.toString());
     if (value !== null){
       let data = JSON.parse(value);
       return new this.prototype.constructor(data);
@@ -72,7 +72,7 @@ Model.all = async function(sort_field = '_id', sort_direction = 'ASC') {
     for (let i = 0; i < allKeys.length; i++) {
       let key = allKeys[i];
       let splitKey = key.split('/');
-      if (splitKey[0] === '@' + this.DBName() + ':' + this.tableName()) {
+      if (splitKey[0] === '@' + this.databaseName() + ':' + this.tableName()) {
         const key_id = parseInt(splitKey[1]);
         const joke = await this.get(key_id);
         results.push(joke);
