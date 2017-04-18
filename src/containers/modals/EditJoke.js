@@ -4,7 +4,7 @@ import React, {Component} from 'react';
 import { View, Text, TouchableHighlight, Switch } from 'react-native';
 import {Button} from 'react-native-ui-xg';
 
-import Joke from '../../models/joke';
+import Joke from '../../models/Joke';
 
 import layoutStyles from '../../stylesheets/layoutStyles';
 
