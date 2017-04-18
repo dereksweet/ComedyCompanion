@@ -43,7 +43,6 @@ export default class Model {
     }
 
     try {
-      console.log(this.constructor.DBName());
       await AsyncStorage.setItem('@' + this.constructor.DBName() + ':' + this.constructor.tableName() + '/' + this._id.toString(), JSON.stringify(this));
     } catch (error) {
       console.log("There was an error saving: ", this);
@@ -65,7 +64,7 @@ Model.get = async function(id) {
   }
 };
 
-Model.all = async function() {
+Model.all = async function(sort_field = '_id', sort_direction = 'ASC') {
   try {
     let results = [];
 
@@ -80,13 +79,20 @@ Model.all = async function() {
       }
     }
 
-    return results;
+    return results.sort((a,b) => {
+      if (a[sort_field] < b[sort_field])
+        return sort_direction.toUpperCase() == 'ASC' ? -1 : 1;
+      if (b[sort_field] < a[sort_field])
+        return sort_direction.toUpperCase() == 'ASC' ? 1 : -1;
+
+      return 0;
+    } );
   } catch (error) {
     console.log(error);
   }
 };
 
-Model.where = async function(operation, filter_hash) {
+Model.where = async function(operation, filter_hash, sort_field = '_id', sort_direction = 'ASC') {
   try {
     let myOperation = operation.toUpperCase();
     let results = [];
@@ -96,79 +102,59 @@ Model.where = async function(operation, filter_hash) {
 
     for (let i = 0; i < all_items.length; i++) {
       let item = all_items[i];
-      let add_item = -1;
 
-      for (let j = 0; j < keys.length; j++) {
-        let key = keys[j];
-        let filter = filter_hash[key];
-        let comparator = filter.split('|')[0];
-        let value = eval(filter.split('|')[1]);
+      if (results.indexOf(item) == -1) {
+        let add_item = -1;
 
-        switch(comparator.toUpperCase()) {
-          case 'EQ':
-            if ((item[key] == value) && (results.indexOf(item) == -1)) {
-              if (myOperation == 'OR') {
-                add_item = 1;
-              } else if (add_item != 0) {
-                add_item = 1;
-              }
-            } else if (myOperation == 'AND') {
-              add_item = 0;
+        for (let j = 0; j < keys.length; j++) {
+          let key = keys[j];
+          let filter = filter_hash[key];
+          let comparator = filter.split('|')[0];
+          let value = eval(filter.split('|')[1]);
+
+          let match = false;
+
+          switch (comparator.toUpperCase()) {
+            case 'EQ':
+              match = (item[key] == value);
+              break;
+            case 'GT':
+              match = (item[key] > value);
+              break;
+            case 'GTE':
+              match = (item[key] >= value);
+              break;
+            case 'LT':
+              match = (item[key] < value);
+              break;
+            case 'LTE':
+              match = (item[key] <= value);
+              break;
+          }
+
+          if (match) {
+            if ((myOperation == 'OR') || (add_item != 0)) {
+              add_item = 1;
             }
-            break;
-          case 'GT':
-            if ((item[key] > value) && (results.indexOf(item) == -1)) {
-              if (myOperation == 'OR') {
-                add_item = 1;
-              } else if (add_item != 0) {
-                add_item = 1;
-              }
-            } else if (myOperation == 'AND') {
-              add_item = 0;
-            }
-            break;
-          case 'GTE':
-            if ((item[key] >= value) && (results.indexOf(item) == -1)) {
-              if (myOperation == 'OR') {
-                add_item = 1;
-              } else if (add_item != 0) {
-                add_item = 1;
-              }
-            } else if (myOperation == 'AND') {
-              add_item = 0;
-            }
-            break;
-          case 'LT':
-            if ((item[key] < value) && (results.indexOf(item) == -1)) {
-              if (myOperation == 'OR') {
-                add_item = 1;
-              } else if (add_item != 0) {
-                add_item = 1;
-              }
-            } else if (myOperation == 'AND') {
-              add_item = 0;
-            }
-            break;
-          case 'LTE':
-            if ((item[key] <= value) && (results.indexOf(item) == -1)) {
-              if (myOperation == 'OR') {
-                add_item = 1;
-              } else if (add_item != 0) {
-                add_item = 1;
-              }
-            } else if (myOperation == 'AND') {
-              add_item = 0;
-            }
-            break;
+          } else if (myOperation == 'AND') {
+            add_item = 0;
+          }
         }
-      }
 
-      if (add_item == 1) {
-        results.push(item);
+        if (add_item == 1) {
+          results.push(item);
+        }
       }
     }
 
-    return results;
+    return results.sort((a,b) => {
+      if (a[sort_field] < b[sort_field])
+        return sort_direction.toUpperCase() == 'ASC' ? -1 : 1;
+      if (b[sort_field] < a[sort_field])
+        return sort_direction.toUpperCase() == 'ASC' ? 1 : -1;
+
+      return 0;
+    } );
   } catch(error) {
     console.log(error);
   }
