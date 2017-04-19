@@ -18,6 +18,11 @@ class EditJoke extends Component {
   render() {
     const { jokesState, jokesActions } = this.props;
 
+    const saveJoke = () => {
+      jokesState.joke.save();
+      this.props.closeModal();
+    };
+
     return (
       <View style={[layoutStyles.modal, layoutStyles.centeredFlex]}>
         <View style={layoutStyles.statusBarBuffer} />
@@ -28,6 +33,20 @@ class EditJoke extends Component {
                     value={jokesState.joke._in_development} />
             <View style={{flex: 1, flexDirection: 'row', justifyContent: 'flex-end'}}>
               <Text style={{ paddingRight: 10 }}>Rating: { jokesState.joke._rating.toFixed(1) }</Text>
+            </View>
+          </View>
+          <View style={ { flex: 1, justifyContent: 'flex-end' } }>
+            <View style={ { flexDirection: 'row' }}>
+              <View style={ { width: '50%' } }>
+                <Button type="surface" size="large" theme="gray" onPress={ this.props.closeModal }>
+                  <Text style={layoutStyles.buttonText}>Cancel</Text>
+                </Button>
+              </View>
+              <View style={ { width: '50%' } }>
+                <Button type="surface" size="large" theme="red" onPress={ saveJoke }>
+                  <Text style={layoutStyles.buttonText}>Save</Text>
+                </Button>
+              </View>
             </View>
           </View>
         </View>

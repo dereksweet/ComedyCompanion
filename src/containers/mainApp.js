@@ -130,9 +130,9 @@ class MainApp extends Component {
         </GestureRecognizer>
 
         <Modal style={ layoutStyles.modal } ref={ (modal) => { this.modal = modal; } }>
-          { routingState.pane == 'jokes' && <EditJoke /> }
-          { routingState.pane == 'set_lists' && <EditSetList /> }
-          { routingState.pane == 'shows' && <EditShow /> }
+          { routingState.pane == 'jokes' && <EditJoke closeModal={ closeModal } /> }
+          { routingState.pane == 'set_lists' && <EditSetList closeModal={ closeModal } /> }
+          { routingState.pane == 'shows' && <EditShow closeModal={ closeModal } /> }
         </Modal>
       </View>
     );
