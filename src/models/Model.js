@@ -9,6 +9,10 @@ export default class Model {
     return "MUST OVERWRITE TABLENAME";
   }
 
+  static dateFields() {
+    return [];
+  }
+
   async getNextID() {
     String.prototype.left = function(n) {
       return this.substring(0, n);
@@ -55,6 +59,11 @@ Model.get = async function(id) {
     const value = await AsyncStorage.getItem('@' + this.databaseName() + ':' + this.tableName() + '/' + id.toString());
     if (value !== null){
       let data = JSON.parse(value);
+      this.dateFields().forEach((dateField) => {
+        if (data[dateField]) {
+          data[dateField] = new Date(data[dateField]);
+        }
+      });
       return new this.prototype.constructor(data);
     } else {
       throw "404 retrieving " + id.toString();
