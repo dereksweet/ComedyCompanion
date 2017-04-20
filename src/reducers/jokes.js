@@ -13,13 +13,29 @@ export default function jokes(state = initialState, action = {}) {
         ...state,
         joke: action.joke
       };
+      break;
     case types.TOGGLE_IN_DEVELOPMENT:
-      let joke = state.joke;
-      joke._in_development = !joke._in_development;
+      state.joke._in_development = !state.joke._in_development;
 
       return {
         ...state,
-        joke
+        joke: state.joke
+      };
+      break;
+    case types.SET_NAME:
+      state.joke._name = action.name;
+
+      return {
+        ...state,
+        joke: state.joke
+      };
+      break;
+    case types.SET_NOTES:
+      state.joke._notes = action.notes;
+
+      return {
+        ...state,
+        joke: state.joke
       };
       break;
     default:

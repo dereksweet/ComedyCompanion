@@ -12,3 +12,17 @@ export function toggleInDevelopment() {
     type: types.TOGGLE_IN_DEVELOPMENT
   }
 }
+
+export function setName(name) {
+  return {
+    type: types.SET_NAME,
+    name
+  }
+}
+
+export function setNotes(notes) {
+  return {
+    type: types.SET_NOTES,
+    notes
+  }
+}

@@ -2,12 +2,11 @@
 
 import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
-import { View, Text, TouchableHighlight, Dimensions } from 'react-native';
+import { View, Text, TouchableHighlight, Dimensions, Modal } from 'react-native';
 import * as routingActions from '../actions/routingActions';
 import { connect } from 'react-redux';
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 import {Button} from 'react-native-ui-xg';
-import Modal from 'react-native-modalbox';
 
 import {SlidingPane, SlidingPaneWrapper} from 'react-native-sliding-panes';
 
@@ -25,6 +24,10 @@ import EditShow from './modals/EditShow.js';
 class MainApp extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      modalVisible: false
+    }
   }
 
   componentDidMount() {
@@ -100,11 +103,15 @@ class MainApp extends Component {
     };
 
     const openModal = () => {
-      this.modal.open();
+      this.setState({
+        modalVisible: true
+      });
     };
 
     const closeModal = () => {
-      this.modal.close();
+      this.setState({
+        modalVisible: false
+      });
     };
 
     return (
@@ -129,7 +136,10 @@ class MainApp extends Component {
           </SlidingPaneWrapper>
         </GestureRecognizer>
 
-        <Modal style={ layoutStyles.modal } ref={ (modal) => { this.modal = modal; } }>
+        <Modal style={ layoutStyles.modal }
+               animationType={"slide"}
+               transparent={false}
+               visible={this.state.modalVisible}>
           { routingState.pane == 'jokes' && <EditJoke closeModal={ closeModal } /> }
           { routingState.pane == 'set_lists' && <EditSetList closeModal={ closeModal } /> }
           { routingState.pane == 'shows' && <EditShow closeModal={ closeModal } /> }

@@ -47,12 +47,12 @@ export default layoutStyles = StyleSheet.create({
     marginTop: 10
   },
   modalContentSection: {
-    flexDirection: 'row',
-    alignItems: 'center',
     borderBottomWidth: 1,
     borderBottomColor: '#999999',
     width: '100%',
     paddingLeft: 10,
-    paddingBottom: 10
+    paddingRight: 10,
+    paddingBottom: 10,
+    paddingTop: 10
   }
 });
