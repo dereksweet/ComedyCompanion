@@ -139,7 +139,8 @@ class MainApp extends Component {
         <Modal style={ layoutStyles.modal }
                animationType={"slide"}
                transparent={false}
-               visible={this.state.modalVisible}>
+               visible={this.state.modalVisible}
+               onRequestClose={() => { }}>
           { routingState.pane == 'jokes' && <EditJoke closeModal={ closeModal } /> }
           { routingState.pane == 'set_lists' && <EditSetList closeModal={ closeModal } /> }
           { routingState.pane == 'shows' && <EditShow closeModal={ closeModal } /> }

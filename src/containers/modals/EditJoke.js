@@ -32,7 +32,6 @@ class EditJoke extends Component {
   keyboardDidShow (e) {
     const { layoutActions } = this.props;
 
-    // layoutActions.setKeyboardHeight(e.endCoordinates.height);
     this.setState({
       keyboard_height: e.endCoordinates.height
     });
@@ -41,7 +40,6 @@ class EditJoke extends Component {
   keyboardDidHide (e) {
     const { layoutActions } = this.props;
 
-    // layoutActions.setKeyboardHeight(0);
     this.setState({
       keyboard_height: 0
     });
@@ -53,9 +51,6 @@ class EditJoke extends Component {
   }
 
   measureModalView(event) {
-    console.log("Mesuring Modal View: ", event.nativeEvent.layout.height);
-
-    // layoutActions.setModalHeight(event.nativeEvent.layout.height);
     this.setState({
       modal_height: event.nativeEvent.layout.height
     });
@@ -84,22 +79,25 @@ class EditJoke extends Component {
         <View style={layoutStyles.modalContent} onLayout={(event) => this.measureModalView(event)}>
           <View style={{ height: this.contentHeight() }}>
             <View style={ [layoutStyles.modalContentSection, { flexDirection: 'row' }] }>
-              <Text style={{ paddingRight: 10 }}>In Development:</Text>
+              <Text style={ layoutStyles.inputLabel }>In Development:</Text>
               <Switch onValueChange={ jokesActions.toggleInDevelopment }
                       value={jokesState.joke._in_development} />
               <View style={{flex: 1, flexDirection: 'row', justifyContent: 'flex-end'}}>
-                <Text>Rating: { jokesState.joke._rating.toFixed(1) }</Text>
+                <Text style={ layoutStyles.inputLabel }>Rating: { jokesState.joke._rating.toFixed(1) }</Text>
               </View>
             </View>
             <View style={ [layoutStyles.modalContentSection, { flexDirection: 'row' }] }>
-              <Text style={{ paddingRight: 10 }}>Title:</Text>
+              <Text style={ layoutStyles.inputLabel }>Name:</Text>
               <TextInput style={ editJokeStyles.nameInput }
+                         underlineColorAndroid='transparent'
+                         placeholder="Name your joke here..."
                          onChangeText={(text) => jokesActions.setName(text)}
                          value={ jokesState.joke._name } />
             </View>
             <View style={ [layoutStyles.modalContentSection, {flex: 1} ] }>
               <TextInput style={ editJokeStyles.notesInput }
                          multiline={ true }
+                         underlineColorAndroid='transparent'
                          placeholder="Type your joke notes here..."
                          autoComplete={ false }
                          onChangeText={(text) => jokesActions.setNotes(text)}

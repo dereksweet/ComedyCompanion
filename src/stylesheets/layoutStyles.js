@@ -54,5 +54,9 @@ export default layoutStyles = StyleSheet.create({
     paddingRight: 10,
     paddingBottom: 10,
     paddingTop: 10
+  },
+  inputLabel: {
+    paddingRight: 10,
+    textAlignVertical: 'center'
   }
 });

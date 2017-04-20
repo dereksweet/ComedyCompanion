@@ -11,6 +11,7 @@ export default editJokeStyles = StyleSheet.create({
     backgroundColor: '#FFFFFF'
   },
   notesInput: {
+    textAlignVertical: 'top',
     width: '100%',
     height: '100%',
     borderColor: 'gray',
