@@ -81,7 +81,7 @@ class EditJoke extends Component {
                 <Text style={ layoutStyles.inputLabel }>Rating: { jokesState.joke._rating.toFixed(1) }</Text>
               </View>
             </View>
-            <View style={ [layoutStyles.modalContentSection, { flexDirection: 'row' }] }>
+            <View style={ [layoutStyles.modalContentSection, { flexDirection: 'row', alignItems: 'center'  }] }>
               <Text style={ layoutStyles.inputLabel }>Name:</Text>
               <TextInput style={ editJokeStyles.nameInput }
                          underlineColorAndroid='transparent'
