@@ -7,7 +7,6 @@ import { connect } from 'react-redux';
 import {Button} from 'react-native-ui-xg';
 
 import * as jokesActions from '../../actions/jokesActions';
-import * as layoutActions from '../../actions/layoutActions';
 
 import layoutStyles from '../../stylesheets/layoutStyles';
 import editJokeStyles from '../../stylesheets/editJokeStyles';
@@ -30,16 +29,12 @@ class EditJoke extends Component {
   }
 
   keyboardDidShow (e) {
-    const { layoutActions } = this.props;
-
     this.setState({
       keyboard_height: e.endCoordinates.height
     });
   }
 
   keyboardDidHide (e) {
-    const { layoutActions } = this.props;
-
     this.setState({
       keyboard_height: 0
     });
@@ -78,7 +73,7 @@ class EditJoke extends Component {
         <View style={layoutStyles.statusBarBuffer} />
         <View style={layoutStyles.modalContent} onLayout={(event) => this.measureModalView(event)}>
           <View style={{ height: this.contentHeight() }}>
-            <View style={ [layoutStyles.modalContentSection, { flexDirection: 'row' }] }>
+            <View style={ [layoutStyles.modalContentSection, { flexDirection: 'row', alignItems: 'center' }] }>
               <Text style={ layoutStyles.inputLabel }>In Development:</Text>
               <Switch onValueChange={ jokesActions.toggleInDevelopment }
                       value={jokesState.joke._in_development} />
@@ -127,7 +122,6 @@ export default connect(state => ({
     layoutState: state.layout
   }),
   (dispatch) => ({
-    jokesActions: bindActionCreators(jokesActions, dispatch),
-    layoutActions: bindActionCreators(layoutActions, dispatch)
+    jokesActions: bindActionCreators(jokesActions, dispatch)
   })
 )(EditJoke);

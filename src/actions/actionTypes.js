@@ -9,6 +9,3 @@ export const SET_JOKE = 'jokes/set_joke';
 export const TOGGLE_IN_DEVELOPMENT = 'jokes/toggle_in_development';
 export const SET_NAME = 'jokes/set_name';
 export const SET_NOTES = 'jokes/set_notes';
-
-export const SET_MODAL_HEIGHT = 'layout/set_modal_height';
-export const SET_KEYBOARD_HEIGHT = 'layout/set_keyboard_height';
