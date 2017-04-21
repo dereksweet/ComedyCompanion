@@ -6,7 +6,10 @@ import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 import {Button} from 'react-native-ui-xg';
 
+import * as routingActions from '../../actions/routingActions';
 import * as jokesActions from '../../actions/jokesActions';
+
+import Joke from '../../models/Joke';
 
 import layoutStyles from '../../stylesheets/layoutStyles';
 import editJokeStyles from '../../stylesheets/editJokeStyles';
@@ -41,8 +44,14 @@ class EditJoke extends Component {
   }
 
   componentWillUnmount () {
+    const { jokesActions } = this.props;
+
     this.keyboardDidShowListener.remove();
     this.keyboardDidHideListener.remove();
+
+    Joke.all().then((jokes) => {
+      jokesActions.setJokeList(jokes);
+    });
   }
 
   measureModalView(event) {
@@ -56,7 +65,7 @@ class EditJoke extends Component {
   }
 
   render() {
-    const { jokesState, jokesActions, layoutState } = this.props;
+    const { jokesState, jokesActions, routingActions } = this.props;
 
     const save = () => {
       jokesState.joke.save();
@@ -65,7 +74,7 @@ class EditJoke extends Component {
 
     const cancel = () => {
       Keyboard.dismiss();
-      this.props.closeModal();
+      routingActions.closeModal();
     };
 
     return (
@@ -118,10 +127,10 @@ class EditJoke extends Component {
 }
 
 export default connect(state => ({
-    jokesState: state.jokes,
-    layoutState: state.layout
+    jokesState: state.jokes
   }),
   (dispatch) => ({
+    routingActions: bindActionCreators(routingActions, dispatch),
     jokesActions: bindActionCreators(jokesActions, dispatch)
   })
 )(EditJoke);

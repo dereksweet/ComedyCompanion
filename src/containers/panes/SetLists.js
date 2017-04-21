@@ -2,25 +2,31 @@
 
 import React, {Component} from 'react';
 import { View, Text } from 'react-native';
+import {bindActionCreators} from 'redux';
+import { connect } from 'react-redux';
 import {Button} from 'react-native-ui-xg';
+
+import * as routingActions from '../../actions/routingActions';
 
 import layoutStyles from '../../stylesheets/layoutStyles';
 
 import {largeSetListsIcon, addSetListIcon} from '../../helpers/icons';
 
-export default class Jokes extends Component {
+class SetLists extends Component {
   constructor(props) {
     super(props);
   }
 
   render() {
+    const { routingActions } = this.props;
+
     return (
       <View style={layoutStyles.centeredFlex}>
         {largeSetListsIcon}
         <Text style={ {paddingTop: 25} }>You do not appear to have any set lists yet!</Text>
         <Text style={ {paddingBottom: 20} }>Click the button below to add one..</Text>
         <View style={ {paddingBottom: 100} }>
-          <Button type="surface" size="large" theme="red" onPress={ this.props.openModal }>
+          <Button type="surface" size="large" theme="red" onPress={ routingActions.openModal }>
             <Text>{addSetListIcon}</Text>
             <Text style={layoutStyles.buttonText}>Add Set List</Text>
           </Button>
@@ -29,3 +35,11 @@ export default class Jokes extends Component {
     );
   }
 }
+
+export default connect(state => ({
+
+  }),
+  (dispatch) => ({
+    routingActions: bindActionCreators(routingActions, dispatch)
+  })
+)(SetLists);

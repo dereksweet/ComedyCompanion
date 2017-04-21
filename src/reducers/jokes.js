@@ -3,7 +3,8 @@ import * as types from '../actions/actionTypes';
 import Joke from '../models/Joke';
 
 const initialState = {
-  joke: new Joke() 
+  joke: new Joke(),
+  joke_list: []
 };
 
 export default function jokes(state = initialState, action = {}) {
@@ -12,6 +13,13 @@ export default function jokes(state = initialState, action = {}) {
       return {
         ...state,
         joke: action.joke
+      };
+      break;
+    case types.SET_JOKE_LIST:
+      console.log("Setting joke list");
+      return {
+        ...state,
+        joke_list: action.joke_list
       };
       break;
     case types.TOGGLE_IN_DEVELOPMENT:

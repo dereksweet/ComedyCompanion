@@ -3,7 +3,8 @@ import * as types from '../actions/actionTypes';
 const initialState = {
   pane: 'jokes',
   visible_panes: ['jokes', 'set_lists', 'shows'],
-  title: 'Jokes'
+  title: 'Jokes',
+  modal_visible: false
 };
 
 export default function routing(state = initialState, action = {}) {
@@ -40,6 +41,18 @@ export default function routing(state = initialState, action = {}) {
           ...state,
           visible_panes: remove_visible_panes
       };
+    case types.OPEN_MODAL:
+      return {
+        ...state,
+        modal_visible: true
+      };
+      break;
+    case types.CLOSE_MODAL:
+      return {
+        ...state,
+        modal_visible: false
+      };
+      break;
     default:
       return state;
   }

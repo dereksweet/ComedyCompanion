@@ -6,13 +6,13 @@ import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 import {Button} from 'react-native-ui-xg';
 
-import * as routingActions from '../../actions/routingActions';
+import * as routingActions from '../../../actions/routingActions';
 
-import layoutStyles from '../../stylesheets/layoutStyles';
+import layoutStyles from '../../../stylesheets/layoutStyles';
 
-import {largeShowsIcon, addShowIcon} from '../../helpers/icons';
+import {largeJokesIcon, addJokeIcon} from '../../../helpers/icons';
 
-class Shows extends Component {
+class Jokes extends Component {
   constructor(props) {
     super(props);
   }
@@ -20,15 +20,19 @@ class Shows extends Component {
   render() {
     const { routingActions } = this.props;
 
+    const addJoke = () => {
+      routingActions.openModal();
+    };
+
     return (
       <View style={layoutStyles.centeredFlex}>
-        {largeShowsIcon}
-        <Text style={ {paddingTop: 25} }>You do not appear to have any shows yet!</Text>
+        {largeJokesIcon}
+        <Text style={ {paddingTop: 25} }>You do not appear to have any jokes yet!</Text>
         <Text style={ {paddingBottom: 20} }>Click the button below to add one..</Text>
         <View style={ {paddingBottom: 100} }>
-          <Button type="surface" size="large" theme="red" onPress={ routingActions.openModal }>
-            <Text>{addShowIcon}</Text>
-            <Text style={layoutStyles.buttonText}>Add Show</Text>
+          <Button type="surface" size="large" theme="red" onPress={ addJoke }>
+            <Text>{addJokeIcon}</Text>
+            <Text style={layoutStyles.buttonText}>Add Joke</Text>
           </Button>
         </View>
       </View>
@@ -42,4 +46,4 @@ export default connect(state => ({
   (dispatch) => ({
     routingActions: bindActionCreators(routingActions, dispatch)
   })
-)(Shows);
+)(Jokes);

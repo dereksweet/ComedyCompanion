@@ -24,10 +24,6 @@ import EditShow from './modals/EditShow.js';
 class MainApp extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      modalVisible: false
-    }
   }
 
   componentDidMount() {
@@ -102,18 +98,6 @@ class MainApp extends Component {
       actions.setPane(pane);
     };
 
-    const openModal = () => {
-      this.setState({
-        modalVisible: true
-      });
-    };
-
-    const closeModal = () => {
-      this.setState({
-        modalVisible: false
-      });
-    };
-
     return (
       <View style={[layoutStyles.centeredFlex, layoutStyles.mainContainer]}>
         <GestureRecognizer
@@ -123,15 +107,15 @@ class MainApp extends Component {
           <SlidingPaneWrapper style={{}} ref={(slidingPaneWrapper) => { this.slidingPaneWrapper = slidingPaneWrapper }}>
             <SlidingPane style={[{borderColor: '#DDDDDD', borderWidth: 1}]}
                          ref={ (jokesPane) => { this.jokesPane = jokesPane} }>
-                <Jokes openModal={ openModal } />
+                <Jokes />
             </SlidingPane>
             <SlidingPane style={[{borderColor: '#DDDDDD', borderWidth: 1}]}
                          ref={ (setListsPane) => { this.setListsPane = setListsPane} }>
-              <SetLists openModal={ openModal } />
+              <SetLists />
             </SlidingPane>
             <SlidingPane style={[{borderColor: '#DDDDDD', borderWidth: 1}]}
                          ref={ (showsPane) => { this.showsPane = showsPane} }>
-              <Shows openModal={ openModal } />
+              <Shows />
             </SlidingPane>
           </SlidingPaneWrapper>
         </GestureRecognizer>
@@ -139,11 +123,11 @@ class MainApp extends Component {
         <Modal style={ layoutStyles.modal }
                animationType={"slide"}
                transparent={false}
-               visible={this.state.modalVisible}
+               visible={routingState.modal_visible}
                onRequestClose={() => { }}>
-          { routingState.pane == 'jokes' && <EditJoke closeModal={ closeModal } /> }
-          { routingState.pane == 'set_lists' && <EditSetList closeModal={ closeModal } /> }
-          { routingState.pane == 'shows' && <EditShow closeModal={ closeModal } /> }
+          { routingState.pane == 'jokes' && <EditJoke /> }
+          { routingState.pane == 'set_lists' && <EditSetList /> }
+          { routingState.pane == 'shows' && <EditShow /> }
         </Modal>
       </View>
     );
