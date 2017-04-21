@@ -1,9 +1,11 @@
 import routing from './routing';
 import statusBar from './statusBar';
-import jokes from './jokes';
+import joke from './joke';
+import joke_list from './joke_list';
 
 export {
   routing,
   statusBar,
-  jokes
+  joke,
+  joke_list
 };

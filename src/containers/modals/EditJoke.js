@@ -7,7 +7,8 @@ import { connect } from 'react-redux';
 import {Button} from 'react-native-ui-xg';
 
 import * as routingActions from '../../actions/routingActions';
-import * as jokesActions from '../../actions/jokesActions';
+import * as jokeActions from '../../actions/jokeActions';
+import * as jokeListActions from '../../actions/jokeListActions';
 
 import Joke from '../../models/Joke';
 
@@ -44,13 +45,13 @@ class EditJoke extends Component {
   }
 
   componentWillUnmount () {
-    const { jokesActions } = this.props;
+    const { jokeListActions } = this.props;
 
     this.keyboardDidShowListener.remove();
     this.keyboardDidHideListener.remove();
 
     Joke.all().then((jokes) => {
-      jokesActions.setJokeList(jokes);
+      jokeListActions.setJokeList(jokes);
     });
   }
 
@@ -65,10 +66,16 @@ class EditJoke extends Component {
   }
 
   render() {
-    const { jokesState, jokesActions, routingActions } = this.props;
+    console.log("Rending EditJoke");
+
+    const { jokeState, jokeActions, jokeListActions, routingActions } = this.props;
 
     const save = () => {
-      jokesState.joke.save();
+      jokeState.joke.save(() => {
+        Joke.all().then((jokes) => {
+          jokeListActions.setJokeList(jokes);
+        });
+      });
       cancel();
     };
 
@@ -84,10 +91,10 @@ class EditJoke extends Component {
           <View style={{ height: this.contentHeight() }}>
             <View style={ [layoutStyles.modalContentSection, { flexDirection: 'row', alignItems: 'center' }] }>
               <Text style={ layoutStyles.inputLabel }>In Development:</Text>
-              <Switch onValueChange={ jokesActions.toggleInDevelopment }
-                      value={jokesState.joke._in_development} />
+              <Switch onValueChange={ jokeActions.toggleInDevelopment }
+                      value={jokeState.joke._in_development} />
               <View style={{flex: 1, flexDirection: 'row', justifyContent: 'flex-end'}}>
-                <Text style={ layoutStyles.inputLabel }>Rating: { jokesState.joke._rating.toFixed(1) }</Text>
+                <Text style={ layoutStyles.inputLabel }>Rating: { jokeState.joke._rating.toFixed(1) }</Text>
               </View>
             </View>
             <View style={ [layoutStyles.modalContentSection, { flexDirection: 'row', alignItems: 'center'  }] }>
@@ -95,8 +102,8 @@ class EditJoke extends Component {
               <TextInput style={ editJokeStyles.nameInput }
                          underlineColorAndroid='transparent'
                          placeholder="Name your joke here..."
-                         onChangeText={(text) => jokesActions.setName(text)}
-                         value={ jokesState.joke._name } />
+                         onChangeText={(text) => jokeActions.setName(text)}
+                         value={ jokeState.joke._name } />
             </View>
             <View style={ [layoutStyles.modalContentSection, {flex: 1} ] }>
               <TextInput style={ editJokeStyles.notesInput }
@@ -104,8 +111,8 @@ class EditJoke extends Component {
                          underlineColorAndroid='transparent'
                          placeholder="Type your joke notes here..."
                          autoComplete={ false }
-                         onChangeText={(text) => jokesActions.setNotes(text)}
-                         value={ jokesState.joke._notes } />
+                         onChangeText={(text) => jokeActions.setNotes(text)}
+                         value={ jokeState.joke._notes } />
             </View>
             <View style={ { flexDirection: 'row' }}>
               <View style={ { width: '50%' } }>
@@ -127,10 +134,11 @@ class EditJoke extends Component {
 }
 
 export default connect(state => ({
-    jokesState: state.jokes
+    jokeState: state.joke
   }),
   (dispatch) => ({
     routingActions: bindActionCreators(routingActions, dispatch),
-    jokesActions: bindActionCreators(jokesActions, dispatch)
+    jokeActions: bindActionCreators(jokeActions, dispatch),
+    jokeListActions: bindActionCreators(jokeListActions, dispatch)
   })
 )(EditJoke);

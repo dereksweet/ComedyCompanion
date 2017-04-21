@@ -41,15 +41,19 @@ export default class Model {
     }
   }
 
-  async save() {
+  async save(callback = null) {
     if (this._id == -1) {
       this._id = await this.getNextID();
     }
 
     try {
-      await AsyncStorage.setItem('@' + this.constructor.databaseName() + ':' + this.constructor.tableName() + '/' + this._id.toString(), JSON.stringify(this));
+      AsyncStorage.setItem(
+        '@' + this.constructor.databaseName() + ':' + this.constructor.tableName() + '/' + this._id.toString(),
+        JSON.stringify(this),
+        callback
+      );
     } catch (error) {
-      console.log("There was an error saving: ", this);
+      reject(error);
     }
   }
 }

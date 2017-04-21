@@ -38,6 +38,8 @@ class MainApp extends Component {
   }
 
   render() {
+    console.log("Rendering mainApp");
+
     const { routingState, actions } = this.props;
 
     const swipe_config = {

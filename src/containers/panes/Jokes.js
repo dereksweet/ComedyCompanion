@@ -5,7 +5,7 @@ import { View, Text, TouchableHighlight } from 'react-native';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 
-import * as jokesActions from '../../actions/jokesActions';
+import * as jokeListActions from '../../actions/jokeListActions';
 
 import NoJokes from './Jokes/NoJokes';
 import JokesList from './Jokes/JokesList';
@@ -19,39 +19,34 @@ class Jokes extends Component {
     super(props);
   }
 
-  componentDidUpdate() {
-    Joke.all().then((jokes) => {
-      jokesActions.setJokeList(jokes);
-    });
-  }
-
   componentDidMount() {
-    const { jokesActions } = this.props;
+    const { jokeListActions } = this.props;
 
-    // Joke.destroy_all();
+    Joke.destroy_all();
 
     Joke.all().then((jokes) => {
-      jokesActions.setJokeList(jokes);
+      jokeListActions.setJokeList(jokes);
     });
   }
 
   render() {
-    console.log("Rendering");
-    const { jokesState } = this.props;
+    console.log("Rending Jokes");
+    
+    const { jokeListState } = this.props;
 
     return (
       <View style={layoutStyles.centeredFlex}>
-        { jokesState.joke_list.length == 0 && <NoJokes /> }
-        { jokesState.joke_list.length > 0 && <JokesList /> }
+        { jokeListState.joke_list.length == 0 && <NoJokes /> }
+        { jokeListState.joke_list.length > 0 && <JokesList /> }
       </View>
     );
   }
 }
 
 export default connect(state => ({
-    jokesState: state.jokes
+    jokeListState: state.joke_list
   }),
   (dispatch) => ({
-    jokesActions: bindActionCreators(jokesActions, dispatch)
+    jokeListActions: bindActionCreators(jokeListActions, dispatch)
   })
 )(Jokes);

@@ -7,19 +7,12 @@ const initialState = {
   joke_list: []
 };
 
-export default function jokes(state = initialState, action = {}) {
+export default function joke(state = initialState, action = {}) {
   switch (action.type) {
     case types.SET_JOKE:
       return {
         ...state,
         joke: action.joke
-      };
-      break;
-    case types.SET_JOKE_LIST:
-      console.log("Setting joke list");
-      return {
-        ...state,
-        joke_list: action.joke_list
       };
       break;
     case types.TOGGLE_IN_DEVELOPMENT:

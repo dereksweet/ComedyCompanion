@@ -7,13 +7,6 @@ export function setJoke(joke) {
   }
 }
 
-export function setJokeList(joke_list) {
-  return {
-    type: types.SET_JOKE_LIST,
-    joke_list
-  }
-}
-
 export function toggleInDevelopment() {
   return {
     type: types.TOGGLE_IN_DEVELOPMENT

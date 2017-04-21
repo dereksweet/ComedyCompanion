@@ -7,8 +7,9 @@ export const CLOSE_MODAL = 'routing/close_modal';
 
 export const TOGGLE_HAMBURGER_ACTIVE = 'statusBar/toggle_hamburger_active';
 
-export const SET_JOKE_LIST = 'jokes/set_joke_list';
-export const SET_JOKE = 'jokes/set_joke';
-export const TOGGLE_IN_DEVELOPMENT = 'jokes/toggle_in_development';
-export const SET_NAME = 'jokes/set_name';
-export const SET_NOTES = 'jokes/set_notes';
+export const SET_JOKE_LIST = 'joke_list/set_joke_list';
+
+export const SET_JOKE = 'joke/set_joke';
+export const TOGGLE_IN_DEVELOPMENT = 'joke/toggle_in_development';
+export const SET_NAME = 'joke/set_name';
+export const SET_NOTES = 'joke/set_notes';
