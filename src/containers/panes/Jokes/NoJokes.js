@@ -6,7 +6,10 @@ import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 import {Button} from 'react-native-ui-xg';
 
+import * as jokeActions from '../../../actions/jokeActions';
 import * as routingActions from '../../../actions/routingActions';
+
+import Joke from '../../../models/Joke';
 
 import layoutStyles from '../../../stylesheets/layoutStyles';
 
@@ -18,9 +21,10 @@ class Jokes extends Component {
   }
 
   render() {
-    const { routingActions } = this.props;
+    const { routingActions, jokeActions } = this.props;
 
     const addJoke = () => {
+      jokeActions.setJoke(new Joke());
       routingActions.openModal();
     };
 
@@ -44,6 +48,7 @@ export default connect(state => ({
 
   }),
   (dispatch) => ({
+    jokeActions: bindActionCreators(jokeActions, dispatch),
     routingActions: bindActionCreators(routingActions, dispatch)
   })
 )(Jokes);

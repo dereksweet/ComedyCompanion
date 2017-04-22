@@ -38,8 +38,6 @@ class MainApp extends Component {
   }
 
   render() {
-    console.log("Rendering mainApp");
-
     const { routingState, actions } = this.props;
 
     const swipe_config = {
@@ -102,9 +100,7 @@ class MainApp extends Component {
 
     return (
       <View style={[layoutStyles.centeredFlex, layoutStyles.mainContainer]}>
-        <GestureRecognizer
-            onSwipe={(direction, state) => onSwipe(direction, state)}
-            config={swipe_config}>
+        <View>
           <StatusBar setActivePane={setActivePane} />
           <SlidingPaneWrapper style={{}} ref={(slidingPaneWrapper) => { this.slidingPaneWrapper = slidingPaneWrapper }}>
             <SlidingPane style={[{borderColor: '#DDDDDD', borderWidth: 1}]}
@@ -120,8 +116,7 @@ class MainApp extends Component {
               <Shows />
             </SlidingPane>
           </SlidingPaneWrapper>
-        </GestureRecognizer>
-
+        </View>
         <Modal style={ layoutStyles.modal }
                animationType={"slide"}
                transparent={false}

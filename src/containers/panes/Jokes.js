@@ -22,16 +22,12 @@ class Jokes extends Component {
   componentDidMount() {
     const { jokeListActions } = this.props;
 
-    Joke.destroy_all();
-
     Joke.all().then((jokes) => {
       jokeListActions.setJokeList(jokes);
     });
   }
 
   render() {
-    console.log("Rending Jokes");
-    
     const { jokeListState } = this.props;
 
     return (

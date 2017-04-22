@@ -173,11 +173,15 @@ Model.where = async function(operation, filter_hash, sort_field = '_id', sort_di
   }
 };
 
-Model.destroy_all = async function() {
+Model.destroy_all = async function(callback = null) {
   all_items = await this.all();
 
   for (let i = 0; i < all_items.length; i++) {
     item = all_items[i];
-    item.destroy();
+    await item.destroy();
+  }
+
+  if (callback) {
+    callback();
   }
 };
