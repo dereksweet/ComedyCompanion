@@ -82,6 +82,11 @@ class EditJoke extends Component {
       routingActions.closeModal();
     };
 
+    const destroy = () => {
+      jokeState.joke.destroy();
+      routingActions.closeModal();
+    };
+
     return (
       <View style={[layoutStyles.modal, layoutStyles.centeredFlex]}>
         <View style={layoutStyles.statusBarBuffer} />
@@ -113,13 +118,20 @@ class EditJoke extends Component {
                          value={ jokeState.joke._notes } />
             </View>
             <View style={ { flexDirection: 'row' }}>
-              <View style={ { width: '50%' } }>
+              { (jokeState.joke._id != -1) &&
+              <View style={ { flex: 1 } }>
+                <Button type="surface" size="large" theme="red" onPress={ destroy }>
+                  <Text style={layoutStyles.buttonText}>Delete</Text>
+                </Button>
+              </View>
+              }
+              <View style={ { flex: 1 } }>
                 <Button type="surface" size="large" theme="gray" onPress={ cancel }>
                   <Text style={layoutStyles.buttonText}>Cancel</Text>
                 </Button>
               </View>
-              <View style={ { width: '50%' } }>
-                <Button type="surface" size="large" theme="red" onPress={ save }>
+              <View style={ { flex: 1 } }>
+                <Button type="surface" size="large" theme="blue" onPress={ save }>
                   <Text style={layoutStyles.buttonText}>Save</Text>
                 </Button>
               </View>

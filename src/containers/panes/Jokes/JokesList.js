@@ -14,8 +14,6 @@ import * as routingActions from '../../../actions/routingActions';
 
 import layoutStyles from '../../../stylesheets/layoutStyles';
 
-import {addJokeIcon} from '../../../helpers/icons';
-
 class JokesList extends Component {
   constructor(props) {
     super(props);
@@ -31,19 +29,6 @@ class JokesList extends Component {
       Joke.get(id).then((joke) => {
         jokeActions.setJoke(joke);
         routingActions.openModal();
-      });
-    };
-
-    const addJoke = () => {
-      jokeActions.setJoke(new Joke());
-      routingActions.openModal();
-    };
-    
-    const deleteAll = () => {
-      Joke.destroy_all(() => {
-        Joke.all().then((jokes) => {
-          jokeListActions.setJokeList(jokes);
-        });
       });
     };
 
@@ -78,18 +63,6 @@ class JokesList extends Component {
           renderSeparator={renderSeparator}
           style={{ backgroundColor: '#FFFFFF' }}
         />
-
-        <View style={{ borderBottomWidth: 1, borderBottomColor: '#999999', width: '100%', paddingTop: 10, marginBottom: 10 }} />
-        <Button type="surface" size="large" theme="red" onPress={ addJoke }>
-          <Text>{addJokeIcon}</Text>
-          <Text style={layoutStyles.buttonText}>Add Joke</Text>
-        </Button>
-        <View style={{ borderBottomWidth: 1, borderBottomColor: '#999999', width: '100%', paddingTop: 10, marginBottom: 10 }} />
-        <Button type="surface" size="large" theme="red" onPress={ deleteAll }>
-          <Text style={layoutStyles.buttonText}>Delete All Jokes</Text>
-        </Button>
-        <View style={{ borderBottomWidth: 1, borderBottomColor: '#999999', width: '100%', paddingTop: 10 }} />
-
       </View>
     );
   }

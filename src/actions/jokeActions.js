@@ -1,6 +1,7 @@
 import * as types from './actionTypes';
 
 export function setJoke(joke) {
+  console.log('in action: ', joke);
   return {
     type: types.SET_JOKE,
     joke

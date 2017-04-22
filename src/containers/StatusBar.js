@@ -8,13 +8,16 @@ import { connect } from 'react-redux';
 
 import ExpandingView from '../components/ExpandingView';
 
+import Joke from '../models/Joke';
+
 import * as routingActions from '../actions/routingActions';
+import * as jokeActions from '../actions/jokeActions';
 import * as statusBarActions from '../actions/statusBarActions';
 
 import statusBarStyles from '../stylesheets/statusBarStyles';
 import layoutStyles from '../stylesheets/layoutStyles';
 
-import {jokesIcon, setListsIcon, showsIcon} from '../helpers/icons';
+import {jokesIcon, setListsIcon, showsIcon, addIcon} from '../helpers/icons';
 
 class StatusBar extends Component {
   constructor(props) {
@@ -22,7 +25,7 @@ class StatusBar extends Component {
   }
 
   render() {
-    const { statusBarState, routingState, statusBarActions, routingActions } = this.props;
+    const { statusBarState, routingState, statusBarActions, routingActions, jokeActions } = this.props;
 
     const clickNavLink = (pane) => {
       routingActions.setPane(pane);
@@ -38,7 +41,26 @@ class StatusBar extends Component {
       statusBarState.hamburger_active ? this.navBarView.performShrink() : this.navBarView.performExpand();
     };
 
-    let renderNavBarButton = (pane, icon, text, styles) => {
+    const addJoke = () => {
+      if (routingState.pane == 'jokes') {
+        jokeActions.setJoke(new Joke());
+      }
+
+      routingActions.openModal();
+    };
+
+    let renderAddButton = () => {
+      return (
+        <View style={ statusBarStyles.addIcon }>
+          <TouchableHighlight style={{ flex: 1, alignItems: 'center', paddingTop: 7, paddingLeft: 7 }}
+                              onPress={ addJoke }>
+            <Text style={{width: '100%'}}>{ addIcon }</Text>
+          </TouchableHighlight>
+        </View>
+      );
+    };
+
+    const renderNavBarButton = (pane, icon, text, styles) => {
       return  <TouchableHighlight style={ [statusBarStyles.navLink, styles] }
                                   onPress={() => clickNavLink(pane)}>
                 <View style={ { flexDirection: 'row' } }>
@@ -48,7 +70,7 @@ class StatusBar extends Component {
               </TouchableHighlight>
     };
 
-    let renderNavBar = () => {
+    const renderNavBar = () => {
       return  <ExpandingView ref={(navBarView) => this.navBarView = navBarView}
                                 style={ [statusBarStyles.navBar] }
                                 expandedHeight={40}>
@@ -73,6 +95,9 @@ class StatusBar extends Component {
           <View style={ { flexDirection: 'row' } }>
             <Text style={statusBarStyles.title}>{routingState.title}</Text>
           </View>
+          <View style={{flex: 1, flexDirection: 'row', justifyContent: 'flex-end'}}>
+            { renderAddButton() }
+          </View>
         </View>
         { renderNavBar() }
       </View>
@@ -85,6 +110,7 @@ export default connect(state => ({
   routingState: state.routing
 }),
 (dispatch) => ({
+  jokeActions: bindActionCreators(jokeActions, dispatch),
   statusBarActions: bindActionCreators(statusBarActions, dispatch),
   routingActions: bindActionCreators(routingActions, dispatch)
 })

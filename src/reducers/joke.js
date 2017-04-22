@@ -10,6 +10,7 @@ const initialState = {
 export default function joke(state = initialState, action = {}) {
   switch (action.type) {
     case types.SET_JOKE:
+      console.log('setting joke: ', action.joke);
       return {
         ...state,
         joke: action.joke
