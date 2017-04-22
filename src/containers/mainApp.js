@@ -40,49 +40,6 @@ class MainApp extends Component {
   render() {
     const { routingState, actions } = this.props;
 
-    const swipe_config = {
-        velocityThreshold: 0.3,
-        directionalOffsetThreshold: 80
-    };
-
-    const handleSwipeLeft = () => {
-      switch (routingState.pane) {
-        case 'jokes':
-          actions.setPane('set_lists');
-          break;
-        case 'set_lists':
-          actions.setPane('shows');
-          break;
-      }
-      this.slidingPaneWrapper.slideAllLeft();
-    };
-
-    const handleSwipeRight = () => {
-      switch (routingState.pane) {
-        case 'set_lists':
-          actions.setPane('jokes');
-          break;
-        case 'shows':
-          actions.setPane('set_lists');
-          break;
-      }
-      this.slidingPaneWrapper.slideAllRight();
-    };
-
-    const onSwipe = (gestureName, gestureState) => {
-        const {SWIPE_LEFT, SWIPE_RIGHT} = swipeDirections;
-        switch (gestureName) {
-            case SWIPE_LEFT:
-                handleSwipeLeft();
-                break;
-            case SWIPE_RIGHT:
-                handleSwipeRight();
-                break;
-            default:
-                break;
-        }
-    };
-
     const setActivePane = (pane) => {
       switch (pane) {
         case 'jokes':
@@ -100,7 +57,7 @@ class MainApp extends Component {
 
     return (
       <View style={[layoutStyles.centeredFlex, layoutStyles.mainContainer]}>
-        <View>
+        <View style={{ flex: 1 }}>
           <StatusBar setActivePane={setActivePane} />
           <SlidingPaneWrapper style={{}} ref={(slidingPaneWrapper) => { this.slidingPaneWrapper = slidingPaneWrapper }}>
             <SlidingPane style={[{borderColor: '#DDDDDD', borderWidth: 1}]}
