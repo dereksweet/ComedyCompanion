@@ -14,26 +14,11 @@ import * as routingActions from '../../../actions/routingActions';
 
 import layoutStyles from '../../../stylesheets/layoutStyles';
 
-import {largeJokesIcon, addJokeIcon} from '../../../helpers/icons';
+import {addJokeIcon} from '../../../helpers/icons';
 
 class JokesList extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      i: 1
-    }
-  }
-
-  _renderSeparator(sectionID: number, rowID: number, adjacentRowHighlighted: bool) {
-    return (
-      <View
-        key={`${sectionID}-${rowID}`}
-        style={{
-            height: adjacentRowHighlighted ? 4 : 1,
-            backgroundColor: adjacentRowHighlighted ? '#3B5998' : '#CCCCCC',
-          }}
-      />
-    );
   }
 
   render() {
@@ -73,24 +58,37 @@ class JokesList extends Component {
       );
     };
 
+    const renderSeparator = (sectionID, rowID, adjacentRowHighlighted) => {
+      return (
+        <View
+          key={`${sectionID}-${rowID}`}
+          style={{
+            height: adjacentRowHighlighted ? 4 : 1,
+            backgroundColor: adjacentRowHighlighted ? '#3B5998' : '#CCCCCC',
+          }}
+        />
+      );
+    };
+
     return (
       <View style={layoutStyles.centeredFlex}>
         <ListView
           dataSource={jokeListDS}
           renderRow={renderRow}
-          renderSeparator={this._renderSeparator}
+          renderSeparator={renderSeparator}
+          style={{ backgroundColor: '#FFFFFF' }}
         />
 
-        <View style={{ borderBottomWidth: 1, borderBottomColor: '#999999', width: '100%', paddingTop: 10, marginBottom: 10 }}></View>
+        <View style={{ borderBottomWidth: 1, borderBottomColor: '#999999', width: '100%', paddingTop: 10, marginBottom: 10 }} />
         <Button type="surface" size="large" theme="red" onPress={ addJoke }>
           <Text>{addJokeIcon}</Text>
           <Text style={layoutStyles.buttonText}>Add Joke</Text>
         </Button>
-        <View style={{ borderBottomWidth: 1, borderBottomColor: '#999999', width: '100%', paddingTop: 10, marginBottom: 10 }}></View>
+        <View style={{ borderBottomWidth: 1, borderBottomColor: '#999999', width: '100%', paddingTop: 10, marginBottom: 10 }} />
         <Button type="surface" size="large" theme="red" onPress={ deleteAll }>
           <Text style={layoutStyles.buttonText}>Delete All Jokes</Text>
         </Button>
-        <View style={{ borderBottomWidth: 1, borderBottomColor: '#999999', width: '100%', paddingTop: 10 }}></View>
+        <View style={{ borderBottomWidth: 1, borderBottomColor: '#999999', width: '100%', paddingTop: 10 }} />
 
       </View>
     );
