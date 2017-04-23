@@ -14,28 +14,28 @@ export default jokeListStyles = StyleSheet.create({
     flexDirection: 'row'
   },
   jokeName: {
-    fontSize: 10
+    fontSize: 12
   },
   jokeInfoView: {
     alignItems: 'flex-end',
-    minWidth: 60,
+    minWidth: 70,
     borderLeftColor: '#DDDDDD',
     borderLeftWidth: 1
   },
   updatedText: {
-    fontSize: 6,
+    fontSize: 8,
     fontWeight: 'bold'
   },
   ratingText: {
     paddingTop: 5,
-    fontSize: 6,
+    fontSize: 8,
     alignItems: 'flex-end'
   },
   sortByText: {
-    fontSize: 10
+    fontSize: 12
   },
   sortButtonText: {
-    fontSize: 8,
+    fontSize: 10,
     color: '#FFFFFF',
   }
 });
