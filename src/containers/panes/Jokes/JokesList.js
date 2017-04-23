@@ -24,7 +24,7 @@ class JokesList extends Component {
   }
 
   render() {
-    const { jokeActions, routingActions, jokeListState } = this.props;
+    const { jokeListState, jokeActions, routingActions, jokeListActions } = this.props;
 
     let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     const jokeListDS = ds.cloneWithRows(jokeListState.joke_list.map((joke) => { return joke.name }));
@@ -85,6 +85,31 @@ class JokesList extends Component {
       );
     };
 
+    const sortButtonClicked = (sort_order) => {
+      const order = jokeListState.sort_order;
+      const direction = jokeListState.sort_direction;
+
+      const new_direction = order == sort_order ? (direction == 'ASC' ? 'DESC' : 'ASC') : 'ASC';
+
+      jokeListActions.setJokeListOrder(sort_order, new_direction);
+
+      Joke.all(sort_order, new_direction).then((jokes) => {
+        jokeListActions.setJokeList(jokes);
+      });
+    };
+
+    const renderSortButton = (sort_order, button_text) => {
+      return (
+        <Button type="surface"
+                size="small"
+                theme="red"
+                selfStyle={{ marginLeft: 10 }}
+                onPress={ () => sortButtonClicked(sort_order) }>
+          <Text style={jokeListStyles.sortButtonText}>{ button_text }</Text>
+        </Button>
+      )
+    };
+
     return (
       <View style={layoutStyles.centeredFlex}>
         <ListView
@@ -94,8 +119,11 @@ class JokesList extends Component {
           style={{ backgroundColor: '#FFFFFF', flex: 1 }}
         />
         <View style={ layoutStyles.toolbar }>
-          <View>
-            <Text>Sort by: </Text>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Text style={ jokeListStyles.sortByText }>Sort by: </Text>
+            { renderSortButton('_updated_at', 'Updated') }
+            { renderSortButton('_name', 'Name') }
+            { renderSortButton('_rating', 'Rating') }
           </View>
           <View style={{ flex: 1, alignItems: 'flex-end' }}>
             { renderAddButton() }

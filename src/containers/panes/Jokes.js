@@ -20,9 +20,9 @@ class Jokes extends Component {
   }
 
   componentDidMount() {
-    const { jokeListActions } = this.props;
+    const { jokeListState, jokeListActions } = this.props;
 
-    Joke.all().then((jokes) => {
+    Joke.all(jokeListState.sort_order, jokeListState.sort_direction).then((jokes) => {
       jokeListActions.setJokeList(jokes);
     });
   }

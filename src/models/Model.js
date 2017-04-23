@@ -46,6 +46,8 @@ export default class Model {
       this._id = await this.getNextID();
     }
 
+    this._updated_at = new Date();
+
     try {
       AsyncStorage.setItem(
         '@' + this.constructor.databaseName() + ':' + this.constructor.tableName() + '/' + this._id.toString(),

@@ -30,5 +30,12 @@ export default jokeListStyles = StyleSheet.create({
     paddingTop: 5,
     fontSize: 6,
     alignItems: 'flex-end'
+  },
+  sortByText: {
+    fontSize: 10
+  },
+  sortButtonText: {
+    fontSize: 8,
+    color: '#FFFFFF',
   }
 });

@@ -66,11 +66,11 @@ class EditJoke extends Component {
   }
 
   render() {
-    const { jokeState, jokeActions, jokeListActions, routingActions } = this.props;
+    const { jokeState, jokeListState, jokeActions, jokeListActions, routingActions } = this.props;
 
     const save = () => {
       jokeState.joke.save(() => {
-        Joke.all().then((jokes) => {
+        Joke.all(jokeListState.sort_order, jokeListState.sort_direction).then((jokes) => {
           jokeListActions.setJokeList(jokes);
         });
       });
@@ -144,7 +144,8 @@ class EditJoke extends Component {
 }
 
 export default connect(state => ({
-    jokeState: state.joke
+    jokeState: state.joke,
+    jokeListState: state.joke_list
   }),
   (dispatch) => ({
     routingActions: bindActionCreators(routingActions, dispatch),
