@@ -5,6 +5,7 @@ import { View, Text, ListView, TouchableHighlight } from 'react-native';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 import {Button} from 'react-native-ui-xg';
+import SearchBar from 'react-native-material-design-searchbar';
 import moment from 'moment';
 
 import Joke from '../../../models/Joke';
@@ -85,15 +86,23 @@ class JokesList extends Component {
       );
     };
 
-    const sortButtonClicked = (sort_order) => {
+    const sortButtonClicked = (sort_field) => {
+      const field = jokeListState.sort_field;
       const order = jokeListState.sort_order;
-      const direction = jokeListState.sort_direction;
 
-      const new_direction = order == sort_order ? (direction == 'ASC' ? 'DESC' : 'ASC') : 'ASC';
+      const new_order = field == sort_field ? (order == 'ASC' ? 'DESC' : 'ASC') : 'ASC';
 
-      jokeListActions.setJokeListOrder(sort_order, new_direction);
+      jokeListActions.setJokeListSort(sort_field, new_order);
 
-      Joke.all(sort_order, new_direction).then((jokes) => {
+      Joke.where({ '_name': "LIKE|'" + jokeListState.name_filter + "'" }, 'AND', sort_field, new_order).then((jokes) => {
+        jokeListActions.setJokeList(jokes);
+      });
+    };
+
+    const nameFilterChanged = (name_filter) => {
+      jokeListActions.setJokeListFilter(name_filter);
+
+      Joke.where({ '_name': "LIKE|'" + name_filter + "'" }, 'AND', jokeListState.sort_field, jokeListState.sort_order).then((jokes) => {
         jokeListActions.setJokeList(jokes);
       });
     };
@@ -112,6 +121,19 @@ class JokesList extends Component {
 
     return (
       <View style={layoutStyles.centeredFlex}>
+        <View style={{ backgroundColor: '#FFFFFF', width: '100%' }}>
+          <SearchBar
+            ref={(searchBar) => { this.searchBar = searchBar }}
+            onSearchChange={ nameFilterChanged }
+            height={20}
+            onFocus={() => console.log('On Focus')}
+            onBlur={() => console.log('On Blur')}
+            placeholder={'Search...'}
+            autoCorrect={false}
+            padding={0}
+            returnKeyType={'search'}
+          />
+        </View>
         <ListView
           dataSource={ jokeListDS }
           renderRow={ renderRow }

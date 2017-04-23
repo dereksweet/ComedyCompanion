@@ -2,8 +2,9 @@ import * as types from '../actions/actionTypes';
 
 const initialState = {
   joke_list: [],
-  sort_order: '_updated_at',
-  sort_direction: 'DESC'
+  sort_field: '_updated_at',
+  sort_order: 'DESC',
+  name_filter: ''
 };
 
 export default function joke_list(state = initialState, action = {}) {
@@ -14,11 +15,17 @@ export default function joke_list(state = initialState, action = {}) {
         joke_list: action.joke_list
       };
       break;
-    case types.SET_JOKE_LIST_ORDER:
+    case types.SET_JOKE_LIST_SORT:
       return {
         ...state,
-        sort_order: action.sort_order,
-        sort_direction: action.sort_direction
+        sort_field: action.sort_field,
+        sort_order: action.sort_order
+      };
+      break;
+    case types.SET_JOKE_LIST_FILTER:
+      return {
+        ...state,
+        name_filter: action.name_filter
       };
       break;
     default:

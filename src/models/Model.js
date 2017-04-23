@@ -79,7 +79,7 @@ Model.get = async function(id) {
   }
 };
 
-Model.all = async function(sort_field = '_id', sort_direction = 'ASC') {
+Model.all = async function(sort_field = '_id', sort_order = 'ASC') {
   try {
     let results = [];
 
@@ -96,9 +96,9 @@ Model.all = async function(sort_field = '_id', sort_direction = 'ASC') {
 
     return results.sort((a,b) => {
       if (a[sort_field] < b[sort_field])
-        return sort_direction.toUpperCase() == 'ASC' ? -1 : 1;
+        return sort_order.toUpperCase() == 'ASC' ? -1 : 1;
       if (b[sort_field] < a[sort_field])
-        return sort_direction.toUpperCase() == 'ASC' ? 1 : -1;
+        return sort_order.toUpperCase() == 'ASC' ? 1 : -1;
 
       return 0;
     } );
@@ -107,7 +107,7 @@ Model.all = async function(sort_field = '_id', sort_direction = 'ASC') {
   }
 };
 
-Model.where = async function(operation, filter_hash, sort_field = '_id', sort_direction = 'ASC') {
+Model.where = async function(filter_hash, operation = 'AND', sort_field = '_id', sort_order= 'ASC') {
   try {
     let myOperation = operation.toUpperCase();
     let results = [];
@@ -145,6 +145,9 @@ Model.where = async function(operation, filter_hash, sort_field = '_id', sort_di
             case 'LTE':
               match = (item[key] <= value);
               break;
+            case 'LIKE':
+              match = (item[key].toLowerCase().indexOf(value.toLowerCase()) != -1);
+              break;
           }
 
           if (match) {
@@ -164,9 +167,9 @@ Model.where = async function(operation, filter_hash, sort_field = '_id', sort_di
 
     return results.sort((a,b) => {
       if (a[sort_field] < b[sort_field])
-        return sort_direction.toUpperCase() == 'ASC' ? -1 : 1;
+        return sort_order.toUpperCase() == 'ASC' ? -1 : 1;
       if (b[sort_field] < a[sort_field])
-        return sort_direction.toUpperCase() == 'ASC' ? 1 : -1;
+        return sort_order.toUpperCase() == 'ASC' ? 1 : -1;
 
       return 0;
     } );

@@ -22,7 +22,7 @@ class Jokes extends Component {
   componentDidMount() {
     const { jokeListState, jokeListActions } = this.props;
 
-    Joke.all(jokeListState.sort_order, jokeListState.sort_direction).then((jokes) => {
+    Joke.where({ '_name': "LIKE|'" + jokeListState.name_filter + "'" }, 'AND', jokeListState.sort_field, jokeListState.sort_order).then((jokes) => {
       jokeListActions.setJokeList(jokes);
     });
   }

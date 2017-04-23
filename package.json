@@ -11,6 +11,7 @@
     "react": "15.4.2",
     "react-native": "0.42.3",
     "react-native-hamburger": "0.0.2",
+    "react-native-material-design-searchbar": "^1.1.2",
     "react-native-sliding-panes": "1.0.1",
     "react-native-swipe-gestures": "^1.0.2",
     "react-native-ui-xg": "0.0.2",

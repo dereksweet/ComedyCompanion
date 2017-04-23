@@ -7,10 +7,17 @@ export function setJokeList(joke_list) {
   }
 }
 
-export function setJokeListOrder(sort_order, sort_direction) {
+export function setJokeListSort(sort_field, sort_order) {
   return {
-    type: types.SET_JOKE_LIST_ORDER,
-    sort_order,
-    sort_direction
+    type: types.SET_JOKE_LIST_SORT,
+    sort_field,
+    sort_order
+  }
+}
+
+export function setJokeListFilter(name_filter) {
+  return {
+    type: types.SET_JOKE_LIST_FILTER,
+    name_filter
   }
 }

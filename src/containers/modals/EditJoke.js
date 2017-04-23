@@ -45,12 +45,12 @@ class EditJoke extends Component {
   }
 
   componentWillUnmount () {
-    const { jokeListActions } = this.props;
+    const { jokeListActions, jokeListState } = this.props;
 
     this.keyboardDidShowListener.remove();
     this.keyboardDidHideListener.remove();
 
-    Joke.all().then((jokes) => {
+    Joke.where({ '_name': "LIKE|'" + jokeListState.name_filter + "'" }, 'AND', jokeListState.sort_field, jokeListState.sort_order).then((jokes) => {
       jokeListActions.setJokeList(jokes);
     });
   }
@@ -70,7 +70,7 @@ class EditJoke extends Component {
 
     const save = () => {
       jokeState.joke.save(() => {
-        Joke.all(jokeListState.sort_order, jokeListState.sort_direction).then((jokes) => {
+        Joke.where({ '_name': "LIKE|'" + jokeListState.name_filter + "'" }, 'AND', jokeListState.sort_field, jokeListState.sort_order).then((jokes) => {
           jokeListActions.setJokeList(jokes);
         });
       });
