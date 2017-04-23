@@ -8,16 +8,13 @@ import { connect } from 'react-redux';
 
 import ExpandingView from '../components/ExpandingView';
 
-import Joke from '../models/Joke';
-
 import * as routingActions from '../actions/routingActions';
-import * as jokeActions from '../actions/jokeActions';
 import * as statusBarActions from '../actions/statusBarActions';
 
 import statusBarStyles from '../stylesheets/statusBarStyles';
 import layoutStyles from '../stylesheets/layoutStyles';
 
-import {jokesIcon, setListsIcon, showsIcon, addIcon} from '../helpers/icons';
+import {jokesIcon, setListsIcon, showsIcon, settingsIcon} from '../helpers/icons';
 
 class StatusBar extends Component {
   constructor(props) {
@@ -25,7 +22,7 @@ class StatusBar extends Component {
   }
 
   render() {
-    const { statusBarState, routingState, statusBarActions, routingActions, jokeActions } = this.props;
+    const { statusBarState, routingState, statusBarActions, routingActions } = this.props;
 
     const clickNavLink = (pane) => {
       routingActions.setPane(pane);
@@ -41,20 +38,12 @@ class StatusBar extends Component {
       statusBarState.hamburger_active ? this.navBarView.performShrink() : this.navBarView.performExpand();
     };
 
-    const addJoke = () => {
-      if (routingState.pane == 'jokes') {
-        jokeActions.setJoke(new Joke());
-      }
-
-      routingActions.openModal();
-    };
-
-    let renderAddButton = () => {
+    let renderSettingsButton = () => {
       return (
-        <View style={ statusBarStyles.addIcon }>
+        <View style={ statusBarStyles.gearIcon }>
           <TouchableHighlight style={{ flex: 1, alignItems: 'center', paddingTop: 7, paddingLeft: 7 }}
-                              onPress={ addJoke }>
-            <Text style={{width: '100%'}}>{ addIcon }</Text>
+                              onPress={ () => console.log('Gear Clicked') }>
+            <Text style={{width: '100%'}}>{ settingsIcon }</Text>
           </TouchableHighlight>
         </View>
       );
@@ -96,7 +85,7 @@ class StatusBar extends Component {
             <Text style={statusBarStyles.title}>{routingState.title}</Text>
           </View>
           <View style={{flex: 1, flexDirection: 'row', justifyContent: 'flex-end'}}>
-            { renderAddButton() }
+            { renderSettingsButton() }
           </View>
         </View>
         { renderNavBar() }
@@ -110,7 +99,6 @@ export default connect(state => ({
   routingState: state.routing
 }),
 (dispatch) => ({
-  jokeActions: bindActionCreators(jokeActions, dispatch),
   statusBarActions: bindActionCreators(statusBarActions, dispatch),
   routingActions: bindActionCreators(routingActions, dispatch)
 })

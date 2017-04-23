@@ -11,10 +11,18 @@ export const addJokeIcon = (<MaterialIcon name="note-add" size={25} color="#FFF"
 export const addSetListIcon = (<MaterialIcon name="playlist-add" size={25} color="#FFF" style={statusBarStyles.navLinkIcon} />);
 export const addShowIcon = (<MaterialIcon name="group-add" size={25} color="#FFF" style={statusBarStyles.navLinkIcon} />);
 export const addIcon = (<MaterialIcon name="add" size={25} color="#000" style={statusBarStyles.navLinkIcon} />);
+export const settingsIcon = (<MaterialIcon name="settings" size={25} color="#000" style={statusBarStyles.navLinkIcon} />);
 
 export default {
   jokesIcon,
+  largeJokesIcon,
   setListsIcon,
+  largeSetListsIcon,
   showsIcon,
-  addJokeIcon
+  largeShowsIcon,
+  addJokeIcon,
+  addSetListIcon,
+  addShowIcon,
+  addIcon,
+  settingsIcon
 }

@@ -13,6 +13,9 @@ import * as jokeListActions from '../../../actions/jokeListActions';
 import * as routingActions from '../../../actions/routingActions';
 
 import layoutStyles from '../../../stylesheets/layoutStyles';
+import jokeListStyles from '../../../stylesheets/jokeListStyles';
+
+import {addIcon} from '../../../helpers/icons';
 
 class JokesList extends Component {
   constructor(props) {
@@ -24,6 +27,11 @@ class JokesList extends Component {
 
     let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     const jokeListDS = ds.cloneWithRows(jokeListState.joke_list.map((joke) => { return joke.name }));
+
+    const addJoke = () => {
+      jokeActions.setJoke(new Joke());
+      routingActions.openModal();
+    };
 
     const editJoke = (id) => {
       Joke.get(id).then((joke) => {
@@ -55,14 +63,33 @@ class JokesList extends Component {
       );
     };
 
+    const renderAddButton = () => {
+      return (
+        <View style={ jokeListStyles.addIcon }>
+          <TouchableHighlight style={{ flex: 1, alignItems: 'center', paddingTop: 7, paddingLeft: 7 }}
+                              onPress={ addJoke }>
+            <Text style={{width: '100%'}}>{ addIcon }</Text>
+          </TouchableHighlight>
+        </View>
+      );
+    };
+
     return (
       <View style={layoutStyles.centeredFlex}>
         <ListView
           dataSource={jokeListDS}
           renderRow={renderRow}
           renderSeparator={renderSeparator}
-          style={{ backgroundColor: '#FFFFFF' }}
+          style={{ backgroundColor: '#FFFFFF', flex: 1 }}
         />
+        <View style={{ width: '100%', backgroundColor: '#EEEEEE', borderTopColor: '#CCCCCC', borderTopWidth: 1, height: 40, flexDirection: 'row', alignItems: 'center', paddingLeft: 10}}>
+          <View>
+            <Text>Sort by: </Text>
+          </View>
+          <View style={{ flex: 1, alignItems: 'flex-end' }}>
+            { renderAddButton() }
+          </View>
+        </View>
       </View>
     );
   }
