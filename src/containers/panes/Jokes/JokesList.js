@@ -1,7 +1,7 @@
 'use strict';
 
 import React, {Component} from 'react';
-import { View, Text, ListView, TouchableHighlight } from 'react-native';
+import { View, Text, ListView, TouchableHighlight, Platform, Keyboard } from 'react-native';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 import {Button} from 'react-native-ui-xg';
@@ -22,6 +22,45 @@ import {addIcon} from '../../../helpers/icons';
 class JokesList extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      view_height: 0,
+      keyboard_height: 0
+    }
+  }
+
+  componentWillMount () {
+    var eventVerb = Platform.OS === 'ios'? 'Will' : 'Did';
+
+    this.keyboardDidShowListener = Keyboard.addListener('keyboard' + eventVerb + 'Show', this.keyboardDidShow.bind(this));
+    this.keyboardDidHideListener = Keyboard.addListener('keyboard' + eventVerb + 'Hide', this.keyboardDidHide.bind(this));
+  }
+
+  keyboardDidShow (e) {
+    this.setState({
+      keyboard_height: e.endCoordinates.height
+    });
+  }
+
+  keyboardDidHide (e) {
+    this.setState({
+      keyboard_height: 0
+    });
+  }
+
+  componentWillUnmount () {
+    this.keyboardDidShowListener.remove();
+    this.keyboardDidHideListener.remove();
+  }
+
+  measureView(event) {
+    this.setState({
+      view_height: event.nativeEvent.layout.height
+    });
+  }
+
+  contentHeight() {
+    return this.state.view_height - (Platform.OS === 'ios'? this.state.keyboard_height : 0);
   }
 
   render() {
@@ -120,36 +159,38 @@ class JokesList extends Component {
     };
 
     return (
-      <View style={layoutStyles.centeredFlex}>
-        <View style={{ backgroundColor: '#FFFFFF', width: '100%' }}>
-          <SearchBar
-            ref={(searchBar) => { this.searchBar = searchBar }}
-            onSearchChange={ nameFilterChanged }
-            height={20}
-            onFocus={() => console.log('On Focus')}
-            onBlur={() => console.log('On Blur')}
-            placeholder={'Search...'}
-            autoCorrect={false}
-            padding={0}
-            returnKeyType={'search'}
-          />
-        </View>
-        <ListView
-          dataSource={ jokeListDS }
-          renderRow={ renderRow }
-          renderSeparator={ renderSeparator }
-          enableEmptySections={ true }
-          style={{ backgroundColor: '#FFFFFF', flex: 1 }}
-        />
-        <View style={ layoutStyles.toolbar }>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Text style={ jokeListStyles.sortByText }>Sort by: </Text>
-            { renderSortButton('_updated_at', 'Updated') }
-            { renderSortButton('_name', 'Name') }
-            { renderSortButton('_rating', 'Rating') }
+      <View style={{ flex: 1 }}  onLayout={(event) => this.measureView(event)}>
+        <View style={{ height: this.contentHeight(), justifyContent: 'flex-start' }}>
+          <View style={{ backgroundColor: '#FFFFFF', width: '100%' }}>
+            <SearchBar
+              ref={(searchBar) => { this.searchBar = searchBar }}
+              onSearchChange={ nameFilterChanged }
+              height={20}
+              onFocus={() => console.log('On Focus')}
+              onBlur={() => console.log('On Blur')}
+              placeholder={'Search...'}
+              autoCorrect={false}
+              padding={0}
+              returnKeyType={'search'}
+            />
           </View>
-          <View style={{ flex: 1, alignItems: 'flex-end' }}>
-            { renderAddButton() }
+          <ListView
+            dataSource={ jokeListDS }
+            renderRow={ renderRow }
+            renderSeparator={ renderSeparator }
+            enableEmptySections={ true }
+            style={{ backgroundColor: '#FFFFFF', flex: 1 }}
+          />
+          <View style={ layoutStyles.toolbar }>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Text style={ jokeListStyles.sortByText }>Sort by: </Text>
+              { renderSortButton('_updated_at', 'Updated') }
+              { renderSortButton('_name', 'Name') }
+              { renderSortButton('_rating', 'Rating') }
+            </View>
+            <View style={{ flex: 1, alignItems: 'flex-end' }}>
+              { renderAddButton() }
+            </View>
           </View>
         </View>
       </View>
