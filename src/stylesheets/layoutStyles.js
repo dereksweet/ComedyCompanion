@@ -58,5 +58,28 @@ export default layoutStyles = StyleSheet.create({
   inputLabel: {
     paddingRight: 10,
     textAlignVertical: 'center'
+  },
+  toolbar: {
+    width: '100%',
+    backgroundColor: '#EEEEFF',
+    borderTopColor: '#CCCCCC',
+    borderTopWidth: 1,
+    height: 40,
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingLeft: 10
+  },
+  addButtonView: {
+    width: 40,
+    height: 40,
+    borderLeftColor: '#CCCCCC',
+    borderLeftWidth: 1,
+    alignItems: 'center'
+  },
+  addButton: {
+    flex: 1,
+    alignItems: 'center',
+    paddingTop: 7,
+    paddingLeft: 7
   }
 });

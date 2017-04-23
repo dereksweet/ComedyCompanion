@@ -5,6 +5,7 @@ import { View, Text, ListView, TouchableHighlight } from 'react-native';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 import {Button} from 'react-native-ui-xg';
+import moment from 'moment';
 
 import Joke from '../../../models/Joke';
 
@@ -23,7 +24,7 @@ class JokesList extends Component {
   }
 
   render() {
-    const { jokeActions, jokeListActions, routingActions, jokeListState } = this.props;
+    const { jokeActions, routingActions, jokeListState } = this.props;
 
     let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     const jokeListDS = ds.cloneWithRows(jokeListState.joke_list.map((joke) => { return joke.name }));
@@ -41,12 +42,22 @@ class JokesList extends Component {
     };
 
     const renderRow = (rowData, sectionID, rowID, highlightRow) => {
-      let joke_name = jokeListState.joke_list[rowID]._name;
-      let joke_id = jokeListState.joke_list[rowID]._id;
+      let joke = jokeListState.joke_list[rowID];
 
       return (
-        <TouchableHighlight onPress={ () => editJoke(joke_id) }>
-          <View style={{ width: '100%', height: 40, justifyContent: 'center', alignItems: 'center', backgroundColor: '#EEEEEE' }}><Text>{ joke_name }</Text></View>
+        <TouchableHighlight onPress={ () => editJoke(joke._id) }>
+          <View style={ jokeListStyles.jokeRow }>
+            <View style={{ flex: 1 }}>
+              <Text style={ jokeListStyles.jokeName }>{ joke._name }</Text>
+            </View>
+            <View style={{ alignItems: 'flex-end' }}>
+              <View style={{ alignItems: 'flex-end', minWidth: 60, borderLeftColor: '#DDDDDD', borderLeftWidth: 1 }}>
+                <Text style={ jokeListStyles.updatedText }>Last Updated:</Text>
+                <Text style={ jokeListStyles.updatedText }>{ moment(joke._updated_at).format("MMM DD, YYYY") }</Text>
+                <Text style={ jokeListStyles.ratingText }>Rating: { joke._rating.toFixed(1) }</Text>
+              </View>
+            </View>
+          </View>
         </TouchableHighlight>
       );
     };
@@ -65,8 +76,8 @@ class JokesList extends Component {
 
     const renderAddButton = () => {
       return (
-        <View style={ jokeListStyles.addIcon }>
-          <TouchableHighlight style={{ flex: 1, alignItems: 'center', paddingTop: 7, paddingLeft: 7 }}
+        <View style={ layoutStyles.addButtonView }>
+          <TouchableHighlight style={ layoutStyles.addButton }
                               onPress={ addJoke }>
             <Text style={{width: '100%'}}>{ addIcon }</Text>
           </TouchableHighlight>
@@ -77,12 +88,12 @@ class JokesList extends Component {
     return (
       <View style={layoutStyles.centeredFlex}>
         <ListView
-          dataSource={jokeListDS}
-          renderRow={renderRow}
-          renderSeparator={renderSeparator}
+          dataSource={ jokeListDS }
+          renderRow={ renderRow }
+          renderSeparator={ renderSeparator }
           style={{ backgroundColor: '#FFFFFF', flex: 1 }}
         />
-        <View style={{ width: '100%', backgroundColor: '#EEEEEE', borderTopColor: '#CCCCCC', borderTopWidth: 1, height: 40, flexDirection: 'row', alignItems: 'center', paddingLeft: 10}}>
+        <View style={ layoutStyles.toolbar }>
           <View>
             <Text>Sort by: </Text>
           </View>
