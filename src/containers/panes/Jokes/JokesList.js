@@ -138,6 +138,7 @@ class JokesList extends Component {
           dataSource={ jokeListDS }
           renderRow={ renderRow }
           renderSeparator={ renderSeparator }
+          enableEmptySections={ true }
           style={{ backgroundColor: '#FFFFFF', flex: 1 }}
         />
         <View style={ layoutStyles.toolbar }>

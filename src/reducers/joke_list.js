@@ -2,6 +2,7 @@ import * as types from '../actions/actionTypes';
 
 const initialState = {
   joke_list: [],
+  empty: false,
   sort_field: '_updated_at',
   sort_order: 'DESC',
   name_filter: ''
@@ -13,6 +14,12 @@ export default function joke_list(state = initialState, action = {}) {
       return {
         ...state,
         joke_list: action.joke_list
+      };
+      break;
+    case types.SET_JOKE_LIST_EMPTY:
+      return {
+        ...state,
+        empty: action.empty
       };
       break;
     case types.SET_JOKE_LIST_SORT:

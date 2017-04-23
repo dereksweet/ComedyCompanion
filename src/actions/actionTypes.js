@@ -9,6 +9,7 @@ export const TOGGLE_SETTINGS = 'routing/toggle_settings';
 export const TOGGLE_HAMBURGER_ACTIVE = 'statusBar/toggle_hamburger_active';
 
 export const SET_JOKE_LIST = 'joke_list/set_joke_list';
+export const SET_JOKE_LIST_EMPTY = 'joke_list/set_joke_list_empty';
 export const SET_JOKE_LIST_SORT = 'joke_list/set_joke_list_sort';
 export const SET_JOKE_LIST_FILTER = 'joke_list/set_joke_list_filter';
 

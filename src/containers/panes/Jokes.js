@@ -32,8 +32,8 @@ class Jokes extends Component {
 
     return (
       <View style={layoutStyles.centeredFlex}>
-        { jokeListState.joke_list.length == 0 && <NoJokes /> }
-        { jokeListState.joke_list.length > 0 && <JokesList /> }
+        { (jokeListState.empty) && <NoJokes /> }
+        { (!jokeListState.empty) && <JokesList /> }
       </View>
     );
   }
