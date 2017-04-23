@@ -4,7 +4,8 @@ const initialState = {
   pane: 'jokes',
   visible_panes: ['jokes', 'set_lists', 'shows'],
   title: 'Jokes',
-  modal_visible: false
+  modal_visible: false,
+  settings_visible: false
 };
 
 export default function routing(state = initialState, action = {}) {
@@ -51,6 +52,12 @@ export default function routing(state = initialState, action = {}) {
       return {
         ...state,
         modal_visible: false
+      };
+      break;
+    case types.TOGGLE_SETTINGS:
+      return {
+        ...state,
+        settings_visible: !state.settings_visible
       };
       break;
     default:

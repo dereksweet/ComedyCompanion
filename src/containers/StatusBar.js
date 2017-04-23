@@ -24,6 +24,12 @@ class StatusBar extends Component {
   render() {
     const { statusBarState, routingState, statusBarActions, routingActions } = this.props;
 
+    const clickHamburger = () => {
+      statusBarActions.toggleHamburgerActive();
+
+      statusBarState.hamburger_active ? this.navBarView.performShrink() : this.navBarView.performExpand();
+    };
+
     const clickNavLink = (pane) => {
       routingActions.setPane(pane);
       this.props.setActivePane(pane);
@@ -32,17 +38,15 @@ class StatusBar extends Component {
       this.navBarView.performShrink();
     };
 
-    const clickHamburger = () => {
-      statusBarActions.toggleHamburgerActive();
-
-      statusBarState.hamburger_active ? this.navBarView.performShrink() : this.navBarView.performExpand();
+    const clickSettings = () => {
+      routingActions.toggleSettings();
     };
 
-    let renderSettingsButton = () => {
+    const renderSettingsButton = () => {
       return (
         <View style={ statusBarStyles.gearIcon }>
           <TouchableHighlight style={{ flex: 1, alignItems: 'center', paddingTop: 7, paddingLeft: 7 }}
-                              onPress={ () => console.log('Gear Clicked') }>
+                              onPress={ clickSettings }>
             <Text style={{width: '100%'}}>{ settingsIcon }</Text>
           </TouchableHighlight>
         </View>

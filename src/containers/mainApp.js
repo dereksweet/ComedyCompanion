@@ -20,6 +20,7 @@ import SetLists from './panes/SetLists.js';
 import EditSetList from './modals/EditSetList.js';
 import Shows from './panes/Shows.js';
 import EditShow from './modals/EditShow.js';
+import Settings from './modals/Settings';
 
 class MainApp extends Component {
   constructor(props) {
@@ -82,6 +83,13 @@ class MainApp extends Component {
           { routingState.pane == 'jokes' && <EditJoke /> }
           { routingState.pane == 'set_lists' && <EditSetList /> }
           { routingState.pane == 'shows' && <EditShow /> }
+        </Modal>
+        <Modal style={ layoutStyles.modal }
+               animationType={"fade"}
+               transparent={false}
+               visible={routingState.settings_visible}
+               onRequestClose={() => { }}>
+          <Settings />
         </Modal>
       </View>
     );

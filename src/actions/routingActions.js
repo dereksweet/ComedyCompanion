@@ -56,3 +56,9 @@ export function closeModal() {
     type: types.CLOSE_MODAL
   }
 }
+
+export function toggleSettings() {
+  return {
+    type: types.TOGGLE_SETTINGS
+  }
+}
