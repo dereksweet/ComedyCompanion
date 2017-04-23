@@ -6,7 +6,7 @@ export default jokeListStyles = StyleSheet.create({
     minHeight: 30,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#EEEEEE',
+    backgroundColor: '#FAFAFA',
     paddingTop: 10,
     paddingBottom: 10,
     paddingLeft: 10,
@@ -15,6 +15,12 @@ export default jokeListStyles = StyleSheet.create({
   },
   jokeName: {
     fontSize: 10
+  },
+  jokeInfoView: {
+    alignItems: 'flex-end',
+    minWidth: 60,
+    borderLeftColor: '#DDDDDD',
+    borderLeftWidth: 1
   },
   updatedText: {
     fontSize: 6,

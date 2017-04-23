@@ -51,7 +51,7 @@ class JokesList extends Component {
               <Text style={ jokeListStyles.jokeName }>{ joke._name }</Text>
             </View>
             <View style={{ alignItems: 'flex-end' }}>
-              <View style={{ alignItems: 'flex-end', minWidth: 60, borderLeftColor: '#DDDDDD', borderLeftWidth: 1 }}>
+              <View style={ jokeListStyles.jokeInfoView }>
                 <Text style={ jokeListStyles.updatedText }>Last Updated:</Text>
                 <Text style={ jokeListStyles.updatedText }>{ moment(joke._updated_at).format("MMM DD, YYYY") }</Text>
                 <Text style={ jokeListStyles.ratingText }>Rating: { joke._rating.toFixed(1) }</Text>
@@ -67,8 +67,8 @@ class JokesList extends Component {
         <View
           key={`${sectionID}-${rowID}`}
           style={{
-            height: adjacentRowHighlighted ? 4 : 1,
-            backgroundColor: adjacentRowHighlighted ? '#3B5998' : '#CCCCCC',
+            height: 1,
+            backgroundColor: '#CCCCCC',
           }}
         />
       );
