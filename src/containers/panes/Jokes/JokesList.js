@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import {Button} from 'react-native-ui-xg';
 import SearchBar from 'react-native-material-design-searchbar';
 import moment from 'moment';
+import { SegmentedControls } from 'react-native-radio-buttons';
 
 import Joke from '../../../models/Joke';
 
@@ -125,7 +126,9 @@ class JokesList extends Component {
       );
     };
 
-    const sortButtonClicked = (sort_field) => {
+    const sortButtonClicked = (sort_info) => {
+      let sort_field = sort_info.value;
+
       const field = jokeListState.sort_field;
       const order = jokeListState.sort_order;
 
@@ -184,9 +187,18 @@ class JokesList extends Component {
           <View style={ layoutStyles.toolbar }>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Text style={ jokeListStyles.sortByText }>Sort by: </Text>
-              { renderSortButton('_updated_at', 'Updated') }
-              { renderSortButton('_name', 'Name') }
-              { renderSortButton('_rating', 'Rating') }
+              <SegmentedControls
+                options={
+                  [{ label: 'Updated', value: '_updated_at' },
+                   { label: 'Name', value: '_name' },
+                   { label: 'Rating', value: '_rating' }]
+                }
+                onSelection={ (sort_field) => sortButtonClicked(sort_field) }
+                selectedOption={ jokeListState.sort_field }
+                containerStyle={{ width: 250 }}
+                extractText={ (option) => option.label }
+                testOptionEqual={(selectedValue, option) => selectedValue === option.value}
+              />
             </View>
             <View style={{ flex: 1, alignItems: 'flex-end' }}>
               { renderAddButton() }
