@@ -168,7 +168,7 @@ class JokesList extends Component {
               placeholder={'Search...'}
               autoCorrect={false}
               padding={0}
-              returnKeyType={'search'}
+              returnKeyType={'done'}
             />
           </View>
           <ListView
