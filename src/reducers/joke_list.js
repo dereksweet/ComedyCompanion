@@ -5,7 +5,8 @@ const initialState = {
   empty: false,
   sort_field: '_updated_at',
   sort_order: 'DESC',
-  name_filter: ''
+  name_filter: '',
+  in_development: false
 };
 
 export default function joke_list(state = initialState, action = {}) {
@@ -38,6 +39,12 @@ export default function joke_list(state = initialState, action = {}) {
       return {
         ...state,
         name_filter: action.name_filter
+      };
+      break;
+    case types.TOGGLE_JOKE_LIST_IN_DEVELOPMENT:
+      return {
+        ...state,
+        in_development: !state.in_development
       };
       break;
     default:

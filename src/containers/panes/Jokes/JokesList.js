@@ -1,13 +1,12 @@
 'use strict';
 
 import React, {Component} from 'react';
-import { View, Text, ListView, TouchableHighlight, Platform, Keyboard } from 'react-native';
+import { View, Text, ListView, TouchableHighlight, Platform, Keyboard, Switch } from 'react-native';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 import {Button} from 'react-native-ui-xg';
 import SearchBar from 'react-native-material-design-searchbar';
 import moment from 'moment';
-import { SegmentedControls } from 'react-native-radio-buttons';
 
 import Joke from '../../../models/Joke';
 
@@ -126,25 +125,29 @@ class JokesList extends Component {
       );
     };
 
-    const sortButtonClicked = (sort_info) => {
-      let sort_field = sort_info.value;
+    const nameFilterChanged = (name_filter) => {
+      jokeListActions.setJokeListFilter(name_filter);
 
-      const field = jokeListState.sort_field;
-      const order = jokeListState.sort_order;
-
-      const new_order = field == sort_field ? (order == 'ASC' ? 'DESC' : 'ASC') : 'ASC';
-
-      jokeListActions.setJokeListSort(sort_field, new_order);
-
-      Joke.where({ '_name': "LIKE|'" + jokeListState.name_filter + "'" }, 'AND', sort_field, new_order).then((jokes) => {
+      Joke.where(
+        { '_name': "LIKE|'" + name_filter + "'", '_in_development':'EQ|' + jokeListState.in_development.toString() },
+        'AND',
+        jokeListState.sort_field,
+        jokeListState.sort_order
+      ).then((jokes) => {
         jokeListActions.setJokeList(jokes);
       });
     };
 
-    const nameFilterChanged = (name_filter) => {
-      jokeListActions.setJokeListFilter(name_filter);
+    const inDevelopmentChanged = () => {
+      jokeListActions.toggleJokeListInDevelopment();
 
-      Joke.where({ '_name': "LIKE|'" + name_filter + "'" }, 'AND', jokeListState.sort_field, jokeListState.sort_order).then((jokes) => {
+      Joke.where(
+        { '_name': "LIKE|'" + jokeListState.name_filter + "'", '_in_development':'EQ|' + (!jokeListState.in_development).toString() },
+        'AND',
+        jokeListState.sort_field,
+        jokeListState.sort_order
+      ).then((jokes) => {
+        console.log(jokes);
         jokeListActions.setJokeList(jokes);
       });
     };
@@ -174,19 +177,9 @@ class JokesList extends Component {
           />
           <View style={ layoutStyles.toolbar }>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Text style={ jokeListStyles.sortByText }>Sort by: </Text>
-              <SegmentedControls
-                options={
-                  [{ label: 'Updated', value: '_updated_at' },
-                   { label: 'Name', value: '_name' },
-                   { label: 'Rating', value: '_rating' }]
-                }
-                onSelection={ (sort_field) => sortButtonClicked(sort_field) }
-                selectedOption={ jokeListState.sort_field }
-                containerStyle={{ width: 250 }}
-                extractText={ (option) => option.label }
-                testOptionEqual={(selectedValue, option) => selectedValue === option.value}
-              />
+              <Text style={ layoutStyles.inputLabel }>In Development:</Text>
+              <Switch onValueChange={ inDevelopmentChanged }
+                      value={jokeListState.in_development} />
             </View>
             <View style={{ flex: 1, alignItems: 'flex-end' }}>
               { renderAddButton() }

@@ -34,3 +34,9 @@ export function setJokeListFilter(name_filter) {
     name_filter
   }
 }
+
+export function toggleJokeListInDevelopment() {
+  return {
+    type: types.TOGGLE_JOKE_LIST_IN_DEVELOPMENT
+  }
+}
