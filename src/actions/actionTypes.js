@@ -10,7 +10,8 @@ export const TOGGLE_HAMBURGER_ACTIVE = 'statusBar/toggle_hamburger_active';
 
 export const SET_JOKE_LIST = 'joke_list/set_joke_list';
 export const SET_JOKE_LIST_EMPTY = 'joke_list/set_joke_list_empty';
-export const SET_JOKE_LIST_SORT = 'joke_list/set_joke_list_sort';
+export const SET_JOKE_LIST_SORT_FIELD = 'joke_list/set_joke_list_sort_field';
+export const SET_JOKE_LIST_SORT_ORDER = 'joke_list/set_joke_list_sort_order';
 export const SET_JOKE_LIST_FILTER = 'joke_list/set_joke_list_filter';
 
 export const SET_JOKE = 'joke/set_joke';

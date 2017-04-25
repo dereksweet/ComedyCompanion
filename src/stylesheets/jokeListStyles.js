@@ -32,7 +32,12 @@ export default jokeListStyles = StyleSheet.create({
     alignItems: 'flex-end'
   },
   sortByText: {
-    fontSize: 12
+    fontSize: 12,
+    paddingRight: 10
+  },
+  sortInText: {
+    fontSize: 12,
+    paddingRight: 13
   },
   sortButtonText: {
     fontSize: 10,

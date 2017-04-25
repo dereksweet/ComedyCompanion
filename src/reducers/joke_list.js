@@ -22,10 +22,15 @@ export default function joke_list(state = initialState, action = {}) {
         empty: action.empty
       };
       break;
-    case types.SET_JOKE_LIST_SORT:
+    case types.SET_JOKE_LIST_SORT_FIELD:
       return {
         ...state,
-        sort_field: action.sort_field,
+        sort_field: action.sort_field
+      };
+      break;
+    case types.SET_JOKE_LIST_SORT_ORDER:
+      return {
+        ...state,
         sort_order: action.sort_order
       };
       break;

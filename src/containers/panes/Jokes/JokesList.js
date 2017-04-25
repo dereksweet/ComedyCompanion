@@ -149,18 +149,6 @@ class JokesList extends Component {
       });
     };
 
-    const renderSortButton = (sort_order, button_text) => {
-      return (
-        <Button type="surface"
-                size="small"
-                theme="red"
-                selfStyle={{ marginLeft: 10 }}
-                onPress={ () => sortButtonClicked(sort_order) }>
-          <Text style={jokeListStyles.sortButtonText}>{ button_text }</Text>
-        </Button>
-      )
-    };
-
     return (
       <View style={{ flex: 1 }}  onLayout={(event) => this.measureView(event)}>
         <View style={{ height: this.contentHeight(), justifyContent: 'flex-start' }}>

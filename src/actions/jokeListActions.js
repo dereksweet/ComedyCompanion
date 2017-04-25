@@ -14,10 +14,16 @@ export function setJokeListEmpty(empty) {
   }
 }
 
-export function setJokeListSort(sort_field, sort_order) {
+export function setJokeListSortField(sort_field) {
   return {
-    type: types.SET_JOKE_LIST_SORT,
-    sort_field,
+    type: types.SET_JOKE_LIST_SORT_FIELD,
+    sort_field
+  }
+}
+
+export function setJokeListSortOrder(sort_order) {
+  return {
+    type: types.SET_JOKE_LIST_SORT_ORDER,
     sort_order
   }
 }
