@@ -126,6 +126,9 @@ class JokesList extends Component {
     };
 
     const nameFilterChanged = (name_filter) => {
+      if (name_filter.nativeEvent) {
+        name_filter = name_filter.nativeEvent.text;
+      }
       jokeListActions.setJokeListFilter(name_filter);
 
       Joke.where(
@@ -159,7 +162,7 @@ class JokesList extends Component {
             <SearchBar
               ref={(searchBar) => { this.searchBar = searchBar }}
               onSearchChange={ nameFilterChanged }
-              height={20}
+              height={30}
               onFocus={() => console.log('On Focus')}
               onBlur={() => console.log('On Blur')}
               placeholder={'Search...'}
