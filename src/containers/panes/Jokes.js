@@ -10,7 +10,7 @@ import * as jokeListActions from '../../actions/jokeListActions';
 import NoJokes from './Jokes/NoJokes';
 import JokesList from './Jokes/JokesList';
 
-import Joke from '../../models/Joke';
+import Joke from '../../models/joke';
 
 import layoutStyles from '../../stylesheets/layoutStyles';
 

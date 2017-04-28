@@ -9,7 +9,7 @@ import {Button} from 'react-native-ui-xg';
 import * as jokeActions from '../../../actions/jokeActions';
 import * as routingActions from '../../../actions/routingActions';
 
-import Joke from '../../../models/Joke';
+import Joke from '../../../models/joke';
 
 import layoutStyles from '../../../stylesheets/layoutStyles';
 

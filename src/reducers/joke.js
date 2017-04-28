@@ -1,6 +1,6 @@
 import * as types from '../actions/actionTypes';
 
-import Joke from '../models/Joke';
+import Joke from '../models/joke';
 
 const initialState = {
   joke: new Joke(),

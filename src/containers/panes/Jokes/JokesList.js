@@ -8,7 +8,7 @@ import {Button} from 'react-native-ui-xg';
 import SearchBar from 'react-native-material-design-searchbar';
 import moment from 'moment';
 
-import Joke from '../../../models/Joke';
+import Joke from '../../../models/joke';
 
 import * as jokeActions from '../../../actions/jokeActions';
 import * as jokeListActions from '../../../actions/jokeListActions';

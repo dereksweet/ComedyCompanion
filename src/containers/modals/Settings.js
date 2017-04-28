@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import {Button} from 'react-native-ui-xg';
 import { SegmentedControls } from 'react-native-radio-buttons';
 
-import Joke from '../../models/Joke';
+import Joke from '../../models/joke';
 
 import * as routingActions from '../../actions/routingActions';
 import * as jokeListActions from '../../actions/jokeListActions';
