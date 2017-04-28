@@ -146,7 +146,7 @@ Model.where = async function(filter_hash, operation = 'AND', sort_field = '_id',
               match = (item[key] <= value);
               break;
             case 'LIKE':
-              match = (item[key].toLowerCase().indexOf(value.toLowerCase()) != -1);
+              match = value !== '' ? (item[key].toLowerCase().indexOf(value.toLowerCase()) !== -1) : true;
               break;
           }
 
