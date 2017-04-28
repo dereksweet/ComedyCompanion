@@ -4,11 +4,12 @@ import React, {Component} from 'react';
 import { View, Text, ListView, TouchableHighlight, Platform, Keyboard, Switch } from 'react-native';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
-import {Button} from 'react-native-ui-xg';
 import SearchBar from 'react-native-material-design-searchbar';
 import moment from 'moment';
 
 import Joke from '../../../models/joke';
+
+import JokeListHelper from '../../../helpers/jokeListHelper';
 
 import * as jokeActions from '../../../actions/jokeActions';
 import * as jokeListActions from '../../../actions/jokeListActions';
@@ -131,28 +132,13 @@ class JokesList extends Component {
       }
       jokeListActions.setJokeListFilter(name_filter);
 
-      Joke.where(
-        { '_name': "LIKE|'" + name_filter + "'", '_in_development':'EQ|' + jokeListState.in_development.toString() },
-        'AND',
-        jokeListState.sort_field,
-        jokeListState.sort_order
-      ).then((jokes) => {
-        jokeListActions.setJokeList(jokes);
-      });
+      JokeListHelper.refreshJokeList({ name_filter: name_filter })
     };
 
     const inDevelopmentChanged = () => {
       jokeListActions.toggleJokeListInDevelopment();
 
-      Joke.where(
-        { '_name': "LIKE|'" + jokeListState.name_filter + "'", '_in_development':'EQ|' + (!jokeListState.in_development).toString() },
-        'AND',
-        jokeListState.sort_field,
-        jokeListState.sort_order
-      ).then((jokes) => {
-        console.log(jokes);
-        jokeListActions.setJokeList(jokes);
-      });
+      JokeListHelper.refreshJokeList({ in_development: !jokeListState.in_development});
     };
 
     return (

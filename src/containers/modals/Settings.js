@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import {Button} from 'react-native-ui-xg';
 import { SegmentedControls } from 'react-native-radio-buttons';
 
-import Joke from '../../models/joke';
+import JokeListHelper from '../../helpers/jokeListHelper';
 
 import * as routingActions from '../../actions/routingActions';
 import * as jokeListActions from '../../actions/jokeListActions';
@@ -31,14 +31,7 @@ class Settings extends Component {
 
       jokeListActions.setJokeListSortField(sort_field);
 
-      Joke.where(
-        { '_name': "LIKE|'" + jokeListState.name_filter + "'", '_in_development':'EQ|' + jokeListState.in_development.toString() },
-        'AND',
-        sort_field,
-        jokeListState.sort_order
-      ).then((jokes) => {
-        jokeListActions.setJokeList(jokes);
-      });
+      JokeListHelper.refreshJokeList({ sort_field: sort_field });
     };
 
     const sortOrderButtonClicked = (sort_order_option) => {
@@ -46,14 +39,7 @@ class Settings extends Component {
 
       jokeListActions.setJokeListSortOrder(sort_order);
 
-      Joke.where(
-        { '_name': "LIKE|'" + jokeListState.name_filter + "'", '_in_development':'EQ|' + jokeListState.in_development.toString() },
-        'AND',
-        jokeListState.sort_field, 
-        sort_order
-      ).then((jokes) => {
-        jokeListActions.setJokeList(jokes);
-      });
+      JokeListHelper.refreshJokeList({ sort_order: sort_order });
     };
 
     return (
