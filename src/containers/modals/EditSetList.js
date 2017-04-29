@@ -6,7 +6,12 @@ import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 import {Button} from 'react-native-ui-xg';
 
+import JokeSelector from './EditSetList/JokeSelector';
+
 import * as routingActions from '../../actions/routingActions';
+import * as jokeListActions from '../../actions/jokeListActions';
+
+import JokeListHelper from '../../helpers/jokeListHelper';
 
 import layoutStyles from '../../stylesheets/layoutStyles';
 
@@ -26,8 +31,13 @@ class EditSetList extends Component {
       <View style={layoutStyles.centeredFlex}>
         <View style={layoutStyles.statusBarBuffer} />
         <View style={layoutStyles.modalContent}>
-          <View style={{ flex: 1 }}>
-            <Text>Editing Set Lists</Text>
+          <View style={{ flex: 1, flexDirection: 'row', borderTopColor: '#CCCCCC', borderTopWidth: 1 }}>
+            <View style={{ flex: 1, borderRightColor: '#CCCCCC', borderRightWidth: 1 }}>
+              <JokeSelector />
+            </View>
+            <View style={{ flex: 1 }}>
+
+            </View>
           </View>
           <View style={ { flexDirection: 'row', width: '100%' }}>
             <View style={ { flex: 1 } }>
@@ -48,9 +58,10 @@ class EditSetList extends Component {
 }
 
 export default connect(state => ({
-
+    jokeListState: state.joke_list
   }),
   (dispatch) => ({
-    routingActions: bindActionCreators(routingActions, dispatch)
+    routingActions: bindActionCreators(routingActions, dispatch),
+    jokeListActions: bindActionCreators(jokeListActions, dispatch)
   })
 )(EditSetList);

@@ -7,6 +7,13 @@ export function setJokeList(joke_list) {
   }
 }
 
+export function setJokeListSelector(joke_list) {
+  return {
+    type: types.SET_JOKE_LIST_SELECTOR,
+    joke_list
+  }
+}
+
 export function setJokeListEmpty(empty) {
   return {
     type: types.SET_JOKE_LIST_EMPTY,
@@ -35,8 +42,21 @@ export function setJokeListFilter(name_filter) {
   }
 }
 
+export function setJokeListFilterSelector(name_filter) {
+  return {
+    type: types.SET_JOKE_LIST_FILTER_SELECTOR,
+    name_filter
+  }
+}
+
 export function toggleJokeListInDevelopment() {
   return {
     type: types.TOGGLE_JOKE_LIST_IN_DEVELOPMENT
+  }
+}
+
+export function toggleJokeListInDevelopmentSelector() {
+  return {
+    type: types.TOGGLE_JOKE_LIST_IN_DEVELOPMENT_SELECTOR
   }
 }

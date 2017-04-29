@@ -2,11 +2,14 @@ import * as types from '../actions/actionTypes';
 
 const initialState = {
   joke_list: [],
+  joke_list_selector: [],
   empty: false,
   sort_field: '_updated_at',
   sort_order: 'DESC',
   name_filter: '',
-  in_development: false
+  name_filter_selector: '',
+  in_development: false,
+  in_development_selector: false
 };
 
 export default function joke_list(state = initialState, action = {}) {
@@ -15,6 +18,12 @@ export default function joke_list(state = initialState, action = {}) {
       return {
         ...state,
         joke_list: action.joke_list
+      };
+      break;
+    case types.SET_JOKE_LIST_SELECTOR:
+      return {
+        ...state,
+        joke_list_selector: action.joke_list
       };
       break;
     case types.SET_JOKE_LIST_EMPTY:
@@ -41,10 +50,22 @@ export default function joke_list(state = initialState, action = {}) {
         name_filter: action.name_filter
       };
       break;
+    case types.SET_JOKE_LIST_FILTER_SELECTOR:
+      return {
+        ...state,
+        name_filter_selector: action.name_filter
+      };
+      break;
     case types.TOGGLE_JOKE_LIST_IN_DEVELOPMENT:
       return {
         ...state,
         in_development: !state.in_development
+      };
+      break;
+    case types.TOGGLE_JOKE_LIST_IN_DEVELOPMENT_SELECTOR:
+      return {
+        ...state,
+        in_development_selector: !state.in_development_selector
       };
       break;
     default:

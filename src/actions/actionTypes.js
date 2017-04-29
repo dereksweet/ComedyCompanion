@@ -9,11 +9,14 @@ export const TOGGLE_SETTINGS = 'routing/toggle_settings';
 export const TOGGLE_HAMBURGER_ACTIVE = 'statusBar/toggle_hamburger_active';
 
 export const SET_JOKE_LIST = 'joke_list/set_joke_list';
+export const SET_JOKE_LIST_SELECTOR = 'joke_list/set_joke_list_selector';
 export const SET_JOKE_LIST_EMPTY = 'joke_list/set_joke_list_empty';
 export const SET_JOKE_LIST_SORT_FIELD = 'joke_list/set_joke_list_sort_field';
 export const SET_JOKE_LIST_SORT_ORDER = 'joke_list/set_joke_list_sort_order';
 export const SET_JOKE_LIST_FILTER = 'joke_list/set_joke_list_filter';
+export const SET_JOKE_LIST_FILTER_SELECTOR = 'joke_list/set_joke_list_filter_selector';
 export const TOGGLE_JOKE_LIST_IN_DEVELOPMENT = 'joke_list/toggle_joke_list_in_development';
+export const TOGGLE_JOKE_LIST_IN_DEVELOPMENT_SELECTOR = 'joke_list/toggle_joke_list_in_development_selector';
 
 export const SET_JOKE = 'joke/set_joke';
 export const TOGGLE_IN_DEVELOPMENT = 'joke/toggle_in_development';
