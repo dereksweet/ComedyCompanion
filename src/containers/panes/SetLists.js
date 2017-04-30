@@ -7,6 +7,9 @@ import { connect } from 'react-redux';
 import {Button} from 'react-native-ui-xg';
 
 import * as routingActions from '../../actions/routingActions';
+import * as setListActions from '../../actions/setListActions';
+
+import SetList from '../../models/set_list';
 
 import layoutStyles from '../../stylesheets/layoutStyles';
 
@@ -18,7 +21,12 @@ class SetLists extends Component {
   }
 
   render() {
-    const { routingActions } = this.props;
+    const { routingActions, setListActions } = this.props;
+
+    const addSetList = () => {
+      setListActions.setSL(new SetList());
+      routingActions.openModal();
+    };
 
     return (
       <View style={layoutStyles.centeredFlex}>
@@ -26,7 +34,7 @@ class SetLists extends Component {
         <Text style={ {paddingTop: 25} }>You do not appear to have any set lists yet!</Text>
         <Text style={ {paddingBottom: 20} }>Click the button below to add one..</Text>
         <View style={ {paddingBottom: 100} }>
-          <Button type="surface" size="large" theme="red" onPress={ routingActions.openModal }>
+          <Button type="surface" size="large" theme="red" onPress={ addSetList }>
             <Text>{addSetListIcon}</Text>
             <Text style={layoutStyles.buttonText}>Add Set List</Text>
           </Button>
@@ -40,6 +48,7 @@ export default connect(state => ({
 
   }),
   (dispatch) => ({
-    routingActions: bindActionCreators(routingActions, dispatch)
+    routingActions: bindActionCreators(routingActions, dispatch),
+    setListActions: bindActionCreators(setListActions, dispatch)
   })
 )(SetLists);

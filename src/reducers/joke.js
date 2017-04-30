@@ -3,8 +3,7 @@ import * as types from '../actions/actionTypes';
 import Joke from '../models/joke';
 
 const initialState = {
-  joke: new Joke(),
-  joke_list: []
+  joke: new Joke()
 };
 
 export default function joke(state = initialState, action = {}) {

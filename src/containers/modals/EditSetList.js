@@ -1,7 +1,7 @@
 'use strict';
 
 import React, {Component} from 'react';
-import { View, Text, TouchableHighlight, Platform, Keyboard } from 'react-native';
+import { View, Text, TextInput, TouchableHighlight, Platform, Keyboard } from 'react-native';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 import {Button} from 'react-native-ui-xg';
@@ -9,8 +9,10 @@ import {Button} from 'react-native-ui-xg';
 import JokeSelector from './EditSetList/JokeSelector';
 
 import * as routingActions from '../../actions/routingActions';
+import * as setListActions from '../../actions/setListActions';
 
 import layoutStyles from '../../stylesheets/layoutStyles';
+import editSetListStyles from '../../stylesheets/editSetListStyles';
 
 class EditSetList extends Component {
   constructor(props) {
@@ -57,7 +59,7 @@ class EditSetList extends Component {
   }
 
   render() {
-    const { routingActions } = this.props;
+    const { setListState, routingActions, setListActions } = this.props;
 
     const cancel = () => {
       routingActions.closeModal();
@@ -73,7 +75,22 @@ class EditSetList extends Component {
                 <JokeSelector />
               </View>
               <View style={{ flex: 1 }}>
-
+                <View style={ [layoutStyles.modalContentSection, { flexDirection: 'row', alignItems: 'center'  }] }>
+                  <Text style={ layoutStyles.inputLabel }>Name:</Text>
+                  <TextInput style={ editSetListStyles.nameInput }
+                             underlineColorAndroid='transparent'
+                             placeholder="Name your set list here..."
+                             onChangeText={(text) => setListActions.setSLName(text)}
+                             value={ setListState.set_list._name } />
+                </View>
+                <View style={ [layoutStyles.modalContentSection, { flexDirection: 'row', alignItems: 'center'  }] }>
+                  <Text style={ layoutStyles.inputLabel }>Length:</Text>
+                  <TextInput style={ editSetListStyles.lengthInput }
+                             underlineColorAndroid='transparent'
+                             placeholder="Set length here..."
+                             onChangeText={(text) => setListActions.setSLLength(text)}
+                             value={ setListState.set_list._length ? setListState.set_list._length.toString() : '' } />
+                </View>
               </View>
             </View>
             <View style={ { flexDirection: 'row', width: '100%' }}>
@@ -96,9 +113,10 @@ class EditSetList extends Component {
 }
 
 export default connect(state => ({
-
+    setListState: state.set_list
   }),
   (dispatch) => ({
-    routingActions: bindActionCreators(routingActions, dispatch)
+    routingActions: bindActionCreators(routingActions, dispatch),
+    setListActions: bindActionCreators(setListActions, dispatch)
   })
 )(EditSetList);

@@ -22,3 +22,7 @@ export const SET_JOKE = 'joke/set_joke';
 export const TOGGLE_IN_DEVELOPMENT = 'joke/toggle_in_development';
 export const SET_NAME = 'joke/set_name';
 export const SET_NOTES = 'joke/set_notes';
+
+export const SET_SL = 'set_list/set_sl';
+export const SET_SL_NAME = 'set_list/set_sl_name';
+export const SET_SL_LENGTH = 'set_list/set_sl_length';
