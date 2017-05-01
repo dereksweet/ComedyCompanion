@@ -70,27 +70,29 @@ class EditSetList extends Component {
         <View style={layoutStyles.statusBarBuffer} />
         <View style={layoutStyles.modalContent} onLayout={(event) => this.measureModalView(event)}>
           <View style={{ height: this.contentHeight() }}>
+            <View style={ [layoutStyles.modalContentSection, { flexDirection: 'row', alignItems: 'center'  }] }>
+              <Text style={ layoutStyles.inputLabel }>Name:</Text>
+              <TextInput style={ editSetListStyles.nameInput }
+                         underlineColorAndroid='transparent'
+                         placeholder="Name your set list here..."
+                         onChangeText={(text) => setListActions.setSLName(text)}
+                         value={ setListState.set_list._name } />
+            </View>
+            <View style={ [layoutStyles.modalContentSection, { flexDirection: 'row', alignItems: 'center'  }] }>
+              <Text style={ layoutStyles.inputLabel }>Length:</Text>
+              <TextInput style={ editSetListStyles.lengthInput }
+                         underlineColorAndroid='transparent'
+                         placeholder=""
+                         onChangeText={(text) => setListActions.setSLLength(text)}
+                         value={ setListState.set_list._length ? setListState.set_list._length.toString() : '' } />
+              <Text style={ [layoutStyles.inputLabel, {marginLeft: 10}] }>min</Text>
+            </View>
             <View style={{ flex: 1, flexDirection: 'row', borderTopColor: '#CCCCCC', borderTopWidth: 1 }}>
               <View style={{ flex: 1, borderRightColor: '#CCCCCC', borderRightWidth: 1 }}>
                 <JokeSelector />
               </View>
               <View style={{ flex: 1 }}>
-                <View style={ [layoutStyles.modalContentSection, { flexDirection: 'row', alignItems: 'center'  }] }>
-                  <Text style={ layoutStyles.inputLabel }>Name:</Text>
-                  <TextInput style={ editSetListStyles.nameInput }
-                             underlineColorAndroid='transparent'
-                             placeholder="Name your set list here..."
-                             onChangeText={(text) => setListActions.setSLName(text)}
-                             value={ setListState.set_list._name } />
-                </View>
-                <View style={ [layoutStyles.modalContentSection, { flexDirection: 'row', alignItems: 'center'  }] }>
-                  <Text style={ layoutStyles.inputLabel }>Length:</Text>
-                  <TextInput style={ editSetListStyles.lengthInput }
-                             underlineColorAndroid='transparent'
-                             placeholder="Set length here..."
-                             onChangeText={(text) => setListActions.setSLLength(text)}
-                             value={ setListState.set_list._length ? setListState.set_list._length.toString() : '' } />
-                </View>
+
               </View>
             </View>
             <View style={ { flexDirection: 'row', width: '100%' }}>

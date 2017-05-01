@@ -11,7 +11,7 @@ export default editSetListStyles = StyleSheet.create({
     backgroundColor: '#FFFFFF'
   },
   lengthInput: {
-    flex: 1,
+    width: 55,
     height: 40,
     borderColor: 'gray',
     borderWidth: 1,
