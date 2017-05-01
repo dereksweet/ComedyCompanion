@@ -1,19 +1,17 @@
 'use strict';
 
 import React, {Component} from 'react';
-import { View, Text, ListView, TouchableHighlight, Platform, Keyboard, Switch } from 'react-native';
+import { View, Text, ListView, TouchableHighlight, Switch } from 'react-native';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 import SearchBar from 'react-native-material-design-searchbar';
-import moment from 'moment';
 
 import Joke from '../../../models/joke';
 
 import JokeListHelper from '../../../helpers/jokeListHelper';
 
-import * as jokeActions from '../../../actions/jokeActions';
 import * as jokeListActions from '../../../actions/jokeListActions';
-import * as routingActions from '../../../actions/routingActions';
+import * as setListActions from '../../../actions/setListActions';
 
 import layoutStyles from '../../../stylesheets/layoutStyles';
 import jokeListStyles from '../../../stylesheets/jokeListStyles';
@@ -28,16 +26,14 @@ class JokeSelector extends Component {
   }
 
   render() {
-    const { jokeListState, jokeActions, routingActions, jokeListActions } = this.props;
+    const { jokeListState, jokeListActions, setListActions } = this.props;
 
     let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     const jokeListDS = ds.cloneWithRows(jokeListState.joke_list_selector.map((joke) => { return joke.name }));
 
     const selectJoke = (id) => {
       Joke.get(id).then((joke) => {
-        console.log("Selected Joke: ", joke);
-        // jokeActions.setJoke(joke);
-        // routingActions.openModal();
+        setListActions.addJokeToSL(joke);
       });
     };
 
@@ -119,8 +115,7 @@ export default connect(state => ({
     jokeListState: state.joke_list
   }),
   (dispatch) => ({
-    jokeActions: bindActionCreators(jokeActions, dispatch),
     jokeListActions: bindActionCreators(jokeListActions, dispatch),
-    routingActions: bindActionCreators(routingActions, dispatch)
+    setListActions: bindActionCreators(setListActions, dispatch)
   })
 )(JokeSelector);

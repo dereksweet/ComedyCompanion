@@ -7,9 +7,13 @@ import { connect } from 'react-redux';
 import {Button} from 'react-native-ui-xg';
 
 import JokeSelector from './EditSetList/JokeSelector';
+import SetListJokes from './EditSetList/SetListJokes';
 
 import * as routingActions from '../../actions/routingActions';
 import * as setListActions from '../../actions/setListActions';
+
+import SetList from '../../models/set_list';
+import Joke from '../../models/joke';
 
 import layoutStyles from '../../stylesheets/layoutStyles';
 import editSetListStyles from '../../stylesheets/editSetListStyles';
@@ -21,7 +25,7 @@ class EditSetList extends Component {
     this.state = {
       modal_height: 0,
       keyboard_height: 0
-    }
+    };
   }
 
   componentWillMount () {
@@ -92,7 +96,7 @@ class EditSetList extends Component {
                 <JokeSelector />
               </View>
               <View style={{ flex: 1 }}>
-
+                <SetListJokes />
               </View>
             </View>
             <View style={ { flexDirection: 'row', width: '100%' }}>

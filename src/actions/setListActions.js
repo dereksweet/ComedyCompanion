@@ -28,3 +28,17 @@ export function setSLLength(length_text) {
     length
   }
 }
+
+export function addJokeToSL(joke) {
+  return {
+    type: types.ADD_JOKE_TO_SL,
+    joke
+  }
+}
+
+export function removeJokeFromSL(joke) {
+  return {
+    type: types.REMOVE_JOKE_FROM_SL,
+    joke
+  }
+}

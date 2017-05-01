@@ -26,3 +26,5 @@ export const SET_NOTES = 'joke/set_notes';
 export const SET_SL = 'set_list/set_sl';
 export const SET_SL_NAME = 'set_list/set_sl_name';
 export const SET_SL_LENGTH = 'set_list/set_sl_length';
+export const ADD_JOKE_TO_SL = 'set_list/add_joke_to_sl';
+export const REMOVE_JOKE_FROM_SL = 'set_list/remove_joke_from_sl';
