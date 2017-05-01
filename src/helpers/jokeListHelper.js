@@ -27,6 +27,12 @@ export default class JokeListHelper extends Component {
         });
     }
 
+    static refreshJokeListEmpty() {
+        Joke.all().then((jokes) => {
+            store.dispatch(jokeListActions.setJokeListEmpty(jokes.length === 0));
+        });
+    }
+
     static refreshJokeListSelector({ name_filter = null, in_development_filter = null, sort_field = null, sort_order = null } = {}) {
         const jokeListState = store.getState().joke_list;
 

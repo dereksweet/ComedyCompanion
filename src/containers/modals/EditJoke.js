@@ -51,6 +51,7 @@ class EditJoke extends Component {
     this.keyboardDidHideListener.remove();
 
     JokeListHelper.refreshJokeList();
+    JokeListHelper.refreshJokeListEmpty();
   }
 
   measureModalView(event) {
@@ -69,6 +70,7 @@ class EditJoke extends Component {
     const save = () => {
       jokeState.joke.save(() => {
         JokeListHelper.refreshJokeList();
+        JokeListHelper.refreshJokeListEmpty();
       });
       cancel();
     };

@@ -3,7 +3,7 @@ import * as types from '../actions/actionTypes';
 const initialState = {
   joke_list: [],
   joke_list_selector: [],
-  empty: false,
+  empty: true,
   sort_field: '_updated_at',
   sort_order: 'DESC',
   name_filter: '',

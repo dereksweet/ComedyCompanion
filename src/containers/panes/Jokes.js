@@ -21,6 +21,7 @@ class Jokes extends Component {
 
   componentDidMount() {
     JokeListHelper.refreshJokeList();
+    JokeListHelper.refreshJokeListEmpty();
   }
 
   render() {
