@@ -69,6 +69,19 @@ class EditSetList extends Component {
       routingActions.closeModal();
     };
 
+    const save = () => {
+      setListState.set_list.save(() => {
+        // SetListHelper.refreshSetListList();
+        // SetListHelper.refreshSetListListEmpty();
+      });
+      cancel();
+    };
+
+    const destroy = () => {
+      setListState.set_list.destroy();
+      cancel();
+    };
+
     return (
       <View style={layoutStyles.centeredFlex}>
         <View style={layoutStyles.statusBarBuffer} />
@@ -100,13 +113,20 @@ class EditSetList extends Component {
               </View>
             </View>
             <View style={ { flexDirection: 'row', width: '100%' }}>
+              { (setListState.set_list._id != -1) &&
+                <View style={ { flex: 1 } }>
+                  <Button type="surface" size="large" theme="red" onPress={ destroy }>
+                    <Text style={layoutStyles.buttonText}>Delete</Text>
+                  </Button>
+                </View>
+              }
               <View style={ { flex: 1 } }>
                 <Button type="surface" size="large" theme="gray" onPress={ cancel }>
                   <Text style={layoutStyles.buttonText}>Cancel</Text>
                 </Button>
               </View>
               <View style={ { flex: 1 } }>
-                <Button type="surface" size="large" theme="blue" onPress={ cancel }>
+                <Button type="surface" size="large" theme="blue" onPress={ save }>
                   <Text style={layoutStyles.buttonText}>Save</Text>
                 </Button>
               </View>
