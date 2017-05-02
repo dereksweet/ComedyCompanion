@@ -4,15 +4,11 @@ import React, {Component} from 'react';
 import { View, Text, ListView, TouchableHighlight } from 'react-native';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
-
-import Joke from '../../../models/joke';
-
-import JokeListHelper from '../../../helpers/jokeListHelper';
+import SortableListView from 'react-native-sortable-listview';
 
 import * as setListActions from '../../../actions/setListActions';
 import * as routingActions from '../../../actions/routingActions';
 
-import layoutStyles from '../../../stylesheets/layoutStyles';
 import jokeListStyles from '../../../stylesheets/jokeListStyles';
 
 class JokeSelector extends Component {
@@ -25,47 +21,43 @@ class JokeSelector extends Component {
   }
 
   render() {
-    const { setListState, routingActions, setListActions } = this.props;
-
-    let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    const jokeListDS = ds.cloneWithRows(setListState.set_list._jokes.map((joke) => { return joke.name }));
+    const { setListState, setListActions } = this.props;
 
     const selectJoke = (joke) => {
       setListActions.removeJokeFromSL(joke);
     };
 
+    let data = {};
+    setListState.set_list._jokes.forEach((joke, i) => {
+      data['joke_' + joke._id] = joke;
+    });
+
+    let order = Object.keys(data);
+
     const renderRow = (rowData, sectionID, rowID, highlightRow) => {
-      let joke = setListState.set_list._jokes[rowID];
-
       return (
-        <TouchableHighlight onPress={ () => selectJoke(joke) }>
-          <View style={ jokeListStyles.jokeRow }>
-            <Text style={ jokeListStyles.jokeName }>{ joke._name }</Text>
-          </View>
+        <TouchableHighlight
+          underlayColor={'#ccc'}
+          delayLongPress={500}
+          onPress={ () => selectJoke(rowData) }
+          style={ [jokeListStyles.jokeRow, {borderBottomWidth: 1, borderBottomColor: '#CCCCCC'}] }
+          {...this.props.sortHandlers}>
+          <Text>{ rowData._name }</Text>
         </TouchableHighlight>
-      );
-    };
-
-    const renderSeparator = (sectionID, rowID, adjacentRowHighlighted) => {
-      return (
-        <View
-          key={`${sectionID}-${rowID}`}
-          style={{
-            height: 1,
-            backgroundColor: '#CCCCCC',
-          }}
-        />
       );
     };
 
     return (
       <View style={{ flex: 1 }}>
-        <ListView
-          dataSource={ jokeListDS }
-          renderRow={ renderRow }
-          renderSeparator={ renderSeparator }
-          enableEmptySections={ true }
-          style={{ backgroundColor: '#FFFFFF', flex: 1 }}
+        <SortableListView
+          style={{flex: 1}}
+          data={data}
+          order={order}
+          onRowMoved={e => {
+            setListState.set_list._jokes.splice(e.to, 0, setListState.set_list._jokes.splice(e.from, 1)[0]);
+            setListActions.setSL(setListState.set_list);
+          }}
+          renderRow={renderRow}
         />
       </View>
     );
