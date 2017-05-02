@@ -8,11 +8,15 @@ import {Button} from 'react-native-ui-xg';
 import { SegmentedControls } from 'react-native-radio-buttons';
 
 import JokeListHelper from '../../helpers/jokeListHelper';
+import SetListListHelper from '../../helpers/setListListHelper';
 
 import * as routingActions from '../../actions/routingActions';
 import * as jokeListActions from '../../actions/jokeListActions';
+import * as setListListActions from '../../actions/setListListActions';
 
 import layoutStyles from '../../stylesheets/layoutStyles';
+import jokeListStyles from '../../stylesheets/jokeListStyles';
+import setListListStyles from '../../stylesheets/setListListStyles';
 
 class Settings extends Component {
   constructor(props) {
@@ -20,13 +24,13 @@ class Settings extends Component {
   }
 
   render() {
-    const { jokeListState, routingActions, jokeListActions } = this.props;
+    const { jokeListState, setListListState, routingActions, jokeListActions, setListListActions } = this.props;
 
     const close = () => {
       routingActions.toggleSettings();
     };
 
-    const sortFieldButtonClicked = (sort_field_option) => {
+    const jokeSortFieldButtonClicked = (sort_field_option) => {
       let sort_field = sort_field_option.value;
 
       jokeListActions.setJokeListSortField(sort_field);
@@ -34,12 +38,28 @@ class Settings extends Component {
       JokeListHelper.refreshJokeList({ sort_field: sort_field });
     };
 
-    const sortOrderButtonClicked = (sort_order_option) => {
+    const jokeSortOrderButtonClicked = (sort_order_option) => {
       let sort_order = sort_order_option.value;
 
       jokeListActions.setJokeListSortOrder(sort_order);
 
       JokeListHelper.refreshJokeList({ sort_order: sort_order });
+    };
+
+    const setListSortFieldButtonClicked = (sort_field_option) => {
+      let sort_field = sort_field_option.value;
+
+      setListListActions.setSLListSortField(sort_field);
+
+      SetListListHelper.refreshSLList({ sort_field: sort_field });
+    };
+
+    const setListSortOrderButtonClicked = (sort_order_option) => {
+      let sort_order = sort_order_option.value;
+
+      setListListActions.setSLListSortOrder(sort_order);
+
+      SetListListHelper.refreshSLList({ sort_order: sort_order });
     };
 
     return (
@@ -59,7 +79,7 @@ class Settings extends Component {
                    { label: 'Name', value: '_name' },
                    { label: 'Rating', value: '_rating' }]
                 }
-                  onSelection={ (sort_field) => sortFieldButtonClicked(sort_field) }
+                  onSelection={ (sort_field) => jokeSortFieldButtonClicked(sort_field) }
                   selectedOption={ jokeListState.sort_field }
                   containerStyle={{ flex: 1 }}
                   extractText={ (option) => option.label }
@@ -73,8 +93,42 @@ class Settings extends Component {
                   [{ label: 'Ascending Order', value: 'ASC' },
                    { label: 'Descending Order', value: 'DESC' }]
                 }
-                  onSelection={ (sort_order) => sortOrderButtonClicked(sort_order) }
+                  onSelection={ (sort_order) => jokeSortOrderButtonClicked(sort_order) }
                   selectedOption={ jokeListState.sort_order }
+                  containerStyle={{ flex: 1 }}
+                  extractText={ (option) => option.label }
+                  testOptionEqual={(selectedValue, option) => selectedValue === option.value}
+                />
+              </View>
+            </View>
+            <View style={[layoutStyles.modalContentSection]}>
+              <View style={ {borderBottomColor: '#999999', borderBottomWidth: 1, paddingBottom: 5, marginBottom: 10} }>
+                <Text style={ layoutStyles.inputLabel }>Set Lists Settings</Text>
+              </View>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Text style={ setListListStyles.sortByText }>Sort by: </Text>
+                <SegmentedControls
+                  options={
+                  [{ label: 'Updated', value: '_updated_at' },
+                   { label: 'Name', value: '_name' },
+                   { label: 'Length', value: '_length' }]
+                }
+                  onSelection={ (sort_field) => setListSortFieldButtonClicked(sort_field) }
+                  selectedOption={ setListListState.sort_field }
+                  containerStyle={{ flex: 1 }}
+                  extractText={ (option) => option.label }
+                  testOptionEqual={(selectedValue, option) => selectedValue === option.value}
+                />
+              </View>
+              <View style={{ flexDirection: 'row', alignItems: 'center', paddingTop: 10 }}>
+                <Text style={ setListListStyles.sortInText }>Sort in: </Text>
+                <SegmentedControls
+                  options={
+                  [{ label: 'Ascending Order', value: 'ASC' },
+                   { label: 'Descending Order', value: 'DESC' }]
+                }
+                  onSelection={ (sort_order) => setListSortOrderButtonClicked(sort_order) }
+                  selectedOption={ setListListState.sort_order }
                   containerStyle={{ flex: 1 }}
                   extractText={ (option) => option.label }
                   testOptionEqual={(selectedValue, option) => selectedValue === option.value}
@@ -96,10 +150,12 @@ class Settings extends Component {
 }
 
 export default connect(state => ({
-    jokeListState: state.joke_list
+    jokeListState: state.joke_list,
+    setListListState: state.set_list_list
   }),
   (dispatch) => ({
     routingActions: bindActionCreators(routingActions, dispatch),
-    jokeListActions: bindActionCreators(jokeListActions, dispatch)
+    jokeListActions: bindActionCreators(jokeListActions, dispatch),
+    setListListActions: bindActionCreators(setListListActions, dispatch)
   })
 )(Settings);
