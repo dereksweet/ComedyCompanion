@@ -45,8 +45,6 @@ class EditJoke extends Component {
   }
 
   componentWillUnmount () {
-    const { jokeListActions, jokeListState } = this.props;
-
     this.keyboardDidShowListener.remove();
     this.keyboardDidHideListener.remove();
 

@@ -1,54 +1,45 @@
 'use strict';
 
 import React, {Component} from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableHighlight } from 'react-native';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
-import {Button} from 'react-native-ui-xg';
 
-import * as routingActions from '../../actions/routingActions';
-import * as setListActions from '../../actions/setListActions';
+import * as setListListActions from '../../actions/setListListActions';
 
-import SetList from '../../models/set_list';
+import NoSetLists from './SetLists/NoSetLists';
+import SetListsList from './SetLists/SetListsList';
+
+import SetListListHelper from '../../helpers/setListListHelper';
 
 import layoutStyles from '../../stylesheets/layoutStyles';
-
-import {largeSetListsIcon, addSetListIcon} from '../../helpers/icons';
 
 class SetLists extends Component {
   constructor(props) {
     super(props);
   }
 
-  render() {
-    const { routingActions, setListActions } = this.props;
+  componentDidMount() {
+    SetListListHelper.refreshSLList();
+    SetListListHelper.refreshSLListEmpty();
+  }
 
-    const addSetList = () => {
-      setListActions.setSL(new SetList());
-      routingActions.openModal();
-    };
+  render() {
+    const { setListListState } = this.props;
 
     return (
       <View style={layoutStyles.centeredFlex}>
-        {largeSetListsIcon}
-        <Text style={ {paddingTop: 25} }>You do not appear to have any set lists yet!</Text>
-        <Text style={ {paddingBottom: 20} }>Click the button below to add one..</Text>
-        <View style={ {paddingBottom: 100} }>
-          <Button type="surface" size="large" theme="red" onPress={ addSetList }>
-            <Text>{addSetListIcon}</Text>
-            <Text style={layoutStyles.buttonText}>Add Set List</Text>
-          </Button>
-        </View>
+        { (setListListState.empty) && <NoSetLists /> }
+        { (!setListListState.empty) && <SetListsList /> }
       </View>
     );
   }
 }
 
 export default connect(state => ({
-
+    setListListState: state.set_list_list
   }),
   (dispatch) => ({
-    routingActions: bindActionCreators(routingActions, dispatch),
-    setListActions: bindActionCreators(setListActions, dispatch)
+    setListListActions: bindActionCreators(setListListActions, dispatch)
   })
 )(SetLists);

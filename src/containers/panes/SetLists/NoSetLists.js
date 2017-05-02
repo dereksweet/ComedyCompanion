@@ -6,37 +6,37 @@ import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 import {Button} from 'react-native-ui-xg';
 
-import * as jokeActions from '../../../actions/jokeActions';
+import * as setListActions from '../../../actions/setListActions';
 import * as routingActions from '../../../actions/routingActions';
 
-import Joke from '../../../models/joke';
+import SetList from '../../../models/set_list';
 
 import layoutStyles from '../../../stylesheets/layoutStyles';
 
-import {largeJokesIcon, addJokeIcon} from '../../../helpers/icons';
+import {largeSetListsIcon, addSetListIcon} from '../../../helpers/icons';
 
-class NoJokes extends Component {
+class NoSetLists extends Component {
   constructor(props) {
     super(props);
   }
 
   render() {
-    const { routingActions, jokeActions } = this.props;
+    const { routingActions, setListActions } = this.props;
 
-    const addJoke = () => {
-      jokeActions.setJoke(new Joke());
+    const addSetList = () => {
+      setListActions.setSL(new SetList());
       routingActions.openModal();
     };
 
     return (
       <View style={layoutStyles.centeredFlex}>
-        {largeJokesIcon}
-        <Text style={ {paddingTop: 25} }>You do not appear to have any jokes yet!</Text>
+        {largeSetListsIcon}
+        <Text style={ {paddingTop: 25} }>You do not appear to have any set lists yet!</Text>
         <Text style={ {paddingBottom: 20} }>Click the button below to add one..</Text>
         <View style={ {paddingBottom: 100} }>
-          <Button type="surface" size="large" theme="red" onPress={ addJoke }>
-            <Text>{addJokeIcon}</Text>
-            <Text style={layoutStyles.buttonText}>Add Joke</Text>
+          <Button type="surface" size="large" theme="red" onPress={ addSetList }>
+            <Text>{addSetListIcon}</Text>
+            <Text style={layoutStyles.buttonText}>Add Set List</Text>
           </Button>
         </View>
       </View>
@@ -48,7 +48,7 @@ export default connect(state => ({
 
   }),
   (dispatch) => ({
-    jokeActions: bindActionCreators(jokeActions, dispatch),
+    setListActions: bindActionCreators(setListActions, dispatch),
     routingActions: bindActionCreators(routingActions, dispatch)
   })
-)(NoJokes);
+)(NoSetLists);

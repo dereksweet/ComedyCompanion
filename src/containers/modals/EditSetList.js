@@ -12,8 +12,7 @@ import SetListJokes from './EditSetList/SetListJokes';
 import * as routingActions from '../../actions/routingActions';
 import * as setListActions from '../../actions/setListActions';
 
-import SetList from '../../models/set_list';
-import Joke from '../../models/joke';
+import SetListListHelper from '../../helpers/setListListHelper';
 
 import layoutStyles from '../../stylesheets/layoutStyles';
 import editSetListStyles from '../../stylesheets/editSetListStyles';
@@ -50,6 +49,9 @@ class EditSetList extends Component {
   componentWillUnmount () {
     this.keyboardDidShowListener.remove();
     this.keyboardDidHideListener.remove();
+
+    SetListListHelper.refreshSLList();
+    SetListListHelper.refreshSLListEmpty();
   }
 
   measureModalView(event) {
@@ -71,8 +73,8 @@ class EditSetList extends Component {
 
     const save = () => {
       setListState.set_list.save(() => {
-        // SetListHelper.refreshSetListList();
-        // SetListHelper.refreshSetListListEmpty();
+        SetListListHelper.refreshSLList();
+        SetListListHelper.refreshSLListEmpty();
       });
       cancel();
     };
