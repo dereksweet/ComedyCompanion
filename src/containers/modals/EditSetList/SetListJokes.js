@@ -10,6 +10,7 @@ import * as setListActions from '../../../actions/setListActions';
 import * as routingActions from '../../../actions/routingActions';
 
 import jokeListStyles from '../../../stylesheets/jokeListStyles';
+import setListListStyles from '../../../stylesheets/setListListStyles';
 
 class JokeSelector extends Component {
   constructor(props) {
@@ -40,15 +41,22 @@ class JokeSelector extends Component {
           underlayColor={'#ccc'}
           delayLongPress={500}
           onPress={ () => selectJoke(rowData) }
-          style={ [jokeListStyles.jokeRow, {borderBottomWidth: 1, borderBottomColor: '#CCCCCC'}] }
+          style={ [setListListStyles.setListJokeRow, {borderBottomWidth: 1, borderBottomColor: '#CCCCCC'}] }
           {...this.props.sortHandlers}>
-          <Text>{ rowData._name }</Text>
+          <View style={ {alignItems: 'center'} }>
+            <Text style={ jokeListStyles.jokeName }>{ rowData._name }</Text>
+          </View>
         </TouchableHighlight>
       );
     };
 
     return (
       <View style={{ flex: 1 }}>
+        <View style={{ backgroundColor: '#EEEEEE', height: 50, alignItems: 'center', justifyContent: 'center', borderBottomWidth: 1, borderBottomColor: '#CCCCCC' }}>
+          <Text style={{ color: '#000000' }}>Set List</Text>
+          <Text style={ setListListStyles.jokeInstructions }>tap to remove</Text>
+          <Text style={ setListListStyles.jokeInstructions }>hold to reorder</Text>
+        </View>
         <SortableListView
           style={{flex: 1}}
           data={data}

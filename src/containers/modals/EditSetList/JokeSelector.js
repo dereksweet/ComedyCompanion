@@ -15,6 +15,7 @@ import * as setListActions from '../../../actions/setListActions';
 
 import layoutStyles from '../../../stylesheets/layoutStyles';
 import jokeListStyles from '../../../stylesheets/jokeListStyles';
+import setListListStyles from '../../../stylesheets/setListListStyles';
 
 class JokeSelector extends Component {
   constructor(props) {
@@ -42,8 +43,9 @@ class JokeSelector extends Component {
 
       return (
         <TouchableHighlight onPress={ () => selectJoke(joke._id) }>
-          <View style={ jokeListStyles.jokeRow }>
+          <View style={ setListListStyles.jokeSelectorRow }>
             <Text style={ jokeListStyles.jokeName }>{ joke._name }</Text>
+            <Text style={ setListListStyles.jokeInstructions }>tap to add</Text>
           </View>
         </TouchableHighlight>
       );
