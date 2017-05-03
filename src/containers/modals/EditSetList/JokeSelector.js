@@ -45,7 +45,6 @@ class JokeSelector extends Component {
         <TouchableHighlight onPress={ () => selectJoke(joke._id) }>
           <View style={ setListListStyles.jokeSelectorRow }>
             <Text style={ jokeListStyles.jokeName }>{ joke._name }</Text>
-            <Text style={ setListListStyles.jokeInstructions }>tap to add</Text>
           </View>
         </TouchableHighlight>
       );
@@ -80,6 +79,10 @@ class JokeSelector extends Component {
 
     return (
       <View style={{ flex: 1 }}>
+        <View style={{ backgroundColor: '#EEEEEE', height: 50, alignItems: 'center', justifyContent: 'center', borderBottomWidth: 1, borderBottomColor: '#CCCCCC' }}>
+          <Text style={{ color: '#000000' }}>My Jokes</Text>
+          <Text style={ setListListStyles.jokeInstructions }>tap to add</Text>
+        </View>
         <View style={{ backgroundColor: '#FFFFFF', width: '100%' }}>
           <SearchBar
             ref={(searchBar) => { this.searchBar = searchBar }}
