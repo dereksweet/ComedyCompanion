@@ -23,6 +23,12 @@ export const SET_SL_LIST_EMPTY = 'sl_list/set_sl_list_empty';
 export const SET_SL_LIST_SORT_FIELD = 'sl_list/set_sl_list_sort_field';
 export const SET_SL_LIST_SORT_ORDER = 'sl_list/set_sl_list_sort_order';
 
+export const SET_SHOW_LIST = 'show_list/set_show_list';
+export const SET_SHOW_LIST_EMPTY = 'show_list/set_show_list_empty';
+export const SET_SHOW_LIST_SORT_FIELD = 'show_list/set_show_list_sort_field';
+export const SET_SHOW_LIST_SORT_ORDER = 'show_list/set_show_list_sort_order';
+export const SET_SHOW_LIST_FILTER = 'show_list/set_show_list_filter';
+
 export const SET_JOKE = 'joke/set_joke';
 export const TOGGLE_IN_DEVELOPMENT = 'joke/toggle_in_development';
 export const SET_NAME = 'joke/set_name';
