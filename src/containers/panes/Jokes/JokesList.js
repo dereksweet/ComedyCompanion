@@ -68,7 +68,7 @@ class JokesList extends Component {
     const { jokeListState, jokeActions, routingActions, jokeListActions } = this.props;
 
     let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    const jokeListDS = ds.cloneWithRows(jokeListState.joke_list.map((joke) => { return joke.name }));
+    const jokeListDS = ds.cloneWithRows(jokeListState.joke_list.map((joke) => { return joke._name }));
 
     const addJoke = () => {
       jokeActions.setJoke(new Joke());
