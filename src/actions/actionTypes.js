@@ -33,3 +33,10 @@ export const SET_SL_NAME = 'set_list/set_sl_name';
 export const SET_SL_LENGTH = 'set_list/set_sl_length';
 export const ADD_JOKE_TO_SL = 'set_list/add_joke_to_sl';
 export const REMOVE_JOKE_FROM_SL = 'set_list/remove_joke_from_sl';
+
+export const SET_SHOW = 'show/set_show';
+export const SET_SHOW_VENUE = 'show/set_show_venue';
+export const SET_SHOW_DATE = 'show/set_show_date';
+export const SET_SHOW_CITY = 'show/set_show_city';
+export const SET_SHOW_STATE = 'show/set_show_state';
+export const SET_SHOW_SET_LIST = 'show/set_show_set_list';

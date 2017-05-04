@@ -4,6 +4,7 @@ import joke from './joke';
 import joke_list from './joke_list';
 import set_list from './set_list';
 import set_list_list from './set_list_list';
+import show from './show';
 
 export {
   routing,
@@ -11,5 +12,6 @@ export {
   joke,
   joke_list,
   set_list,
-  set_list_list
+  set_list_list,
+  show
 };
