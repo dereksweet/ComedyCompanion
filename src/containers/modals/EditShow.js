@@ -4,7 +4,8 @@ import React, {Component} from 'react';
 import { View, Text, TouchableHighlight, Switch, TextInput, KeyboardAvoidingView, Platform, Keyboard } from 'react-native';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
-import {Button} from 'react-native-ui-xg';
+import {Button, DatePicker} from 'react-native-ui-xg';
+import moment from 'moment';
 
 import * as routingActions from '../../actions/routingActions';
 import * as showActions from '../../actions/showActions';
@@ -111,6 +112,31 @@ class EditShow extends Component {
                          placeholder="State name here..."
                          onChangeText={(text) => showActions.setShowState(text)}
                          value={ showState.show._state} />
+            </View>
+            <View style={ [layoutStyles.modalContentSection, { flexDirection: 'row', alignItems: 'center'  }] }>
+              <Text style={ layoutStyles.inputLabel }>Date:</Text>
+              <DatePicker
+                style={{width: 200}}
+                date={moment(showState.show._date).utc().format("YYYY-MM-DD")}
+                mode="date"
+                placeholder="select date"
+                format="YYYY-MM-DD"
+                confirmBtnText="Confirm"
+                cancelBtnText="Cancel"
+                customStyles={{
+                  dateIcon: {
+                    position: 'absolute',
+                    left: 0,
+                    top: 4,
+                    marginLeft: 0
+                  },
+                  dateInput: {
+                    marginLeft: 36,
+                    backgroundColor: '#FFFFFF'
+                  }
+                }}
+                onDateChange={(date) => { console.log("Here: ", date); showActions.setShowDate(new Date(date))}}
+              />
             </View>
             <View style={ [layoutStyles.modalContentSection, {flex: 1} ] }>
 

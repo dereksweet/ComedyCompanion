@@ -93,8 +93,8 @@ class ShowsList extends Component {
             </View>
             <View style={{ alignItems: 'flex-end' }}>
               <View style={ showListStyles.showInfoView }>
-                <Text style={ showListStyles.updatedText }>Last Updated:</Text>
-                <Text style={ showListStyles.updatedText }>{ moment(show._updated_at).format("MMM DD, YYYY") }</Text>
+                <Text style={ showListStyles.updatedText }>Show Date:</Text>
+                <Text style={ showListStyles.updatedText }>{ moment(show._date).utc().format("MMM DD, YYYY") }</Text>
                 <Text style={ showListStyles.locationText }>{ show._city }, { show._state }</Text>
               </View>
             </View>
