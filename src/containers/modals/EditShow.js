@@ -1,7 +1,7 @@
 'use strict';
 
 import React, {Component} from 'react';
-import { View, Text, TouchableHighlight, Switch, TextInput, KeyboardAvoidingView, Platform, Keyboard, Picker } from 'react-native';
+import { View, Text, TextInput, Platform, Keyboard, Picker, Button as NativeButton } from 'react-native';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 import {Button, DatePicker} from 'react-native-ui-xg';
@@ -24,11 +24,22 @@ class EditShow extends Component {
 
     this.state = {
       modal_height: 0,
-      keyboard_height: 0
+      keyboard_height: 0,
+      show_set_list_select: false,
+      set_lists: []
     }
   }
 
   componentWillMount () {
+    SetList.all(
+      this.props.setListListState.sort_field,
+      this.props.setListListState.sort_order
+    ).then((set_lists) => {
+      this.setState({
+        set_lists: set_lists
+      });
+    });
+
     var eventVerb = Platform.OS === 'ios'? 'Will' : 'Did';
 
     this.keyboardDidShowListener = Keyboard.addListener('keyboard' + eventVerb + 'Show', this.keyboardDidShow.bind(this));
@@ -68,10 +79,6 @@ class EditShow extends Component {
   render() {
     const { showState, showListState, showActions, showListActions, routingActions } = this.props;
 
-    if (showState && showState.show) {
-      console.log("Rendering: ", showState.show._set_list);
-    }
-
     const selectSetList = (set_list_id) => {
       SetList.get(set_list_id).then((set_list) => {
         showActions.setShowSetList(set_list);
@@ -96,10 +103,46 @@ class EditShow extends Component {
       routingActions.closeModal();
     };
 
+    const showSetListSelect = () => {
+      this.setState({
+        show_set_list_select: true
+      });
+    };
+
+    const hideSetListSelect = () => {
+      this.setState({
+        show_set_list_select: false
+      });
+    };
+
+    const renderSetListPicker = () => {
+      return <Picker style={ { flex: 1 }}
+                     selectedValue={showState.show._set_list._id.toString()}
+                     onValueChange={(set_list_id) => selectSetList(parseInt(set_list_id))}>
+               { this.state.set_lists.map((set_list) => <Picker.Item key={ set_list._id.toString() } label={ set_list._name } value={ set_list._id.toString() } />) }
+             </Picker>
+    };
+
     return (
       <View style={[layoutStyles.modal, layoutStyles.centeredFlex]}>
         <View style={layoutStyles.statusBarBuffer} />
         <View style={layoutStyles.modalContent} onLayout={(event) => this.measureModalView(event)}>
+          { this.state.show_set_list_select &&
+            <View>
+              <View style={ { width: '100%', backgroundColor: '#FFFFFF', borderBottomWidth: 1, borderBottomColor: '#CCCCCC', paddingBottom: 10, paddingTop: 10, alignItems: 'center' } }>
+                <Text style={ { fontWeight: 'bold', fontSize: 14 } }>Choose Set List</Text>
+              </View>
+              <View style={ { flex: 1 } }>
+                { renderSetListPicker() }
+              </View>
+              <View style={ { width: '100%' } }>
+                <Button type="surface" size="large" theme="gray" onPress={ hideSetListSelect }>
+                  <Text style={layoutStyles.buttonText}>Close</Text>
+                </Button>
+              </View>
+            </View>
+          }
+          { !this.state.show_set_list_select &&
           <View style={{ height: this.contentHeight() }}>
             <View style={ [layoutStyles.modalContentSection, { flexDirection: 'row', alignItems: 'center'  }] }>
               <Text style={ layoutStyles.inputLabel }>Venue:</Text>
@@ -150,13 +193,17 @@ class EditShow extends Component {
             </View>
             <View style={ [layoutStyles.modalContentSection, { flexDirection: 'row', alignItems: 'center'  }] }>
               <Text style={ layoutStyles.inputLabel }>Set List:</Text>
-              <Picker
-                style={ { flex: 1 }}
-                selectedValue={showState.show._set_list._id.toString()}
-                onValueChange={(set_list_id) => selectSetList(parseInt(set_list_id))}>
-                <Picker.Item label="Set List 1" value="1" />
-                <Picker.Item label="Set List 2" value="2" />
-              </Picker>
+              {
+                Platform.OS !== 'ios' &&
+                renderSetListPicker()
+              }
+              {
+                Platform.OS === 'ios' &&
+                <View style={ { flex: 1, alignItems: 'flex-start' } }>
+                  <NativeButton title={ showState.show._set_list._id != -1 ? showState.show._set_list._name : 'No Set List Selected' }
+                                onPress={ showSetListSelect } />
+                </View>
+              }
             </View>
             <View style={ [layoutStyles.modalContentSection, {flex: 1} ] }>
 
@@ -181,6 +228,7 @@ class EditShow extends Component {
               </View>
             </View>
           </View>
+          }
         </View>
       </View>
     );
@@ -189,7 +237,8 @@ class EditShow extends Component {
 
 export default connect(state => ({
     showState: state.show,
-    showListState: state.show_list
+    showListState: state.show_list,
+    setListListState: state.set_list_list
   }),
   (dispatch) => ({
     routingActions: bindActionCreators(routingActions, dispatch),

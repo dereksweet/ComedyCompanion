@@ -44,7 +44,8 @@ export default layoutStyles = StyleSheet.create({
   },
   modalContent: {
     flex: 1,
-    marginTop: 10
+    borderTopColor: '#CCCCCC',
+    borderTopWidth: 1
   },
   modalContentSection: {
     borderBottomWidth: 1,
