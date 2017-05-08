@@ -103,6 +103,7 @@ class EditSetList extends Component {
                          underlineColorAndroid='transparent'
                          placeholder=""
                          onChangeText={(text) => setListActions.setSLLength(text)}
+                         keyboardType="numeric"
                          value={ setListState.set_list._length ? setListState.set_list._length.toString() : '' } />
               <Text style={ [layoutStyles.inputLabel, {marginLeft: 10}] }>min</Text>
             </View>

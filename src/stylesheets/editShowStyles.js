@@ -20,12 +20,13 @@ export default editShowStyles = StyleSheet.create({
     backgroundColor: '#FFFFFF'
   },
   stateInput: {
-    flex: 1,
+    width: 55,
     height: 40,
     borderColor: 'gray',
     borderWidth: 1,
     paddingLeft: 10,
     paddingRight: 10,
-    backgroundColor: '#FFFFFF'
+    backgroundColor: '#FFFFFF',
+    textAlign: 'center'
   }
 });

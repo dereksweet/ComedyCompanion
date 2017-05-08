@@ -1,7 +1,7 @@
 'use strict';
 
 import React, {Component} from 'react';
-import { View, Text, TouchableHighlight, Switch, TextInput, KeyboardAvoidingView, Platform, Keyboard } from 'react-native';
+import { View, Text, TouchableHighlight, Switch, TextInput, KeyboardAvoidingView, Platform, Keyboard, Picker } from 'react-native';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 import {Button, DatePicker} from 'react-native-ui-xg';
@@ -10,6 +10,8 @@ import moment from 'moment';
 import * as routingActions from '../../actions/routingActions';
 import * as showActions from '../../actions/showActions';
 import * as showListActions from '../../actions/showListActions';
+
+import SetList from '../../models/set_list';
 
 import ShowListHelper from '../../helpers/showListHelper';
 
@@ -66,6 +68,16 @@ class EditShow extends Component {
   render() {
     const { showState, showListState, showActions, showListActions, routingActions } = this.props;
 
+    if (showState && showState.show) {
+      console.log("Rendering: ", showState.show._set_list);
+    }
+
+    const selectSetList = (set_list_id) => {
+      SetList.get(set_list_id).then((set_list) => {
+        showActions.setShowSetList(set_list);
+      })
+    };
+
     const save = () => {
       showState.show.save(() => {
         ShowListHelper.refreshShowList();
@@ -104,13 +116,11 @@ class EditShow extends Component {
                          placeholder="City name here..."
                          onChangeText={(text) => showActions.setShowCity(text)}
                          value={ showState.show._city} />
-            </View>
-            <View style={ [layoutStyles.modalContentSection, { flexDirection: 'row', alignItems: 'center'  }] }>
-              <Text style={ layoutStyles.inputLabel }>State:</Text>
+              <Text style={ [layoutStyles.inputLabel, { paddingLeft: 10 }] }>State:</Text>
               <TextInput style={ editShowStyles.stateInput }
                          underlineColorAndroid='transparent'
-                         placeholder="State name here..."
-                         onChangeText={(text) => showActions.setShowState(text)}
+                         onChangeText={(text) => showActions.setShowState(text.toUpperCase())}
+                         maxLength={ 2 }
                          value={ showState.show._state} />
             </View>
             <View style={ [layoutStyles.modalContentSection, { flexDirection: 'row', alignItems: 'center'  }] }>
@@ -137,6 +147,16 @@ class EditShow extends Component {
                 }}
                 onDateChange={(date) => { console.log("Here: ", date); showActions.setShowDate(new Date(date))}}
               />
+            </View>
+            <View style={ [layoutStyles.modalContentSection, { flexDirection: 'row', alignItems: 'center'  }] }>
+              <Text style={ layoutStyles.inputLabel }>Set List:</Text>
+              <Picker
+                style={ { flex: 1 }}
+                selectedValue={showState.show._set_list._id.toString()}
+                onValueChange={(set_list_id) => selectSetList(parseInt(set_list_id))}>
+                <Picker.Item label="Set List 1" value="1" />
+                <Picker.Item label="Set List 2" value="2" />
+              </Picker>
             </View>
             <View style={ [layoutStyles.modalContentSection, {flex: 1} ] }>
 
