@@ -1,7 +1,7 @@
 'use strict';
 
 import React, {Component} from 'react';
-import { View, Text, ListView, TouchableHighlight, Platform, Keyboard, Switch } from 'react-native';
+import { View, Text, ListView, TouchableHighlight, Platform, Keyboard, Switch, Modal } from 'react-native';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 import SearchBar from 'react-native-material-design-searchbar';
@@ -13,6 +13,7 @@ import ShowListHelper from '../../../helpers/showListHelper';
 
 import * as showActions from '../../../actions/showActions';
 import * as showListActions from '../../../actions/showListActions';
+import * as setListActions from '../../../actions/setListActions';
 import * as routingActions from '../../../actions/routingActions';
 
 import layoutStyles from '../../../stylesheets/layoutStyles';
@@ -26,7 +27,8 @@ class ShowsList extends Component {
 
     this.state = {
       view_height: 0,
-      keyboard_height: 0
+      keyboard_height: 0,
+      set_list_visible: false
     }
   }
 
@@ -83,7 +85,10 @@ class ShowsList extends Component {
     };
 
     const viewSetList = (set_list) => {
-      console.log(set_list);
+      setListActions.setSL(set_list);
+      this.setState({
+        set_list_visible: true
+      });
     };
 
     const renderRow = (rowData, sectionID, rowID, highlightRow) => {
@@ -174,6 +179,16 @@ class ShowsList extends Component {
             </View>
           </View>
         </View>
+        <Modal style={ layoutStyles.modal }
+               animationType={"fade"}
+               transparent={false}
+               visible={this.state.set_list_visible}
+               onRequestClose={() => { }}>
+          <View style={layoutStyles.statusBarBuffer} />
+          <Text>Hi</Text>
+          <View style={{ flex: 1 }}></View>
+          
+        </Modal>
       </View>
     );
   }
@@ -185,6 +200,7 @@ export default connect(state => ({
   (dispatch) => ({
     showActions: bindActionCreators(showActions, dispatch),
     showListActions: bindActionCreators(showListActions, dispatch),
+    setListActions: bindActionCreators(setListActions, dispatch),
     routingActions: bindActionCreators(routingActions, dispatch)
   })
 )(ShowsList);
