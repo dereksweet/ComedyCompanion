@@ -1,7 +1,7 @@
 'use strict';
 
 import React, {Component} from 'react';
-import { View, Text, TextInput, Platform, Keyboard, Picker, Button as NativeButton } from 'react-native';
+import { View, ScrollView, TouchableHighlight, Text, TextInput, Platform, Keyboard, Button as NativeButton } from 'react-native';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 import {Button, DatePicker} from 'react-native-ui-xg';
@@ -82,6 +82,7 @@ class EditShow extends Component {
     const selectSetList = (set_list_id) => {
       SetList.get(set_list_id).then((set_list) => {
         showActions.setShowSetList(set_list);
+        hideSetListSelect();
       })
     };
 
@@ -115,14 +116,6 @@ class EditShow extends Component {
       });
     };
 
-    const renderSetListPicker = () => {
-      return <Picker style={ { flex: 1 }}
-                     selectedValue={showState.show._set_list._id.toString()}
-                     onValueChange={(set_list_id) => selectSetList(parseInt(set_list_id))}>
-               { this.state.set_lists.map((set_list) => <Picker.Item key={ set_list._id.toString() } label={ set_list._name } value={ set_list._id.toString() } />) }
-             </Picker>
-    };
-
     return (
       <View style={[layoutStyles.modal, layoutStyles.centeredFlex]}>
         <View style={layoutStyles.statusBarBuffer} />
@@ -133,11 +126,20 @@ class EditShow extends Component {
                 <Text style={ { fontWeight: 'bold', fontSize: 14 } }>Choose Set List</Text>
               </View>
               <View style={ { flex: 1 } }>
-                { renderSetListPicker() }
+                <ScrollView>
+                  { this.state.set_lists.map((set_list) => {
+                      return <View key={ set_list._id } style={ { flex: 1, backgroundColor: '#EEEEFF', borderBottomColor: '#CCCCCC', borderBottomWidth: 2 } }>
+                               <TouchableHighlight onPress={ () => selectSetList(set_list._id) }>
+                                 <Text style={{ color: '#000000', padding: 10, textAlign: 'center' }}>{set_list._name}</Text>
+                               </TouchableHighlight>
+                             </View>
+                    })
+                  }
+                </ScrollView>
               </View>
               <View style={ { width: '100%' } }>
                 <Button type="surface" size="large" theme="gray" onPress={ hideSetListSelect }>
-                  <Text style={layoutStyles.buttonText}>Close</Text>
+                  <Text style={layoutStyles.buttonText}>Cancel</Text>
                 </Button>
               </View>
             </View>
@@ -193,17 +195,10 @@ class EditShow extends Component {
             </View>
             <View style={ [layoutStyles.modalContentSection, { flexDirection: 'row', alignItems: 'center'  }] }>
               <Text style={ layoutStyles.inputLabel }>Set List:</Text>
-              {
-                Platform.OS !== 'ios' &&
-                renderSetListPicker()
-              }
-              {
-                Platform.OS === 'ios' &&
-                <View style={ { flex: 1, alignItems: 'flex-start' } }>
-                  <NativeButton title={ showState.show._set_list._id != -1 ? showState.show._set_list._name : 'No Set List Selected' }
-                                onPress={ showSetListSelect } />
-                </View>
-              }
+              <View style={ { flex: 1, alignItems: 'flex-start' } }>
+                <NativeButton title={ showState.show._set_list._id != -1 ? showState.show._set_list._name : 'No Set List Selected' }
+                              onPress={ showSetListSelect } />
+              </View>
             </View>
             <View style={ [layoutStyles.modalContentSection, {flex: 1} ] }>
 
