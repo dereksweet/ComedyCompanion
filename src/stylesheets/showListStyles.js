@@ -17,8 +17,7 @@ export default showListStyles = StyleSheet.create({
     fontSize: 12
   },
   showInfoView: {
-    alignItems: 'flex-end',
-    minWidth: 70,
+    width: 70,
     borderLeftColor: '#DDDDDD',
     borderLeftWidth: 1
   },

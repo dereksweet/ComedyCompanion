@@ -82,6 +82,10 @@ class ShowsList extends Component {
       });
     };
 
+    const viewSetList = (set_list) => {
+      console.log(set_list);
+    };
+
     const renderRow = (rowData, sectionID, rowID, highlightRow) => {
       let show = showListState.show_list[rowID];
 
@@ -90,12 +94,15 @@ class ShowsList extends Component {
           <View style={ showListStyles.showRow }>
             <View style={{ flex: 1 }}>
               <Text style={ showListStyles.showName }>{ show._venue }</Text>
+              <Text style={ showListStyles.updatedText }>{ moment(show._date).utc().format("MMM DD, YYYY") } in { show._city }, { show._state }</Text>
             </View>
             <View style={{ alignItems: 'flex-end' }}>
               <View style={ showListStyles.showInfoView }>
-                <Text style={ showListStyles.updatedText }>Show Date:</Text>
-                <Text style={ showListStyles.updatedText }>{ moment(show._date).utc().format("MMM DD, YYYY") }</Text>
-                <Text style={ showListStyles.locationText }>{ show._city }, { show._state }</Text>
+                <TouchableHighlight onPress={ () => viewSetList(show._set_list) } style={{ flex: 1, marginLeft: 10 }}>
+                  <View style={{ flex: 1, alignItems: 'flex-end', backgroundColor: '#EEFFEE', padding: 10, borderColor: '#EEEEEE', borderWidth: 1 }}>
+                    <Text style={{ textAlign: 'center', fontSize: 10 }}>View Set List</Text>
+                  </View>
+                </TouchableHighlight>
               </View>
             </View>
           </View>
