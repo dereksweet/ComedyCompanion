@@ -1,9 +1,10 @@
 'use strict';
 
 import React, {Component} from 'react';
-import { View, Text, ListView, TouchableHighlight, Platform, Keyboard, Switch, Modal } from 'react-native';
+import { View, Text, ListView, ScrollView, TouchableHighlight, Platform, Keyboard, Switch, Modal } from 'react-native';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
+import {Button} from 'react-native-ui-xg';
 import SearchBar from 'react-native-material-design-searchbar';
 import moment from 'moment';
 
@@ -13,7 +14,6 @@ import ShowListHelper from '../../../helpers/showListHelper';
 
 import * as showActions from '../../../actions/showActions';
 import * as showListActions from '../../../actions/showListActions';
-import * as setListActions from '../../../actions/setListActions';
 import * as routingActions from '../../../actions/routingActions';
 
 import layoutStyles from '../../../stylesheets/layoutStyles';
@@ -67,7 +67,7 @@ class ShowsList extends Component {
   }
 
   render() {
-    const { showListState, showActions, routingActions, showListActions } = this.props;
+    const { showListState, showState, showActions, routingActions, showListActions } = this.props;
 
     let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     const showListDS = ds.cloneWithRows(showListState.show_list.map((show) => { return show._venue }));
@@ -84,10 +84,16 @@ class ShowsList extends Component {
       });
     };
 
-    const viewSetList = (set_list) => {
-      setListActions.setSL(set_list);
+    const viewSetList = (show) => {
+      showActions.setShow(show);
       this.setState({
         set_list_visible: true
+      });
+    };
+
+    const hideSetList = () => {
+      this.setState({
+        set_list_visible: false
       });
     };
 
@@ -103,7 +109,7 @@ class ShowsList extends Component {
             </View>
             <View style={{ alignItems: 'flex-end' }}>
               <View style={ showListStyles.showInfoView }>
-                <TouchableHighlight onPress={ () => viewSetList(show._set_list) } style={{ flex: 1, marginLeft: 10 }}>
+                <TouchableHighlight onPress={ () => viewSetList(show) } style={{ flex: 1, marginLeft: 10 }}>
                   <View style={{ flex: 1, alignItems: 'flex-end', backgroundColor: '#EEFFEE', padding: 10, borderColor: '#EEEEEE', borderWidth: 1 }}>
                     <Text style={{ textAlign: 'center', fontSize: 10 }}>View Set List</Text>
                   </View>
@@ -185,9 +191,26 @@ class ShowsList extends Component {
                visible={this.state.set_list_visible}
                onRequestClose={() => { }}>
           <View style={layoutStyles.statusBarBuffer} />
-          <Text>Hi</Text>
-          <View style={{ flex: 1 }}></View>
-          
+          <View style={ { width: '100%', backgroundColor: '#FFFFFF', borderBottomWidth: 1, borderBottomColor: '#CCCCCC', paddingBottom: 10, paddingTop: 10, alignItems: 'center' } }>
+            <Text style={ { fontWeight: 'bold', fontSize: 14 } }>Set List for { showState.show._venue }</Text>
+          </View>
+          <View style={ { flex: 1 } }>
+            <ScrollView>
+              { showState.show._set_list._jokes.map((joke) => {
+                return <View key={ joke._id } style={ { flex: 1, backgroundColor: '#EEEEFF', borderBottomColor: '#CCCCCC', borderBottomWidth: 2 } }>
+                         <TouchableHighlight onPress={ () => console.log("Joke Clicked") }>
+                           <Text style={{ color: '#000000', padding: 10, textAlign: 'center' }}>{joke._name}</Text>
+                         </TouchableHighlight>
+                       </View>
+              })
+              }
+            </ScrollView>
+          </View>
+          <View style={ { height: 40 } }>
+            <Button type="surface" size="large" theme="gray" onPress={ hideSetList }>
+              <Text style={layoutStyles.buttonText}>Close</Text>
+            </Button>
+          </View>
         </Modal>
       </View>
     );
@@ -195,12 +218,12 @@ class ShowsList extends Component {
 }
 
 export default connect(state => ({
+    showState: state.show,
     showListState: state.show_list
   }),
   (dispatch) => ({
     showActions: bindActionCreators(showActions, dispatch),
     showListActions: bindActionCreators(showListActions, dispatch),
-    setListActions: bindActionCreators(setListActions, dispatch),
     routingActions: bindActionCreators(routingActions, dispatch)
   })
 )(ShowsList);
