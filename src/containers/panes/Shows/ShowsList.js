@@ -8,6 +8,8 @@ import {Button} from 'react-native-ui-xg';
 import SearchBar from 'react-native-material-design-searchbar';
 import moment from 'moment';
 
+import ExpandingView from '../../../components/ExpandingView';
+
 import Show from '../../../models/show';
 
 import ShowListHelper from '../../../helpers/showListHelper';
@@ -29,7 +31,9 @@ class ShowsList extends Component {
       view_height: 0,
       keyboard_height: 0,
       set_list_visible: false
-    }
+    };
+
+    this.jokeViews = {};
   }
 
   componentWillMount () {
@@ -85,6 +89,7 @@ class ShowsList extends Component {
     };
 
     const viewSetList = (show) => {
+      this.jokeViews = {};
       showActions.setShow(show);
       this.setState({
         set_list_visible: true
@@ -153,6 +158,16 @@ class ShowsList extends Component {
       ShowListHelper.refreshShowList({ venue_filter: venue_filter })
     };
 
+    const jokeClicked = (joke_id) => {
+      if (this.jokeViews[joke_id].visible) {
+        this.jokeViews[joke_id].jokeView.performShrink();
+        this.jokeViews[joke_id].visible = false;
+      } else {
+        this.jokeViews[joke_id].jokeView.performExpand();
+        this.jokeViews[joke_id].visible = true;
+      }
+    };
+
     return (
       <View style={{ flex: 1 }}  onLayout={(event) => this.measureView(event)}>
         <View style={{ height: this.contentHeight(), justifyContent: 'flex-start' }}>
@@ -195,12 +210,21 @@ class ShowsList extends Component {
             <Text style={ { fontWeight: 'bold', fontSize: 14 } }>Set List for { showState.show._venue }</Text>
           </View>
           <View style={ { flex: 1 } }>
-            <ScrollView>
+            <ScrollView style={ { flex: 1 } }>
               { showState.show._set_list._jokes.map((joke) => {
                 return <View key={ joke._id } style={ { flex: 1, backgroundColor: '#EEEEFF', borderBottomColor: '#CCCCCC', borderBottomWidth: 2 } }>
-                         <TouchableHighlight onPress={ () => console.log("Joke Clicked") }>
+                         <TouchableHighlight onPress={ () => jokeClicked(joke._id) }>
                            <Text style={{ color: '#000000', padding: 10, textAlign: 'center' }}>{joke._name}</Text>
                          </TouchableHighlight>
+                         <ExpandingView ref={(jokeView) => this.jokeViews[joke._id] = { jokeView: jokeView, visible: false }}
+                                        style={ { height: 200 } }
+                                        expandedHeight={200}>
+                           <View style={ { backgroundColor: '#EEEEEE', borderTopColor: '#CCCCCC', borderTopWidth: 1, borderBottomColor: '#CCCCCC', borderBottomWidth: 1 } }>
+                             <View style={{padding: 10}}>
+                              <Text style={ { fontSize: 10 }}>{ joke._notes }</Text>
+                             </View>
+                           </View>
+                         </ExpandingView>
                        </View>
               })
               }
