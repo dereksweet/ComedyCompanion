@@ -14,6 +14,10 @@ export default class SetList extends Model {
     return ['_created_at', '_updated_at'];
   }
 
+  static modelFields() {
+    return [{ field: '_jokes', class: Joke, array: true}];
+  }
+
   constructor(data = {
     _id: -1,
     _name: '',

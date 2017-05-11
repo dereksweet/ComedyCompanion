@@ -13,6 +13,10 @@ export default class Model {
     return [];
   }
 
+  static modelFields() {
+    return [];
+  }
+
   async getNextID() {
     String.prototype.left = function(n) {
       return this.substring(0, n);
@@ -61,21 +65,34 @@ export default class Model {
 }
 
 Model.get = async function(id) {
-  try {
-    const value = await AsyncStorage.getItem('@' + this.databaseName() + ':' + this.tableName() + '/' + id.toString());
-    if (value !== null){
-      let data = JSON.parse(value);
-      this.dateFields().forEach((dateField) => {
-        if (data[dateField]) {
-          data[dateField] = new Date(data[dateField]);
+  const value = await AsyncStorage.getItem('@' + this.databaseName() + ':' + this.tableName() + '/' + id.toString());
+  if (value !== null){
+    let data = JSON.parse(value);
+    this.dateFields().forEach((dateField) => {
+      if (data[dateField]) {
+        data[dateField] = new Date(data[dateField]);
+      }
+    });
+    for (let i = 0; i < this.modelFields().length; i++) {
+      const modelField = this.modelFields()[i];
+      if (modelField.array) {
+        for (let j = 0; j < data[modelField.field].length; j++) {
+          const model = await modelField.class.get(data[modelField.field][j]._id);
+          if (model) {
+            data[modelField.field][j] = model;
+          } else {
+            data[modelField.field].splice(j, 1);
+          }
         }
-      });
-      return new this.prototype.constructor(data);
-    } else {
-      throw "404 retrieving " + id.toString();
+      } else {
+        const model = await modelField.class.get(data[modelField.field]._id);
+        data[modelField.field] = model ? model : new modelField.class();
+      }
     }
-  } catch (error) {
-    console.log(error);
+    let returnObject = new this.prototype.constructor(data);
+    returnObject.save();
+
+    return returnObject;
   }
 };
 

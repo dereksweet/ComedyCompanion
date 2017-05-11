@@ -14,6 +14,10 @@ export default class Show extends Model {
     return ['_date', '_created_at', '_updated_at'];
   }
 
+  static modelFields() {
+    return [{ field: '_set_list', class: SetList, array: false}];
+  }
+
   constructor(data = {
     _id: -1,
     _venue: '',

@@ -87,17 +87,18 @@ class ShowsList extends Component {
       });
     };
 
-    const viewSetList = (show) => {
-      showActions.setShow(show);
+    const viewSetList = (id) => {
+      Show.get(id).then((show) => {
+        showActions.setShow(show);
+        let jokeViews = {};
+        show._set_list._jokes.forEach((joke) => {
+          jokeViews[joke._id] = false
+        });
 
-      let jokeViews = {};
-      show._set_list._jokes.forEach((joke) => {
-        jokeViews[joke._id] = false
-      });
-
-      this.setState({
-        jokeViews: jokeViews,
-        set_list_visible: true
+        this.setState({
+          jokeViews: jokeViews,
+          set_list_visible: true
+        });
       });
     };
 
@@ -119,7 +120,7 @@ class ShowsList extends Component {
             </View>
             <View style={{ alignItems: 'flex-end' }}>
               <View style={ showListStyles.showInfoView }>
-                <TouchableHighlight onPress={ () => viewSetList(show) } style={{ flex: 1, marginLeft: 10 }}>
+                <TouchableHighlight onPress={ () => viewSetList(show._id) } style={{ flex: 1, marginLeft: 10 }}>
                   <View style={{ flex: 1, alignItems: 'flex-end', backgroundColor: '#EEFFEE', padding: 10, borderColor: '#EEEEEE', borderWidth: 1 }}>
                     <Text style={{ textAlign: 'center', fontSize: 10 }}>View Set List</Text>
                   </View>
