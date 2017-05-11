@@ -81,14 +81,14 @@ class ShowsList extends Component {
     };
 
     const editShow = (id) => {
-      Show.get(id).then((show) => {
+      Show.get(id, true).then((show) => {
         showActions.setShow(show);
         routingActions.openModal();
       });
     };
 
     const viewSetList = (id) => {
-      Show.get(id).then((show) => {
+      Show.get(id, true).then((show) => {
         showActions.setShow(show);
         let jokeViews = {};
         show._set_list._jokes.forEach((joke) => {

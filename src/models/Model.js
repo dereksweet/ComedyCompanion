@@ -64,7 +64,7 @@ export default class Model {
   }
 }
 
-Model.get = async function(id) {
+Model.get = async function(id, refresh_models = false) {
   const value = await AsyncStorage.getItem('@' + this.databaseName() + ':' + this.tableName() + '/' + id.toString());
   if (value !== null){
     let data = JSON.parse(value);
@@ -73,30 +73,34 @@ Model.get = async function(id) {
         data[dateField] = new Date(data[dateField]);
       }
     });
-    for (let i = 0; i < this.modelFields().length; i++) {
-      const modelField = this.modelFields()[i];
-      if (modelField.array) {
-        for (let j = 0; j < data[modelField.field].length; j++) {
-          const model = await modelField.class.get(data[modelField.field][j]._id);
-          if (model) {
-            data[modelField.field][j] = model;
-          } else {
-            data[modelField.field].splice(j, 1);
+    if (refresh_models) {
+      for (let i = 0; i < this.modelFields().length; i++) {
+        const modelField = this.modelFields()[i];
+        if (modelField.array) {
+          for (let j = 0; j < data[modelField.field].length; j++) {
+            const model = await modelField.class.get(data[modelField.field][j]._id, refresh_models);
+              if (model) {
+                data[modelField.field][j] = model;
+              } else {
+                data[modelField.field].splice(j, 1);
+              }
           }
+        } else {
+          const model = await modelField.class.get(data[modelField.field]._id, refresh_models);
+          data[modelField.field] = model ? model : new modelField.class();
         }
-      } else {
-        const model = await modelField.class.get(data[modelField.field]._id);
-        data[modelField.field] = model ? model : new modelField.class();
       }
     }
     let returnObject = new this.prototype.constructor(data);
-    returnObject.save();
+    if (refresh_models) {
+      returnObject.save();
+    }
 
     return returnObject;
   }
 };
 
-Model.all = async function(sort_field = '_id', sort_order = 'ASC') {
+Model.all = async function(sort_field = '_id', sort_order = 'ASC', refresh_models = false) {
   try {
     let results = [];
 
@@ -106,7 +110,7 @@ Model.all = async function(sort_field = '_id', sort_order = 'ASC') {
       let splitKey = key.split('/');
       if (splitKey[0] === '@' + this.databaseName() + ':' + this.tableName()) {
         const key_id = parseInt(splitKey[1]);
-        const joke = await this.get(key_id);
+        const joke = await this.get(key_id, refresh_models);
         results.push(joke);
       }
     }
@@ -124,13 +128,13 @@ Model.all = async function(sort_field = '_id', sort_order = 'ASC') {
   }
 };
 
-Model.where = async function(filter_hash, operation = 'AND', sort_field = '_id', sort_order= 'ASC') {
+Model.where = async function(filter_hash, operation = 'AND', sort_field = '_id', sort_order= 'ASC', refresh_models = false) {
   try {
     let myOperation = operation.toUpperCase();
     let results = [];
     let keys = Object.keys(filter_hash);
 
-    let all_items = await this.all();
+    let all_items = await this.all(null, null, refresh_models);
 
     for (let i = 0; i < all_items.length; i++) {
       let item = all_items[i];
