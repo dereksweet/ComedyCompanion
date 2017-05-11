@@ -30,10 +30,9 @@ class ShowsList extends Component {
     this.state = {
       view_height: 0,
       keyboard_height: 0,
-      set_list_visible: false
+      set_list_visible: false,
+      jokeViews: {}
     };
-
-    this.jokeViews = {};
   }
 
   componentWillMount () {
@@ -89,9 +88,15 @@ class ShowsList extends Component {
     };
 
     const viewSetList = (show) => {
-      this.jokeViews = {};
       showActions.setShow(show);
+
+      let jokeViews = {};
+      show._set_list._jokes.forEach((joke) => {
+        jokeViews[joke._id] = false
+      });
+
       this.setState({
+        jokeViews: jokeViews,
         set_list_visible: true
       });
     };
@@ -159,13 +164,12 @@ class ShowsList extends Component {
     };
 
     const jokeClicked = (joke_id) => {
-      if (this.jokeViews[joke_id].visible) {
-        this.jokeViews[joke_id].jokeView.performShrink();
-        this.jokeViews[joke_id].visible = false;
-      } else {
-        this.jokeViews[joke_id].jokeView.performExpand();
-        this.jokeViews[joke_id].visible = true;
-      }
+      let newJokeViews = this.state.jokeViews;
+      newJokeViews[joke_id] = !newJokeViews[joke_id];
+
+      this.setState({
+        jokeViews: newJokeViews
+      });
     };
 
     return (
@@ -216,15 +220,13 @@ class ShowsList extends Component {
                          <TouchableHighlight onPress={ () => jokeClicked(joke._id) }>
                            <Text style={{ color: '#000000', padding: 10, textAlign: 'center' }}>{joke._name}</Text>
                          </TouchableHighlight>
-                         <ExpandingView ref={(jokeView) => this.jokeViews[joke._id] = { jokeView: jokeView, visible: false }}
-                                        style={ { height: 200 } }
-                                        expandedHeight={200}>
+                         <View style={ { maxHeight: this.state.jokeViews[joke._id] ? 200 : 0 } }>
                            <View style={ { backgroundColor: '#EEEEEE', borderTopColor: '#CCCCCC', borderTopWidth: 1, borderBottomColor: '#CCCCCC', borderBottomWidth: 1 } }>
                              <View style={{padding: 10}}>
                               <Text style={ { fontSize: 10 }}>{ joke._notes }</Text>
                              </View>
                            </View>
-                         </ExpandingView>
+                         </View>
                        </View>
               })
               }
