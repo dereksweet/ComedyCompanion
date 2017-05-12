@@ -7,6 +7,8 @@ import { connect } from 'react-redux';
 import {Button} from 'react-native-ui-xg';
 import { SegmentedControls } from 'react-native-radio-buttons';
 
+import Setting from '../../models/setting';
+
 import JokeListHelper from '../../helpers/jokeListHelper';
 import SetListListHelper from '../../helpers/setListListHelper';
 import ShowListHelper from '../../helpers/showListHelper';
@@ -24,6 +26,10 @@ import showListStyles from '../../stylesheets/showListStyles';
 class Settings extends Component {
   constructor(props) {
     super(props);
+
+    Setting.get(1).then((setting) => {
+      this.setting = setting;
+    });
   }
 
   render() {
@@ -36,6 +42,9 @@ class Settings extends Component {
     const jokeSortFieldButtonClicked = (sort_field_option) => {
       let sort_field = sort_field_option.value;
 
+      this.setting._jokes_sort_field = sort_field;
+      this.setting.save();
+
       jokeListActions.setJokeListSortField(sort_field);
 
       JokeListHelper.refreshJokeList({ sort_field: sort_field });
@@ -43,6 +52,9 @@ class Settings extends Component {
 
     const jokeSortOrderButtonClicked = (sort_order_option) => {
       let sort_order = sort_order_option.value;
+
+      this.setting._jokes_sort_order = sort_order;
+      this.setting.save();
 
       jokeListActions.setJokeListSortOrder(sort_order);
 
@@ -52,6 +64,9 @@ class Settings extends Component {
     const setListSortFieldButtonClicked = (sort_field_option) => {
       let sort_field = sort_field_option.value;
 
+      this.setting._set_lists_sort_field = sort_field;
+      this.setting.save();
+
       setListListActions.setSLListSortField(sort_field);
 
       SetListListHelper.refreshSLList({ sort_field: sort_field });
@@ -59,6 +74,9 @@ class Settings extends Component {
 
     const setListSortOrderButtonClicked = (sort_order_option) => {
       let sort_order = sort_order_option.value;
+
+      this.setting._set_lists_sort_order = sort_order;
+      this.setting.save();
 
       setListListActions.setSLListSortOrder(sort_order);
 
@@ -68,6 +86,9 @@ class Settings extends Component {
     const showSortFieldButtonClicked = (sort_field_option) => {
       let sort_field = sort_field_option.value;
 
+      this.setting._shows_sort_field = sort_field;
+      this.setting.save();
+
       showListActions.setShowListSortField(sort_field);
 
       ShowListHelper.refreshShowList({ sort_field: sort_field });
@@ -75,6 +96,9 @@ class Settings extends Component {
 
     const showSortOrderButtonClicked = (sort_order_option) => {
       let sort_order = sort_order_option.value;
+
+      this.setting._shows_sort_order = sort_order;
+      this.setting.save();
 
       showListActions.setShowListSortOrder(sort_order);
 

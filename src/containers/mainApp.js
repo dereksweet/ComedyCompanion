@@ -3,12 +3,18 @@
 import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import { View, Text, TouchableHighlight, Dimensions, Modal } from 'react-native';
-import * as routingActions from '../actions/routingActions';
 import { connect } from 'react-redux';
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 import {Button} from 'react-native-ui-xg';
 
 import {SlidingPane, SlidingPaneWrapper} from 'react-native-sliding-panes';
+
+import Setting from '../models/setting';
+
+import * as routingActions from '../actions/routingActions';
+import * as jokeListActions from '../actions/jokeListActions';
+import * as setListListActions from '../actions/setListListActions';
+import * as showListActions from '../actions/showListActions';
 
 import layoutStyles from '../stylesheets/layoutStyles';
 
@@ -22,9 +28,35 @@ import Shows from './panes/Shows.js';
 import EditShow from './modals/EditShow.js';
 import Settings from './modals/Settings';
 
+import JokeListHelper from '../helpers/jokeListHelper';
+import SetListListHelper from '../helpers/setListListHelper';
+import ShowListHelper from '../helpers/showListHelper';
+
 class MainApp extends Component {
   constructor(props) {
     super(props);
+  }
+
+  componentWillMount() {
+    Setting.get(1).then((setting) => {
+      if (setting) {
+        this.setting = setting;
+      } else {
+        this.setting = new Setting();
+        this.setting.save();
+      }
+
+      this.props.jokeListActions.setJokeListSortField(this.setting._jokes_sort_field);
+      this.props.jokeListActions.setJokeListSortOrder(this.setting._jokes_sort_order);
+      this.props.setListListActions.setSLListSortField(this.setting._set_lists_sort_field);
+      this.props.setListListActions.setSLListSortOrder(this.setting._set_lists_sort_order);
+      this.props.showListActions.setShowListSortField(this.setting._shows_sort_field);
+      this.props.showListActions.setShowListSortOrder(this.setting._shows_sort_order);
+
+      JokeListHelper.refreshJokeList();
+      SetListListHelper.refreshSLList();
+      ShowListHelper.refreshShowList();
+    });
   }
 
   componentDidMount() {
@@ -100,6 +132,9 @@ export default connect(state => ({
     routingState: state.routing
   }),
   (dispatch) => ({
-    actions: bindActionCreators(routingActions, dispatch)
+    actions: bindActionCreators(routingActions, dispatch),
+    jokeListActions: bindActionCreators(jokeListActions, dispatch),
+    setListListActions: bindActionCreators(setListListActions, dispatch),
+    showListActions: bindActionCreators(showListActions, dispatch)
   })
 )(MainApp);
