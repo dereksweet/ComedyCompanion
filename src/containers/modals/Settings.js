@@ -6,12 +6,17 @@ import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 import {Button} from 'react-native-ui-xg';
 import { SegmentedControls } from 'react-native-radio-buttons';
+import iCloudStorage from 'react-native-icloudstore';
 
 import Setting from '../../models/setting';
 
 import JokeListHelper from '../../helpers/jokeListHelper';
 import SetListListHelper from '../../helpers/setListListHelper';
 import ShowListHelper from '../../helpers/showListHelper';
+
+import Joke from '../../models/joke';
+import SetList from '../../models/set_list';
+import Show from '../../models/show';
 
 import * as routingActions from '../../actions/routingActions';
 import * as jokeListActions from '../../actions/jokeListActions';
@@ -103,6 +108,32 @@ class Settings extends Component {
       showListActions.setShowListSortOrder(sort_order);
 
       ShowListHelper.refreshShowList({ sort_order: sort_order });
+    };
+
+    const syncWithiCloud = () => {
+      iCloudStorage.getItem('ComedyCompanion/jokes').then((cloud_jokes) => {
+        if (!cloud_jokes) {
+          Joke.all().then((jokes) => {
+            iCloudStorage.setItem('ComedyCompanion/jokes', JSON.stringify(jokes));
+          })
+        } else {
+          let cloud_jokes_parsed = JSON.parse(cloud_jokes);
+          cloud_jokes_parsed.forEach((cloud_joke_parsed) => {
+            let cloud_joke = new Joke(cloud_joke_parsed);
+            Joke.get(cloud_joke._id).then((joke) => {
+              if (joke) {
+                if (cloud_joke._updated_at > joke._updated_at) {
+                  cloud_joke.save();
+                } else {
+                  // Save the joke to the cloud here
+                }
+              } else {
+                cloud_joke.save();
+              }
+            });
+          })
+        }
+      });
     };
 
     return (
@@ -209,6 +240,16 @@ class Settings extends Component {
                   extractText={ (option) => option.label }
                   testOptionEqual={(selectedValue, option) => selectedValue === option.value}
                 />
+              </View>
+            </View>
+            <View style={[layoutStyles.modalContentSection]}>
+              <View style={ {borderBottomColor: '#999999', borderBottomWidth: 1, paddingBottom: 5, marginBottom: 10} }>
+                <Text style={ layoutStyles.inputLabel }>iCloud Sync</Text>
+              </View>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Button type="surface" size="large" theme="blue" onPress={ syncWithiCloud }>
+                    <Text>Sync With iCloud</Text>
+                </Button>
               </View>
             </View>
           </View>
