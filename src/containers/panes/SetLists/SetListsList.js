@@ -76,7 +76,7 @@ class SetListsList extends Component {
     };
 
     const editSL = (id) => {
-      SetList.get(id).then((set_list) => {
+      SetList.get(id, true).then((set_list) => {
         setListActions.setSL(set_list);
         routingActions.openModal();
       });
