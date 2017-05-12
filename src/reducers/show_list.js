@@ -3,7 +3,7 @@ import * as types from '../actions/actionTypes';
 const initialState = {
   show_list: [],
   empty: true,
-  sort_field: '_updated_at',
+  sort_field: '_date',
   sort_order: 'DESC',
   venue_filter: ''
 };

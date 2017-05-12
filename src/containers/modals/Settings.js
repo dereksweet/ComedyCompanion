@@ -9,14 +9,17 @@ import { SegmentedControls } from 'react-native-radio-buttons';
 
 import JokeListHelper from '../../helpers/jokeListHelper';
 import SetListListHelper from '../../helpers/setListListHelper';
+import ShowListHelper from '../../helpers/showListHelper';
 
 import * as routingActions from '../../actions/routingActions';
 import * as jokeListActions from '../../actions/jokeListActions';
 import * as setListListActions from '../../actions/setListListActions';
+import * as showListActions from '../../actions/showListActions';
 
 import layoutStyles from '../../stylesheets/layoutStyles';
 import jokeListStyles from '../../stylesheets/jokeListStyles';
 import setListListStyles from '../../stylesheets/setListListStyles';
+import showListStyles from '../../stylesheets/showListStyles';
 
 class Settings extends Component {
   constructor(props) {
@@ -24,7 +27,7 @@ class Settings extends Component {
   }
 
   render() {
-    const { jokeListState, setListListState, routingActions, jokeListActions, setListListActions } = this.props;
+    const { jokeListState, setListListState, showListState, routingActions, jokeListActions, setListListActions, showListActions } = this.props;
 
     const close = () => {
       routingActions.toggleSettings();
@@ -60,6 +63,22 @@ class Settings extends Component {
       setListListActions.setSLListSortOrder(sort_order);
 
       SetListListHelper.refreshSLList({ sort_order: sort_order });
+    };
+
+    const showSortFieldButtonClicked = (sort_field_option) => {
+      let sort_field = sort_field_option.value;
+
+      showListActions.setShowListSortField(sort_field);
+
+      ShowListHelper.refreshShowList({ sort_field: sort_field });
+    };
+
+    const showSortOrderButtonClicked = (sort_order_option) => {
+      let sort_order = sort_order_option.value;
+
+      showListActions.setShowListSortOrder(sort_order);
+
+      ShowListHelper.refreshShowList({ sort_order: sort_order });
     };
 
     return (
@@ -135,6 +154,39 @@ class Settings extends Component {
                 />
               </View>
             </View>
+            <View style={[layoutStyles.modalContentSection]}>
+              <View style={ {borderBottomColor: '#999999', borderBottomWidth: 1, paddingBottom: 5, marginBottom: 10} }>
+                <Text style={ layoutStyles.inputLabel }>Shows Settings</Text>
+              </View>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Text style={ showListStyles.sortByText }>Sort by: </Text>
+                <SegmentedControls
+                  options={
+                  [{ label: 'Venue', value: '_venue' },
+                   { label: 'Date', value: '_date' }]
+                }
+                  onSelection={ (sort_field) => showSortFieldButtonClicked(sort_field) }
+                  selectedOption={ showListState.sort_field }
+                  containerStyle={{ flex: 1 }}
+                  extractText={ (option) => option.label }
+                  testOptionEqual={(selectedValue, option) => selectedValue === option.value}
+                />
+              </View>
+              <View style={{ flexDirection: 'row', alignItems: 'center', paddingTop: 10 }}>
+                <Text style={ showListStyles.sortInText }>Sort in: </Text>
+                <SegmentedControls
+                  options={
+                  [{ label: 'Ascending Order', value: 'ASC' },
+                   { label: 'Descending Order', value: 'DESC' }]
+                }
+                  onSelection={ (sort_order) => showSortOrderButtonClicked(sort_order) }
+                  selectedOption={ showListState.sort_order }
+                  containerStyle={{ flex: 1 }}
+                  extractText={ (option) => option.label }
+                  testOptionEqual={(selectedValue, option) => selectedValue === option.value}
+                />
+              </View>
+            </View>
           </View>
           <View style={{ flexDirection: 'row', width: '100%', borderTopColor: '#999999', borderTopWidth: 1 }}>
             <View style={ { flex: 1 } }>
@@ -151,11 +203,13 @@ class Settings extends Component {
 
 export default connect(state => ({
     jokeListState: state.joke_list,
-    setListListState: state.set_list_list
+    setListListState: state.set_list_list,
+    showListState: state.show_list
   }),
   (dispatch) => ({
     routingActions: bindActionCreators(routingActions, dispatch),
     jokeListActions: bindActionCreators(jokeListActions, dispatch),
-    setListListActions: bindActionCreators(setListListActions, dispatch)
+    setListListActions: bindActionCreators(setListListActions, dispatch),
+    showListActions: bindActionCreators(showListActions, dispatch)
   })
 )(Settings);
