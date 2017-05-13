@@ -113,27 +113,42 @@ class Settings extends Component {
     const syncWithiCloud = () => {
       iCloudStorage.getItem('ComedyCompanion/jokes').then((cloud_jokes) => {
         if (!cloud_jokes) {
-          Joke.all().then((jokes) => {
-            iCloudStorage.setItem('ComedyCompanion/jokes', JSON.stringify(jokes));
-          })
+          iCloudStorage.setItem('ComedyCompanion/jokes', "my_test");
         } else {
-          let cloud_jokes_parsed = JSON.parse(cloud_jokes);
-          cloud_jokes_parsed.forEach((cloud_joke_parsed) => {
-            let cloud_joke = new Joke(cloud_joke_parsed);
-            Joke.get(cloud_joke._id).then((joke) => {
-              if (joke) {
-                if (cloud_joke._updated_at > joke._updated_at) {
-                  cloud_joke.save();
-                } else {
-                  // Save the joke to the cloud here
-                }
-              } else {
-                cloud_joke.save();
-              }
-            });
-          })
+          console.log("iCloud Jokes: ", cloud_jokes);
         }
       });
+
+      // iCloudStorage.removeItem('ComedyCompanion/jokes');
+      // iCloudStorage.getAllKeys().then((all_keys) => {
+      //   console.log("all_keys: ", all_keys);
+      // });
+      // iCloudStorage.getItem('ComedyCompanion/jokes').then((cloud_jokes) => {
+      //   if (!cloud_jokes) {
+      //     Joke.all().then((jokes) => {
+      //       iCloudStorage.setItem('ComedyCompanion/jokes', JSON.stringify(jokes));
+      //     });
+      //   } else {
+      //     console.log("cloud_jokes: ", JSON.parse(cloud_jokes));
+      //   }
+        // } else {
+        //   let cloud_jokes_parsed = JSON.parse(cloud_jokes);
+        //   cloud_jokes_parsed.forEach((cloud_joke_parsed) => {
+        //     let cloud_joke = new Joke(cloud_joke_parsed);
+        //     Joke.get(cloud_joke._id).then((joke) => {
+        //       if (joke) {
+        //         if (cloud_joke._updated_at > joke._updated_at) {
+        //           cloud_joke.save();
+        //         } else {
+        //           // Save the joke to the cloud here
+        //         }
+        //       } else {
+        //         cloud_joke.save();
+        //       }
+        //     });
+        //   })
+        // }
+      // });
     };
 
     return (
