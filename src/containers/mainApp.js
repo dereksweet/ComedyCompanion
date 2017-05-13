@@ -6,7 +6,6 @@ import { View, Text, TouchableHighlight, Dimensions, Modal } from 'react-native'
 import { connect } from 'react-redux';
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 import {Button} from 'react-native-ui-xg';
-import iCloudStorage from 'react-native-icloudstore';
 
 import {SlidingPane, SlidingPaneWrapper} from 'react-native-sliding-panes';
 
@@ -58,10 +57,6 @@ class MainApp extends Component {
       SetListListHelper.refreshSLList();
       ShowListHelper.refreshShowList();
     });
-
-    // iCloudStorage.removeItem('MY_TEST');
-    // iCloudStorage.setItem('MY_TEST', 'BLAH BLOO');
-    // iCloudStorage.getItem('MY_TEST').then(result => console.log(result));
   }
 
   componentDidMount() {

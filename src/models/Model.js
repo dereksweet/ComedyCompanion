@@ -18,21 +18,12 @@ export default class Model {
   }
 
   async getNextID() {
-    String.prototype.left = function(n) {
-      return this.substring(0, n);
-    };
-
-    const allKeys = await AsyncStorage.getAllKeys();
     let max_id = 1;
-    allKeys.forEach((key) => {
-      let splitKey = key.split('/');
-      if (splitKey[0] === '@' + this.constructor.databaseName() + ':' + this.constructor.tableName()) {
-        const key_id = parseInt(splitKey[1]);
-        if (key_id >= max_id) {
-          max_id = key_id + 1;
-        }
-      }
-    });
+    const value = await AsyncStorage.getItem('@' + this.constructor.databaseName() + ':' + this.constructor.tableName() + '_next_id');
+    if (value) {
+      max_id = JSON.parse(value) + 1;
+    }
+    AsyncStorage.setItem('@' + this.constructor.databaseName() + ':' + this.constructor.tableName() + '_next_id', JSON.stringify(max_id));
 
     return max_id;
   }
