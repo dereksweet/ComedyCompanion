@@ -21,7 +21,8 @@
     "react-native-vector-icons": "^4.0.0",
     "react-redux": "4.4.7",
     "redux": "3.6.0",
-    "redux-thunk": "2.2.0"
+    "redux-thunk": "2.2.0",
+    "uuid": "^3.0.1"
   },
   "devDependencies": {
     "babel-jest": "19.0.0",

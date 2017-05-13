@@ -1,6 +1,8 @@
 import Model from './Model';
 import SetList from './set_list';
 
+import uuidV4 from 'uuid/v4';
+
 export default class Show extends Model {
   static databaseName() {
     return "CCDB";
@@ -20,6 +22,7 @@ export default class Show extends Model {
 
   constructor(data = {
     _id: -1,
+    _uuid: uuidV4(),
     _venue: '',
     _date: new Date(),
     _city: '',
@@ -32,6 +35,7 @@ export default class Show extends Model {
     super();
 
     this._id             = data._id;
+    this._uuid           = data._uuid;
     this._venue          = data._venue;
     this._date           = data._date;
     this._city           = data._city;

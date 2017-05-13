@@ -1,5 +1,7 @@
 import Model from './Model';
 
+import uuidV4 from 'uuid/v4';
+
 export default class Joke extends Model {
   static databaseName() {
     return "CCDB";
@@ -15,6 +17,7 @@ export default class Joke extends Model {
 
   constructor(data = {
     _id: -1,
+    _uuid: uuidV4(),
     _in_development: false,
     _name: '',
     _notes: '',
@@ -26,6 +29,7 @@ export default class Joke extends Model {
     super();
 
     this._id             = data._id;
+    this._uuid           = data._uuid;
     this._in_development = data._in_development;
     this._name           = data._name;
     this._notes          = data._notes;
