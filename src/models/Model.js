@@ -36,12 +36,14 @@ export default class Model {
     }
   }
 
-  async save(callback = null) {
+  async save(callback = null, refresh_models=false) {
     if (this._id == -1) {
       this._id = await this.getNextID();
     }
 
-    this._updated_at = new Date();
+    if (!refresh_models) {
+      this._updated_at = new Date();
+    }
 
     try {
       AsyncStorage.setItem(
@@ -84,7 +86,7 @@ Model.get = async function(id, refresh_models = false) {
     }
     let returnObject = new this.prototype.constructor(data);
     if (refresh_models) {
-      returnObject.save();
+      returnObject.save(null, refresh_models);
     }
 
     return returnObject;
