@@ -32,6 +32,17 @@ class Settings extends Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      showWriteConfirm: false,
+      showReadConfirm: false,
+      cloudJokesCount: 0,
+      cloudSetListsCount: 0,
+      cloudShowsCount: 0,
+      localJokesCount: 0,
+      localSetListsCount: 0,
+      localShowsCount: 0
+    };
+
     Setting.get(1).then((setting) => {
       this.setting = setting;
     });
@@ -110,14 +121,29 @@ class Settings extends Component {
       ShowListHelper.refreshShowList({ sort_order: sort_order });
     };
 
-    const writeToiCloud = async () => {
+    const confirmWriteToiCloud = async () => {
       const local_jokes = await Joke.all(null, null, true);
       const local_set_lists = await SetList.all(null, null, true);
       const local_shows = await Show.all(null, null, true);
 
-      console.log('Writing ' + local_jokes.length + ' jokes to iCloud');
-      console.log('Writing ' + local_set_lists.length + ' set lists to iCloud');
-      console.log('Writing ' + local_shows.length + ' shows to iCloud');
+      this.setState({
+        localJokesCount: local_jokes.length,
+        localSetListsCount: local_set_lists.length,
+        localShowsCount: local_shows.length,
+        showWriteConfirm: true
+      });
+    };
+
+    const cancelWriteToiCloud = async () => {
+      this.setState({
+        showWriteConfirm: false
+      });
+    };
+
+    const writeToiCloud = async () => {
+      const local_jokes = await Joke.all(null, null, true);
+      const local_set_lists = await SetList.all(null, null, true);
+      const local_shows = await Show.all(null, null, true);
 
       await iCloudStorage.setItem('ComedyCompanion:jokes', JSON.stringify(local_jokes));
       await iCloudStorage.setItem('ComedyCompanion:set_lists', JSON.stringify(local_set_lists));
@@ -125,30 +151,49 @@ class Settings extends Component {
 
       if (local_jokes.length > 0) {
         const jokes_next_id = await AsyncStorage.getItem('@' + Joke.databaseName() + ':' + Joke.tableName() + '_next_id');
-        await iCloudStorage.setItem('ComedyCompanion:jokes_next_id', JSON.stringify(jokes_next_id));
+        await iCloudStorage.setItem('ComedyCompanion:jokes_next_id', jokes_next_id);
       }
 
       if (local_set_lists.length > 0) {
         const set_lists_next_id = await AsyncStorage.getItem('@' + SetList.databaseName() + ':' + SetList.tableName() + '_next_id');
-        await iCloudStorage.setItem('ComedyCompanion:set_lists_next_id', JSON.stringify(set_lists_next_id));
+        await iCloudStorage.setItem('ComedyCompanion:set_lists_next_id', set_lists_next_id);
       }
 
       if (local_shows.length > 0) {
         const shows_next_id = await AsyncStorage.getItem('@' + Show.databaseName() + ':' + Show.tableName() + '_next_id');
-        await iCloudStorage.setItem('ComedyCompanion:shows_next_id', JSON.stringify(shows_next_id));
+        await iCloudStorage.setItem('ComedyCompanion:shows_next_id', shows_next_id);
       }
 
-      alert('Jokes written to iCloud');
+      this.setState({
+        showWriteConfirm: false
+      });
+
+      alert('Write to iCloud Complete!');
+    };
+
+    const confirmReadFromiCloud = async () => {
+      const cloud_jokes = JSON.parse(await iCloudStorage.getItem('ComedyCompanion:jokes'));
+      const cloud_set_lists = JSON.parse(await iCloudStorage.getItem('ComedyCompanion:set_lists'));
+      const cloud_shows = JSON.parse(await iCloudStorage.getItem('ComedyCompanion:shows'));
+
+      this.setState({
+        cloudJokesCount: cloud_jokes.length,
+        cloudSetListsCount: cloud_set_lists.length,
+        cloudShowsCount: cloud_shows.length,
+        showReadConfirm: true
+      });
+    };
+
+    const cancelReadFromiCloud = async () => {
+      this.setState({
+        showReadConfirm: false
+      });
     };
 
     const readFromiCloud = async () => {
       const cloud_jokes = JSON.parse(await iCloudStorage.getItem('ComedyCompanion:jokes'));
       const cloud_set_lists = JSON.parse(await iCloudStorage.getItem('ComedyCompanion:set_lists'));
       const cloud_shows = JSON.parse(await iCloudStorage.getItem('ComedyCompanion:shows'));
-
-      console.log('Reading ' + cloud_jokes.length + ' jokes from iCloud');
-      console.log('Reading ' + cloud_set_lists.length + ' set lists from iCloud');
-      console.log('Reading ' + cloud_shows.length + ' shows from iCloud');
 
       await Joke.destroy_all();
       await SetList.destroy_all();
@@ -191,101 +236,51 @@ class Settings extends Component {
       await ShowListHelper.refreshShowList();
       await ShowListHelper.refreshShowListEmpty();
 
-      alert('Jokes read from iCloud');
-    };
-
-    const syncWithiCloud = async () => {
-      // await iCloudStorage.setItem('ComedyCompanion:jokes/1', 'test1');
-      // await iCloudStorage.setItem('ComedyCompanion:jokes/2', 'test2');
-      // await iCloudStorage.setItem('ComedyCompanion:set_lists/1', 'test1');
-      // await iCloudStorage.setItem('ComedyCompanion:shows/1', 'test1');
-      // await iCloudStorage.setItem('ComedyCompanion:shows/2', 'test2');
-
-      // await iCloudStorage.removeItem('ComedyCompanion:jokes/1');
-      // await iCloudStorage.removeItem('ComedyCompanion:jokes/2');
-      // await iCloudStorage.removeItem('ComedyCompanion:set_lists/1');
-      // await iCloudStorage.removeItem('ComedyCompanion:shows/1');
-      // await iCloudStorage.removeItem('ComedyCompanion:shows/2');
-
-      let cloud_keys = await iCloudStorage.getAllKeys();
-      console.log("cloud_keys: ", cloud_keys);
-      let cloud_joke_ids = [];
-      let cloud_set_list_ids = [];
-      let cloud_show_ids = [];
-      
-      cloud_keys.forEach((key) => {
-        let splitKey = key.split('/');
-        if (splitKey[0] === 'ComedyCompanion:jokes') {
-          cloud_joke_ids.push({id: parseInt(splitKey[1]), synced: false});
-        } else if (splitKey[0] === 'ComedyCompanion:set_lists') {
-          cloud_set_list_ids.push({id: parseInt(splitKey[1]), synced: false});
-        } else if (splitKey[0] === 'ComedyCompanion:shows') {
-          cloud_show_ids.push({id: parseInt(splitKey[1]), synced: false});
-        }
+      this.setState({
+        showReadConfirm: false
       });
 
-      console.log("cloud_joke_ids", cloud_joke_ids);
-
-      let local_jokes = await Joke.all(null, null, true);
-      let local_set_lists = await SetList.all(null, null, true);
-      let local_shows = await Show.all(null, null, true);
-
-      for (let i = 0; i < local_jokes.length; i++) {
-        const local_joke = local_jokes[i];
-        console.log("local_joke: ", local_joke);
-        if (cloud_joke_ids.filter((cloud_joke_id) => cloud_joke_id.id == local_joke._id).length > 0) {
-          console.log("Syncing ", local_joke._id.toString());
-        } else {
-          console.log("Setting ", local_joke._id.toString());
-          await iCloudStorage.setItem('ComedyCompanion:jokes/' + local_joke._id.toString(), JSON.stringify(local_joke));
-        }
-      }
-
-
-      // iCloudStorage.getItem('ComedyCompanion/jokes').then((cloud_jokes) => {
-      //   if (!cloud_jokes) {
-      //     iCloudStorage.setItem('ComedyCompanion/jokes', "my_test");
-      //   } else {
-      //     console.log("iCloud Jokes: ", cloud_jokes);
-      //   }
-      // });
-
-      // iCloudStorage.removeItem('ComedyCompanion/jokes');
-      // iCloudStorage.getAllKeys().then((all_keys) => {
-      //   console.log("all_keys: ", all_keys);
-      // });
-      // iCloudStorage.getItem('ComedyCompanion/jokes').then((cloud_jokes) => {
-      //   if (!cloud_jokes) {
-      //     Joke.all().then((jokes) => {
-      //       iCloudStorage.setItem('ComedyCompanion/jokes', JSON.stringify(jokes));
-      //     });
-      //   } else {
-      //     console.log("cloud_jokes: ", JSON.parse(cloud_jokes));
-      //   }
-        // } else {
-        //   let cloud_jokes_parsed = JSON.parse(cloud_jokes);
-        //   cloud_jokes_parsed.forEach((cloud_joke_parsed) => {
-        //     let cloud_joke = new Joke(cloud_joke_parsed);
-        //     Joke.get(cloud_joke._id).then((joke) => {
-        //       if (joke) {
-        //         if (cloud_joke._updated_at > joke._updated_at) {
-        //           cloud_joke.save();
-        //         } else {
-        //           // Save the joke to the cloud here
-        //         }
-        //       } else {
-        //         cloud_joke.save();
-        //       }
-        //     });
-        //   })
-        // }
-      // });
+      alert('Read from iCloud Complete!');
     };
 
     return (
       <View style={[layoutStyles.modal, layoutStyles.centeredFlex]}>
         <View style={layoutStyles.statusBarBuffer} />
         <View style={layoutStyles.modalContent}>
+          { this.state.showReadConfirm &&
+            <View style={ layoutStyles.confirmBox }>
+              <Text style={{ textAlign: 'center' }}>This is what is stored on your iCloud:</Text>
+              <Text style={{ paddingTop: 25 }}>{ this.state.cloudJokesCount } Jokes</Text>
+              <Text>{ this.state.cloudSetListsCount } Set Lists</Text>
+              <Text>{ this.state.cloudShowsCount } Shows</Text>
+              <Text style={{ textAlign: 'center', paddingTop: 25, fontWeight: 'bold' }}>ARE YOU SURE YOU WANT TO REPLACE EVERYTHING WITH WHAT IS ON ICLOUD?</Text>
+              <View style={{ paddingTop: 25, flexDirection: 'row' }}>
+                <Button type="surface" size="large" theme="red" onPress={ cancelReadFromiCloud }>
+                  <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>NO</Text>
+                </Button>
+                <Button selfStyle={{ marginLeft: 10 }} type="surface" size="large" theme="blue" onPress={ readFromiCloud }>
+                  <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>YES</Text>
+                </Button>
+              </View>
+            </View>
+          }
+          { this.state.showWriteConfirm &&
+          <View style={ layoutStyles.confirmBox }>
+            <Text style={{ textAlign: 'center' }}>This is what is stored on your device:</Text>
+            <Text style={{ paddingTop: 25 }}>{ this.state.localJokesCount } Jokes</Text>
+            <Text>{ this.state.localSetListsCount } Set Lists</Text>
+            <Text>{ this.state.localShowsCount } Shows</Text>
+            <Text style={{ textAlign: 'center', paddingTop: 25, fontWeight: 'bold' }}>ARE YOU SURE YOU WANT TO OVERWRITE EVERYTHING ON ICLOUD?</Text>
+            <View style={{ paddingTop: 25, flexDirection: 'row' }}>
+              <Button type="surface" size="large" theme="red" onPress={ cancelWriteToiCloud }>
+                <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>NO</Text>
+              </Button>
+              <Button selfStyle={{ marginLeft: 10 }} type="surface" size="large" theme="blue" onPress={ writeToiCloud }>
+                <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>YES</Text>
+              </Button>
+            </View>
+          </View>
+          }
           <View style={{ flex: 1 }}>
             <View style={[layoutStyles.modalContentSection]}>
               <View style={ {borderBottomColor: '#999999', borderBottomWidth: 1, paddingBottom: 5, marginBottom: 10} }>
@@ -393,10 +388,10 @@ class Settings extends Component {
                 <Text style={ layoutStyles.inputLabel }>iCloud Sync</Text>
               </View>
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <Button type="surface" size="large" theme="blue" onPress={ writeToiCloud }>
+                <Button type="surface" size="large" theme="blue" onPress={ confirmWriteToiCloud }>
                     <Text>Write to iCloud</Text>
                 </Button>
-                <Button type="surface" size="large" theme="blue" onPress={ readFromiCloud } selfStyle={{ marginLeft: 10 }}>
+                <Button type="surface" size="large" theme="blue" onPress={ confirmReadFromiCloud } selfStyle={{ marginLeft: 10 }}>
                   <Text>Read from iCloud</Text>
                 </Button>
               </View>

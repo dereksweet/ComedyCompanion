@@ -82,5 +82,19 @@ export default layoutStyles = StyleSheet.create({
     alignItems: 'center',
     paddingTop: 7,
     paddingLeft: 7
+  },
+  confirmBox: {
+    borderColor: '#000000',
+    borderWidth: 2,
+    backgroundColor: '#FFFFFF',
+    position: 'absolute',
+    alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    top: '20%',
+    width: '75%',
+    height: '50%',
+    padding: 10,
+    zIndex: 99
   }
 });
