@@ -3,7 +3,7 @@ import { StyleSheet, Platform } from 'react-native';
 export default jokeListStyles = StyleSheet.create({
   jokeRow: {
     width: '100%',
-    minHeight: 40,
+    minHeight: 60,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#FAFAFA',
