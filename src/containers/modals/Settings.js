@@ -201,17 +201,17 @@ class Settings extends Component {
 
       for (let i = 0; i < cloud_jokes.length; i++) {
         const cloud_joke = new Joke(cloud_jokes[i]);
-        await cloud_joke.save();
+        await cloud_joke.save(null, true);
       }
 
       for (let i = 0; i < cloud_set_lists.length; i++) {
         const cloud_set_list = new SetList(cloud_set_lists[i]);
-        await cloud_set_list.save();
+        await cloud_set_list.save(null, true);
       }
 
       for (let i = 0; i < cloud_shows.length; i++) {
         const cloud_show = new Show(cloud_shows[i]);
-        await cloud_show.save();
+        await cloud_show.save(null, true);
       }
 
       if (cloud_jokes.length > 0) {
