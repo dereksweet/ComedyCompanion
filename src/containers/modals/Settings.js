@@ -291,8 +291,7 @@ class Settings extends Component {
                 <SegmentedControls
                   options={
                   [{ label: 'Updated', value: '_updated_at' },
-                   { label: 'Name', value: '_name' },
-                   { label: 'Rating', value: '_rating' }]
+                   { label: 'Name', value: '_name' }]
                 }
                   onSelection={ (sort_field) => jokeSortFieldButtonClicked(sort_field) }
                   selectedOption={ jokeListState.sort_field }

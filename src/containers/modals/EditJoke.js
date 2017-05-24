@@ -93,7 +93,7 @@ class EditJoke extends Component {
               <Switch onValueChange={ jokeActions.toggleInDevelopment }
                       value={jokeState.joke._in_development} />
               <View style={{flex: 1, flexDirection: 'row', justifyContent: 'flex-end'}}>
-                <Text style={ layoutStyles.inputLabel }>Rating: { jokeState.joke._rating.toFixed(1) }</Text>
+                <Text style={ layoutStyles.inputLabel }></Text>
               </View>
             </View>
             <View style={ [layoutStyles.modalContentSection, { flexDirection: 'row', alignItems: 'center'  }] }>

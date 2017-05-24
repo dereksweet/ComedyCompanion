@@ -95,7 +95,6 @@ class JokesList extends Component {
               <View style={ jokeListStyles.jokeInfoView }>
                 <Text style={ jokeListStyles.updatedText }>Last Updated:</Text>
                 <Text style={ jokeListStyles.updatedText }>{ moment(joke._updated_at).format("MMM DD, YYYY") }</Text>
-                <Text style={ jokeListStyles.ratingText }>Rating: { joke._rating.toFixed(1) }</Text>
               </View>
             </View>
           </View>
