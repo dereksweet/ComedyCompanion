@@ -38,15 +38,19 @@ class SetListsList extends Component {
   }
 
   keyboardDidShow (e) {
-    this.setState({
-      keyboard_height: e.endCoordinates.height
-    });
+    if (this.props.routingState.pane === 'set_lists') {
+      this.setState({
+        keyboard_height: e.endCoordinates.height
+      });
+    }
   }
 
   keyboardDidHide (e) {
-    this.setState({
-      keyboard_height: 0
-    });
+    if (this.props.routingState.pane === 'set_lists') {
+      this.setState({
+        keyboard_height: 0
+      });
+    }
   }
 
   componentWillUnmount () {
@@ -55,9 +59,11 @@ class SetListsList extends Component {
   }
 
   measureView(event) {
-    this.setState({
-      view_height: event.nativeEvent.layout.height
-    });
+    if (this.props.routingState.pane === 'set_lists') {
+      this.setState({
+        view_height: event.nativeEvent.layout.height
+      });
+    }
   }
 
   contentHeight() {
@@ -65,6 +71,8 @@ class SetListsList extends Component {
   }
 
   render() {
+    console.log("Render SetListsList.js");
+
     const { setListListState,  routingActions, setListActions, setListListActions } = this.props;
 
     let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -151,7 +159,8 @@ class SetListsList extends Component {
 }
 
 export default connect(state => ({
-    setListListState: state.set_list_list
+    setListListState: state.set_list_list,
+    routingState: state.routing
   }),
   (dispatch) => ({
     setListActions: bindActionCreators(setListActions, dispatch),

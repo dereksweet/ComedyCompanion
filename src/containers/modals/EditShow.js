@@ -77,6 +77,8 @@ class EditShow extends Component {
   }
 
   render() {
+    console.log("Render EditShow.js");
+
     const { showState, showListState, showActions, showListActions, routingActions } = this.props;
 
     const selectSetList = (set_list_id) => {

@@ -21,6 +21,8 @@ class NoSetLists extends Component {
   }
 
   render() {
+    console.log("Render NoSetLists.js");
+
     const { routingActions, setListActions } = this.props;
 
     const addSetList = () => {

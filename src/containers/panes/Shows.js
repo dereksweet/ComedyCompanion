@@ -25,6 +25,8 @@ class Shows extends Component {
   }
 
   render() {
+    console.log("Render Shows.js");
+
     const { showListState } = this.props;
 
     return (

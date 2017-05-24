@@ -21,6 +21,8 @@ class NoJokes extends Component {
   }
 
   render() {
+    console.log("Render NoJokes.js");
+
     const { routingActions, jokeActions } = this.props;
 
     const addJoke = () => {

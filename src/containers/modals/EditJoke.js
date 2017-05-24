@@ -63,6 +63,8 @@ class EditJoke extends Component {
   }
 
   render() {
+    console.log("Render EditJoke.js");
+
     const { jokeState, jokeListState, jokeActions, jokeListActions, routingActions } = this.props;
 
     const save = () => {

@@ -25,6 +25,8 @@ class SetLists extends Component {
   }
 
   render() {
+    console.log("Render SetLists.js");
+
     const { setListListState } = this.props;
 
     return (

@@ -38,15 +38,19 @@ class JokesList extends Component {
   }
 
   keyboardDidShow (e) {
-    this.setState({
-      keyboard_height: e.endCoordinates.height
-    });
+    if (this.props.routingState.pane === 'jokes') {
+      this.setState({
+        keyboard_height: e.endCoordinates.height
+      });
+    }
   }
 
   keyboardDidHide (e) {
-    this.setState({
-      keyboard_height: 0
-    });
+    if (this.props.routingState.pane === 'jokes') {
+      this.setState({
+        keyboard_height: 0
+      });
+    }
   }
 
   componentWillUnmount () {
@@ -55,9 +59,11 @@ class JokesList extends Component {
   }
 
   measureView(event) {
-    this.setState({
-      view_height: event.nativeEvent.layout.height
-    });
+    if (this.props.routingState.pane === 'jokes') {
+      this.setState({
+        view_height: event.nativeEvent.layout.height
+      });
+    }
   }
 
   contentHeight() {
@@ -65,6 +71,8 @@ class JokesList extends Component {
   }
 
   render() {
+    console.log("Render JokesList.js");
+
     const { jokeListState, jokeActions, routingActions, jokeListActions } = this.props;
 
     let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -180,7 +188,8 @@ class JokesList extends Component {
 }
 
 export default connect(state => ({
-    jokeListState: state.joke_list
+    jokeListState: state.joke_list,
+    routingState: state.routing
   }),
   (dispatch) => ({
     jokeActions: bindActionCreators(jokeActions, dispatch),

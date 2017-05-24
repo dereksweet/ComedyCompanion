@@ -43,15 +43,19 @@ class ShowsList extends Component {
   }
 
   keyboardDidShow (e) {
-    this.setState({
-      keyboard_height: e.endCoordinates.height
-    });
+    if (this.props.routingState.pane === 'shows') {
+      this.setState({
+        keyboard_height: e.endCoordinates.height
+      });
+    }
   }
 
   keyboardDidHide (e) {
-    this.setState({
-      keyboard_height: 0
-    });
+    if (this.props.routingState.pane === 'shows') {
+      this.setState({
+        keyboard_height: 0
+      });
+    }
   }
 
   componentWillUnmount () {
@@ -60,9 +64,11 @@ class ShowsList extends Component {
   }
 
   measureView(event) {
-    this.setState({
-      view_height: event.nativeEvent.layout.height
-    });
+    if (this.props.routingState.pane === 'shows') {
+      this.setState({
+        view_height: event.nativeEvent.layout.height
+      });
+    }
   }
 
   contentHeight() {
@@ -70,6 +76,8 @@ class ShowsList extends Component {
   }
 
   render() {
+    console.log("Render ShowsList.js");
+
     const { showListState, showState, showActions, routingActions, showListActions } = this.props;
 
     let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -246,7 +254,8 @@ class ShowsList extends Component {
 
 export default connect(state => ({
     showState: state.show,
-    showListState: state.show_list
+    showListState: state.show_list,
+    routingState: state.routing
   }),
   (dispatch) => ({
     showActions: bindActionCreators(showActions, dispatch),

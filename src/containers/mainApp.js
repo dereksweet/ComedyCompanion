@@ -71,6 +71,8 @@ class MainApp extends Component {
   }
 
   render() {
+    console.log("Render mainApp.js");
+
     const { routingState, actions } = this.props;
 
     const setActivePane = (pane) => {

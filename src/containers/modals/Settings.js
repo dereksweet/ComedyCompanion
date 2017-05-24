@@ -49,6 +49,8 @@ class Settings extends Component {
   }
 
   render() {
+    console.log("Render Settings.js");
+
     const { jokeListState, setListListState, showListState, routingActions, jokeListActions, setListListActions, showListActions } = this.props;
 
     const close = () => {

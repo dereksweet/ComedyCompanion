@@ -21,6 +21,8 @@ export default class ExpandingView extends React.Component {
     ).start();
   }
   render() {
+    console.log("Render ExpandingView.js");
+
     return (
       <Animated.View
         style={[...this.props.style, {maxHeight: this.state.heightAnim}]}>
