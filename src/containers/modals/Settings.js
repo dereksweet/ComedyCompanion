@@ -1,7 +1,7 @@
 'use strict';
 
 import React, {Component} from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, AsyncStorage } from 'react-native';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 import {Button} from 'react-native-ui-xg';
@@ -110,14 +110,145 @@ class Settings extends Component {
       ShowListHelper.refreshShowList({ sort_order: sort_order });
     };
 
-    const syncWithiCloud = () => {
-      iCloudStorage.getItem('ComedyCompanion/jokes').then((cloud_jokes) => {
-        if (!cloud_jokes) {
-          iCloudStorage.setItem('ComedyCompanion/jokes', "my_test");
-        } else {
-          console.log("iCloud Jokes: ", cloud_jokes);
+    const writeToiCloud = async () => {
+      const local_jokes = await Joke.all(null, null, true);
+      const local_set_lists = await SetList.all(null, null, true);
+      const local_shows = await Show.all(null, null, true);
+
+      console.log('Writing ' + local_jokes.length + ' jokes to iCloud');
+      console.log('Writing ' + local_set_lists.length + ' set lists to iCloud');
+      console.log('Writing ' + local_shows.length + ' shows to iCloud');
+
+      await iCloudStorage.setItem('ComedyCompanion:jokes', JSON.stringify(local_jokes));
+      await iCloudStorage.setItem('ComedyCompanion:set_lists', JSON.stringify(local_set_lists));
+      await iCloudStorage.setItem('ComedyCompanion:shows', JSON.stringify(local_shows));
+
+      if (local_jokes.length > 0) {
+        const jokes_next_id = await AsyncStorage.getItem('@' + Joke.databaseName() + ':' + Joke.tableName() + '_next_id');
+        await iCloudStorage.setItem('ComedyCompanion:jokes_next_id', JSON.stringify(jokes_next_id));
+      }
+
+      if (local_set_lists.length > 0) {
+        const set_lists_next_id = await AsyncStorage.getItem('@' + SetList.databaseName() + ':' + SetList.tableName() + '_next_id');
+        await iCloudStorage.setItem('ComedyCompanion:set_lists_next_id', JSON.stringify(set_lists_next_id));
+      }
+
+      if (local_shows.length > 0) {
+        const shows_next_id = await AsyncStorage.getItem('@' + Show.databaseName() + ':' + Show.tableName() + '_next_id');
+        await iCloudStorage.setItem('ComedyCompanion:shows_next_id', JSON.stringify(shows_next_id));
+      }
+
+      alert('Jokes written to iCloud');
+    };
+
+    const readFromiCloud = async () => {
+      const cloud_jokes = JSON.parse(await iCloudStorage.getItem('ComedyCompanion:jokes'));
+      const cloud_set_lists = JSON.parse(await iCloudStorage.getItem('ComedyCompanion:set_lists'));
+      const cloud_shows = JSON.parse(await iCloudStorage.getItem('ComedyCompanion:shows'));
+
+      console.log('Reading ' + cloud_jokes.length + ' jokes from iCloud');
+      console.log('Reading ' + cloud_set_lists.length + ' set lists from iCloud');
+      console.log('Reading ' + cloud_shows.length + ' shows from iCloud');
+
+      await Joke.destroy_all();
+      await SetList.destroy_all();
+      await Show.destroy_all();
+
+      for (let i = 0; i < cloud_jokes.length; i++) {
+        const cloud_joke = new Joke(cloud_jokes[i]);
+        await cloud_joke.save();
+      }
+
+      for (let i = 0; i < cloud_set_lists.length; i++) {
+        const cloud_set_list = new SetList(cloud_set_lists[i]);
+        await cloud_set_list.save();
+      }
+
+      for (let i = 0; i < cloud_shows.length; i++) {
+        const cloud_show = new Show(cloud_shows[i]);
+        await cloud_show.save();
+      }
+
+      if (cloud_jokes.length > 0) {
+        const jokes_next_id = JSON.parse(await iCloudStorage.getItem('ComedyCompanion:jokes_next_id'));
+        await AsyncStorage.setItem('@' + Joke.databaseName() + ':' + Joke.tableName() + '_next_id', JSON.stringify(jokes_next_id));
+      }
+
+      if (cloud_set_lists.length > 0) {
+        const set_lists_next_id = JSON.parse(await iCloudStorage.getItem('ComedyCompanion:set_lists_next_id'));
+        await AsyncStorage.setItem('@' + SetList.databaseName() + ':' + SetList.tableName() + '_next_id', JSON.stringify(set_lists_next_id));
+      }
+
+      if (cloud_shows.length > 0) {
+        const shows_next_id = JSON.parse(await iCloudStorage.getItem('ComedyCompanion:shows_next_id'));
+        await AsyncStorage.setItem('@' + Show.databaseName() + ':' + Show.tableName() + '_next_id', JSON.stringify(shows_next_id));
+      }
+
+      await JokeListHelper.refreshJokeList();
+      await JokeListHelper.refreshJokeListEmpty();
+      await SetListListHelper.refreshSLList();
+      await SetListListHelper.refreshSLListEmpty();
+      await ShowListHelper.refreshShowList();
+      await ShowListHelper.refreshShowListEmpty();
+
+      alert('Jokes read from iCloud');
+    };
+
+    const syncWithiCloud = async () => {
+      // await iCloudStorage.setItem('ComedyCompanion:jokes/1', 'test1');
+      // await iCloudStorage.setItem('ComedyCompanion:jokes/2', 'test2');
+      // await iCloudStorage.setItem('ComedyCompanion:set_lists/1', 'test1');
+      // await iCloudStorage.setItem('ComedyCompanion:shows/1', 'test1');
+      // await iCloudStorage.setItem('ComedyCompanion:shows/2', 'test2');
+
+      // await iCloudStorage.removeItem('ComedyCompanion:jokes/1');
+      // await iCloudStorage.removeItem('ComedyCompanion:jokes/2');
+      // await iCloudStorage.removeItem('ComedyCompanion:set_lists/1');
+      // await iCloudStorage.removeItem('ComedyCompanion:shows/1');
+      // await iCloudStorage.removeItem('ComedyCompanion:shows/2');
+
+      let cloud_keys = await iCloudStorage.getAllKeys();
+      console.log("cloud_keys: ", cloud_keys);
+      let cloud_joke_ids = [];
+      let cloud_set_list_ids = [];
+      let cloud_show_ids = [];
+      
+      cloud_keys.forEach((key) => {
+        let splitKey = key.split('/');
+        if (splitKey[0] === 'ComedyCompanion:jokes') {
+          cloud_joke_ids.push({id: parseInt(splitKey[1]), synced: false});
+        } else if (splitKey[0] === 'ComedyCompanion:set_lists') {
+          cloud_set_list_ids.push({id: parseInt(splitKey[1]), synced: false});
+        } else if (splitKey[0] === 'ComedyCompanion:shows') {
+          cloud_show_ids.push({id: parseInt(splitKey[1]), synced: false});
         }
       });
+
+      console.log("cloud_joke_ids", cloud_joke_ids);
+
+      let local_jokes = await Joke.all(null, null, true);
+      let local_set_lists = await SetList.all(null, null, true);
+      let local_shows = await Show.all(null, null, true);
+
+      for (let i = 0; i < local_jokes.length; i++) {
+        const local_joke = local_jokes[i];
+        console.log("local_joke: ", local_joke);
+        if (cloud_joke_ids.filter((cloud_joke_id) => cloud_joke_id.id == local_joke._id).length > 0) {
+          console.log("Syncing ", local_joke._id.toString());
+        } else {
+          console.log("Setting ", local_joke._id.toString());
+          await iCloudStorage.setItem('ComedyCompanion:jokes/' + local_joke._id.toString(), JSON.stringify(local_joke));
+        }
+      }
+
+
+      // iCloudStorage.getItem('ComedyCompanion/jokes').then((cloud_jokes) => {
+      //   if (!cloud_jokes) {
+      //     iCloudStorage.setItem('ComedyCompanion/jokes', "my_test");
+      //   } else {
+      //     console.log("iCloud Jokes: ", cloud_jokes);
+      //   }
+      // });
 
       // iCloudStorage.removeItem('ComedyCompanion/jokes');
       // iCloudStorage.getAllKeys().then((all_keys) => {
@@ -262,8 +393,11 @@ class Settings extends Component {
                 <Text style={ layoutStyles.inputLabel }>iCloud Sync</Text>
               </View>
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <Button type="surface" size="large" theme="blue" onPress={ syncWithiCloud }>
-                    <Text>Sync With iCloud</Text>
+                <Button type="surface" size="large" theme="blue" onPress={ writeToiCloud }>
+                    <Text>Write to iCloud</Text>
+                </Button>
+                <Button type="surface" size="large" theme="blue" onPress={ readFromiCloud } selfStyle={{ marginLeft: 10 }}>
+                  <Text>Read from iCloud</Text>
                 </Button>
               </View>
             </View>
