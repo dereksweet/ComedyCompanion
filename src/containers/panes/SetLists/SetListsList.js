@@ -138,7 +138,7 @@ class SetListsList extends Component {
           />
           <View style={ layoutStyles.toolbar }>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Text>???</Text>
+              <Text></Text>
             </View>
             <View style={{ flex: 1, alignItems: 'flex-end' }}>
               { renderAddButton() }
