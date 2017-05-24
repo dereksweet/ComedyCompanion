@@ -1,7 +1,7 @@
 'use strict';
 
 import React, {Component} from 'react';
-import { View, Text, AsyncStorage } from 'react-native';
+import { View, Text, AsyncStorage, Platform } from 'react-native';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 import {Button} from 'react-native-ui-xg';
@@ -382,19 +382,22 @@ class Settings extends Component {
                 />
               </View>
             </View>
-            <View style={[layoutStyles.modalContentSection]}>
-              <View style={ {borderBottomColor: '#999999', borderBottomWidth: 1, paddingBottom: 5, marginBottom: 10} }>
-                <Text style={ layoutStyles.inputLabel }>iCloud Sync</Text>
-              </View>
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <Button type="surface" size="large" theme="blue" onPress={ confirmWriteToiCloud }>
+            { Platform.OS === 'ios' &&
+              <View style={[layoutStyles.modalContentSection]}>
+                <View style={ {borderBottomColor: '#999999', borderBottomWidth: 1, paddingBottom: 5, marginBottom: 10} }>
+                  <Text style={ layoutStyles.inputLabel }>iCloud Sync</Text>
+                </View>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <Button type="surface" size="large" theme="blue" onPress={ confirmWriteToiCloud }>
                     <Text>Write to iCloud</Text>
-                </Button>
-                <Button type="surface" size="large" theme="blue" onPress={ confirmReadFromiCloud } selfStyle={{ marginLeft: 10 }}>
-                  <Text>Read from iCloud</Text>
-                </Button>
+                  </Button>
+                  <Button type="surface" size="large" theme="blue" onPress={ confirmReadFromiCloud }
+                          selfStyle={{ marginLeft: 10 }}>
+                    <Text>Read from iCloud</Text>
+                  </Button>
+                </View>
               </View>
-            </View>
+            }
           </View>
           <View style={{ flexDirection: 'row', width: '100%', borderTopColor: '#999999', borderTopWidth: 1 }}>
             <View style={ { flex: 1 } }>
