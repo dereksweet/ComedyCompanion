@@ -2,7 +2,7 @@
 
 import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
-import { View, Text, TouchableHighlight } from 'react-native';
+import { View, Text, TouchableHighlight, Keyboard } from 'react-native';
 import Hamburger from 'react-native-hamburger';
 import { connect } from 'react-redux';
 
@@ -27,6 +27,8 @@ class StatusBar extends Component {
     const { statusBarState, routingState, statusBarActions, routingActions } = this.props;
 
     const clickHamburger = () => {
+      Keyboard.dismiss();
+
       statusBarActions.toggleHamburgerActive();
 
       statusBarState.hamburger_active ? this.navBarView.performShrink() : this.navBarView.performExpand();

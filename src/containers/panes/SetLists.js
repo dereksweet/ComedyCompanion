@@ -19,6 +19,11 @@ class SetLists extends Component {
     super(props);
   }
 
+  shouldComponentUpdate(nextProps) {
+    const differentEmpty = this.props.setListListState.empty !== nextProps.setListListState.empty;
+    return differentEmpty;
+  }
+
   componentDidMount() {
     SetListListHelper.refreshSLList();
     SetListListHelper.refreshSLListEmpty();

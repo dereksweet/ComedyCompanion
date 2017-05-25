@@ -37,6 +37,14 @@ class SetListsList extends Component {
     this.keyboardDidHideListener = Keyboard.addListener('keyboard' + eventVerb + 'Hide', this.keyboardDidHide.bind(this));
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    const setListListChanged = this.props.setListListState.sl_list !== nextProps.setListListState.sl_list;
+    const keyboardHeightChanged = this.state.keyboard_height !== nextState.keyboard_height;
+    const viewHeightChanged = this.state.view_height !== nextState.view_height;
+
+    return setListListChanged || keyboardHeightChanged || viewHeightChanged;
+  }
+
   keyboardDidShow (e) {
     if (this.props.routingState.pane === 'set_lists') {
       this.setState({
