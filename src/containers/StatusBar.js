@@ -14,7 +14,7 @@ import * as statusBarActions from '../actions/statusBarActions';
 import statusBarStyles from '../stylesheets/statusBarStyles';
 import layoutStyles from '../stylesheets/layoutStyles';
 
-import {jokesIcon, setListsIcon, showsIcon, settingsIcon} from '../helpers/icons';
+import {jokesIcon, setListsIcon, showsIcon, settingsIcon, aboutIcon} from '../helpers/icons';
 
 class StatusBar extends Component {
   constructor(props) {
@@ -46,12 +46,27 @@ class StatusBar extends Component {
       routingActions.toggleSettings();
     };
 
+    const clickAbout = () => {
+      routingActions.toggleAbout();
+    };
+
     const renderSettingsButton = () => {
       return (
         <View style={ statusBarStyles.gearIcon }>
           <TouchableHighlight style={{ flex: 1, alignItems: 'center', paddingTop: 7, paddingLeft: 7 }}
                               onPress={ clickSettings }>
             <Text style={{width: '100%'}}>{ settingsIcon }</Text>
+          </TouchableHighlight>
+        </View>
+      );
+    };
+
+    const renderAboutButton = () => {
+      return (
+        <View style={ statusBarStyles.aboutIcon }>
+          <TouchableHighlight style={{ flex: 1, alignItems: 'center', paddingTop: 7, paddingLeft: 7 }}
+                              onPress={ clickAbout }>
+            <Text style={{width: '100%'}}>{ aboutIcon }</Text>
           </TouchableHighlight>
         </View>
       );
@@ -93,6 +108,7 @@ class StatusBar extends Component {
             <Text style={statusBarStyles.title}>{routingState.title}</Text>
           </View>
           <View style={{flex: 1, flexDirection: 'row', justifyContent: 'flex-end'}}>
+            { renderAboutButton() }
             { renderSettingsButton() }
           </View>
         </View>

@@ -5,6 +5,7 @@ export const SET_PANE = 'routing/set_pane';
 export const OPEN_MODAL = 'routing/open_modal';
 export const CLOSE_MODAL = 'routing/close_modal';
 export const TOGGLE_SETTINGS = 'routing/toggle_settings';
+export const TOGGLE_ABOUT = 'routing/toggle_about';
 
 export const TOGGLE_HAMBURGER_ACTIVE = 'statusBar/toggle_hamburger_active';
 

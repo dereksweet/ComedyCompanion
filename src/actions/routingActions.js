@@ -62,3 +62,9 @@ export function toggleSettings() {
     type: types.TOGGLE_SETTINGS
   }
 }
+
+export function toggleAbout() {
+  return {
+    type: types.TOGGLE_ABOUT
+  }
+}

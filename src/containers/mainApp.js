@@ -2,10 +2,8 @@
 
 import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
-import { View, Text, TouchableHighlight, Dimensions, Modal } from 'react-native';
+import { View, Modal } from 'react-native';
 import { connect } from 'react-redux';
-import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
-import {Button} from 'react-native-ui-xg';
 
 import {SlidingPane, SlidingPaneWrapper} from 'react-native-sliding-panes';
 
@@ -27,6 +25,7 @@ import EditSetList from './modals/EditSetList.js';
 import Shows from './panes/Shows.js';
 import EditShow from './modals/EditShow.js';
 import Settings from './modals/Settings';
+import About from './modals/About';
 
 import JokeListHelper from '../helpers/jokeListHelper';
 import SetListListHelper from '../helpers/setListListHelper';
@@ -122,6 +121,13 @@ class MainApp extends Component {
                visible={routingState.settings_visible}
                onRequestClose={() => { }}>
           <Settings />
+        </Modal>
+        <Modal style={ layoutStyles.modal }
+               animationType={"fade"}
+               transparent={false}
+               visible={routingState.about_visible}
+               onRequestClose={() => { }}>
+          <About />
         </Modal>
       </View>
     );
