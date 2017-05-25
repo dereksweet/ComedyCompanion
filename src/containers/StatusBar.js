@@ -33,6 +33,8 @@ class StatusBar extends Component {
     };
 
     const clickNavLink = (pane) => {
+      Keyboard.dismiss();
+      
       routingActions.setPane(pane);
       this.props.setActivePane(pane);
       statusBarActions.toggleHamburgerActive();

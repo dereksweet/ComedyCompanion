@@ -46,19 +46,15 @@ class SetListsList extends Component {
   }
 
   keyboardDidShow (e) {
-    if (this.props.routingState.pane === 'set_lists') {
-      this.setState({
-        keyboard_height: e.endCoordinates.height
-      });
-    }
+    this.setState({
+      keyboard_height: e.endCoordinates.height
+    });
   }
 
   keyboardDidHide (e) {
-    if (this.props.routingState.pane === 'set_lists') {
-      this.setState({
-        keyboard_height: 0
-      });
-    }
+    this.setState({
+      keyboard_height: 0
+    });
   }
 
   componentWillUnmount () {

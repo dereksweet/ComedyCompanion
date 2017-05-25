@@ -42,6 +42,11 @@ class ShowsList extends Component {
     this.keyboardDidHideListener = Keyboard.addListener('keyboard' + eventVerb + 'Hide', this.keyboardDidHide.bind(this));
   }
 
+  componentWillUnmount () {
+    this.keyboardDidShowListener.remove();
+    this.keyboardDidHideListener.remove();
+  }
+
   shouldComponentUpdate(nextProps, nextState) {
     const showListChanged = this.props.showListState.show_list !== nextProps.showListState.show_list;
     const keyboardHeightChanged = this.state.keyboard_height !== nextState.keyboard_height;
@@ -53,24 +58,15 @@ class ShowsList extends Component {
   }
 
   keyboardDidShow (e) {
-    if (this.props.routingState.pane === 'shows') {
-      this.setState({
-        keyboard_height: e.endCoordinates.height
-      });
-    }
+    this.setState({
+      keyboard_height: e.endCoordinates.height
+    });
   }
 
   keyboardDidHide (e) {
-    if (this.props.routingState.pane === 'shows') {
-      this.setState({
-        keyboard_height: 0
-      });
-    }
-  }
-
-  componentWillUnmount () {
-    this.keyboardDidShowListener.remove();
-    this.keyboardDidHideListener.remove();
+    this.setState({
+      keyboard_height: 0
+    });
   }
 
   measureView(event) {

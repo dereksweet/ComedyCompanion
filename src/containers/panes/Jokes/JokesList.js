@@ -37,12 +37,9 @@ class JokesList extends Component {
     this.keyboardDidHideListener = Keyboard.addListener('keyboard' + eventVerb + 'Hide', this.keyboardDidHide.bind(this));
   }
 
-  keyboardDidShow (e) {
-    if (this.props.routingState.pane === 'jokes') {
-      this.setState({
-        keyboard_height: e.endCoordinates.height
-      });
-    }
+  componentWillUnmount () {
+    this.keyboardDidShowListener.remove();
+    this.keyboardDidHideListener.remove();
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -53,17 +50,16 @@ class JokesList extends Component {
     return jokeListChanged || keyboardHeightChanged || viewHeightChanged;
   }
 
-  keyboardDidHide (e) {
-    if (this.props.routingState.pane === 'jokes') {
-      this.setState({
-        keyboard_height: 0
-      });
-    }
+  keyboardDidShow (e) {
+    this.setState({
+      keyboard_height: e.endCoordinates.height
+    });
   }
 
-  componentWillUnmount () {
-    this.keyboardDidShowListener.remove();
-    this.keyboardDidHideListener.remove();
+  keyboardDidHide (e) {
+    this.setState({
+      keyboard_height: 0
+    });
   }
 
   measureView(event) {
