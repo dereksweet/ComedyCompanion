@@ -45,6 +45,14 @@ class JokesList extends Component {
     }
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    const jokeListChanged = this.props.jokeListState.joke_list !== nextProps.jokeListState.joke_list;
+    const keyboardHeightChanged = this.state.keyboard_height !== nextState.keyboard_height;
+    const viewHeightChanged = this.state.view_height !== nextState.view_height;
+
+    return jokeListChanged || keyboardHeightChanged || viewHeightChanged;
+  }
+
   keyboardDidHide (e) {
     if (this.props.routingState.pane === 'jokes') {
       this.setState({

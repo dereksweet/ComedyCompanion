@@ -19,6 +19,11 @@ class Jokes extends Component {
     super(props);
   }
 
+  shouldComponentUpdate(nextProps) {
+    const differentEmpty = this.props.jokeListState.empty !== nextProps.jokeListState.empty;
+    return differentEmpty;
+  }
+
   componentDidMount() {
     JokeListHelper.refreshJokeList();
     JokeListHelper.refreshJokeListEmpty();
