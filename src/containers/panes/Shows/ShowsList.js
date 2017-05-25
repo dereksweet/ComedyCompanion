@@ -42,6 +42,16 @@ class ShowsList extends Component {
     this.keyboardDidHideListener = Keyboard.addListener('keyboard' + eventVerb + 'Hide', this.keyboardDidHide.bind(this));
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    const showListChanged = this.props.showListState.show_list !== nextProps.showListState.show_list;
+    const keyboardHeightChanged = this.state.keyboard_height !== nextState.keyboard_height;
+    const viewHeightChanged = this.state.view_height !== nextState.view_height;
+    const setListVisibleChanged = this.state.set_list_visible !== nextState.set_list_visible;
+    const jokeViewsChanged = this.state.jokeViews !== nextState.jokeViews;
+
+    return showListChanged || keyboardHeightChanged || viewHeightChanged || setListVisibleChanged || jokeViewsChanged;
+  }
+
   keyboardDidShow (e) {
     if (this.props.routingState.pane === 'shows') {
       this.setState({
@@ -76,8 +86,6 @@ class ShowsList extends Component {
   }
 
   render() {
-    console.log("Render ShowsList.js");
-
     const { showListState, showState, showActions, routingActions, showListActions } = this.props;
 
     let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -173,7 +181,7 @@ class ShowsList extends Component {
     };
 
     const jokeClicked = (joke_id) => {
-      let newJokeViews = this.state.jokeViews;
+      let newJokeViews = JSON.parse(JSON.stringify(this.state.jokeViews));
       newJokeViews[joke_id] = !newJokeViews[joke_id];
 
       this.setState({
@@ -189,8 +197,6 @@ class ShowsList extends Component {
               ref={(searchBar) => { this.searchBar = searchBar }}
               onSearchChange={ venueFilterChanged }
               height={30}
-              onFocus={() => console.log('On Focus')}
-              onBlur={() => console.log('On Blur')}
               placeholder={'Search...'}
               autoCorrect={false}
               padding={0}

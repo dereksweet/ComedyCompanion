@@ -22,8 +22,6 @@ class JokeSelector extends Component {
   }
 
   render() {
-    console.log("Render SetListJokes.js");
-
     const { setListState, setListActions } = this.props;
 
     const selectJoke = (joke) => {

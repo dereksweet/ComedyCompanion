@@ -77,8 +77,6 @@ class EditShow extends Component {
   }
 
   render() {
-    console.log("Render EditShow.js");
-
     const { showState, showListState, showActions, showListActions, routingActions } = this.props;
 
     const selectSetList = (set_list_id) => {
@@ -192,7 +190,7 @@ class EditShow extends Component {
                     backgroundColor: '#FFFFFF'
                   }
                 }}
-                onDateChange={(date) => { console.log("Here: ", date); showActions.setShowDate(new Date(date))}}
+                onDateChange={(date) => { showActions.setShowDate(new Date(date))}}
               />
             </View>
             <View style={ [layoutStyles.modalContentSection, { flexDirection: 'row', alignItems: 'center'  }] }>

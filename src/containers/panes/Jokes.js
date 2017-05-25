@@ -30,8 +30,6 @@ class Jokes extends Component {
   }
 
   render() {
-    console.log("Render Jokes.js");
-
     const { jokeListState } = this.props;
 
     return (

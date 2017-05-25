@@ -24,9 +24,12 @@ class Shows extends Component {
     ShowListHelper.refreshShowListEmpty();
   }
 
-  render() {
-    console.log("Render Shows.js");
+  shouldComponentUpdate(nextProps) {
+    const differentEmpty = this.props.showListState.empty !== nextProps.showListState.empty;
+    return differentEmpty;
+  }
 
+  render() {
     const { showListState } = this.props;
 
     return (

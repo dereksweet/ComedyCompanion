@@ -79,8 +79,6 @@ class JokesList extends Component {
   }
 
   render() {
-    console.log("Render JokesList.js");
-
     const { jokeListState, jokeActions, routingActions, jokeListActions } = this.props;
 
     let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -164,8 +162,6 @@ class JokesList extends Component {
               ref={(searchBar) => { this.searchBar = searchBar }}
               onSearchChange={ nameFilterChanged }
               height={30}
-              onFocus={() => console.log('On Focus')}
-              onBlur={() => console.log('On Blur')}
               placeholder={'Search...'}
               autoCorrect={false}
               padding={0}

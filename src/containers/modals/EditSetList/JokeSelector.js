@@ -27,8 +27,6 @@ class JokeSelector extends Component {
   }
 
   render() {
-    console.log("Render JokeSelector.js");
-
     const { jokeListState, jokeListActions, setListActions } = this.props;
 
     let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -90,8 +88,6 @@ class JokeSelector extends Component {
             ref={(searchBar) => { this.searchBar = searchBar }}
             onSearchChange={ nameFilterChanged }
             height={30}
-            onFocus={() => console.log('On Focus')}
-            onBlur={() => console.log('On Blur')}
             placeholder={'Search...'}
             inputProps={{ value: jokeListState.name_filter_selector }}
             autoCorrect={false}

@@ -13,8 +13,6 @@ export const store = createStoreWithMiddleware(reducer);
 
 export default class App extends Component {
   render() {
-    console.log("Render App.js");
-
     return (
       <Provider store={store}>
         <MainApp />

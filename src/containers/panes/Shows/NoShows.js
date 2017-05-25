@@ -21,8 +21,6 @@ class NoShows extends Component {
   }
 
   render() {
-    console.log("Render NoShows.js");
-
     const { routingActions, showActions } = this.props;
 
     const addShow = () => {

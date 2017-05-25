@@ -22,8 +22,6 @@ class StatusBar extends Component {
   }
 
   render() {
-    console.log("Render Statusbar.js");
-
     const { statusBarState, routingState, statusBarActions, routingActions } = this.props;
 
     const clickHamburger = () => {

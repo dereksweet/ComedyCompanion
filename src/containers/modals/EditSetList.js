@@ -65,8 +65,6 @@ class EditSetList extends Component {
   }
 
   render() {
-    console.log("Render EditSetList.js");
-
     const { setListState, routingActions, setListActions } = this.props;
 
     const cancel = () => {

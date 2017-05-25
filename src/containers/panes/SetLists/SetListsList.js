@@ -79,8 +79,6 @@ class SetListsList extends Component {
   }
 
   render() {
-    console.log("Render SetListsList.js");
-
     const { setListListState,  routingActions, setListActions, setListListActions } = this.props;
 
     let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
