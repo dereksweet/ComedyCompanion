@@ -59,6 +59,7 @@ class JokeSelector extends Component {
         </View>
         <SortableListView
           style={{flex: 1}}
+          ref={(selectedJokes) => this.props.parent.selectedJokes = selectedJokes}
           data={data}
           order={order}
           onRowMoved={e => {
