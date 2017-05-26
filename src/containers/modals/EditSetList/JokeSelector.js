@@ -34,10 +34,10 @@ class JokeSelector extends Component {
 
     const selectJoke = (id) => {
       Joke.get(id).then((joke) => {
-        setListActions.addJokeToSL(joke);
+        Promise.resolve(setListActions.addJokeToSL(joke)).then(() => {
+          this.props.parent.selectedJokes.scrollResponder.scrollToEnd();
+        });
       });
-
-      this.props.parent.selectedJokes.scrollTo({x: 0, y: 100, animated: true});
     };
 
     const renderRow = (rowData, sectionID, rowID, highlightRow) => {
