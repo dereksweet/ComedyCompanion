@@ -1,5 +1,7 @@
 'use strict';
 
+const VERSION=1.0;
+
 import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import { View, Modal } from 'react-native';
@@ -55,6 +57,12 @@ class MainApp extends Component {
       JokeListHelper.refreshJokeList();
       SetListListHelper.refreshSLList();
       ShowListHelper.refreshShowList();
+
+      if (this.setting._about_version_seen < VERSION) {
+        this.props.routingActions.toggleAbout();
+        this.setting._about_version_seen = VERSION;
+        this.setting.save();
+      }
     });
   }
 
@@ -70,7 +78,7 @@ class MainApp extends Component {
   }
 
   render() {
-    const { routingState, actions } = this.props;
+    const { routingState, routingActions } = this.props;
 
     const setActivePane = (pane) => {
       switch (pane) {
@@ -84,7 +92,7 @@ class MainApp extends Component {
           this.slidingPaneWrapper.setActive(2);
           break;
       }
-      actions.setPane(pane);
+      routingActions.setPane(pane);
     };
 
     return (
@@ -138,7 +146,7 @@ export default connect(state => ({
     routingState: state.routing
   }),
   (dispatch) => ({
-    actions: bindActionCreators(routingActions, dispatch),
+    routingActions: bindActionCreators(routingActions, dispatch),
     jokeListActions: bindActionCreators(jokeListActions, dispatch),
     setListListActions: bindActionCreators(setListListActions, dispatch),
     showListActions: bindActionCreators(showListActions, dispatch)
