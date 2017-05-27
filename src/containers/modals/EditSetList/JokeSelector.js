@@ -31,12 +31,10 @@ class JokeSelector extends Component {
 
     let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     const jokeListDS = ds.cloneWithRows(jokeListState.joke_list_selector.map((joke) => { return joke.name }));
-
+    
     const selectJoke = (id) => {
       Joke.get(id).then((joke) => {
-        Promise.resolve(setListActions.addJokeToSL(joke)).then(() => {
-          this.props.parent.selectedJokes.scrollResponder.scrollToEnd();
-        });
+        setListActions.addJokeToSL(joke);
       });
     };
 

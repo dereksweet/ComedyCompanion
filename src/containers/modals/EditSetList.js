@@ -109,10 +109,10 @@ class EditSetList extends Component {
             </View>
             <View style={{ flex: 1, flexDirection: 'row', borderTopColor: '#CCCCCC', borderTopWidth: 1 }}>
               <View style={{ flex: 1, borderRightColor: '#CCCCCC', borderRightWidth: 1 }}>
-                <JokeSelector parent={ this } />
+                <JokeSelector />
               </View>
               <View style={{ flex: 1 }}>
-                <SetListJokes parent={ this } />
+                <SetListJokes />
               </View>
             </View>
             <View style={ { flexDirection: 'row', width: '100%' }}>

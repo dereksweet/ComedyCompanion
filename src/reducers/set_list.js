@@ -38,13 +38,14 @@ export default function set_list(state = initialState, action = {}) {
         }
       });
 
+      let new_set_list = new SetList(state.set_list);
       if (add) {
-        state.set_list._jokes.push(action.joke);
+        new_set_list._jokes.push(action.joke);
       }
 
       return {
         ...state,
-        set_list: state.set_list
+        set_list: new_set_list
       };
       break;
     case types.REMOVE_JOKE_FROM_SL:

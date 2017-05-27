@@ -17,8 +17,10 @@ class JokeSelector extends Component {
     super(props);
   }
 
-  componentDidMount() {
-
+  componentDidUpdate(prevProps) {
+    if (this.props.setListState.set_list._jokes.length > prevProps.setListState.set_list._jokes.length) {
+      setTimeout(() => this.listView.scrollResponder.scrollToEnd(), 200);
+    }
   }
 
   render() {
@@ -59,7 +61,7 @@ class JokeSelector extends Component {
         </View>
         <SortableListView
           style={{flex: 1}}
-          ref={(selectedJokes) => this.props.parent.selectedJokes = selectedJokes}
+          ref={(listView) => this.listView = listView}
           data={data}
           order={order}
           onRowMoved={e => {

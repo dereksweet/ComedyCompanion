@@ -17,7 +17,6 @@ export default SLListStyles = StyleSheet.create({
     width: '100%',
     minHeight: 30,
     alignItems: 'center',
-    justifyContent: 'center',
     backgroundColor: '#FAFAFA',
     paddingTop: 10,
     paddingBottom: 10,
