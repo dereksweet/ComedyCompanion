@@ -45,7 +45,7 @@ class JokeSelector extends Component {
 
     if (Object.keys(this.rowHeights).length == this.props.setListState.set_list._jokes.length) {
       if ((this.jokeAdded) && (this.totalRowHeights() >= this.listViewHeight)) {
-        setTimeout(() => this.listView.scrollResponder.scrollToEnd(), 200);
+        this.listView.scrollResponder.scrollToEnd();
         this.jokeAdded = false;
       }
     }
