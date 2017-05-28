@@ -1,7 +1,7 @@
 'use strict';
 
 import React, {Component} from 'react';
-import { View, Text, ListView, TouchableHighlight } from 'react-native';
+import { View, Text, ListView, ScrollView, TouchableHighlight } from 'react-native';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 import SortableListView from 'react-native-sortable-listview';
@@ -15,11 +15,39 @@ import setListListStyles from '../../../stylesheets/setListListStyles';
 class JokeSelector extends Component {
   constructor(props) {
     super(props);
+
+    this.listViewHeight = 0;
+    this.rowHeights = {};
+  }
+
+  totalRowHeights() {
+    let sum = 0;
+
+    for (var key in this.rowHeights) {
+      sum += this.rowHeights[key];
+    }
+
+    return sum;
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.setListState.set_list._jokes.length > prevProps.setListState.set_list._jokes.length) {
-      setTimeout(() => this.listView.scrollResponder.scrollToEnd(), 200);
+      this.jokeAdded = true;
+    }
+  }
+
+  measureView(event) {
+    this.listViewHeight = event.nativeEvent.layout.height;
+  }
+
+  measureRow(joke_id, event) {
+    this.rowHeights[joke_id] = event.nativeEvent.layout.height;
+
+    if (Object.keys(this.rowHeights).length == this.props.setListState.set_list._jokes.length) {
+      if ((this.jokeAdded) && (this.totalRowHeights() >= this.listViewHeight)) {
+        setTimeout(() => this.listView.scrollResponder.scrollToEnd(), 200);
+        this.jokeAdded = false;
+      }
     }
   }
 
@@ -27,6 +55,7 @@ class JokeSelector extends Component {
     const { setListState, setListActions } = this.props;
 
     const selectJoke = (joke) => {
+      delete this.rowHeights[joke._id];
       setListActions.removeJokeFromSL(joke);
     };
 
@@ -40,6 +69,7 @@ class JokeSelector extends Component {
     const renderRow = (rowData, sectionID, rowID, highlightRow) => {
       return (
         <TouchableHighlight
+          onLayout={ this.measureRow.bind(this, rowData._id) }
           underlayColor={'#ccc'}
           delayLongPress={500}
           onPress={ () => selectJoke(rowData) }
@@ -59,17 +89,19 @@ class JokeSelector extends Component {
           <Text style={ setListListStyles.jokeInstructions }>tap to remove</Text>
           <Text style={ setListListStyles.jokeInstructions }>hold to reorder</Text>
         </View>
-        <SortableListView
-          style={{flex: 1}}
-          ref={(listView) => this.listView = listView}
-          data={data}
-          order={order}
-          onRowMoved={e => {
-            setListState.set_list._jokes.splice(e.to, 0, setListState.set_list._jokes.splice(e.from, 1)[0]);
-            setListActions.setSL(setListState.set_list);
-          }}
-          renderRow={renderRow}
-        />
+        <View onLayout={ this.measureView.bind(this) } style={{ flex: 1 }}>
+          <SortableListView
+            style={{flex: 1}}
+            ref={(listView) => this.listView = listView}
+            data={data}
+            order={order}
+            onRowMoved={e => {
+              setListState.set_list._jokes.splice(e.to, 0, setListState.set_list._jokes.splice(e.from, 1)[0]);
+              setListActions.setSL(setListState.set_list);
+            }}
+            renderRow={renderRow}
+          />
+       </View>
       </View>
     );
   }
