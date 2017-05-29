@@ -358,6 +358,7 @@ class Settings extends Component {
                 <SegmentedControls
                   options={
                   [{ label: 'Venue', value: '_venue' },
+                   { label: 'City', value: '_city' },
                    { label: 'Date', value: '_date' }]
                 }
                   onSelection={ (sort_field) => showSortFieldButtonClicked(sort_field) }
