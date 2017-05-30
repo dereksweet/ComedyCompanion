@@ -60,6 +60,12 @@ export default layoutStyles = StyleSheet.create({
     paddingRight: 10,
     textAlignVertical: 'center'
   },
+  settingsSectionTitle: {
+    fontSize: 13,
+    fontWeight: 'bold',
+    paddingRight: 10,
+    textAlignVertical: 'center'
+  },
   toolbar: {
     width: '100%',
     backgroundColor: '#EEEEFF',

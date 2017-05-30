@@ -284,7 +284,7 @@ class Settings extends Component {
           <View style={{ flex: 1 }}>
             <View style={[layoutStyles.modalContentSection]}>
               <View style={ {borderBottomColor: '#999999', borderBottomWidth: 1, paddingBottom: 5, marginBottom: 10} }>
-                <Text style={ layoutStyles.inputLabel }>Jokes Settings</Text>
+                <Text style={ layoutStyles.settingsSectionTitle }>Jokes Settings</Text>
               </View>
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Text style={ jokeListStyles.sortByText }>Sort by: </Text>
@@ -317,7 +317,7 @@ class Settings extends Component {
             </View>
             <View style={[layoutStyles.modalContentSection]}>
               <View style={ {borderBottomColor: '#999999', borderBottomWidth: 1, paddingBottom: 5, marginBottom: 10} }>
-                <Text style={ layoutStyles.inputLabel }>Set Lists Settings</Text>
+                <Text style={ layoutStyles.settingsSectionTitle }>Set Lists Settings</Text>
               </View>
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Text style={ setListListStyles.sortByText }>Sort by: </Text>
@@ -351,7 +351,7 @@ class Settings extends Component {
             </View>
             <View style={[layoutStyles.modalContentSection]}>
               <View style={ {borderBottomColor: '#999999', borderBottomWidth: 1, paddingBottom: 5, marginBottom: 10} }>
-                <Text style={ layoutStyles.inputLabel }>Shows Settings</Text>
+                <Text style={ layoutStyles.settingsSectionTitle }>Shows Settings</Text>
               </View>
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Text style={ showListStyles.sortByText }>Sort by: </Text>
@@ -386,7 +386,7 @@ class Settings extends Component {
             { Platform.OS === 'ios' &&
               <View style={[layoutStyles.modalContentSection]}>
                 <View style={ {borderBottomColor: '#999999', borderBottomWidth: 1, paddingBottom: 5, marginBottom: 10} }>
-                  <Text style={ layoutStyles.inputLabel }>iCloud Sync</Text>
+                  <Text style={ layoutStyles.settingsSectionTitle }>iCloud Sync</Text>
                 </View>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <Button type="surface" size="large" theme="blue" onPress={ confirmWriteToiCloud }>
