@@ -30,7 +30,7 @@ class About extends Component {
           <View style={layoutStyles.modalContent}>
             <View style={{ flex: 1, paddingLeft: 10, paddingRight: 10 }}>
               <View style={{ paddingTop: 10, justifyContent: 'center', alignItems: 'center' }}>
-                <Text>LOGO HERE</Text>
+                <Image style={{ width: 100, height: 110, marginTop: 15 }} source={ require('../../images/FullMascot.png') } />
               </View>
               <View style={{ paddingTop: 10, justifyContent: 'center', alignItems: 'center' }}>
                 <View style={{ borderBottomWidth: 1 }}>
