@@ -90,7 +90,7 @@ export default layoutStyles = StyleSheet.create({
     paddingLeft: 7
   },
   confirmBox: {
-    borderColor: '#000000',
+    borderColor: '#999999',
     borderWidth: 2,
     backgroundColor: '#FFFFFF',
     position: 'absolute',
@@ -101,7 +101,11 @@ export default layoutStyles = StyleSheet.create({
     width: '75%',
     height: '50%',
     padding: 10,
-    zIndex: 99
+    zIndex: 99,
+    shadowColor: '#000000',
+    shadowOffset: {width: 2, height: 2},
+    shadowOpacity: 0.5,
+    shadowRadius: 10
   },
   loadingScreen: {
     zIndex: 999,
