@@ -63,6 +63,8 @@ class MainApp extends Component {
         this.setting._about_version_seen = VERSION;
         this.setting.save();
       }
+
+      setTimeout(() => this.props.routingActions.hideLoading(), 500);
     });
   }
 
@@ -97,6 +99,7 @@ class MainApp extends Component {
 
     return (
       <View style={[layoutStyles.centeredFlex, layoutStyles.mainContainer]}>
+        { routingState.show_loading && <View style={ layoutStyles.loadingScreen } /> }
         <View style={{ flex: 1 }}>
           <StatusBar setActivePane={setActivePane} />
           <SlidingPaneWrapper style={{}} ref={(slidingPaneWrapper) => { this.slidingPaneWrapper = slidingPaneWrapper }}>

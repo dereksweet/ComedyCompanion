@@ -6,7 +6,8 @@ const initialState = {
   title: 'Jokes',
   modal_visible: false,
   settings_visible: false,
-  about_visible: false
+  about_visible: false,
+  show_loading: true
 };
 
 export default function routing(state = initialState, action = {}) {
@@ -65,6 +66,12 @@ export default function routing(state = initialState, action = {}) {
       return {
         ...state,
         about_visible: !state.about_visible
+      };
+      break;
+    case types.HIDE_LOADING:
+      return {
+        ...state,
+        show_loading: false
       };
       break;
     default:

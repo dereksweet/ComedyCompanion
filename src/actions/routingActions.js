@@ -68,3 +68,9 @@ export function toggleAbout() {
     type: types.TOGGLE_ABOUT
   }
 }
+
+export function hideLoading() {
+  return {
+    type: types.HIDE_LOADING
+  }
+}
