@@ -113,5 +113,17 @@ export default layoutStyles = StyleSheet.create({
     width: '100%',
     height: '100%',
     backgroundColor: '#FFFFFF'
+  },
+  cancelButton: {
+    backgroundColor: '#999999',
+    borderColor: '#888888'
+  },
+  confirmButton: {
+    backgroundColor: '#009900',
+    borderColor: '#008800'
+  },
+  deleteButton: {
+    backgroundColor: '#DD0000',
+    borderColor: '#CC0000'
   }
 });

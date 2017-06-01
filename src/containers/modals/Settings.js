@@ -255,10 +255,10 @@ class Settings extends Component {
               <Text>{ this.state.cloudShowsCount } Shows</Text>
               <Text style={{ textAlign: 'center', paddingTop: 25, fontWeight: 'bold' }}>ARE YOU SURE YOU WANT TO REPLACE EVERYTHING WITH WHAT IS ON ICLOUD?</Text>
               <View style={{ paddingTop: 25, flexDirection: 'row' }}>
-                <Button type="surface" size="large" theme="red" onPress={ cancelReadFromiCloud }>
+                <Button type="surface" size="large" theme="red" selfStyle={ layoutStyles.deleteButton } onPress={ cancelReadFromiCloud }>
                   <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>NO</Text>
                 </Button>
-                <Button selfStyle={{ marginLeft: 10 }} type="surface" size="large" theme="blue" onPress={ readFromiCloud }>
+                <Button type="surface" size="large" theme="blue" selfStyle={ [layoutStyles.confirmButton, { marginLeft: 10 }] } onPress={ readFromiCloud }>
                   <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>YES</Text>
                 </Button>
               </View>
@@ -272,10 +272,10 @@ class Settings extends Component {
             <Text>{ this.state.localShowsCount } Shows</Text>
             <Text style={{ textAlign: 'center', paddingTop: 25, fontWeight: 'bold' }}>ARE YOU SURE YOU WANT TO OVERWRITE EVERYTHING ON ICLOUD?</Text>
             <View style={{ paddingTop: 25, flexDirection: 'row' }}>
-              <Button type="surface" size="large" theme="red" onPress={ cancelWriteToiCloud }>
+              <Button type="surface" size="large" theme="red" selfStyle={ layoutStyles.deleteButton } onPress={ cancelWriteToiCloud }>
                 <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>NO</Text>
               </Button>
-              <Button selfStyle={{ marginLeft: 10 }} type="surface" size="large" theme="blue" onPress={ writeToiCloud }>
+              <Button type="surface" size="large" theme="blue" selfStyle={ [layoutStyles.confirmButton, { marginLeft: 10 }] } onPress={ writeToiCloud }>
                 <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>YES</Text>
               </Button>
             </View>
@@ -389,12 +389,11 @@ class Settings extends Component {
                   <Text style={ layoutStyles.settingsSectionTitle }>iCloud Sync</Text>
                 </View>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <Button type="surface" size="large" theme="blue" onPress={ confirmWriteToiCloud }>
-                    <Text>Write to iCloud</Text>
+                  <Button type="surface" size="large" theme="blue" selfStyle={ layoutStyles.confirmButton } onPress={ confirmWriteToiCloud }>
+                    <Text style={{ color: '#FFFFFF' }}>Write to iCloud</Text>
                   </Button>
-                  <Button type="surface" size="large" theme="blue" onPress={ confirmReadFromiCloud }
-                          selfStyle={{ marginLeft: 10 }}>
-                    <Text>Read from iCloud</Text>
+                  <Button type="surface" size="large" theme="blue" selfStyle={ [layoutStyles.confirmButton, { marginLeft: 10 }] } onPress={ confirmReadFromiCloud }>
+                    <Text style={{ color: '#FFFFFF' }}>Read from iCloud</Text>
                   </Button>
                 </View>
               </View>
@@ -402,7 +401,7 @@ class Settings extends Component {
           </View>
           <View style={{ flexDirection: 'row', width: '100%', borderTopColor: '#999999', borderTopWidth: 1 }}>
             <View style={ { flex: 1 } }>
-              <Button type="surface" size="large" theme="gray" onPress={ close }>
+              <Button type="surface" size="large" theme="gray" selfStyle={ layoutStyles.cancelButton } onPress={ close }>
                 <Text style={layoutStyles.buttonText}>Close</Text>
               </Button>
             </View>

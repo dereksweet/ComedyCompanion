@@ -71,7 +71,7 @@ class About extends Component {
             </View>
             <View style={{ flexDirection: 'row', width: '100%', borderTopColor: '#999999', borderTopWidth: 1 }}>
               <View style={ { flex: 1 } }>
-                <Button type="surface" size="large" theme="gray" onPress={ close }>
+                <Button type="surface" size="large" theme="gray" selfStyle={ layoutStyles.cancelButton } onPress={ close }>
                   <Text style={layoutStyles.buttonText}>Close</Text>
                 </Button>
               </View>

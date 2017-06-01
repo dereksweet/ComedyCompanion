@@ -118,18 +118,18 @@ class EditSetList extends Component {
             <View style={ { flexDirection: 'row', width: '100%' }}>
               { (setListState.set_list._id != -1) &&
                 <View style={ { flex: 1 } }>
-                  <Button type="surface" size="large" theme="red" onPress={ destroy }>
+                  <Button type="surface" size="large" theme="red" selfStyle={ layoutStyles.deleteButton } onPress={ destroy }>
                     <Text style={layoutStyles.buttonText}>Delete</Text>
                   </Button>
                 </View>
               }
               <View style={ { flex: 1 } }>
-                <Button type="surface" size="large" theme="gray" onPress={ cancel }>
+                <Button type="surface" size="large" theme="gray" selfStyle={ layoutStyles.cancelButton } onPress={ cancel }>
                   <Text style={layoutStyles.buttonText}>Cancel</Text>
                 </Button>
               </View>
               <View style={ { flex: 1 } }>
-                <Button type="surface" size="large" theme="blue" onPress={ save }>
+                <Button type="surface" size="large" theme="blue" selfStyle={ layoutStyles.confirmButton } onPress={ save }>
                   <Text style={layoutStyles.buttonText}>Save</Text>
                 </Button>
               </View>
