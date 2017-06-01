@@ -99,7 +99,6 @@ class MainApp extends Component {
 
     return (
       <View style={[layoutStyles.centeredFlex, layoutStyles.mainContainer]}>
-        { routingState.show_loading && <View style={ layoutStyles.loadingScreen } /> }
         <View style={{ flex: 1 }}>
           <StatusBar setActivePane={setActivePane} />
           <SlidingPaneWrapper style={{}} ref={(slidingPaneWrapper) => { this.slidingPaneWrapper = slidingPaneWrapper }}>
@@ -140,6 +139,7 @@ class MainApp extends Component {
                onRequestClose={() => { }}>
           <About />
         </Modal>
+        { routingState.show_loading && <View style={ layoutStyles.loadingScreen } /> }
       </View>
     );
   }

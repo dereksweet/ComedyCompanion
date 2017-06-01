@@ -101,14 +101,12 @@ export default layoutStyles = StyleSheet.create({
     width: '75%',
     height: '50%',
     padding: 10,
-    zIndex: 99,
     shadowColor: '#000000',
     shadowOffset: {width: 2, height: 2},
     shadowOpacity: 0.5,
     shadowRadius: 10
   },
   loadingScreen: {
-    zIndex: 999,
     position: 'absolute',
     top: 0,
     bottom: 0,

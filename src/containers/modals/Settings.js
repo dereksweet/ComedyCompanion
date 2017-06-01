@@ -247,40 +247,6 @@ class Settings extends Component {
       <View style={[layoutStyles.modal, layoutStyles.centeredFlex]}>
         <View style={layoutStyles.statusBarBuffer} />
         <View style={layoutStyles.modalContent}>
-          { this.state.showReadConfirm &&
-            <View style={ layoutStyles.confirmBox }>
-              <Text style={{ textAlign: 'center' }}>This is what is stored on your iCloud:</Text>
-              <Text style={{ paddingTop: 25 }}>{ this.state.cloudJokesCount } Jokes</Text>
-              <Text>{ this.state.cloudSetListsCount } Set Lists</Text>
-              <Text>{ this.state.cloudShowsCount } Shows</Text>
-              <Text style={{ textAlign: 'center', paddingTop: 25, fontWeight: 'bold' }}>ARE YOU SURE YOU WANT TO REPLACE EVERYTHING WITH WHAT IS ON ICLOUD?</Text>
-              <View style={{ paddingTop: 25, flexDirection: 'row' }}>
-                <Button type="surface" size="large" theme="red" selfStyle={ layoutStyles.deleteButton } onPress={ cancelReadFromiCloud }>
-                  <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>NO</Text>
-                </Button>
-                <Button type="surface" size="large" theme="blue" selfStyle={ [layoutStyles.confirmButton, { marginLeft: 10 }] } onPress={ readFromiCloud }>
-                  <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>YES</Text>
-                </Button>
-              </View>
-            </View>
-          }
-          { this.state.showWriteConfirm &&
-          <View style={ layoutStyles.confirmBox }>
-            <Text style={{ textAlign: 'center' }}>This is what is stored on your device:</Text>
-            <Text style={{ paddingTop: 25 }}>{ this.state.localJokesCount } Jokes</Text>
-            <Text>{ this.state.localSetListsCount } Set Lists</Text>
-            <Text>{ this.state.localShowsCount } Shows</Text>
-            <Text style={{ textAlign: 'center', paddingTop: 25, fontWeight: 'bold' }}>ARE YOU SURE YOU WANT TO OVERWRITE EVERYTHING ON ICLOUD?</Text>
-            <View style={{ paddingTop: 25, flexDirection: 'row' }}>
-              <Button type="surface" size="large" theme="red" selfStyle={ layoutStyles.deleteButton } onPress={ cancelWriteToiCloud }>
-                <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>NO</Text>
-              </Button>
-              <Button type="surface" size="large" theme="blue" selfStyle={ [layoutStyles.confirmButton, { marginLeft: 10 }] } onPress={ writeToiCloud }>
-                <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>YES</Text>
-              </Button>
-            </View>
-          </View>
-          }
           <View style={{ flex: 1 }}>
             <View style={[layoutStyles.modalContentSection]}>
               <View style={ {borderBottomColor: '#999999', borderBottomWidth: 1, paddingBottom: 5, marginBottom: 10} }>
@@ -399,6 +365,40 @@ class Settings extends Component {
               </View>
             }
           </View>
+          { this.state.showReadConfirm &&
+            <View style={ layoutStyles.confirmBox }>
+              <Text style={{ textAlign: 'center' }}>This is what is stored on your iCloud:</Text>
+              <Text style={{ paddingTop: 25 }}>{ this.state.cloudJokesCount } Jokes</Text>
+              <Text>{ this.state.cloudSetListsCount } Set Lists</Text>
+              <Text>{ this.state.cloudShowsCount } Shows</Text>
+              <Text style={{ textAlign: 'center', paddingTop: 25, fontWeight: 'bold' }}>ARE YOU SURE YOU WANT TO REPLACE EVERYTHING WITH WHAT IS ON ICLOUD?</Text>
+              <View style={{ paddingTop: 25, flexDirection: 'row' }}>
+                <Button type="surface" size="large" theme="red" selfStyle={ layoutStyles.deleteButton } onPress={ cancelReadFromiCloud }>
+                  <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>NO</Text>
+                </Button>
+                <Button type="surface" size="large" theme="blue" selfStyle={ [layoutStyles.confirmButton, { marginLeft: 10 }] } onPress={ readFromiCloud }>
+                  <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>YES</Text>
+                </Button>
+              </View>
+            </View>
+          }
+          { this.state.showWriteConfirm &&
+            <View style={ layoutStyles.confirmBox }>
+              <Text style={{ textAlign: 'center' }}>This is what is stored on your device:</Text>
+              <Text style={{ paddingTop: 25 }}>{ this.state.localJokesCount } Jokes</Text>
+              <Text>{ this.state.localSetListsCount } Set Lists</Text>
+              <Text>{ this.state.localShowsCount } Shows</Text>
+              <Text style={{ textAlign: 'center', paddingTop: 25, fontWeight: 'bold' }}>ARE YOU SURE YOU WANT TO OVERWRITE EVERYTHING ON ICLOUD?</Text>
+              <View style={{ paddingTop: 25, flexDirection: 'row' }}>
+                <Button type="surface" size="large" theme="red" selfStyle={ layoutStyles.deleteButton } onPress={ cancelWriteToiCloud }>
+                  <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>NO</Text>
+                </Button>
+                <Button type="surface" size="large" theme="blue" selfStyle={ [layoutStyles.confirmButton, { marginLeft: 10 }] } onPress={ writeToiCloud }>
+                  <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>YES</Text>
+                </Button>
+              </View>
+            </View>
+          }
           <View style={{ flexDirection: 'row', width: '100%', borderTopColor: '#999999', borderTopWidth: 1 }}>
             <View style={ { flex: 1 } }>
               <Button type="surface" size="large" theme="gray" selfStyle={ layoutStyles.cancelButton } onPress={ close }>

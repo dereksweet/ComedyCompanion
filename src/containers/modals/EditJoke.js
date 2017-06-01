@@ -94,19 +94,6 @@ class EditJoke extends Component {
       <View style={[layoutStyles.modal, layoutStyles.centeredFlex]}>
         <View style={layoutStyles.statusBarBuffer} />
         <View style={layoutStyles.modalContent} onLayout={(event) => this.measureModalView(event)}>
-          { this.state.show_delete_confirm &&
-            <View style={ layoutStyles.confirmBox }>
-              <Text style={{ textAlign: 'center', fontSize: 20 }}>Are you SURE you want to delete this joke?</Text>
-              <View style={{ paddingTop: 25, flexDirection: 'row' }}>
-                <Button type="surface" size="large" theme="red" selfStyle={ layoutStyles.deleteButton } onPress={ toggleDeleteConfirm }>
-                  <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>NO</Text>
-                </Button>
-                <Button type="surface" size="large" theme="blue" selfStyle={ [layoutStyles.confirmButton, { marginLeft: 10 }] } onPress={ destroy }>
-                  <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>YES</Text>
-                </Button>
-              </View>
-            </View>
-          }
           <View style={{ height: this.contentHeight() }}>
             <View style={ [layoutStyles.modalContentSection, { flexDirection: 'row', alignItems: 'center' }] }>
               <Text style={ layoutStyles.inputLabel }>In Development:</Text>
@@ -153,6 +140,19 @@ class EditJoke extends Component {
               </View>
             </View>
           </View>
+          { this.state.show_delete_confirm &&
+            <View style={ layoutStyles.confirmBox }>
+              <Text style={{ textAlign: 'center', fontSize: 20 }}>Are you SURE you want to delete this joke?</Text>
+              <View style={{ paddingTop: 25, flexDirection: 'row' }}>
+                <Button type="surface" size="large" theme="red" selfStyle={ layoutStyles.deleteButton } onPress={ toggleDeleteConfirm }>
+                  <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>NO</Text>
+                </Button>
+                <Button type="surface" size="large" theme="blue" selfStyle={ [layoutStyles.confirmButton, { marginLeft: 10 }] } onPress={ destroy }>
+                  <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>YES</Text>
+                </Button>
+              </View>
+            </View>
+          }
         </View>
       </View>
     );
