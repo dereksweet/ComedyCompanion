@@ -386,7 +386,7 @@ class Settings extends Component {
             { Platform.OS === 'ios' &&
               <View style={[layoutStyles.modalContentSection]}>
                 <View style={ {borderBottomColor: '#999999', borderBottomWidth: 1, paddingBottom: 5, marginBottom: 10} }>
-                  <Text style={ layoutStyles.settingsSectionTitle }>iCloud Sync</Text>
+                  <Text style={ layoutStyles.settingsSectionTitle }>iCloud Sync <Text style={{ fontWeight: '100', fontSize: 10 }}>(must be signed into iCloud on device)</Text></Text>
                 </View>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <Button type="surface" size="large" theme="blue" selfStyle={ layoutStyles.confirmButton } onPress={ confirmWriteToiCloud }>
