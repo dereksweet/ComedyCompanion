@@ -243,7 +243,7 @@ class ShowsList extends Component {
               }
             </ScrollView>
           </View>
-          <View style={ { height: 40 } }>
+          <View>
             <Button type="surface" size="large" theme="gray" selfStyle={ layoutStyles.cancelButton } onPress={ hideSetList }>
               <Text style={layoutStyles.buttonText}>Close</Text>
             </Button>
