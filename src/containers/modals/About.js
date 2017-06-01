@@ -1,7 +1,7 @@
 'use strict';
 
 import React, {Component} from 'react';
-import { View, Text, TouchableHighlight, Linking, Image } from 'react-native';
+import { View, Text, ScrollView, TouchableHighlight, Linking, Image } from 'react-native';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 import {Button} from 'react-native-ui-xg';
@@ -28,47 +28,49 @@ class About extends Component {
         <View style={[layoutStyles.modal, layoutStyles.centeredFlex]}>
           <View style={layoutStyles.statusBarBuffer} />
           <View style={layoutStyles.modalContent}>
-            <View style={{ flex: 1, paddingLeft: 10, paddingRight: 10 }}>
-              <View style={{ paddingTop: 10, justifyContent: 'center', alignItems: 'center' }}>
-                <Image style={{ width: 100, height: 110, marginTop: 15 }} source={ require('../../images/FullMascot.png') } />
-              </View>
-              <View style={{ paddingTop: 10, justifyContent: 'center', alignItems: 'center' }}>
-                <View style={{ borderBottomWidth: 1 }}>
-                  <Text style={{ fontWeight: 'bold' }}>The Comedy Companion v1.0</Text>
+            <ScrollView>
+              <View style={{ flex: 1, paddingLeft: 10, paddingRight: 10 }}>
+                <View style={{ paddingTop: 10, justifyContent: 'center', alignItems: 'center' }}>
+                  <Image style={{ width: 100, height: 110, marginTop: 15 }} source={ require('../../images/FullMascot.png') } />
+                </View>
+                <View style={{ paddingTop: 10, justifyContent: 'center', alignItems: 'center' }}>
+                  <View style={{ borderBottomWidth: 1 }}>
+                    <Text style={{ fontWeight: 'bold' }}>The Comedy Companion v1.0</Text>
+                  </View>
+                </View>
+                <View style={{ paddingTop: 10, justifyContent: 'center', alignItems: 'center' }}>
+                  <Text style={{ textAlign: 'center' }}>
+                    Thanks for downloading the premiere version of The Comedy Companion!
+                    I really hope it's a big help to comedians around the world. Using this app you can manage
+                    your Jokes, Set Lists, and Shows.
+                  </Text>
+                </View>
+                <View style={{ paddingTop: 10, justifyContent: 'center', alignItems: 'center' }}>
+                  <Text style={{ textAlign: 'center' }}>
+                    Not only is the app entirely free, but all the code is open source and, if you can code in React Native,
+                    you can help contribute and make it better! If you'd like to get involved click the following link:
+                  </Text>
+                </View>
+                <View style={{ paddingTop: 10, justifyContent: 'center', alignItems: 'center' }}>
+                  <TouchableHighlight onPress={ () => Linking.openURL('http://www.github.com/dereksweet/ComedyCompanion') }>
+                    <Text style={{ textAlign: 'center', color: '#0000FF' }}>
+                      www.github.com/dereksweet/ComedyCompanion
+                    </Text>
+                  </TouchableHighlight>
+                </View>
+                <View style={{ paddingTop: 10, justifyContent: 'center', alignItems: 'center' }}>
+                  <Text style={{ textAlign: 'center' }}>
+                    Oh, and by the way, have you signed up for Comediate yet? It's the best new way for people to find your comedy
+                    and see your upcoming shows. It's also entirely free for fans and comics alike. Click the button below to join!
+                  </Text>
+                </View>
+                <View style={{ paddingTop: 10, justifyContent: 'center', alignItems: 'center' }}>
+                  <TouchableHighlight onPress={ () => Linking.openURL('http://www.comediate.com') }>
+                    <Image style={{ width: 100, height: 100 }} source={ require('../../images/comediate.png') } />
+                  </TouchableHighlight>
                 </View>
               </View>
-              <View style={{ paddingTop: 10, justifyContent: 'center', alignItems: 'center' }}>
-                <Text style={{ textAlign: 'center' }}>
-                  Thanks for downloading the premiere version of The Comedy Companion!
-                  I really hope it's a big help to comedians around the world. Using this app you can manage
-                  your Jokes, Set Lists, and Shows.
-                </Text>
-              </View>
-              <View style={{ paddingTop: 10, justifyContent: 'center', alignItems: 'center' }}>
-                <Text style={{ textAlign: 'center' }}>
-                  Not only is the app entirely free, but all the code is open source and, if you can code in React Native,
-                  you can help contribute and make it better! If you'd like to get involved click the following link:
-                </Text>
-              </View>
-              <View style={{ paddingTop: 10, justifyContent: 'center', alignItems: 'center' }}>
-                <TouchableHighlight onPress={ () => Linking.openURL('http://www.github.com/dereksweet/ComedyCompanion') }>
-                  <Text style={{ textAlign: 'center', color: '#0000FF' }}>
-                    www.github.com/dereksweet/ComedyCompanion
-                  </Text>
-                </TouchableHighlight>
-              </View>
-              <View style={{ paddingTop: 10, justifyContent: 'center', alignItems: 'center' }}>
-                <Text style={{ textAlign: 'center' }}>
-                  Oh, and by the way, have you signed up for Comediate yet? It's the best new way for people to find your comedy
-                  and see your upcoming shows. It's also entirely free for fans and comics alike. Click the button below to join!
-                </Text>
-              </View>
-              <View style={{ paddingTop: 10, justifyContent: 'center', alignItems: 'center' }}>
-                <TouchableHighlight onPress={ () => Linking.openURL('http://www.comediate.com') }>
-                  <Image style={{ width: 100, height: 100 }} source={ require('../../images/comediate.png') } />
-                </TouchableHighlight>
-              </View>
-            </View>
+            </ScrollView>
             <View style={{ flexDirection: 'row', width: '100%', borderTopColor: '#999999', borderTopWidth: 1 }}>
               <View style={ { flex: 1 } }>
                 <Button type="surface" size="large" theme="gray" selfStyle={ layoutStyles.cancelButton } onPress={ close }>
