@@ -148,7 +148,7 @@ class ShowsList extends Component {
           key={`${sectionID}-${rowID}`}
           style={{
             height: 1,
-            backgroundColor: '#CCCCCC',
+            backgroundColor: '#CCCCCC'
           }}
         />
       );

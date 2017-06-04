@@ -4,7 +4,7 @@ const VERSION=1.0;
 
 import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
-import { View, Modal } from 'react-native';
+import { View, Image, Modal } from 'react-native';
 import { connect } from 'react-redux';
 
 import {SlidingPane, SlidingPaneWrapper} from 'react-native-sliding-panes';
@@ -64,7 +64,7 @@ class MainApp extends Component {
         this.setting.save();
       }
 
-      setTimeout(() => this.props.routingActions.hideLoading(), 500);
+      setTimeout(() => this.props.routingActions.hideLoading(), 1000);
     });
   }
 
@@ -141,7 +141,11 @@ class MainApp extends Component {
                onRequestClose={() => { }}>
           <About />
         </Modal>
-        { routingState.show_loading && <View style={ layoutStyles.loadingScreen } /> }
+        { routingState.show_loading && 
+          <View style={ layoutStyles.loadingScreen }>
+            <Image style={{ width: 300, height: 300, marginTop: 15 }} source={ require('../images/Loading.png') } />
+          </View>
+        }
       </View>
     );
   }

@@ -114,7 +114,9 @@ export default layoutStyles = StyleSheet.create({
     right: 0,
     width: '100%',
     height: '100%',
-    backgroundColor: '#FFFFFF'
+    backgroundColor: '#F8ECC2',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   cancelButton: {
     backgroundColor: '#999999',
