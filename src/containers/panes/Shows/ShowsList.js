@@ -8,8 +8,6 @@ import {Button} from 'react-native-ui-xg';
 import SearchBar from 'react-native-material-design-searchbar';
 import moment from 'moment';
 
-import ExpandingView from '../../../components/ExpandingView';
-
 import Show from '../../../models/show';
 
 import ShowListHelper from '../../../helpers/showListHelper';
@@ -216,7 +214,7 @@ class ShowsList extends Component {
           </View>
         </View>
         <Modal style={ layoutStyles.modal }
-               animationType={"fade"}
+               animationType={ Platform.OS === 'ios'? "fade" : "none" }
                transparent={false}
                visible={this.state.set_list_visible}
                onRequestClose={() => { }}>

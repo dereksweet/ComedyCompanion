@@ -7,8 +7,6 @@ import {bindActionCreators} from 'redux';
 import { View, Modal } from 'react-native';
 import { connect } from 'react-redux';
 
-import {SlidingPane, SlidingPaneWrapper} from 'react-native-sliding-panes';
-
 import Setting from '../models/setting';
 
 import * as routingActions from '../actions/routingActions';
@@ -18,14 +16,14 @@ import * as showListActions from '../actions/showListActions';
 
 import layoutStyles from '../stylesheets/layoutStyles';
 
-import StatusBar from './StatusBar.js';
+import StatusBar from './StatusBar';
 
-import Jokes from './panes/Jokes.js';
-import EditJoke from './modals/EditJoke.js';
-import SetLists from './panes/SetLists.js';
-import EditSetList from './modals/EditSetList.js';
-import Shows from './panes/Shows.js';
-import EditShow from './modals/EditShow.js';
+import Jokes from './panes/Jokes';
+import EditJoke from './modals/EditJoke';
+import SetLists from './panes/SetLists';
+import EditSetList from './modals/EditSetList';
+import Shows from './panes/Shows';
+import EditShow from './modals/EditShow';
 import Settings from './modals/Settings';
 import About from './modals/About';
 
@@ -68,32 +66,10 @@ class MainApp extends Component {
     });
   }
 
-  componentDidMount() {
-    this.setupSlidingPanes();
-  }
-
-  setupSlidingPanes() {
-    this.jokesPane.warpCenter();
-    this.setListsPane.warpRight();
-    this.showsPane.warpRight();
-    this.slidingPaneWrapper.childPanes = [this.jokesPane, this.setListsPane, this.showsPane];
-  }
-
   render() {
     const { routingState, routingActions } = this.props;
 
     const setActivePane = (pane) => {
-      switch (pane) {
-        case 'jokes':
-          this.slidingPaneWrapper.setActive(0);
-          break;
-        case 'set_lists':
-          this.slidingPaneWrapper.setActive(1);
-          break;
-        case 'shows':
-          this.slidingPaneWrapper.setActive(2);
-          break;
-      }
       routingActions.setPane(pane);
     };
 
@@ -101,23 +77,14 @@ class MainApp extends Component {
       <View style={[layoutStyles.centeredFlex, layoutStyles.mainContainer]}>
         <View style={{ flex: 1 }}>
           <StatusBar setActivePane={setActivePane} />
-          <SlidingPaneWrapper style={{}} ref={(slidingPaneWrapper) => { this.slidingPaneWrapper = slidingPaneWrapper }}>
-            <SlidingPane style={[{borderColor: '#DDDDDD', borderWidth: 1}]}
-                         ref={ (jokesPane) => { this.jokesPane = jokesPane} }>
-                <Jokes />
-            </SlidingPane>
-            <SlidingPane style={[{borderColor: '#DDDDDD', borderWidth: 1}]}
-                         ref={ (setListsPane) => { this.setListsPane = setListsPane} }>
-              <SetLists />
-            </SlidingPane>
-            <SlidingPane style={[{borderColor: '#DDDDDD', borderWidth: 1}]}
-                         ref={ (showsPane) => { this.showsPane = showsPane} }>
-              <Shows />
-            </SlidingPane>
-          </SlidingPaneWrapper>
+          <View style={{ flex: 1 }}>
+            { routingState.pane == 'jokes' && <Jokes /> }
+            { routingState.pane == 'set_lists' && <SetLists /> }
+            { routingState.pane == 'shows' && <Shows /> }
+          </View>
         </View>
         <Modal style={ layoutStyles.modal }
-               animationType={"slide"}
+               animationType={ "none" }
                transparent={false}
                visible={routingState.modal_visible}
                onRequestClose={() => { }}>
@@ -126,14 +93,14 @@ class MainApp extends Component {
           { routingState.pane == 'shows' && <EditShow /> }
         </Modal>
         <Modal style={ layoutStyles.modal }
-               animationType={"fade"}
+               animationType={ "none" }
                transparent={false}
                visible={routingState.settings_visible}
                onRequestClose={() => { }}>
           <Settings />
         </Modal>
         <Modal style={ layoutStyles.modal }
-               animationType={"fade"}
+               animationType={ "none" }
                transparent={false}
                visible={routingState.about_visible}
                onRequestClose={() => { }}>

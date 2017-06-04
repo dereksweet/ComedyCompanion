@@ -1,7 +1,7 @@
 'use strict';
 
 import React, {Component} from 'react';
-import { View, Text, AsyncStorage, Platform } from 'react-native';
+import { View, ScrollView, Text, Switch, AsyncStorage, Platform } from 'react-native';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 import {Button} from 'react-native-ui-xg';
@@ -247,7 +247,7 @@ class Settings extends Component {
       <View style={[layoutStyles.modal, layoutStyles.centeredFlex]}>
         <View style={layoutStyles.statusBarBuffer} />
         <View style={layoutStyles.modalContent}>
-          <View style={{ flex: 1 }}>
+          <ScrollView style={{ flex: 1 }}>
             <View style={[layoutStyles.modalContentSection]}>
               <View style={ {borderBottomColor: '#999999', borderBottomWidth: 1, paddingBottom: 5, marginBottom: 10} }>
                 <Text style={ layoutStyles.settingsSectionTitle }>Jokes Settings</Text>
@@ -364,7 +364,7 @@ class Settings extends Component {
                 </View>
               </View>
             }
-          </View>
+          </ScrollView>
           { this.state.showReadConfirm &&
             <View style={ layoutStyles.confirmBox }>
               <Text style={{ textAlign: 'center' }}>This is what is stored on your iCloud:</Text>

@@ -4,6 +4,7 @@ import { Animated } from 'react-native';
 export default class ExpandingView extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
       heightAnim: new Animated.Value(0)
     };

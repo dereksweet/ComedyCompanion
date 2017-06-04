@@ -3,8 +3,8 @@
 import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import { View, Text, TouchableHighlight, Keyboard } from 'react-native';
-import Hamburger from 'react-native-hamburger';
 import { connect } from 'react-redux';
+import Hamburger from 'react-native-hamburger';
 
 import ExpandingView from '../components/ExpandingView';
 
@@ -39,6 +39,7 @@ class StatusBar extends Component {
       this.props.setActivePane(pane);
       statusBarActions.toggleHamburgerActive();
       this.hamburger._animate();
+
       this.navBarView.performShrink();
     };
 
@@ -101,7 +102,7 @@ class StatusBar extends Component {
                        active={statusBarState.hamburger_active}
                        type="spinCross"
                        color="black"
-                       onPress={() => clickHamburger()}
+                       onPress={ clickHamburger }
             />
           </View>
           <View style={ { flexDirection: 'row' } }>
