@@ -127,7 +127,8 @@ class JokesList extends Component {
     const renderAddButton = () => {
       return (
         <View style={ layoutStyles.addButtonView }>
-          <TouchableHighlight style={ layoutStyles.addButton }
+          <TouchableHighlight underlayColor="#EEEEEE"
+                              style={ layoutStyles.addButton }
                               onPress={ addJoke }>
             <Text style={{width: '100%'}}>{ addIcon }</Text>
           </TouchableHighlight>

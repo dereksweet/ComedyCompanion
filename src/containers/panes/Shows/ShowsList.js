@@ -130,7 +130,7 @@ class ShowsList extends Component {
             </View>
             <View style={{ alignItems: 'flex-end' }}>
               <View style={ showListStyles.showInfoView }>
-                <TouchableHighlight onPress={ () => viewSetList(show._id) } style={{ flex: 1, marginLeft: 10 }}>
+                <TouchableHighlight underlayColor="#EEEEEE" onPress={ () => viewSetList(show._id) } style={{ flex: 1, marginLeft: 10 }}>
                   <View style={{ flex: 1, alignItems: 'flex-end', backgroundColor: '#EEFFEE', padding: 10, borderColor: '#EEEEEE', borderWidth: 1 }}>
                     <Text style={{ textAlign: 'center', fontSize: 10 }}>View Set List</Text>
                   </View>
@@ -157,7 +157,8 @@ class ShowsList extends Component {
     const renderAddButton = () => {
       return (
         <View style={ layoutStyles.addButtonView }>
-          <TouchableHighlight style={ layoutStyles.addButton }
+          <TouchableHighlight underlayColor="#EEEEEE"
+                              style={ layoutStyles.addButton }
                               onPress={ addShow }>
             <Text style={{width: '100%'}}>{ addIcon }</Text>
           </TouchableHighlight>

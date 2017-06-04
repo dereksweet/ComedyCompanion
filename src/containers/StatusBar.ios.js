@@ -54,7 +54,8 @@ class StatusBar extends Component {
     const renderSettingsButton = () => {
       return (
         <View style={ statusBarStyles.gearIcon }>
-          <TouchableHighlight style={{ flex: 1, alignItems: 'center', paddingTop: 7, paddingLeft: 7 }}
+          <TouchableHighlight underlayColor="#EEEEEE"
+                              style={{ flex: 1, alignItems: 'center', paddingTop: 7, paddingLeft: 7 }}
                               onPress={ clickSettings }>
             <Text style={{width: '100%'}}>{ settingsIcon }</Text>
           </TouchableHighlight>
@@ -65,7 +66,8 @@ class StatusBar extends Component {
     const renderAboutButton = () => {
       return (
         <View style={ statusBarStyles.aboutIcon }>
-          <TouchableHighlight style={{ flex: 1, alignItems: 'center', paddingTop: 7, paddingLeft: 7 }}
+          <TouchableHighlight underlayColor="#EEEEEE"
+                              style={{ flex: 1, alignItems: 'center', paddingTop: 7, paddingLeft: 7 }}
                               onPress={ clickAbout }>
             <Text style={{width: '100%'}}>{ aboutIcon }</Text>
           </TouchableHighlight>
@@ -74,7 +76,8 @@ class StatusBar extends Component {
     };
 
     const renderNavBarButton = (pane, icon, text, styles) => {
-      return  <TouchableHighlight style={ [statusBarStyles.navLink, styles] }
+      return  <TouchableHighlight underlayColor="#EEEEEE"
+                                  style={ [statusBarStyles.navLink, styles] }
                                   onPress={() => clickNavLink(pane)}>
                 <View style={ { flexDirection: 'row' } }>
                   { icon }
