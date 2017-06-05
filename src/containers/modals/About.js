@@ -61,12 +61,14 @@ class About extends Component {
                 <View style={{ paddingTop: 10, justifyContent: 'center', alignItems: 'center' }}>
                   <Text style={{ textAlign: 'center' }}>
                     Oh, and by the way, have you signed up for Comediate yet? It's the best new way for people to find your comedy
-                    and see your upcoming shows. It's also entirely free for fans and comics alike. Click the button below to join!
+                    and see your upcoming shows. It's also entirely free for fans and comics alike. Click the link below to join!
                   </Text>
                 </View>
                 <View style={{ paddingTop: 10, justifyContent: 'center', alignItems: 'center' }}>
                   <TouchableHighlight onPress={ () => Linking.openURL('http://www.comediate.com') }>
-                    <Image style={{ width: 100, height: 100 }} source={ require('../../images/comediate.png') } />
+                    <Text style={{ textAlign: 'center', color: '#0000FF' }}>
+                      www.comediate.com
+                    </Text>
                   </TouchableHighlight>
                 </View>
               </View>
