@@ -1,7 +1,7 @@
 'use strict';
 
 import React, {Component} from 'react';
-import { View, Text, ListView, TouchableHighlight, Platform, Keyboard, Switch } from 'react-native';
+import { View, Text, ListView, TouchableHighlight, Platform, Switch } from 'react-native';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 import SearchBar from 'react-native-material-design-searchbar';
@@ -23,55 +23,12 @@ import {addIcon} from '../../../helpers/icons';
 class JokesList extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      view_height: 0,
-      keyboard_height: 0
-    }
-  }
-
-  componentWillMount () {
-    var eventVerb = Platform.OS === 'ios'? 'Will' : 'Did';
-
-    this.keyboardDidShowListener = Keyboard.addListener('keyboard' + eventVerb + 'Show', this.keyboardDidShow.bind(this));
-    this.keyboardDidHideListener = Keyboard.addListener('keyboard' + eventVerb + 'Hide', this.keyboardDidHide.bind(this));
-  }
-
-  componentWillUnmount () {
-    this.keyboardDidShowListener.remove();
-    this.keyboardDidHideListener.remove();
   }
 
   shouldComponentUpdate(nextProps, nextState) {
     const jokeListChanged = this.props.jokeListState.joke_list !== nextProps.jokeListState.joke_list;
-    const keyboardHeightChanged = this.state.keyboard_height !== nextState.keyboard_height;
-    const viewHeightChanged = this.state.view_height !== nextState.view_height;
 
-    return jokeListChanged || keyboardHeightChanged || viewHeightChanged;
-  }
-
-  keyboardDidShow (e) {
-    this.setState({
-      keyboard_height: e.endCoordinates.height
-    });
-  }
-
-  keyboardDidHide (e) {
-    this.setState({
-      keyboard_height: 0
-    });
-  }
-
-  measureView(event) {
-    if (this.props.routingState.pane === 'jokes') {
-      this.setState({
-        view_height: event.nativeEvent.layout.height
-      });
-    }
-  }
-
-  contentHeight() {
-    return this.state.view_height - (Platform.OS === 'ios'? this.state.keyboard_height : 0);
+    return jokeListChanged;
   }
 
   render() {
@@ -152,8 +109,8 @@ class JokesList extends Component {
     };
 
     return (
-      <View style={{ flex: 1 }}  onLayout={(event) => this.measureView(event)}>
-        <View style={{ height: this.contentHeight(), justifyContent: 'flex-start' }}>
+      <View style={{ flex: 1 }}>
+        <View style={{ justifyContent: 'flex-start' }}>
           <View style={{ backgroundColor: '#FFFFFF', width: '100%' }}>
             <SearchBar
               ref={(searchBar) => { this.searchBar = searchBar }}

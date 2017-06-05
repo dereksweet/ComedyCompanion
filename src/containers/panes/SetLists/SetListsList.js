@@ -1,18 +1,14 @@
 'use strict';
 
 import React, {Component} from 'react';
-import { View, Text, ListView, TouchableHighlight, Platform, Keyboard, Switch } from 'react-native';
+import { View, Text, ListView, TouchableHighlight, Platform, Switch } from 'react-native';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
-import SearchBar from 'react-native-material-design-searchbar';
 import moment from 'moment';
 
 import SetList from '../../../models/set_list';
 
-import SetListListHelper from '../../../helpers/setListListHelper';
-
 import * as setListActions from '../../../actions/setListActions';
-import * as setListListActions from '../../../actions/setListListActions';
 import * as routingActions from '../../../actions/routingActions';
 
 import layoutStyles from '../../../stylesheets/layoutStyles';
@@ -23,59 +19,16 @@ import {addIcon} from '../../../helpers/icons';
 class SetListsList extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      view_height: 0,
-      keyboard_height: 0
-    }
-  }
-
-  componentWillMount () {
-    var eventVerb = Platform.OS === 'ios'? 'Will' : 'Did';
-
-    this.keyboardDidShowListener = Keyboard.addListener('keyboard' + eventVerb + 'Show', this.keyboardDidShow.bind(this));
-    this.keyboardDidHideListener = Keyboard.addListener('keyboard' + eventVerb + 'Hide', this.keyboardDidHide.bind(this));
   }
 
   shouldComponentUpdate(nextProps, nextState) {
     const setListListChanged = this.props.setListListState.sl_list !== nextProps.setListListState.sl_list;
-    const keyboardHeightChanged = this.state.keyboard_height !== nextState.keyboard_height;
-    const viewHeightChanged = this.state.view_height !== nextState.view_height;
 
-    return setListListChanged || keyboardHeightChanged || viewHeightChanged;
-  }
-
-  keyboardDidShow (e) {
-    this.setState({
-      keyboard_height: e.endCoordinates.height
-    });
-  }
-
-  keyboardDidHide (e) {
-    this.setState({
-      keyboard_height: 0
-    });
-  }
-
-  componentWillUnmount () {
-    this.keyboardDidShowListener.remove();
-    this.keyboardDidHideListener.remove();
-  }
-
-  measureView(event) {
-    if (this.props.routingState.pane === 'set_lists') {
-      this.setState({
-        view_height: event.nativeEvent.layout.height
-      });
-    }
-  }
-
-  contentHeight() {
-    return this.state.view_height - (Platform.OS === 'ios'? this.state.keyboard_height : 0);
+    return setListListChanged;
   }
 
   render() {
-    const { setListListState,  routingActions, setListActions, setListListActions } = this.props;
+    const { setListListState,  routingActions, setListActions } = this.props;
 
     let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     const setListListDS = ds.cloneWithRows(setListListState.sl_list.map((set_list) => { return set_list._name }));
@@ -138,8 +91,8 @@ class SetListsList extends Component {
     };
 
     return (
-      <View style={{ flex: 1 }}  onLayout={(event) => this.measureView(event)}>
-        <View style={{ height: this.contentHeight(), justifyContent: 'flex-start' }}>
+      <View style={{ flex: 1 }}>
+        <View style={{ justifyContent: 'flex-start' }}>
           <ListView
             dataSource={ setListListDS }
             renderRow={ renderRow }
@@ -167,7 +120,6 @@ export default connect(state => ({
   }),
   (dispatch) => ({
     setListActions: bindActionCreators(setListActions, dispatch),
-    setListListActions: bindActionCreators(setListListActions, dispatch),
     routingActions: bindActionCreators(routingActions, dispatch)
   })
 )(SetListsList);

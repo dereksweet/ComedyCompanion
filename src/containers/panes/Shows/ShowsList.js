@@ -1,7 +1,7 @@
 'use strict';
 
 import React, {Component} from 'react';
-import { View, Text, ListView, ScrollView, TouchableHighlight, Platform, Keyboard, Switch, Modal } from 'react-native';
+import { View, Text, ListView, ScrollView, TouchableHighlight, Platform, Switch, Modal } from 'react-native';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 import {Button} from 'react-native-ui-xg';
@@ -26,57 +26,17 @@ class ShowsList extends Component {
     super(props);
 
     this.state = {
-      view_height: 0,
-      keyboard_height: 0,
       set_list_visible: false,
       jokeViews: {}
     };
   }
 
-  componentWillMount () {
-    var eventVerb = Platform.OS === 'ios'? 'Will' : 'Did';
-
-    this.keyboardDidShowListener = Keyboard.addListener('keyboard' + eventVerb + 'Show', this.keyboardDidShow.bind(this));
-    this.keyboardDidHideListener = Keyboard.addListener('keyboard' + eventVerb + 'Hide', this.keyboardDidHide.bind(this));
-  }
-
-  componentWillUnmount () {
-    this.keyboardDidShowListener.remove();
-    this.keyboardDidHideListener.remove();
-  }
-
   shouldComponentUpdate(nextProps, nextState) {
     const showListChanged = this.props.showListState.show_list !== nextProps.showListState.show_list;
-    const keyboardHeightChanged = this.state.keyboard_height !== nextState.keyboard_height;
-    const viewHeightChanged = this.state.view_height !== nextState.view_height;
     const setListVisibleChanged = this.state.set_list_visible !== nextState.set_list_visible;
     const jokeViewsChanged = this.state.jokeViews !== nextState.jokeViews;
 
-    return showListChanged || keyboardHeightChanged || viewHeightChanged || setListVisibleChanged || jokeViewsChanged;
-  }
-
-  keyboardDidShow (e) {
-    this.setState({
-      keyboard_height: e.endCoordinates.height
-    });
-  }
-
-  keyboardDidHide (e) {
-    this.setState({
-      keyboard_height: 0
-    });
-  }
-
-  measureView(event) {
-    if (this.props.routingState.pane === 'shows') {
-      this.setState({
-        view_height: event.nativeEvent.layout.height
-      });
-    }
-  }
-
-  contentHeight() {
-    return this.state.view_height - (Platform.OS === 'ios'? this.state.keyboard_height : 0);
+    return showListChanged || setListVisibleChanged || jokeViewsChanged;
   }
 
   render() {
@@ -185,8 +145,8 @@ class ShowsList extends Component {
     };
 
     return (
-      <View style={{ flex: 1 }}  onLayout={(event) => this.measureView(event)}>
-        <View style={{ height: this.contentHeight(), justifyContent: 'flex-start' }}>
+      <View style={{ flex: 1 }}>
+        <View style={{ justifyContent: 'flex-start' }}>
           <View style={{ backgroundColor: '#FFFFFF', width: '100%' }}>
             <SearchBar
               ref={(searchBar) => { this.searchBar = searchBar }}
