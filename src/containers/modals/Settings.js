@@ -34,7 +34,11 @@ class Settings extends Component {
 
     this.state = {
       showWriteConfirm: false,
+      writeLoadComplete: false,
+      writing: false,
       showReadConfirm: false,
+      readLoadComplete: false,
+      reading: false,
       cloudJokesCount: 0,
       cloudSetListsCount: 0,
       cloudShowsCount: 0,
@@ -122,6 +126,11 @@ class Settings extends Component {
     };
 
     const confirmWriteToiCloud = async () => {
+      this.setState({
+        showWriteConfirm: true,
+        writeLoadComplete: false
+      });
+
       const local_jokes = await Joke.all(null, null, true);
       const local_set_lists = await SetList.all(null, null, true);
       const local_shows = await Show.all(null, null, true);
@@ -130,17 +139,23 @@ class Settings extends Component {
         localJokesCount: local_jokes.length,
         localSetListsCount: local_set_lists.length,
         localShowsCount: local_shows.length,
-        showWriteConfirm: true
+        writeLoadComplete: true
       });
     };
 
     const cancelWriteToiCloud = async () => {
       this.setState({
-        showWriteConfirm: false
+        showWriteConfirm: false,
+        writeLoadComplete: false,
+        writing: false
       });
     };
 
     const writeToiCloud = async () => {
+      this.setState({
+        writing: true
+      });
+
       const local_jokes = await Joke.all(null, null, true);
       const local_set_lists = await SetList.all(null, null, true);
       const local_shows = await Show.all(null, null, true);
@@ -165,13 +180,20 @@ class Settings extends Component {
       }
 
       this.setState({
-        showWriteConfirm: false
+        showWriteConfirm: false,
+        writeLoadComplete: false,
+        writing: false
       });
 
       alert('Write to iCloud Complete!');
     };
 
     const confirmReadFromiCloud = async () => {
+      this.setState({
+        showReadConfirm: true,
+        readLoadComplete: false
+      });
+
       const cloud_jokes = JSON.parse(await iCloudStorage.getItem('ComedyCompanion:jokes'));
       const cloud_set_lists = JSON.parse(await iCloudStorage.getItem('ComedyCompanion:set_lists'));
       const cloud_shows = JSON.parse(await iCloudStorage.getItem('ComedyCompanion:shows'));
@@ -180,17 +202,23 @@ class Settings extends Component {
         cloudJokesCount: cloud_jokes.length,
         cloudSetListsCount: cloud_set_lists.length,
         cloudShowsCount: cloud_shows.length,
-        showReadConfirm: true
+        readLoadComplete: true
       });
     };
 
     const cancelReadFromiCloud = async () => {
       this.setState({
-        showReadConfirm: false
+        showReadConfirm: false,
+        readLoadComplete: false,
+        reading: false
       });
     };
 
     const readFromiCloud = async () => {
+      this.setState({
+        reading: true
+      });
+
       const cloud_jokes = JSON.parse(await iCloudStorage.getItem('ComedyCompanion:jokes'));
       const cloud_set_lists = JSON.parse(await iCloudStorage.getItem('ComedyCompanion:set_lists'));
       const cloud_shows = JSON.parse(await iCloudStorage.getItem('ComedyCompanion:shows'));
@@ -237,7 +265,9 @@ class Settings extends Component {
       await ShowListHelper.refreshShowListEmpty();
 
       this.setState({
-        showReadConfirm: false
+        showReadConfirm: false,
+        readLoadComplete: false,
+        reading: false
       });
 
       alert('Read from iCloud Complete!');
@@ -367,36 +397,72 @@ class Settings extends Component {
           </ScrollView>
           { this.state.showReadConfirm &&
             <View style={ layoutStyles.confirmBox }>
-              <Text style={{ textAlign: 'center' }}>This is what is stored on your iCloud:</Text>
-              <Text style={{ paddingTop: 25 }}>{ this.state.cloudJokesCount } Jokes</Text>
-              <Text>{ this.state.cloudSetListsCount } Set Lists</Text>
-              <Text>{ this.state.cloudShowsCount } Shows</Text>
-              <Text style={{ textAlign: 'center', paddingTop: 25, fontWeight: 'bold' }}>ARE YOU SURE YOU WANT TO REPLACE EVERYTHING WITH WHAT IS ON ICLOUD?</Text>
-              <View style={{ paddingTop: 25, flexDirection: 'row' }}>
-                <Button type="surface" size="large" theme="red" selfStyle={ layoutStyles.deleteButton } onPress={ cancelReadFromiCloud }>
-                  <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>NO</Text>
-                </Button>
-                <Button type="surface" size="large" theme="blue" selfStyle={ [layoutStyles.confirmButton, { marginLeft: 10 }] } onPress={ readFromiCloud }>
-                  <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>YES</Text>
-                </Button>
-              </View>
+              { this.state.readLoadComplete && !this.state.reading &&
+                <View style={{ flex: 1, alignSelf: 'center', alignItems: 'center', justifyContent: 'center' }}>
+                  <Text style={{ textAlign: 'center' }}>This is what is stored on your iCloud:</Text>
+                  <Text style={{ paddingTop: 25 }}>{ this.state.cloudJokesCount } Jokes</Text>
+                  <Text>{ this.state.cloudSetListsCount } Set Lists</Text>
+                  <Text>{ this.state.cloudShowsCount } Shows</Text>
+                  <Text style={{ textAlign: 'center', paddingTop: 25, fontWeight: 'bold' }}>ARE YOU SURE YOU WANT TO
+                    REPLACE EVERYTHING WITH WHAT IS ON ICLOUD?</Text>
+                  <View style={{ paddingTop: 25, flexDirection: 'row' }}>
+                    <Button type="surface" size="large" theme="red" selfStyle={ layoutStyles.deleteButton }
+                            onPress={ cancelReadFromiCloud }>
+                      <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>NO</Text>
+                    </Button>
+                    <Button type="surface" size="large" theme="blue"
+                            selfStyle={ [layoutStyles.confirmButton, { marginLeft: 10 }] } onPress={ readFromiCloud }>
+                      <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>YES</Text>
+                    </Button>
+                  </View>
+                </View>
+              }
+              { !this.state.readLoadComplete && !this.state.reading &&
+                <View style={{ flex: 1, alignSelf: 'center', alignItems: 'center', justifyContent: 'center' }}>
+                  <Text style={{ textAlign: 'center'}}>Preloading iCloud Data</Text>
+                  <Text style={{ textAlign: 'center'}}>Please Wait...</Text>
+                </View>
+              }
+              { this.state.reading &&
+                <View style={{ flex: 1, alignSelf: 'center', alignItems: 'center', justifyContent: 'center' }}>
+                  <Text style={{ textAlign: 'center'}}>Reading from iCloud</Text>
+                </View>
+              }
             </View>
           }
           { this.state.showWriteConfirm &&
             <View style={ layoutStyles.confirmBox }>
-              <Text style={{ textAlign: 'center' }}>This is what is stored on your device:</Text>
-              <Text style={{ paddingTop: 25 }}>{ this.state.localJokesCount } Jokes</Text>
-              <Text>{ this.state.localSetListsCount } Set Lists</Text>
-              <Text>{ this.state.localShowsCount } Shows</Text>
-              <Text style={{ textAlign: 'center', paddingTop: 25, fontWeight: 'bold' }}>ARE YOU SURE YOU WANT TO OVERWRITE EVERYTHING ON ICLOUD?</Text>
-              <View style={{ paddingTop: 25, flexDirection: 'row' }}>
-                <Button type="surface" size="large" theme="red" selfStyle={ layoutStyles.deleteButton } onPress={ cancelWriteToiCloud }>
-                  <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>NO</Text>
-                </Button>
-                <Button type="surface" size="large" theme="blue" selfStyle={ [layoutStyles.confirmButton, { marginLeft: 10 }] } onPress={ writeToiCloud }>
-                  <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>YES</Text>
-                </Button>
-              </View>
+              { this.state.writeLoadComplete && !this.state.writing &&
+                <View style={{ flex: 1, alignSelf: 'center', alignItems: 'center', justifyContent: 'center' }}>
+                  <Text style={{ textAlign: 'center' }}>This is what is stored on your device:</Text>
+                  <Text style={{ paddingTop: 25 }}>{ this.state.localJokesCount } Jokes</Text>
+                  <Text>{ this.state.localSetListsCount } Set Lists</Text>
+                  <Text>{ this.state.localShowsCount } Shows</Text>
+                  <Text style={{ textAlign: 'center', paddingTop: 25, fontWeight: 'bold' }}>ARE YOU SURE YOU WANT TO
+                    OVERWRITE EVERYTHING ON ICLOUD?</Text>
+                  <View style={{ paddingTop: 25, flexDirection: 'row' }}>
+                    <Button type="surface" size="large" theme="red" selfStyle={ layoutStyles.deleteButton }
+                            onPress={ cancelWriteToiCloud }>
+                      <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>NO</Text>
+                    </Button>
+                    <Button type="surface" size="large" theme="blue"
+                            selfStyle={ [layoutStyles.confirmButton, { marginLeft: 10 }] } onPress={ writeToiCloud }>
+                      <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>YES</Text>
+                    </Button>
+                  </View>
+                </View>
+              }
+              { !this.state.writeLoadComplete && !this.state.writing &&
+                <View style={{ flex: 1, alignSelf: 'center', alignItems: 'center', justifyContent: 'center' }}>
+                  <Text style={{ textAlign: 'center'}}>Preloading Device Data</Text>
+                  <Text style={{ textAlign: 'center'}}>Please Wait...</Text>
+                </View>
+              }
+              { this.state.writing &&
+                <View style={{ flex: 1, alignSelf: 'center', alignItems: 'center', justifyContent: 'center' }}>
+                  <Text style={{ textAlign: 'center'}}>Writing to iCloud</Text>
+                </View>
+              }
             </View>
           }
           <View style={{ flexDirection: 'row', width: '100%', borderTopColor: '#999999', borderTopWidth: 1 }}>
