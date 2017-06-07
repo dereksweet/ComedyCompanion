@@ -44,7 +44,7 @@ class JokeSelector extends Component {
       return (
         <TouchableHighlight onPress={ () => selectJoke(joke._id) }>
           <View style={ setListListStyles.jokeSelectorRow }>
-            <Text style={ jokeListStyles.jokeName }>{ joke._name }</Text>
+            <Text style={ [jokeListStyles.jokeName, { textAlign: 'center' }] }>{ joke._name }</Text>
           </View>
         </TouchableHighlight>
       );

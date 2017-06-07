@@ -76,7 +76,7 @@ class JokeSelector extends Component {
           style={ [setListListStyles.setListJokeRow, {borderBottomWidth: 1, borderBottomColor: '#CCCCCC'}] }
           {...this.props.sortHandlers}>
           <View style={ {alignItems: 'center'} }>
-            <Text style={ jokeListStyles.jokeName }>{ rowData._name }</Text>
+            <Text style={ [jokeListStyles.jokeName, { textAlign: 'center' }] }>{ rowData._name }</Text>
           </View>
         </TouchableHighlight>
       );
