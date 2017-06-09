@@ -20,7 +20,7 @@ class Shows extends Component {
   }
 
   componentDidMount() {
-    ShowListHelper.refreshShowList();
+    // ShowListHelper.refreshShowList();
     ShowListHelper.refreshShowListEmpty();
   }
 

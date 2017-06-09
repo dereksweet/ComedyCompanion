@@ -25,7 +25,7 @@ class SetLists extends Component {
   }
 
   componentDidMount() {
-    SetListListHelper.refreshSLList();
+    // SetListListHelper.refreshSLList();
     SetListListHelper.refreshSLListEmpty();
   }
 
