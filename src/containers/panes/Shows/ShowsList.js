@@ -175,7 +175,7 @@ class ShowsList extends Component {
           </View>
         </View>
         <Modal style={ layoutStyles.modal }
-               animationType={ Platform.OS === 'ios'? "fade" : "none" }
+               animationType={ "fade" }
                transparent={false}
                visible={this.state.set_list_visible}
                onRequestClose={() => { }}>
