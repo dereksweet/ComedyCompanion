@@ -15,7 +15,7 @@ Developed in 100% React Native, "The Comedy Companion" is the world's first prod
 - Create set lists with ease, dragging and dropping jokes into place, and track their estimated length
 - Track every show you perform, which set list was used, the venue performed at including city and state
 - Reorder everything on the fly as well as search for specific keywords in your bits
-- Back everything up to your personal iCloud account for security and ease of transferring data between multiple iPhones and iPads
+- Back everything up to your personal iCloud account for security and ease of transferring data between multiple iPhones and iPads (iOS Users Only)
 
 ### Instalation Instructions
 
