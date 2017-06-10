@@ -2,13 +2,13 @@
 
 Developed in 100% React Native, "The Comedy Companion" is the world's first productivity tool for Stand-Up Comedians. Manage your jokes, organize them into set lists, and track performances all in one place.
 
-### Upcoming Features
+### Upcoming Features (v1.1)
 
 - Cloud Storage for Android Users
 - Running rating of Joke performance by swiping left for good, right for bad on a given show
 - Customizable Categories
 
-### Currently Available Features
+### Currently Available Features (v1.0)
 
 - Track solid bits as well as those you're currently working on
 - Associate detailed notes with each bit
