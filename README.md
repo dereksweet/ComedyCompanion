@@ -6,7 +6,7 @@ Developed in 100% React Native, "The Comedy Companion" is the world's first prod
 
 - Cloud Storage for Android Users
 - Running rating of Joke performance by swiping left for good, right for bad on a given show
-- Customizable Categories
+- Customizable Categories, and filtering on those categories
 
 ### Currently Available Features (v1.0)
 
