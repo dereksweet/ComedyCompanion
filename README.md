@@ -29,6 +29,8 @@ Once all the packages are done installing you should be able to simply type `rea
 
 ### Thank-yous go out to...
 
+[**g-harel**](https://github.com/g-harel) - [**open-source-logos**](https://github.com/g-harel/open-source-logos) - The guy that drew our awesome little devil mascot/icon. Great work! Thanks so much!
+
 [**GeekyAnts**](https://github.com/GeekyAnts) - [**react-native-hamburger**](https://github.com/GeekyAnts/react-native-hamburger) - Hamburger menu you see in the top left corner with the awesome animation when touched
 
 [**manicakes**](https://github.com/manicakes) - [**react-native-icloudstore**](https://github.com/manicakes/react-native-icloudstore) - What allows iOS users to back up their jokes to their iCloud
