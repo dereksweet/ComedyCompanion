@@ -18,7 +18,7 @@ Developed in 100% React Native, "The Comedy Companion" is the world's first prod
 - Reorder everything on the fly as well as search for specific keywords in your bits
 - Back everything up to your personal iCloud account for security and ease of transferring data between multiple iPhones and iPads (iOS Users Only)
 
-### Instalation Instructions
+### Installation Instructions
 
 Installation should be ridiculously simple once you are set up for React Native development ([Getting Started With React Native](https://facebook.github.io/react-native/docs/getting-started.html)) . Simply clone the repository into whatever folder you like, go into that folder and type:
 
