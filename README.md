@@ -7,6 +7,7 @@ Developed in 100% React Native, "The Comedy Companion" is the world's first prod
 - Cloud Storage for Android Users
 - Running rating of Joke performance by swiping left for good, right for bad on a given show
 - Customizable Categories, and filtering on those categories
+- Associate an Audio or Video Recording with any Given Show
 
 ### Currently Available Features (v1.0)
 
@@ -17,7 +18,7 @@ Developed in 100% React Native, "The Comedy Companion" is the world's first prod
 - Reorder everything on the fly as well as search for specific keywords in your bits
 - Back everything up to your personal iCloud account for security and ease of transferring data between multiple iPhones and iPads (iOS Users Only)
 
-### Instalation Instructions
+### Installation Instructions
 
 Installation should be ridiculously simple once you are set up for React Native development ([Getting Started With React Native](https://facebook.github.io/react-native/docs/getting-started.html)) . Simply clone the repository into whatever folder you like, go into that folder and type:
 
@@ -28,6 +29,8 @@ npm install
 Once all the packages are done installing you should be able to simply type `react-native-run-ios` or `react-native-run-android` and the app should boot up in a simulator.
 
 ### Thank-yous go out to...
+
+[**g-harel**](https://github.com/g-harel) - [**open-source-logos**](https://github.com/g-harel/open-source-logos) - The guy that drew our awesome little devil mascot/icon. Great work! Thanks so much!
 
 [**GeekyAnts**](https://github.com/GeekyAnts) - [**react-native-hamburger**](https://github.com/GeekyAnts/react-native-hamburger) - Hamburger menu you see in the top left corner with the awesome animation when touched
 
