@@ -58,6 +58,16 @@ export default function set_list(state = initialState, action = {}) {
         set_list: state.set_list
       };
       break;
+    case types.DUPLICATE_SL:
+      state.set_list._id = -1;
+      state.set_list._name = '';
+      state.set_list._length = 0;
+
+      return {
+        ...state,
+        set_list: state.set_list
+      };
+      break;
     default:
       return state;
   }

@@ -42,3 +42,9 @@ export function removeJokeFromSL(joke) {
     joke
   }
 }
+
+export function duplicateSL() {
+  return {
+    type: types.DUPLICATE_SL
+  }
+}

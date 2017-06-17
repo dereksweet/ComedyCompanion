@@ -91,6 +91,10 @@ class EditSetList extends Component {
       })
     };
 
+    const duplicateSetList = () => {
+      setListActions.duplicateSL();
+    };
+
     return (
       <View style={layoutStyles.centeredFlex}>
         <View style={layoutStyles.statusBarBuffer} />
@@ -105,14 +109,23 @@ class EditSetList extends Component {
                          value={ setListState.set_list._name } />
             </View>
             <View style={ [layoutStyles.modalContentSection, { flexDirection: 'row', alignItems: 'center'  }] }>
-              <Text style={ layoutStyles.inputLabel }>Length:</Text>
-              <TextInput style={ editSetListStyles.lengthInput }
-                         underlineColorAndroid='transparent'
-                         placeholder=""
-                         onChangeText={(text) => setListActions.setSLLength(text)}
-                         keyboardType="numeric"
-                         value={ setListState.set_list._length ? setListState.set_list._length.toString() : '' } />
-              <Text style={ [layoutStyles.inputLabel, {marginLeft: 10}] }>min</Text>
+              <View style={ { flex: 1, flexDirection: 'row', alignItems: 'center'  } }>
+                <Text style={ layoutStyles.inputLabel }>Length:</Text>
+                <TextInput style={ editSetListStyles.lengthInput }
+                           underlineColorAndroid='transparent'
+                           placeholder=""
+                           onChangeText={(text) => setListActions.setSLLength(text)}
+                           keyboardType="numeric"
+                           value={ setListState.set_list._length ? setListState.set_list._length.toString() : '' } />
+                <Text style={ [layoutStyles.inputLabel, {marginLeft: 10}] }>min</Text>
+              </View>
+              { setListState.set_list._id != -1 &&
+                <View>
+                  <Button type="surface" size="large" theme="red" onPress={ duplicateSetList }>
+                    <Text style={{ color: 'white', fontWeight: 'bold' }}>Duplicate</Text>
+                  </Button>
+                </View>
+              }
             </View>
             <View style={{ flex: 1, flexDirection: 'row', borderTopColor: '#CCCCCC', borderTopWidth: 1 }}>
               <View style={{ flex: 1, borderRightColor: '#CCCCCC', borderRightWidth: 1 }}>
