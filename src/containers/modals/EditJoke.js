@@ -10,6 +10,8 @@ import * as routingActions from '../../actions/routingActions';
 import * as jokeActions from '../../actions/jokeActions';
 import * as jokeListActions from '../../actions/jokeListActions';
 
+import MultilineTextInput from '../../components/MultilineTextinput';
+
 import JokeListHelper from '../../helpers/jokeListHelper';
 
 import layoutStyles from '../../stylesheets/layoutStyles';
@@ -112,8 +114,7 @@ class EditJoke extends Component {
                          value={ jokeState.joke._name } />
             </View>
             <View style={ [layoutStyles.modalContentSection, {flex: 1} ] }>
-              <TextInput style={ editJokeStyles.notesInput }
-                         multiline={ true }
+              <MultilineTextInput style={ editJokeStyles.notesInput }
                          underlineColorAndroid='transparent'
                          placeholder="Type your joke notes here..."
                          autoComplete={ false }
