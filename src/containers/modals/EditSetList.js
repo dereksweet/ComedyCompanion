@@ -1,7 +1,7 @@
 'use strict';
 
 import React, {Component} from 'react';
-import { View, Text, TextInput, TouchableHighlight, Platform, Keyboard } from 'react-native';
+import { View, Text, TextInput, TouchableHighlight, TouchableWithoutFeedback, Platform, Keyboard } from 'react-native';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 import {Button} from 'react-native-ui-xg';
@@ -99,62 +99,64 @@ class EditSetList extends Component {
       <View style={layoutStyles.centeredFlex}>
         <View style={layoutStyles.statusBarBuffer} />
         <View style={layoutStyles.modalContent} onLayout={(event) => this.measureModalView(event)}>
-          <View style={{ height: this.contentHeight() }}>
-            <View style={ [layoutStyles.modalContentSection, { flexDirection: 'row', alignItems: 'center'  }] }>
-              <Text style={ layoutStyles.inputLabel }>Name:</Text>
-              <TextInput style={ editSetListStyles.nameInput }
-                         underlineColorAndroid='transparent'
-                         placeholder="Name your set list here..."
-                         onChangeText={(text) => setListActions.setSLName(text)}
-                         value={ setListState.set_list._name } />
-            </View>
-            <View style={ [layoutStyles.modalContentSection, { flexDirection: 'row', alignItems: 'center'  }] }>
-              <View style={ { flex: 1, flexDirection: 'row', alignItems: 'center'  } }>
-                <Text style={ layoutStyles.inputLabel }>Length:</Text>
-                <TextInput style={ editSetListStyles.lengthInput }
+          <TouchableWithoutFeedback onPress={ Keyboard.dismiss }>
+            <View style={{ height: this.contentHeight() }}>
+              <View style={ [layoutStyles.modalContentSection, { flexDirection: 'row', alignItems: 'center'  }] }>
+                <Text style={ layoutStyles.inputLabel }>Name:</Text>
+                <TextInput style={ editSetListStyles.nameInput }
                            underlineColorAndroid='transparent'
-                           placeholder=""
-                           onChangeText={(text) => setListActions.setSLLength(text)}
-                           keyboardType="numeric"
-                           value={ setListState.set_list._length ? setListState.set_list._length.toString() : '' } />
-                <Text style={ [layoutStyles.inputLabel, {marginLeft: 10}] }>min</Text>
+                           placeholder="Name your set list here..."
+                           onChangeText={(text) => setListActions.setSLName(text)}
+                           value={ setListState.set_list._name } />
               </View>
-              { setListState.set_list._id != -1 &&
-                <View>
-                  <Button type="surface" size="large" theme="red" onPress={ duplicateSetList }>
-                    <Text style={{ color: 'white', fontWeight: 'bold' }}>Duplicate</Text>
-                  </Button>
+              <View style={ [layoutStyles.modalContentSection, { flexDirection: 'row', alignItems: 'center'  }] }>
+                <View style={ { flex: 1, flexDirection: 'row', alignItems: 'center'  } }>
+                  <Text style={ layoutStyles.inputLabel }>Length:</Text>
+                  <TextInput style={ editSetListStyles.lengthInput }
+                             underlineColorAndroid='transparent'
+                             placeholder=""
+                             onChangeText={(text) => setListActions.setSLLength(text)}
+                             keyboardType="numeric"
+                             value={ setListState.set_list._length ? setListState.set_list._length.toString() : '' } />
+                  <Text style={ [layoutStyles.inputLabel, {marginLeft: 10}] }>min</Text>
                 </View>
-              }
-            </View>
-            <View style={{ flex: 1, flexDirection: 'row', borderTopColor: '#CCCCCC', borderTopWidth: 1 }}>
-              <View style={{ flex: 1, borderRightColor: '#CCCCCC', borderRightWidth: 1 }}>
-                <JokeSelector />
+                { setListState.set_list._id != -1 &&
+                  <View>
+                    <Button type="surface" size="large" theme="red" onPress={ duplicateSetList }>
+                      <Text style={{ color: 'white', fontWeight: 'bold' }}>Duplicate</Text>
+                    </Button>
+                  </View>
+                }
               </View>
-              <View style={{ flex: 1 }}>
-                <SetListJokes />
+              <View style={{ flex: 1, flexDirection: 'row', borderTopColor: '#CCCCCC', borderTopWidth: 1 }}>
+                <View style={{ flex: 1, borderRightColor: '#CCCCCC', borderRightWidth: 1 }}>
+                  <JokeSelector />
+                </View>
+                <View style={{ flex: 1 }}>
+                  <SetListJokes />
+                </View>
               </View>
-            </View>
-            <View style={ { flexDirection: 'row', width: '100%' }}>
-              { (setListState.set_list._id != -1) &&
+              <View style={ { flexDirection: 'row', width: '100%' }}>
+                { (setListState.set_list._id != -1) &&
+                  <View style={ { flex: 1 } }>
+                    <Button type="surface" size="large" theme="red" selfStyle={ layoutStyles.deleteButton } onPress={ toggleDeleteConfirm }>
+                      <Text style={layoutStyles.buttonText}>Delete</Text>
+                    </Button>
+                  </View>
+                }
                 <View style={ { flex: 1 } }>
-                  <Button type="surface" size="large" theme="red" selfStyle={ layoutStyles.deleteButton } onPress={ toggleDeleteConfirm }>
-                    <Text style={layoutStyles.buttonText}>Delete</Text>
+                  <Button type="surface" size="large" theme="gray" selfStyle={ layoutStyles.cancelButton } onPress={ cancel }>
+                    <Text style={layoutStyles.buttonText}>Cancel</Text>
                   </Button>
                 </View>
-              }
-              <View style={ { flex: 1 } }>
-                <Button type="surface" size="large" theme="gray" selfStyle={ layoutStyles.cancelButton } onPress={ cancel }>
-                  <Text style={layoutStyles.buttonText}>Cancel</Text>
-                </Button>
-              </View>
-              <View style={ { flex: 1 } }>
-                <Button type="surface" size="large" theme="blue" selfStyle={ layoutStyles.confirmButton } onPress={ save }>
-                  <Text style={layoutStyles.buttonText}>Save</Text>
-                </Button>
+                <View style={ { flex: 1 } }>
+                  <Button type="surface" size="large" theme="blue" selfStyle={ layoutStyles.confirmButton } onPress={ save }>
+                    <Text style={layoutStyles.buttonText}>Save</Text>
+                  </Button>
+                </View>
               </View>
             </View>
-          </View>
+          </TouchableWithoutFeedback>
           { this.state.show_delete_confirm &&
             <View style={ layoutStyles.confirmBox }>
               <Text style={{ textAlign: 'center', fontSize: 20 }}>Are you SURE you want to delete this set list?</Text>

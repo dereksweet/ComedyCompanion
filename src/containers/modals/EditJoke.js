@@ -1,7 +1,7 @@
 'use strict';
 
 import React, {Component} from 'react';
-import { View, Text, TouchableHighlight, Switch, TextInput, KeyboardAvoidingView, Platform, Keyboard } from 'react-native';
+import { View, Text, TouchableHighlight, TouchableWithoutFeedback, Switch, TextInput, KeyboardAvoidingView, Platform, Keyboard } from 'react-native';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 import {Button} from 'react-native-ui-xg';
@@ -96,51 +96,53 @@ class EditJoke extends Component {
       <View style={[layoutStyles.modal, layoutStyles.centeredFlex]}>
         <View style={layoutStyles.statusBarBuffer} />
         <View style={layoutStyles.modalContent} onLayout={(event) => this.measureModalView(event)}>
-          <View style={{ height: this.contentHeight() }}>
-            <View style={ [layoutStyles.modalContentSection, { flexDirection: 'row', alignItems: 'center' }] }>
-              <Text style={ layoutStyles.inputLabel }>In Development:</Text>
-              <Switch onValueChange={ jokeActions.toggleInDevelopment }
-                      value={jokeState.joke._in_development} />
-              <View style={{flex: 1, flexDirection: 'row', justifyContent: 'flex-end'}}>
-                <Text style={ layoutStyles.inputLabel }></Text>
+          <TouchableWithoutFeedback onPress={ Keyboard.dismiss }>
+            <View style={{ height: this.contentHeight() }}>
+              <View style={ [layoutStyles.modalContentSection, { flexDirection: 'row', alignItems: 'center' }] }>
+                <Text style={ layoutStyles.inputLabel }>In Development:</Text>
+                <Switch onValueChange={ jokeActions.toggleInDevelopment }
+                        value={jokeState.joke._in_development} />
+                <View style={{flex: 1, flexDirection: 'row', justifyContent: 'flex-end'}}>
+                  <Text style={ layoutStyles.inputLabel }></Text>
+                </View>
+              </View>
+              <View style={ [layoutStyles.modalContentSection, { flexDirection: 'row', alignItems: 'center'  }] }>
+                <Text style={ layoutStyles.inputLabel }>Name:</Text>
+                <TextInput style={ editJokeStyles.nameInput }
+                           underlineColorAndroid='transparent'
+                           placeholder="Name your joke here..."
+                           onChangeText={(text) => jokeActions.setName(text)}
+                           value={ jokeState.joke._name } />
+              </View>
+              <View style={ [layoutStyles.modalContentSection, {flex: 1} ] }>
+                <MultilineTextInput style={ editJokeStyles.notesInput }
+                           underlineColorAndroid='transparent'
+                           placeholder="Type your joke notes here..."
+                           autoComplete={ false }
+                           onChangeText={(text) => jokeActions.setNotes(text)}
+                           value={ jokeState.joke._notes } />
+              </View>
+              <View style={ { flexDirection: 'row' }}>
+                { (jokeState.joke._id != -1) &&
+                <View style={ { flex: 1 } }>
+                  <Button type="surface" size="large" theme="red" selfStyle={ layoutStyles.deleteButton } onPress={ toggleDeleteConfirm }>
+                    <Text style={layoutStyles.buttonText}>Delete</Text>
+                  </Button>
+                </View>
+                }
+                <View style={ { flex: 1 } }>
+                  <Button type="surface" size="large" theme="gray" selfStyle={ layoutStyles.cancelButton } onPress={ cancel }>
+                    <Text style={layoutStyles.buttonText}>Cancel</Text>
+                  </Button>
+                </View>
+                <View style={ { flex: 1 } }>
+                  <Button type="surface" size="large" theme="blue" selfStyle={ layoutStyles.confirmButton } onPress={ save }>
+                    <Text style={layoutStyles.buttonText}>Save</Text>
+                  </Button>
+                </View>
               </View>
             </View>
-            <View style={ [layoutStyles.modalContentSection, { flexDirection: 'row', alignItems: 'center'  }] }>
-              <Text style={ layoutStyles.inputLabel }>Name:</Text>
-              <TextInput style={ editJokeStyles.nameInput }
-                         underlineColorAndroid='transparent'
-                         placeholder="Name your joke here..."
-                         onChangeText={(text) => jokeActions.setName(text)}
-                         value={ jokeState.joke._name } />
-            </View>
-            <View style={ [layoutStyles.modalContentSection, {flex: 1} ] }>
-              <MultilineTextInput style={ editJokeStyles.notesInput }
-                         underlineColorAndroid='transparent'
-                         placeholder="Type your joke notes here..."
-                         autoComplete={ false }
-                         onChangeText={(text) => jokeActions.setNotes(text)}
-                         value={ jokeState.joke._notes } />
-            </View>
-            <View style={ { flexDirection: 'row' }}>
-              { (jokeState.joke._id != -1) &&
-              <View style={ { flex: 1 } }>
-                <Button type="surface" size="large" theme="red" selfStyle={ layoutStyles.deleteButton } onPress={ toggleDeleteConfirm }>
-                  <Text style={layoutStyles.buttonText}>Delete</Text>
-                </Button>
-              </View>
-              }
-              <View style={ { flex: 1 } }>
-                <Button type="surface" size="large" theme="gray" selfStyle={ layoutStyles.cancelButton } onPress={ cancel }>
-                  <Text style={layoutStyles.buttonText}>Cancel</Text>
-                </Button>
-              </View>
-              <View style={ { flex: 1 } }>
-                <Button type="surface" size="large" theme="blue" selfStyle={ layoutStyles.confirmButton } onPress={ save }>
-                  <Text style={layoutStyles.buttonText}>Save</Text>
-                </Button>
-              </View>
-            </View>
-          </View>
+          </TouchableWithoutFeedback>
           { this.state.show_delete_confirm &&
             <View style={ layoutStyles.confirmBox }>
               <Text style={{ textAlign: 'center', fontSize: 20 }}>Are you SURE you want to delete this joke?</Text>

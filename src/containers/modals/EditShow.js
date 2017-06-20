@@ -1,7 +1,7 @@
 'use strict';
 
 import React, {Component} from 'react';
-import { View, ScrollView, TouchableHighlight, Text, TextInput, Platform, Keyboard, Button as NativeButton } from 'react-native';
+import { View, ScrollView, TouchableHighlight, TouchableWithoutFeedback, Text, TextInput, Platform, Keyboard, Button as NativeButton } from 'react-native';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 import {Button, DatePicker} from 'react-native-ui-xg';
@@ -152,97 +152,99 @@ class EditShow extends Component {
             </View>
           }
           { !this.state.show_set_list_select &&
-            <View style={{ height: this.contentHeight() }}>
-              <View style={ [layoutStyles.modalContentSection, { flexDirection: 'row', alignItems: 'center'  }] }>
-                <Text style={ layoutStyles.inputLabel }>Venue:</Text>
-                <TextInput style={ editShowStyles.venueInput }
-                           underlineColorAndroid='transparent'
-                           placeholder="Venue name here..."
-                           onChangeText={(text) => showActions.setShowVenue(text)}
-                           value={ showState.show._venue } />
-              </View>
-              <View style={ [layoutStyles.modalContentSection, { flexDirection: 'row', alignItems: 'center'  }] }>
-                <Text style={ layoutStyles.inputLabel }>City:</Text>
-                <TextInput style={ editShowStyles.cityInput }
-                           underlineColorAndroid='transparent'
-                           placeholder="City name here..."
-                           onChangeText={(text) => showActions.setShowCity(text)}
-                           value={ showState.show._city} />
-                <Text style={ [layoutStyles.inputLabel, { paddingLeft: 10 }] }>State:</Text>
-                <TextInput style={ editShowStyles.stateInput }
-                           underlineColorAndroid='transparent'
-                           onChangeText={(text) => showActions.setShowState(text.toUpperCase())}
-                           maxLength={ 2 }
-                           value={ showState.show._state} />
-              </View>
-              <View style={ [layoutStyles.modalContentSection, { flexDirection: 'row', alignItems: 'center'  }] }>
-                <Text style={ layoutStyles.inputLabel }>Date:</Text>
-                <DatePicker
-                  style={{width: 200}}
-                  date={moment(showState.show._date).utc().format("YYYY-MM-DD")}
-                  mode="date"
-                  placeholder="select date"
-                  format="YYYY-MM-DD"
-                  confirmBtnText="Confirm"
-                  cancelBtnText="Cancel"
-                  customStyles={{
-                    dateIcon: {
-                      position: 'absolute',
-                      left: 0,
-                      top: 4,
-                      marginLeft: 0
-                    },
-                    dateInput: {
-                      marginLeft: 36,
-                      backgroundColor: '#FFFFFF'
-                    }
-                  }}
-                  onDateChange={(date) => { showActions.setShowDate(new Date(date))}}
-                />
-              </View>
-              <View style={ [layoutStyles.modalContentSection, { flexDirection: 'row', alignItems: 'center'  }] }>
-                <Text style={ layoutStyles.inputLabel }>Set List:</Text>
-                <View style={ { flex: 1, alignItems: 'flex-start' } }>
-                  <NativeButton title={ showState.show._set_list._id != -1 ? showState.show._set_list._name : 'No Set List Selected' }
-                                onPress={ showSetListSelect } />
+            <TouchableWithoutFeedback onPress={ Keyboard.dismiss }>
+              <View style={{ height: this.contentHeight() }}>
+                <View style={ [layoutStyles.modalContentSection, { flexDirection: 'row', alignItems: 'center'  }] }>
+                  <Text style={ layoutStyles.inputLabel }>Venue:</Text>
+                  <TextInput style={ editShowStyles.venueInput }
+                             underlineColorAndroid='transparent'
+                             placeholder="Venue name here..."
+                             onChangeText={(text) => showActions.setShowVenue(text)}
+                             value={ showState.show._venue } />
                 </View>
-              </View>
-              <View style={ [layoutStyles.modalContentSection, {flex: 1} ] }>
+                <View style={ [layoutStyles.modalContentSection, { flexDirection: 'row', alignItems: 'center'  }] }>
+                  <Text style={ layoutStyles.inputLabel }>City:</Text>
+                  <TextInput style={ editShowStyles.cityInput }
+                             underlineColorAndroid='transparent'
+                             placeholder="City name here..."
+                             onChangeText={(text) => showActions.setShowCity(text)}
+                             value={ showState.show._city} />
+                  <Text style={ [layoutStyles.inputLabel, { paddingLeft: 10 }] }>State:</Text>
+                  <TextInput style={ editShowStyles.stateInput }
+                             underlineColorAndroid='transparent'
+                             onChangeText={(text) => showActions.setShowState(text.toUpperCase())}
+                             maxLength={ 2 }
+                             value={ showState.show._state} />
+                </View>
+                <View style={ [layoutStyles.modalContentSection, { flexDirection: 'row', alignItems: 'center'  }] }>
+                  <Text style={ layoutStyles.inputLabel }>Date:</Text>
+                  <DatePicker
+                    style={{width: 200}}
+                    date={moment(showState.show._date).utc().format("YYYY-MM-DD")}
+                    mode="date"
+                    placeholder="select date"
+                    format="YYYY-MM-DD"
+                    confirmBtnText="Confirm"
+                    cancelBtnText="Cancel"
+                    customStyles={{
+                      dateIcon: {
+                        position: 'absolute',
+                        left: 0,
+                        top: 4,
+                        marginLeft: 0
+                      },
+                      dateInput: {
+                        marginLeft: 36,
+                        backgroundColor: '#FFFFFF'
+                      }
+                    }}
+                    onDateChange={(date) => { showActions.setShowDate(new Date(date))}}
+                  />
+                </View>
+                <View style={ [layoutStyles.modalContentSection, { flexDirection: 'row', alignItems: 'center'  }] }>
+                  <Text style={ layoutStyles.inputLabel }>Set List:</Text>
+                  <View style={ { flex: 1, alignItems: 'flex-start' } }>
+                    <NativeButton title={ showState.show._set_list._id != -1 ? showState.show._set_list._name : 'No Set List Selected' }
+                                  onPress={ showSetListSelect } />
+                  </View>
+                </View>
+                <View style={ [layoutStyles.modalContentSection, {flex: 1} ] }>
 
-              </View>
-              <View style={ { flexDirection: 'row' }}>
-                { (showState.show._id != -1) &&
-                <View style={ { flex: 1 } }>
-                  <Button type="surface" size="large" theme="red" selfStyle={ layoutStyles.deleteButton } onPress={ toggleDeleteConfirm }>
-                    <Text style={layoutStyles.buttonText}>Delete</Text>
-                  </Button>
                 </View>
-                }
-                <View style={ { flex: 1 } }>
-                  <Button type="surface" size="large" theme="gray" selfStyle={ layoutStyles.cancelButton } onPress={ cancel }>
-                    <Text style={layoutStyles.buttonText}>Cancel</Text>
-                  </Button>
-                </View>
-                <View style={ { flex: 1 } }>
-                  <Button type="surface" size="large" theme="blue" selfStyle={ layoutStyles.confirmButton } onPress={ save }>
-                    <Text style={layoutStyles.buttonText}>Save</Text>
-                  </Button>
-                </View>
-              </View>
-              { this.state.show_delete_confirm &&
-                <View style={ layoutStyles.confirmBox }>
-                  <Text style={{ textAlign: 'center', fontSize: 20 }}>Are you SURE you want to delete this show?</Text>
-                  <View style={{ paddingTop: 25, flexDirection: 'row' }}>
+                <View style={ { flexDirection: 'row' }}>
+                  { (showState.show._id != -1) &&
+                  <View style={ { flex: 1 } }>
                     <Button type="surface" size="large" theme="red" selfStyle={ layoutStyles.deleteButton } onPress={ toggleDeleteConfirm }>
-                      <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>NO</Text>
+                      <Text style={layoutStyles.buttonText}>Delete</Text>
                     </Button>
-                    <Button type="surface" size="large" theme="blue" selfStyle={ [layoutStyles.confirmButton, { marginLeft: 10 }] } onPress={ destroy }>
-                      <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>YES</Text>
+                  </View>
+                  }
+                  <View style={ { flex: 1 } }>
+                    <Button type="surface" size="large" theme="gray" selfStyle={ layoutStyles.cancelButton } onPress={ cancel }>
+                      <Text style={layoutStyles.buttonText}>Cancel</Text>
+                    </Button>
+                  </View>
+                  <View style={ { flex: 1 } }>
+                    <Button type="surface" size="large" theme="blue" selfStyle={ layoutStyles.confirmButton } onPress={ save }>
+                      <Text style={layoutStyles.buttonText}>Save</Text>
                     </Button>
                   </View>
                 </View>
-              }
-            </View>
+                { this.state.show_delete_confirm &&
+                  <View style={ layoutStyles.confirmBox }>
+                    <Text style={{ textAlign: 'center', fontSize: 20 }}>Are you SURE you want to delete this show?</Text>
+                    <View style={{ paddingTop: 25, flexDirection: 'row' }}>
+                      <Button type="surface" size="large" theme="red" selfStyle={ layoutStyles.deleteButton } onPress={ toggleDeleteConfirm }>
+                        <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>NO</Text>
+                      </Button>
+                      <Button type="surface" size="large" theme="blue" selfStyle={ [layoutStyles.confirmButton, { marginLeft: 10 }] } onPress={ destroy }>
+                        <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>YES</Text>
+                      </Button>
+                    </View>
+                  </View>
+                }
+              </View>
+            </TouchableWithoutFeedback>
           }
         </View>
       </View>
