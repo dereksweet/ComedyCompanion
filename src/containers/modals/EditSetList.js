@@ -101,7 +101,7 @@ class EditSetList extends Component {
         <View style={layoutStyles.modalContent} onLayout={(event) => this.measureModalView(event)}>
           <TouchableWithoutFeedback onPress={ Keyboard.dismiss }>
             <View style={{ height: this.contentHeight() }}>
-              <View style={ [layoutStyles.modalContentSection, { flexDirection: 'row', alignItems: 'center'  }] }>
+              <View style={ [layoutStyles.modalContentSection, { flexDirection: 'row', alignItems: 'center', backgroundColor: '#EEEEEE'  }] }>
                 <Text style={ layoutStyles.inputLabel }>Name:</Text>
                 <TextInput style={ editSetListStyles.nameInput }
                            underlineColorAndroid='transparent'
@@ -109,7 +109,7 @@ class EditSetList extends Component {
                            onChangeText={(text) => setListActions.setSLName(text)}
                            value={ setListState.set_list._name } />
               </View>
-              <View style={ [layoutStyles.modalContentSection, { flexDirection: 'row', alignItems: 'center'  }] }>
+              <View style={ [layoutStyles.modalContentSection, { flexDirection: 'row', alignItems: 'center', backgroundColor: '#EEEEEE'  }] }>
                 <View style={ { flex: 1, flexDirection: 'row', alignItems: 'center'  } }>
                   <Text style={ layoutStyles.inputLabel }>Length:</Text>
                   <TextInput style={ editSetListStyles.lengthInput }

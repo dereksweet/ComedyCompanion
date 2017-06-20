@@ -84,7 +84,7 @@ class JokeSelector extends Component {
 
     return (
       <View style={{ flex: 1 }}>
-        <View style={{ backgroundColor: '#EEEEEE', height: 50, alignItems: 'center', justifyContent: 'center', borderBottomWidth: 1, borderBottomColor: '#CCCCCC' }}>
+        <View style={{ backgroundColor: '#EEEEFF', height: 50, alignItems: 'center', justifyContent: 'center', borderBottomWidth: 1, borderBottomColor: '#CCCCCC' }}>
           <Text style={{ color: '#000000' }}>Set List</Text>
           <Text style={ setListListStyles.jokeInstructions }>tap to remove</Text>
           <Text style={ setListListStyles.jokeInstructions }>hold to reorder</Text>
