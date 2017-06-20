@@ -24,8 +24,11 @@ class EditJoke extends Component {
     this.state = {
       modal_height: 0,
       keyboard_height: 0,
-      show_delete_confirm: false
-    }
+      show_delete_confirm: false,
+      show_cancel_confirm: false
+    };
+
+    this.dirty = false;
   }
 
   componentWillMount () {
@@ -87,9 +90,27 @@ class EditJoke extends Component {
     };
 
     const toggleDeleteConfirm = () => {
+      Keyboard.dismiss();
+
       this.setState({
         show_delete_confirm: !this.state.show_delete_confirm
       })
+    };
+
+    const toggleCancelConfirm = () => {
+      Keyboard.dismiss();
+
+      if (this.dirty) {
+        this.setState({
+          show_cancel_confirm: !this.state.show_cancel_confirm
+        })
+      } else {
+        cancel();
+      }
+    };
+
+    const setDirty = () => {
+      this.dirty = true;
     };
 
     return (
@@ -100,7 +121,7 @@ class EditJoke extends Component {
             <View style={{ height: this.contentHeight() }}>
               <View style={ [layoutStyles.modalContentSection, { flexDirection: 'row', alignItems: 'center' }] }>
                 <Text style={ layoutStyles.inputLabel }>In Development:</Text>
-                <Switch onValueChange={ jokeActions.toggleInDevelopment }
+                <Switch onValueChange={ () => { jokeActions.toggleInDevelopment(); setDirty(); }}
                         value={jokeState.joke._in_development} />
                 <View style={{flex: 1, flexDirection: 'row', justifyContent: 'flex-end'}}>
                   <Text style={ layoutStyles.inputLabel }></Text>
@@ -111,7 +132,7 @@ class EditJoke extends Component {
                 <TextInput style={ editJokeStyles.nameInput }
                            underlineColorAndroid='transparent'
                            placeholder="Name your joke here..."
-                           onChangeText={(text) => jokeActions.setName(text)}
+                           onChangeText={(text) => { jokeActions.setName(text); setDirty(); }}
                            value={ jokeState.joke._name } />
               </View>
               <View style={ [layoutStyles.modalContentSection, {flex: 1} ] }>
@@ -119,7 +140,7 @@ class EditJoke extends Component {
                            underlineColorAndroid='transparent'
                            placeholder="Type your joke notes here..."
                            autoComplete={ false }
-                           onChangeText={(text) => jokeActions.setNotes(text)}
+                           onChangeText={(text) => { jokeActions.setNotes(text); setDirty(); }}
                            value={ jokeState.joke._notes } />
               </View>
               <View style={ { flexDirection: 'row' }}>
@@ -131,7 +152,7 @@ class EditJoke extends Component {
                 </View>
                 }
                 <View style={ { flex: 1 } }>
-                  <Button type="surface" size="large" theme="gray" selfStyle={ layoutStyles.cancelButton } onPress={ cancel }>
+                  <Button type="surface" size="large" theme="gray" selfStyle={ layoutStyles.cancelButton } onPress={ toggleCancelConfirm }>
                     <Text style={layoutStyles.buttonText}>Cancel</Text>
                   </Button>
                 </View>
@@ -151,6 +172,19 @@ class EditJoke extends Component {
                   <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>NO</Text>
                 </Button>
                 <Button type="surface" size="large" theme="blue" selfStyle={ [layoutStyles.confirmButton, { marginLeft: 10 }] } onPress={ destroy }>
+                  <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>YES</Text>
+                </Button>
+              </View>
+            </View>
+          }
+          { this.state.show_cancel_confirm &&
+            <View style={ layoutStyles.confirmBox }>
+              <Text style={{ textAlign: 'center', fontSize: 20 }}>You have changes that will be lost. Are you SURE you want to cancel?</Text>
+              <View style={{ paddingTop: 25, flexDirection: 'row' }}>
+                <Button type="surface" size="large" theme="red" selfStyle={ layoutStyles.deleteButton } onPress={ toggleCancelConfirm }>
+                  <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>NO</Text>
+                </Button>
+                <Button type="surface" size="large" theme="blue" selfStyle={ [layoutStyles.confirmButton, { marginLeft: 10 }] } onPress={ cancel }>
                   <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>YES</Text>
                 </Button>
               </View>
