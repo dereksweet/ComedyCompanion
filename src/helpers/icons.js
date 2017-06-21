@@ -15,6 +15,7 @@ export const settingsIcon = (<MaterialIcon name="settings" size={25} color="#000
 export const aboutIcon = (<MaterialIcon name="help-outline" size={25} color="#000" style={statusBarStyles.navLinkIcon} />);
 export const menuIcon = (<MaterialIcon name="menu" size={32} color="#000" style={statusBarStyles.navLinkIcon} />);
 export const closeIcon = (<MaterialIcon name="close" size={32} color="#000" style={statusBarStyles.navLinkIcon} />);
+export const bulletIcon = (<MaterialIcon name="fiber-manual-record" size={10} color="#000" style={statusBarStyles.navLinkIcon} />);
 
 export default {
   jokesIcon,
@@ -30,5 +31,6 @@ export default {
   settingsIcon,
   aboutIcon,
   menuIcon,
-  closeIcon
+  closeIcon,
+  bulletIcon
 }
