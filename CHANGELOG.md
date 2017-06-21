@@ -1,4 +1,4 @@
-## Version 1.1
+## Version 1.1 (June 20, 2017)
 
 - You can now duplicate Set Lists
 - Android users should ALL be able to put carriage returns in their joke notes
