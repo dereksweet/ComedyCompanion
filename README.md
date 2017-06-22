@@ -6,8 +6,8 @@ Developed in 100% React Native, "The Comedy Companion" is the world's first prod
 
 - Associate an Audio Recording with any Given Show
 - Cloud Storage for Android Users
-- Running rating of Joke performance by swiping left for good, right for bad on a given show
 - Customizable Categories, and filtering on those categories
+- Running rating of Joke performance by swiping left for good, right for bad on a given show
 
 ### Currently Available Features (v1.1)
 
