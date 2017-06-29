@@ -30,7 +30,7 @@ Once all the packages are done installing you should be able to simply type `rea
 
 ### Development Instructions
 
-Please make all your pull requests on the `development` branch. They will be merged in after review and releases will be cut from development to master whenever a group of features is deemed ready to go.
+Please make all your pull requests on the `develop` branch. They will be merged in after review and releases will be cut from development to master whenever a group of features is deemed ready to go.
 
 ### Thank-yous go out to...
 
