@@ -129,5 +129,9 @@ export default layoutStyles = StyleSheet.create({
   deleteButton: {
     backgroundColor: '#DD0000',
     borderColor: '#CC0000'
+  },
+  errorInput: {
+    borderColor: '#FF0000',
+    borderWidth: 2
   }
 });

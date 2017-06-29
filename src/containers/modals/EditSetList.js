@@ -9,6 +9,8 @@ import {Button} from 'react-native-ui-xg';
 import JokeSelector from './EditSetList/JokeSelector';
 import SetListJokes from './EditSetList/SetListJokes';
 
+import ShakingView from '../../components/ShakingView';
+
 import * as routingActions from '../../actions/routingActions';
 import * as setListActions from '../../actions/setListActions';
 
@@ -24,7 +26,8 @@ class EditSetList extends Component {
     this.state = {
       modal_height: 0,
       keyboard_height: 0,
-      show_delete_confirm: false
+      show_delete_confirm: false,
+      name_input_valid: true
     };
   }
 
@@ -68,16 +71,35 @@ class EditSetList extends Component {
   render() {
     const { setListState, routingActions, setListActions } = this.props;
 
+    const validateFields = () => {
+      let fields_valid = true;
+
+      if (setListState.set_list._name === '') {
+        fields_valid = false;
+        this.setState({
+          name_input_valid: false
+        });
+      }
+
+      if (!fields_valid) {
+        this.editSetListView.performShake();
+      }
+
+      return fields_valid;
+    };
+
     const cancel = () => {
       routingActions.closeModal();
     };
 
     const save = () => {
-      setListState.set_list.save(() => {
-        SetListListHelper.refreshSLList();
-        SetListListHelper.refreshSLListEmpty();
-      });
-      cancel();
+      if (validateFields()) {
+        setListState.set_list.save(() => {
+          SetListListHelper.refreshSLList();
+          SetListListHelper.refreshSLListEmpty();
+        });
+        cancel();
+      }
     };
 
     const destroy = () => {
@@ -96,14 +118,15 @@ class EditSetList extends Component {
     };
 
     return (
-      <View style={layoutStyles.centeredFlex}>
+      <ShakingView ref={(editSetListView) => this.editSetListView = editSetListView}
+                   style={[layoutStyles.modal, layoutStyles.centeredFlex]}>
         <View style={layoutStyles.statusBarBuffer} />
         <View style={layoutStyles.modalContent} onLayout={(event) => this.measureModalView(event)}>
           <TouchableWithoutFeedback onPress={ Keyboard.dismiss }>
             <View style={{ height: this.contentHeight() }}>
               <View style={ [layoutStyles.modalContentSection, { flexDirection: 'row', alignItems: 'center', backgroundColor: '#EEEEEE'  }] }>
                 <Text style={ layoutStyles.inputLabel }>Name:</Text>
-                <TextInput style={ editSetListStyles.nameInput }
+                <TextInput style={ [editSetListStyles.nameInput, this.state.name_input_valid ? {} : layoutStyles.errorInput] }
                            underlineColorAndroid='transparent'
                            placeholder="Name your set list here..."
                            onChangeText={(text) => setListActions.setSLName(text)}
@@ -157,21 +180,21 @@ class EditSetList extends Component {
               </View>
             </View>
           </TouchableWithoutFeedback>
-          { this.state.show_delete_confirm &&
-            <View style={ layoutStyles.confirmBox }>
-              <Text style={{ textAlign: 'center', fontSize: 20 }}>Are you SURE you want to delete this set list?</Text>
-              <View style={{ paddingTop: 25, flexDirection: 'row' }}>
-                <Button type="surface" size="large" theme="red" selfStyle={ layoutStyles.deleteButton } onPress={ toggleDeleteConfirm }>
-                  <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>NO</Text>
-                </Button>
-                <Button type="surface" size="large" theme="blue" selfStyle={ [layoutStyles.confirmButton, { marginLeft: 10 }] } onPress={ destroy }>
-                  <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>YES</Text>
-                </Button>
-              </View>
+        { this.state.show_delete_confirm &&
+          <View style={ layoutStyles.confirmBox }>
+            <Text style={{ textAlign: 'center', fontSize: 20 }}>Are you SURE you want to delete this set list?</Text>
+            <View style={{ paddingTop: 25, flexDirection: 'row' }}>
+              <Button type="surface" size="large" theme="red" selfStyle={ layoutStyles.deleteButton } onPress={ toggleDeleteConfirm }>
+                <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>NO</Text>
+              </Button>
+              <Button type="surface" size="large" theme="blue" selfStyle={ [layoutStyles.confirmButton, { marginLeft: 10 }] } onPress={ destroy }>
+                <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>YES</Text>
+              </Button>
             </View>
-          }
+          </View>
+        }
         </View>
-      </View>
+      </ShakingView>
     );
   }
 }
