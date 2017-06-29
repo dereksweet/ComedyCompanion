@@ -28,6 +28,10 @@ npm install
 
 Once all the packages are done installing you should be able to simply type `react-native-run-ios` or `react-native-run-android` and the app should boot up in a simulator.
 
+### Development Instructions
+
+Please make all your pull requests on the `development` branch. They will be merged in after review and releases will be cut from development to master whenever a group of features is deemed ready to go.
+
 ### Thank-yous go out to...
 
 [**g-harel**](https://github.com/g-harel) - [**open-source-logos**](https://github.com/g-harel/open-source-logos) - The guy that drew our awesome little devil mascot/icon. Great work! Thanks so much!
