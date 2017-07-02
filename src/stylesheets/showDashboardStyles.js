@@ -6,19 +6,28 @@ const {
 } = Dimensions.get('window');
 
 // based on iphone 5s's scale
-const scale = SCREEN_WIDTH / 320;
+const scaleWidth = SCREEN_WIDTH / 320;
+const scaleHeight = SCREEN_HEIGHT / 568;
 
-export function normalize(size) {
+export function normalizeWidth(size) {
   if (Platform.OS === 'ios') {
-    return Math.round(PixelRatio.roundToNearestPixel(size))
+    return Math.round(PixelRatio.roundToNearestPixel(size * scaleWidth))
   } else {
-    return Math.round(PixelRatio.roundToNearestPixel(size)) - 2
+    return Math.round(PixelRatio.roundToNearestPixel(size * scaleWidth)) - 2
+  }
+}
+
+export function normalizeHeight(size) {
+  if (Platform.OS === 'ios') {
+    return Math.round(PixelRatio.roundToNearestPixel(size * scaleHeight))
+  } else {
+    return Math.round(PixelRatio.roundToNearestPixel(size * scaleHeight)) - 2
   }
 }
 
 export default showDashbordStyles = StyleSheet.create({
   soundBoardView: {
-    height: 75,
+    height: normalizeHeight(75),
     borderBottomWidth: 4,
     borderTopWidth: 4,
     borderBottomColor: '#CCCCCC',
@@ -38,8 +47,13 @@ export default showDashbordStyles = StyleSheet.create({
     alignItems: 'center'
   },
   timerText: {
-    fontSize: normalize(40),
+    fontSize: normalizeWidth(30),
     fontWeight: 'bold',
     color: '#FFFFFF'
+  },
+  buttonView: {
+    width: normalizeWidth(85),
+    marginLeft: 10,
+    justifyContent: 'center'
   }
 });

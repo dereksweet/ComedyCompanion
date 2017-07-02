@@ -75,13 +75,13 @@ class SoundBoard extends Component {
 
     return (
       <View style={ showDashboardStyles.soundBoardView }>
-        <View style={{ width: 90, marginLeft: 10, justifyContent: 'center' }}>
+        <View style={ showDashboardStyles.buttonView }>
           <Button type="surface" size="large" theme="red" onPress={ () => alert('recording') }>
             <Text>{recIcon}</Text>
             <Text style={layoutStyles.buttonText}>Rec</Text>
           </Button>
         </View>
-        <View style={{ width: 90, marginLeft: 10, justifyContent: 'center' }}>
+        <View style={ showDashboardStyles.buttonView }>
           { !showState.timer_running &&
             <Button type="surface" size="large" theme="gray" onPress={ this.startTimer }>
               <Text>{timerIcon}</Text>
