@@ -41,3 +41,21 @@ export function setShowSetList(set_list) {
     set_list
   }
 }
+
+export function startShowTimer() {
+  return {
+    type: types.START_SHOW_TIMER
+  }
+}
+
+export function stopShowTimer() {
+  return {
+    type: types.STOP_SHOW_TIMER
+  }
+}
+
+export function updateShowTimer() {
+  return {
+    type: types.UPDATE_SHOW_TIMER
+  }
+}

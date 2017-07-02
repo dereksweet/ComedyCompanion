@@ -3,7 +3,9 @@ import * as types from '../actions/actionTypes';
 import Show from '../models/show';
 
 const initialState = {
-  show: new Show()
+  show: new Show(),
+  timer_running: false,
+  start_time: null
 };
 
 export default function show(state = initialState, action = {}) {
@@ -52,6 +54,31 @@ export default function show(state = initialState, action = {}) {
       return {
         ...state,
         show: state.show
+      };
+      break;
+    case types.START_SHOW_TIMER:
+      state.show._show_time_seconds = 0;
+
+      return {
+        ...state,
+        show: state.show,
+        start_time: new Date(),
+        timer_running: true
+      };
+      break;
+    case types.STOP_SHOW_TIMER:
+      return {
+        ...state,
+        timer_running: false
+      };
+      break;
+    case types.UPDATE_SHOW_TIMER:
+      let new_show = new Show(state.show);
+      new_show._show_time_seconds = Math.floor((new Date() - state.start_time) / 1000);
+
+      return {
+        ...state,
+        show: new_show
       };
       break;
     default:
