@@ -6,7 +6,10 @@ import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 import {Button} from 'react-native-ui-xg';
 import SearchBar from 'react-native-material-design-searchbar';
+import {AudioRecorder, AudioUtils} from 'react-native-audio';
 import moment from 'moment';
+
+import ShowDashboard from './ShowDashboard';
 
 import Show from '../../../models/show';
 
@@ -26,21 +29,19 @@ class ShowsList extends Component {
     super(props);
 
     this.state = {
-      set_list_visible: false,
-      jokeViews: {}
+      show_dashboard_visible: false
     };
   }
 
   shouldComponentUpdate(nextProps, nextState) {
     const showListChanged = this.props.showListState.show_list !== nextProps.showListState.show_list;
-    const setListVisibleChanged = this.state.set_list_visible !== nextState.set_list_visible;
-    const jokeViewsChanged = this.state.jokeViews !== nextState.jokeViews;
+    const showDashboardVisibleChanged = this.state.show_dashboard_visible !== nextState.show_dashboard_visible;
 
-    return showListChanged || setListVisibleChanged || jokeViewsChanged;
+    return showListChanged || showDashboardVisibleChanged;
   }
 
   render() {
-    const { showListState, showState, showActions, routingActions, showListActions } = this.props;
+    const { showListState, showActions, routingActions, showListActions } = this.props;
 
     let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     const showListDS = ds.cloneWithRows(showListState.show_list.map((show) => { return show._venue }));
@@ -60,21 +61,16 @@ class ShowsList extends Component {
     const viewSetList = (id) => {
       Show.get(id, true).then((show) => {
         showActions.setShow(show);
-        let jokeViews = {};
-        show._set_list._jokes.forEach((joke) => {
-          jokeViews[joke._id] = false
-        });
 
         this.setState({
-          jokeViews: jokeViews,
-          set_list_visible: true
+          show_dashboard_visible: true
         });
       });
     };
 
     const hideSetList = () => {
       this.setState({
-        set_list_visible: false
+        show_dashboard_visible: false
       });
     };
 
@@ -92,7 +88,7 @@ class ShowsList extends Component {
               <View style={ showListStyles.showInfoView }>
                 <TouchableHighlight underlayColor="#EEEEEE" onPress={ () => viewSetList(show._id) } style={{ flex: 1, marginLeft: 10 }}>
                   <View style={{ flex: 1, alignItems: 'flex-end', backgroundColor: '#EEFFEE', padding: 10, borderColor: '#EEEEEE', borderWidth: 1 }}>
-                    <Text style={{ textAlign: 'center', fontSize: 10 }}>View Set List</Text>
+                    <Text style={{ textAlign: 'center', fontSize: 10 }}>Show Dashboard</Text>
                   </View>
                 </TouchableHighlight>
               </View>
@@ -135,15 +131,6 @@ class ShowsList extends Component {
       ShowListHelper.refreshShowList({ venue_filter: venue_filter })
     };
 
-    const jokeClicked = (joke_id) => {
-      let newJokeViews = JSON.parse(JSON.stringify(this.state.jokeViews));
-      newJokeViews[joke_id] = !newJokeViews[joke_id];
-
-      this.setState({
-        jokeViews: newJokeViews
-      });
-    };
-
     return (
       <View style={{ flex: 1 }}>
         <View style={{ justifyContent: 'flex-start' }}>
@@ -177,31 +164,9 @@ class ShowsList extends Component {
         <Modal style={ layoutStyles.modal }
                animationType={ "fade" }
                transparent={false}
-               visible={this.state.set_list_visible}
+               visible={this.state.show_dashboard_visible}
                onRequestClose={() => { }}>
-          <View style={layoutStyles.statusBarBuffer} />
-          <View style={ { width: '100%', backgroundColor: '#FFFFFF', borderBottomWidth: 1, borderBottomColor: '#CCCCCC', paddingBottom: 10, paddingTop: 10, alignItems: 'center' } }>
-            <Text style={ { fontWeight: 'bold', fontSize: 14 } }>Set List for { showState.show._venue }</Text>
-          </View>
-          <View style={ { flex: 1 } }>
-            <ScrollView style={ { flex: 1 } }>
-              { showState.show._set_list._jokes.map((joke) => {
-                return <View key={ joke._id } style={ { flex: 1, backgroundColor: '#EEEEFF', borderBottomColor: '#CCCCCC', borderBottomWidth: 2 } }>
-                         <TouchableHighlight onPress={ () => jokeClicked(joke._id) }>
-                           <Text style={{ color: '#000000', padding: 10, textAlign: 'center' }}>{joke._name}</Text>
-                         </TouchableHighlight>
-                         <View style={ { maxHeight: this.state.jokeViews[joke._id] ? 200 : 0 } }>
-                           <View style={ { backgroundColor: '#EEEEEE', borderTopColor: '#CCCCCC', borderTopWidth: 1, borderBottomColor: '#CCCCCC', borderBottomWidth: 1 } }>
-                             <View style={{padding: 10}}>
-                              <Text style={ { fontSize: 10 }}>{ joke._notes }</Text>
-                             </View>
-                           </View>
-                         </View>
-                       </View>
-              })
-              }
-            </ScrollView>
-          </View>
+          <ShowDashboard />
           <View>
             <Button type="surface" size="large" theme="gray" selfStyle={ layoutStyles.cancelButton } onPress={ hideSetList }>
               <Text style={layoutStyles.buttonText}>Close</Text>
@@ -214,7 +179,6 @@ class ShowsList extends Component {
 }
 
 export default connect(state => ({
-    showState: state.show,
     showListState: state.show_list,
     routingState: state.routing
   }),

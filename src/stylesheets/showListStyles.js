@@ -17,7 +17,7 @@ export default showListStyles = StyleSheet.create({
     fontSize: 12
   },
   showInfoView: {
-    width: 70,
+    width: 90,
     borderLeftColor: '#DDDDDD',
     borderLeftWidth: 1
   },
