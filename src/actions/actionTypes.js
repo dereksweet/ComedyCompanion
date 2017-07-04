@@ -52,3 +52,4 @@ export const SET_SHOW_SET_LIST = 'show/set_show_set_list';
 export const START_SHOW_TIMER = 'show/start_show_timer';
 export const STOP_SHOW_TIMER = 'show/stop_show_timer';
 export const UPDATE_SHOW_TIMER = 'show/update_show_timer';
+export const SET_HAS_RECORDING = 'show/set_show_has_recording';

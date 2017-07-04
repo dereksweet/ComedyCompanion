@@ -11,7 +11,7 @@ import showDashboardStyles from '../../../../stylesheets/showDashboardStyles';
 
 import * as showActions from '../../../../actions/showActions';
 
-import {recIcon, timerIcon, pauseIcon, stopIcon} from '../../../../helpers/icons';
+import {recIcon, timerIcon, pauseIcon, stopIcon, rewindIcon, fastForwardIcon, back30Icon, forward30Icon, playIcon} from '../../../../helpers/icons';
 
 import {AudioRecorder, AudioUtils} from 'react-native-audio';
 
@@ -23,6 +23,7 @@ class SoundBoard extends Component {
     this.stopTimer = this.stopTimer.bind(this);
     this.updateShowTimer = this.updateShowTimer.bind(this);
     this.displayShowTime = this.displayShowTime.bind(this);
+    this.startRecording = this.startRecording.bind(this);
 
     this.timerInterval = null;
   }
@@ -42,8 +43,9 @@ class SoundBoard extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     const showTimerChanged = this.props.showState.timer_running !== nextProps.showState.timer_running;
     const showSecondsChanged = this.props.showState.show._show_time_seconds !== nextProps.showState.show._show_time_seconds;
+    const hasRecordingChanged = this.props.showState.show._has_recording !== nextProps.showState.show._has_recording;
 
-    return showTimerChanged || showSecondsChanged;
+    return showTimerChanged || showSecondsChanged || hasRecordingChanged;
   }
 
   startTimer() {
@@ -70,32 +72,76 @@ class SoundBoard extends Component {
     return `${hours > 0 ? hours.toString() + ':' : ''}${minutes > 9 ? minutes.toString() : '0' + minutes.toString()}:${seconds > 9 ? seconds.toString() : '0' + seconds.toString()}`;
   }
 
+  startRecording() {
+    this.props.showActions.setHasRecording(true);
+  }
+
   render() {
     const { showState } = this.props;
 
     return (
       <View style={ showDashboardStyles.soundBoardView }>
         <View style={ showDashboardStyles.buttonView }>
-          <Button type="surface" size="large" theme="red" onPress={ () => alert('recording') }>
+          <Button type="surface" size="large" theme="red" onPress={ this.startRecording }>
             <Text>{recIcon}</Text>
             <Text style={layoutStyles.buttonText}>Rec</Text>
           </Button>
         </View>
-        <View style={ showDashboardStyles.buttonView }>
-          { !showState.timer_running &&
-            <Button type="surface" size="large" theme="gray" onPress={ this.startTimer }>
-              <Text>{timerIcon}</Text>
-              <Text style={layoutStyles.buttonText}>Time</Text>
-            </Button> }
-          { showState.timer_running &&
-            <Button type="surface" size="large" theme="gray" selfStyle={ { borderColor: '#FF0000' } } onPress={ this.stopTimer }>
-              <Text>{stopIcon}</Text>
-              <Text style={layoutStyles.buttonText}>Stop</Text>
-            </Button> }
-        </View>
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-          <Text style={ showDashboardStyles.timerText }>{ this.displayShowTime() }</Text>
-        </View>
+        { showState.show._has_recording &&
+          <View style={{ flex: 1 }}>
+            <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+              <View style={ showDashboardStyles.playbackControlView }>
+                <Button type="surface" size="default" theme="gray" onPress={ () => { alert('rewind') } }>
+                  <Text style={{ left: -2, width: 20 }}>{rewindIcon}</Text>
+                </Button>
+              </View>
+              <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                <Text style={ [showDashboardStyles.timerText, { marginLeft: 10 }] }>{ this.displayShowTime() }</Text>
+              </View>
+              <View style={ showDashboardStyles.playbackControlView }>
+                <Button type="surface" size="default" theme="gray" onPress={ () => { alert('ffwd') } }>
+                  <Text style={{ left: -2, width: 20 }}>{fastForwardIcon}</Text>
+                </Button>
+              </View>
+            </View>
+            <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+              <View style={ [showDashboardStyles.playbackControlView, { marginBottom: 5 }] }>
+                <Button type="surface" size="default" theme="gray" onPress={ () => { alert('back30') } }>
+                  <Text style={{ left: -2, width: 20 }}>{back30Icon}</Text>
+                </Button>
+              </View>
+              <View style={ [showDashboardStyles.playbackControlView, { marginBottom: 5 }] }>
+                <Button type="surface" size="default" theme="gray" onPress={ () => { alert('play') } }>
+                  <Text style={{ left: -2, width: 20 }}>{playIcon}</Text>
+                </Button>
+              </View>
+              <View style={ [showDashboardStyles.playbackControlView, { marginBottom: 5 }] }>
+                <Button type="surface" size="default" theme="gray" onPress={ () => { alert('forward30') } }>
+                  <Text style={{ left: -2, width: 20 }}>{forward30Icon}</Text>
+                </Button>
+              </View>
+            </View>
+          </View>
+        }
+        { !showState.show._has_recording &&
+          <View style={{ flexDirection: 'row', flex: 1 }}>
+            <View style={ showDashboardStyles.buttonView }>
+              { !showState.timer_running &&
+                <Button type="surface" size="large" theme="gray" onPress={ this.startTimer }>
+                  <Text>{timerIcon}</Text>
+                  <Text style={layoutStyles.buttonText}>Time</Text>
+                </Button> }
+              { showState.timer_running &&
+                <Button type="surface" size="large" theme="gray" selfStyle={ { borderColor: '#FF0000' } } onPress={ this.stopTimer }>
+                  <Text>{stopIcon}</Text>
+                  <Text style={layoutStyles.buttonText}>Stop</Text>
+                </Button> }
+            </View>
+            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+              <Text style={ showDashboardStyles.timerText }>{ this.displayShowTime() }</Text>
+            </View>
+          </View>
+        }
       </View>
     );
   }

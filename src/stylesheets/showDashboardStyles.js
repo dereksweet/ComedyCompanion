@@ -27,7 +27,7 @@ export function normalizeHeight(size) {
 
 export default showDashbordStyles = StyleSheet.create({
   soundBoardView: {
-    height: normalizeHeight(75),
+    minHeight: normalizeHeight(75),
     borderBottomWidth: 4,
     borderTopWidth: 4,
     borderBottomColor: '#CCCCCC',
@@ -53,6 +53,11 @@ export default showDashbordStyles = StyleSheet.create({
   },
   buttonView: {
     width: normalizeWidth(85),
+    marginLeft: 10,
+    justifyContent: 'center'
+  },
+  playbackControlView: {
+    width: normalizeWidth(35),
     marginLeft: 10,
     justifyContent: 'center'
   }

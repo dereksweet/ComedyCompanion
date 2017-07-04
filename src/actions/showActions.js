@@ -59,3 +59,10 @@ export function updateShowTimer() {
     type: types.UPDATE_SHOW_TIMER
   }
 }
+
+export function setHasRecording(has_recording) {
+  return {
+    type: types.SET_HAS_RECORDING,
+    has_recording
+  }
+}

@@ -20,6 +20,11 @@ export const recIcon = (<MaterialIcon name="fiber-smart-record" size={25} color=
 export const timerIcon = (<MaterialIcon name="timer" size={25} color="#000" style={statusBarStyles.navLinkIcon} />);
 export const pauseIcon = (<MaterialIcon name="pause" size={25} color="#000" style={statusBarStyles.navLinkIcon} />);
 export const stopIcon = (<MaterialIcon name="stop" size={25} color="#000" style={statusBarStyles.navLinkIcon} />);
+export const rewindIcon = (<MaterialIcon name="skip-previous" size={25} color="#000" style={statusBarStyles.navLinkIcon} />);
+export const fastForwardIcon = (<MaterialIcon name="skip-next" size={25} color="#000" style={statusBarStyles.navLinkIcon} />);
+export const back30Icon = (<MaterialIcon name="replay-30" size={25} color="#000" style={statusBarStyles.navLinkIcon} />);
+export const forward30Icon = (<MaterialIcon name="forward-30" size={25} color="#000" style={statusBarStyles.navLinkIcon} />);
+export const playIcon = (<MaterialIcon name="play-arrow" size={25} color="#000" style={statusBarStyles.navLinkIcon} />);
 
 export default {
   jokesIcon,
@@ -40,5 +45,10 @@ export default {
   recIcon,
   timerIcon,
   pauseIcon,
-  stopIcon
+  stopIcon,
+  rewindIcon,
+  fastForwardIcon,
+  back30Icon,
+  forward30Icon,
+  playIcon
 }

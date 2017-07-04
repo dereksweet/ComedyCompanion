@@ -9,6 +9,8 @@ const initialState = {
 };
 
 export default function show(state = initialState, action = {}) {
+  let new_show = new Show(state.show);
+
   switch (action.type) {
     case types.SET_SHOW:
       return {
@@ -73,8 +75,15 @@ export default function show(state = initialState, action = {}) {
       };
       break;
     case types.UPDATE_SHOW_TIMER:
-      let new_show = new Show(state.show);
       new_show._show_time_seconds = Math.floor((new Date() - state.start_time) / 1000);
+
+      return {
+        ...state,
+        show: new_show
+      };
+      break;
+    case types.SET_HAS_RECORDING:
+      new_show._has_recording = action.has_recording;
 
       return {
         ...state,
