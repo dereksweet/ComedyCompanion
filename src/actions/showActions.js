@@ -42,6 +42,12 @@ export function setShowSetList(set_list) {
   }
 }
 
+export function resetShowTimer() {
+  return {
+    type: types.RESET_SHOW_TIMER
+  }
+}
+
 export function startShowTimer() {
   return {
     type: types.START_SHOW_TIMER
@@ -64,5 +70,11 @@ export function setHasRecording(has_recording) {
   return {
     type: types.SET_HAS_RECORDING,
     has_recording
+  }
+}
+
+export function toggleDeleteRecordingConfirm() {
+  return {
+    type: types.TOGGLE_DELETE_RECORDING_CONFIRM
   }
 }

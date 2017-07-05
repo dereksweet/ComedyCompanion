@@ -5,7 +5,8 @@ import Show from '../models/show';
 const initialState = {
   show: new Show(),
   timer_running: false,
-  start_time: null
+  start_time: null,
+  delete_recording_confirm: false
 };
 
 export default function show(state = initialState, action = {}) {
@@ -19,51 +20,61 @@ export default function show(state = initialState, action = {}) {
       };
       break;
     case types.SET_SHOW_VENUE:
-      state.show._venue = action.venue;
+      new_show._venue = action.venue;
 
       return {
         ...state,
-        show: state.show
+        show: new_show
       };
       break;
     case types.SET_SHOW_DATE:
-      state.show._date = action.date;
+      new_show._date = action.date;
 
       return {
         ...state,
-        show: state.show
+        show: new_show
       };
       break;
     case types.SET_SHOW_CITY:
-      state.show._city = action.city;
+      new_show._city = action.city;
 
       return {
         ...state,
-        show: state.show
+        show: new_show
       };
       break;
     case types.SET_SHOW_STATE:
-      state.show._state = action.state;
+      new_show._state = action.state;
 
       return {
         ...state,
-        show: state.show
+        show: new_show
       };
       break;
     case types.SET_SHOW_SET_LIST:
-      state.show._set_list = action.set_list;
+      new_show._set_list = action.set_list;
 
       return {
         ...state,
-        show: state.show
+        show: new_show
+      };
+      break;
+    case types.RESET_SHOW_TIMER:
+      new_show._show_time_seconds = 0;
+
+      return {
+        ...state,
+        show: new_show,
+        start_time: null,
+        timer_running: false
       };
       break;
     case types.START_SHOW_TIMER:
-      state.show._show_time_seconds = 0;
+      new_show._show_time_seconds = 0;
 
       return {
         ...state,
-        show: state.show,
+        show: new_show,
         start_time: new Date(),
         timer_running: true
       };
@@ -88,6 +99,12 @@ export default function show(state = initialState, action = {}) {
       return {
         ...state,
         show: new_show
+      };
+      break;
+    case types.TOGGLE_DELETE_RECORDING_CONFIRM:
+      return {
+        ...state,
+        delete_recording_confirm: !state.delete_recording_confirm
       };
       break;
     default:

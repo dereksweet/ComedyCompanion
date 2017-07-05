@@ -1,5 +1,6 @@
 import React from 'react';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import { normalizeWidth } from '../helpers/sizeHelper';
 
 export const jokesIcon = (<MaterialIcon name="insert-drive-file" size={25} color="#000" style={statusBarStyles.navLinkIcon} />);
 export const largeJokesIcon = (<MaterialIcon name="insert-drive-file" size={50} color="#000" style={statusBarStyles.navLinkIcon} />);
@@ -25,6 +26,7 @@ export const fastForwardIcon = (<MaterialIcon name="skip-next" size={25} color="
 export const back30Icon = (<MaterialIcon name="replay-30" size={25} color="#000" style={statusBarStyles.navLinkIcon} />);
 export const forward30Icon = (<MaterialIcon name="forward-30" size={25} color="#000" style={statusBarStyles.navLinkIcon} />);
 export const playIcon = (<MaterialIcon name="play-arrow" size={25} color="#000" style={statusBarStyles.navLinkIcon} />);
+export const backIcon = (<MaterialIcon name="arrow-back" size={normalizeWidth(10)} color="#CCC" style={statusBarStyles.navLinkIcon} />);
 
 export default {
   jokesIcon,
@@ -50,5 +52,6 @@ export default {
   fastForwardIcon,
   back30Icon,
   forward30Icon,
-  playIcon
+  playIcon,
+  backIcon
 }

@@ -5,13 +5,16 @@ import { View, Text, TouchableHighlight } from 'react-native';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 import {Button} from 'react-native-ui-xg';
+import Swipeout from 'react-native-swipeout';
+
+import { normalizeHeight, normalizeWidth } from '../../../../helpers/sizeHelper';
 
 import layoutStyles from '../../../../stylesheets/layoutStyles';
 import showDashboardStyles from '../../../../stylesheets/showDashboardStyles';
 
 import * as showActions from '../../../../actions/showActions';
 
-import {recIcon, timerIcon, pauseIcon, stopIcon, rewindIcon, fastForwardIcon, back30Icon, forward30Icon, playIcon} from '../../../../helpers/icons';
+import {backIcon, recIcon, timerIcon, pauseIcon, stopIcon, rewindIcon, fastForwardIcon, back30Icon, forward30Icon, playIcon} from '../../../../helpers/icons';
 
 import {AudioRecorder, AudioUtils} from 'react-native-audio';
 
@@ -77,68 +80,85 @@ class SoundBoard extends Component {
   }
 
   render() {
-    const { showState } = this.props;
+    const { showState, showActions } = this.props;
+
+    const swipeoutButtons = showState.show._has_recording ? [{ text: 'Delete', backgroundColor: '#FF0000', underlayColor: '#DD0000', onPress: showActions.toggleDeleteRecordingConfirm }] : [];
 
     return (
-      <View style={ showDashboardStyles.soundBoardView }>
-        <View style={ showDashboardStyles.buttonView }>
-          <Button type="surface" size="large" theme="red" onPress={ this.startRecording }>
-            <Text>{recIcon}</Text>
-            <Text style={layoutStyles.buttonText}>Rec</Text>
-          </Button>
-        </View>
+      <View>
         { showState.show._has_recording &&
-          <View style={{ flex: 1 }}>
-            <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-              <View style={ showDashboardStyles.playbackControlView }>
-                <Button type="surface" size="default" theme="gray" onPress={ () => { alert('rewind') } }>
-                  <Text style={{ left: -2, width: 20 }}>{rewindIcon}</Text>
-                </Button>
-              </View>
-              <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-                <Text style={ [showDashboardStyles.timerText, { marginLeft: 10 }] }>{ this.displayShowTime() }</Text>
-              </View>
-              <View style={ showDashboardStyles.playbackControlView }>
-                <Button type="surface" size="default" theme="gray" onPress={ () => { alert('ffwd') } }>
-                  <Text style={{ left: -2, width: 20 }}>{fastForwardIcon}</Text>
-                </Button>
+          <Swipeout right={ swipeoutButtons } autoClose={ true }>
+            <View style={ showDashboardStyles.soundBoardView }>
+              <View style={{ flex: 1, flexDirection: 'row' }}>
+                <View style={ showDashboardStyles.buttonView }>
+                  <Button type="surface" size="large" theme="red" onPress={ this.startRecording }>
+                    <Text>{recIcon}</Text>
+                    <Text style={layoutStyles.buttonText}>Rec</Text>
+                  </Button>
+                  <Text style={{ color: '#CCCCCC', marginTop: 3, fontSize: normalizeWidth(10), alignSelf: 'center', alignItems: 'center' }}>swipe { backIcon } to del</Text>
+                </View>
+                <View style={{ flex: 1 }}>
+                  <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+                    <View style={ showDashboardStyles.playbackControlView }>
+                      <Button type="surface" size="default" theme="gray" onPress={ () => { alert('rewind') } }>
+                        <Text style={{ left: -2, width: 20 }}>{rewindIcon}</Text>
+                      </Button>
+                    </View>
+                    <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                      <Text style={ [showDashboardStyles.timerText, { marginLeft: 10 }] }>{ this.displayShowTime() }</Text>
+                    </View>
+                    <View style={ showDashboardStyles.playbackControlView }>
+                      <Button type="surface" size="default" theme="gray" onPress={ () => { alert('ffwd') } }>
+                        <Text style={{ left: -2, width: 20 }}>{fastForwardIcon}</Text>
+                      </Button>
+                    </View>
+                  </View>
+                  <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+                    <View style={ [showDashboardStyles.playbackControlView, { marginBottom: 5 }] }>
+                      <Button type="surface" size="default" theme="gray" onPress={ () => { alert('back30') } }>
+                        <Text style={{ left: -2, width: 20 }}>{back30Icon}</Text>
+                      </Button>
+                    </View>
+                    <View style={ [showDashboardStyles.playbackControlView, { marginBottom: 5 }] }>
+                      <Button type="surface" size="default" theme="gray" onPress={ () => { alert('play') } }>
+                        <Text style={{ left: -2, width: 20 }}>{playIcon}</Text>
+                      </Button>
+                    </View>
+                    <View style={ [showDashboardStyles.playbackControlView, { marginBottom: 5 }] }>
+                      <Button type="surface" size="default" theme="gray" onPress={ () => { alert('forward30') } }>
+                        <Text style={{ left: -2, width: 20 }}>{forward30Icon}</Text>
+                      </Button>
+                    </View>
+                  </View>
+                </View>
               </View>
             </View>
-            <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-              <View style={ [showDashboardStyles.playbackControlView, { marginBottom: 5 }] }>
-                <Button type="surface" size="default" theme="gray" onPress={ () => { alert('back30') } }>
-                  <Text style={{ left: -2, width: 20 }}>{back30Icon}</Text>
-                </Button>
-              </View>
-              <View style={ [showDashboardStyles.playbackControlView, { marginBottom: 5 }] }>
-                <Button type="surface" size="default" theme="gray" onPress={ () => { alert('play') } }>
-                  <Text style={{ left: -2, width: 20 }}>{playIcon}</Text>
-                </Button>
-              </View>
-              <View style={ [showDashboardStyles.playbackControlView, { marginBottom: 5 }] }>
-                <Button type="surface" size="default" theme="gray" onPress={ () => { alert('forward30') } }>
-                  <Text style={{ left: -2, width: 20 }}>{forward30Icon}</Text>
-                </Button>
-              </View>
-            </View>
-          </View>
+          </Swipeout>
         }
         { !showState.show._has_recording &&
-          <View style={{ flexDirection: 'row', flex: 1 }}>
-            <View style={ showDashboardStyles.buttonView }>
-              { !showState.timer_running &&
-                <Button type="surface" size="large" theme="gray" onPress={ this.startTimer }>
-                  <Text>{timerIcon}</Text>
-                  <Text style={layoutStyles.buttonText}>Time</Text>
-                </Button> }
-              { showState.timer_running &&
-                <Button type="surface" size="large" theme="gray" selfStyle={ { borderColor: '#FF0000' } } onPress={ this.stopTimer }>
-                  <Text>{stopIcon}</Text>
-                  <Text style={layoutStyles.buttonText}>Stop</Text>
-                </Button> }
-            </View>
-            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-              <Text style={ showDashboardStyles.timerText }>{ this.displayShowTime() }</Text>
+          <View style={ showDashboardStyles.soundBoardView }>
+            <View style={{ flexDirection: 'row', flex: 1 }}>
+              <View style={ showDashboardStyles.buttonView }>
+                <Button type="surface" size="large" theme="red" onPress={ this.startRecording }>
+                  <Text>{recIcon}</Text>
+                  <Text style={layoutStyles.buttonText}>Rec</Text>
+                </Button>
+              </View>
+              <View style={ showDashboardStyles.buttonView }>
+                { !showState.timer_running &&
+                  <Button type="surface" size="large" theme="gray" onPress={ this.startTimer }>
+                    <Text>{timerIcon}</Text>
+                    <Text style={layoutStyles.buttonText}>Time</Text>
+                  </Button> }
+                { showState.timer_running &&
+                  <Button type="surface" size="large" theme="gray" selfStyle={ { borderColor: '#FF0000' } } onPress={ this.stopTimer }>
+                    <Text>{stopIcon}</Text>
+                    <Text style={layoutStyles.buttonText}>Stop</Text>
+                  </Button> }
+              </View>
+              <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                <Text style={ showDashboardStyles.timerText }>{ this.displayShowTime() }</Text>
+              </View>
             </View>
           </View>
         }
