@@ -4,7 +4,7 @@ import Show from '../models/show';
 
 const initialState = {
   show: new Show(),
-  timer_running: false,
+  is_timing: false,
   start_time: null,
   is_recording: false,
   is_playing: false,
@@ -69,7 +69,7 @@ export default function show(state = initialState, action = {}) {
         ...state,
         show: new_show,
         start_time: null,
-        timer_running: false
+        is_timing: false
       };
       break;
     case types.START_SHOW_TIMER:
@@ -79,13 +79,13 @@ export default function show(state = initialState, action = {}) {
         ...state,
         show: new_show,
         start_time: new Date(),
-        timer_running: true
+        is_timing: true
       };
       break;
     case types.STOP_SHOW_TIMER:
       return {
         ...state,
-        timer_running: false
+        is_timing: false
       };
       break;
     case types.UPDATE_SHOW_TIMER:
@@ -123,14 +123,14 @@ export default function show(state = initialState, action = {}) {
         ...state,
         show: new_show,
         start_time: new Date(),
-        timer_running: true,
+        is_timing: true,
         is_recording: true
       };
       break;
     case types.STOP_RECORDING:
       return {
         ...state,
-        timer_running: false,
+        is_timing: false,
         is_recording: false
       };
       break;

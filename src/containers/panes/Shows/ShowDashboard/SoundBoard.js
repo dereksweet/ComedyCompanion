@@ -50,6 +50,7 @@ class SoundBoard extends Component {
     this.back30 = this.back30.bind(this);
     this.forward30 = this.forward30.bind(this);
     this.deleteRecording = this.deleteRecording.bind(this);
+    this.stopRunningProcsses = this.stopRunningProcsses.bind(this);
   }
 
   componentDidMount() {
@@ -57,11 +58,22 @@ class SoundBoard extends Component {
   }
 
   componentWillUnmount() {
-    this.stopTimer();
+    this.stopRunningProcsses();
+  }
+
+  stopRunningProcsses() {
+    if (this.props.showState.is_timing)
+      this.stopTimer();
+
+    if (this.props.showState.is_recording)
+      this.stopRecording();
+
+    if (this.props.showState.is_playing)
+      this.stop();
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    const showTimerChanged = this.props.showState.timer_running !== nextProps.showState.timer_running;
+    const showTimerChanged = this.props.showState.is_timing !== nextProps.showState.is_timing;
     const showSecondsChanged = this.props.showState.show._show_time_seconds !== nextProps.showState.show._show_time_seconds;
     const hasRecordingChanged = this.props.showState.show._has_recording !== nextProps.showState.show._has_recording;
 
@@ -93,7 +105,7 @@ class SoundBoard extends Component {
   }
 
   startRecording() {
-    if (!this.props.showState.timer_running) {
+    if (!this.props.showState.is_timing) {
       this.props.showActions.setHasRecording(true);
       this.props.showActions.startRecording();
 
@@ -219,18 +231,18 @@ class SoundBoard extends Component {
           <View style={ showDashboardStyles.soundBoardView }>
             <View style={{ flexDirection: 'row', flex: 1 }}>
               <View style={ showDashboardStyles.buttonView }>
-                <Button type="surface" size="large" theme={ showState.timer_running ? "gray" : "red" } onPress={ this.startRecording }>
-                  <Text>{showState.timer_running ? recIconDisabled : recIcon}</Text>
-                  <Text style={[layoutStyles.buttonText, { color: showState.timer_running ? '#AAA' : '#FFF' }]}>Rec</Text>
+                <Button type="surface" size="large" theme={ showState.is_timing ? "gray" : "red" } onPress={ this.startRecording }>
+                  <Text>{showState.is_timing ? recIconDisabled : recIcon}</Text>
+                  <Text style={[layoutStyles.buttonText, { color: showState.is_timing ? '#AAA' : '#FFF' }]}>Rec</Text>
                 </Button>
               </View>
               <View style={ showDashboardStyles.buttonView }>
-                { !showState.timer_running &&
+                { !showState.is_timing &&
                   <Button type="surface" size="large" theme="gray" onPress={ this.startTimer }>
                     <Text>{timerIcon}</Text>
                     <Text style={layoutStyles.buttonText}>Time</Text>
                   </Button> }
-                { showState.timer_running &&
+                { showState.is_timing &&
                   <Button type="surface" size="large" theme="gray" selfStyle={ { borderColor: '#FF0000', borderWidth: 2 } } onPress={ this.stopTimer }>
                     <Text>{stopIcon}</Text>
                     <Text style={layoutStyles.buttonText}>Stop</Text>
