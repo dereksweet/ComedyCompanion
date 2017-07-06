@@ -55,3 +55,6 @@ export const STOP_SHOW_TIMER = 'show/stop_show_timer';
 export const UPDATE_SHOW_TIMER = 'show/update_show_timer';
 export const SET_HAS_RECORDING = 'show/set_show_has_recording';
 export const TOGGLE_DELETE_RECORDING_CONFIRM = 'show/toggle_delete_recording_confirm';
+export const TOGGLE_REPLACE_RECORDING_CONFIRM = 'show/toggle_replace_recording_confirm';
+export const START_RECORDING = 'show/start_recording';
+export const STOP_RECORDING = 'show/stop_recording';

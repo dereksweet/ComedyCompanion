@@ -78,3 +78,21 @@ export function toggleDeleteRecordingConfirm() {
     type: types.TOGGLE_DELETE_RECORDING_CONFIRM
   }
 }
+
+export function toggleReplaceRecordingConfirm() {
+  return {
+    type: types.TOGGLE_REPLACE_RECORDING_CONFIRM
+  }
+}
+
+export function startRecording() {
+  return {
+    type: types.START_RECORDING
+  }
+}
+
+export function stopRecording() {
+  return {
+    type: types.STOP_RECORDING
+  }
+}

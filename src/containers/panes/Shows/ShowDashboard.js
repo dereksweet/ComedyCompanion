@@ -20,12 +20,31 @@ class ShowDashboard extends Component {
     super(props);
 
     this.deleteRecording = this.deleteRecording.bind(this);
+    this.replaceRecording = this.replaceRecording.bind(this);
+    this.updateShowTimer = this.updateShowTimer.bind(this);
+    this.startTimerInterval = this.startTimerInterval.bind(this);
+    this.stopTimerInterval = this.stopTimerInterval.bind(this);
+
+    this.timerInterval = null;
+  }
+
+  updateShowTimer() {
+    this.props.showActions.updateShowTimer();
+  };
+
+  startTimerInterval() {
+    this.timerInterval = setInterval(this.updateShowTimer, 1000);
+  }
+
+  stopTimerInterval() {
+    clearInterval(this.timerInterval);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
     const deleteRecordingConfirmChanged = this.props.showState.delete_recording_confirm !== nextProps.showState.delete_recording_confirm;
+    const replaceRecordingConfirmChanged = this.props.showState.replace_recording_confirm !== nextProps.showState.replace_recording_confirm;
 
-    return deleteRecordingConfirmChanged;
+    return deleteRecordingConfirmChanged || replaceRecordingConfirmChanged;
   }
 
   deleteRecording() {
@@ -33,6 +52,13 @@ class ShowDashboard extends Component {
     this.props.showActions.toggleDeleteRecordingConfirm();
     this.props.showState.show.save();
     this.props.showActions.resetShowTimer();
+  }
+
+  replaceRecording() {
+    this.props.showActions.toggleReplaceRecordingConfirm();
+
+    this.props.showActions.startRecording();
+    this.startTimerInterval();
   }
 
   render() {
@@ -45,7 +71,7 @@ class ShowDashboard extends Component {
     return (
       <View style={{ flex: 1 }}>
         <View style={layoutStyles.statusBarBuffer} />
-        <SoundBoard />
+        <SoundBoard startTimerInterval={ this.startTimerInterval } stopTimerInterval={ this.stopTimerInterval } />
         <SetListViewer />
         { showState.delete_recording_confirm &&
           <View style={ layoutStyles.confirmBox }>
@@ -55,6 +81,19 @@ class ShowDashboard extends Component {
                 <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>NO</Text>
               </Button>
               <Button type="surface" size="large" theme="blue" selfStyle={ [layoutStyles.confirmButton, { marginLeft: 10 }] } onPress={ this.deleteRecording }>
+                <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>YES</Text>
+              </Button>
+            </View>
+          </View>
+        }
+        { showState.replace_recording_confirm &&
+          <View style={ layoutStyles.confirmBox }>
+            <Text style={{ textAlign: 'center', fontSize: 20 }}>Are you SURE you want to replace this recording?</Text>
+            <View style={{ paddingTop: 25, flexDirection: 'row' }}>
+              <Button type="surface" size="large" theme="red" selfStyle={ layoutStyles.deleteButton } onPress={ showActions.toggleReplaceRecordingConfirm }>
+                <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>NO</Text>
+              </Button>
+              <Button type="surface" size="large" theme="blue" selfStyle={ [layoutStyles.confirmButton, { marginLeft: 10 }] } onPress={ this.replaceRecording }>
                 <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>YES</Text>
               </Button>
             </View>

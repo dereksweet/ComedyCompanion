@@ -14,7 +14,22 @@ import showDashboardStyles from '../../../../stylesheets/showDashboardStyles';
 
 import * as showActions from '../../../../actions/showActions';
 
-import {backIcon, recIcon, timerIcon, pauseIcon, stopIcon, rewindIcon, fastForwardIcon, back30Icon, forward30Icon, playIcon} from '../../../../helpers/icons';
+import {
+  backIcon,
+  recIcon,
+  recIconDisabled,
+  timerIcon,
+  pauseIcon,
+  stopIcon,
+  rewindIcon,
+  rewindIconDisabled,
+  fastForwardIcon,
+  fastForwardIconDisabled,
+  back30Icon,
+  back30IconDisabled,
+  forward30Icon,
+  forward30IconDisabled,
+  playIcon } from '../../../../helpers/icons';
 
 import {AudioRecorder, AudioUtils} from 'react-native-audio';
 
@@ -24,11 +39,17 @@ class SoundBoard extends Component {
 
     this.startTimer = this.startTimer.bind(this);
     this.stopTimer = this.stopTimer.bind(this);
-    this.updateShowTimer = this.updateShowTimer.bind(this);
     this.displayShowTime = this.displayShowTime.bind(this);
     this.startRecording = this.startRecording.bind(this);
-
-    this.timerInterval = null;
+    this.stopRecording = this.stopRecording.bind(this);
+    this.pressPlayPauseStop = this.pressPlayPauseStop.bind(this);
+    this.stop = this.stop.bind(this);
+    this.play = this.play.bind(this);
+    this.rewind = this.rewind.bind(this);
+    this.fastForward = this.fastForward.bind(this);
+    this.back30 = this.back30.bind(this);
+    this.forward30 = this.forward30.bind(this);
+    this.deleteRecording = this.deleteRecording.bind(this);
   }
 
   componentDidMount() {
@@ -38,10 +59,6 @@ class SoundBoard extends Component {
   componentWillUnmount() {
     this.stopTimer();
   }
-
-  updateShowTimer() {
-    this.props.showActions.updateShowTimer();
-  };
 
   shouldComponentUpdate(nextProps, nextState) {
     const showTimerChanged = this.props.showState.timer_running !== nextProps.showState.timer_running;
@@ -54,13 +71,13 @@ class SoundBoard extends Component {
   startTimer() {
     this.props.showActions.startShowTimer();
 
-    this.timerInterval = setInterval(this.updateShowTimer, 1000);
+    this.props.startTimerInterval();
   }
 
   stopTimer() {
     this.props.showActions.stopShowTimer();
 
-    clearInterval(this.timerInterval);
+    this.props.stopTimerInterval();
 
     this.props.showState.show.save();
   }
@@ -76,13 +93,69 @@ class SoundBoard extends Component {
   }
 
   startRecording() {
-    this.props.showActions.setHasRecording(true);
+    if (!this.props.showState.timer_running) {
+      this.props.showActions.setHasRecording(true);
+      this.props.showActions.startRecording();
+
+      this.props.startTimerInterval();
+    }
+  }
+
+  stopRecording() {
+    this.props.showActions.stopRecording();
+
+    this.props.stopTimerInterval();
+
+    this.props.showState.show.save();
+  }
+
+  play() {
+    alert('playing');
+  }
+
+  stop() {
+    alert('stopping');
+  }
+
+  rewind() {
+    if (!this.props.showState.is_recording)
+      alert('rewind');
+  }
+
+  fastForward() {
+    if (!this.props.showState.is_recording)
+      alert('fast foward');
+  }
+
+  back30() {
+    if (!this.props.showState.is_recording)
+      alert('back30');
+  }
+
+  forward30() {
+    if (!this.props.showState.is_recording)
+      alert('forward30');
+  }
+
+  pressPlayPauseStop() {
+    if (this.props.showState.is_recording)
+      this.stopRecording();
+    else if (this.props.showState.is_playing)
+      this.stop();
+    else
+      this.play();
+  }
+
+  deleteRecording() {
+    if (!this.props.showState.is_recording && !this.props.showState.is_playing) {
+      this.props.showActions.toggleDeleteRecordingConfirm();
+    }
   }
 
   render() {
     const { showState, showActions } = this.props;
 
-    const swipeoutButtons = showState.show._has_recording ? [{ text: 'Delete', backgroundColor: '#FF0000', underlayColor: '#DD0000', onPress: showActions.toggleDeleteRecordingConfirm }] : [];
+    const swipeoutButtons = showState.show._has_recording ? [{ text: 'Delete', backgroundColor: '#FF0000', underlayColor: '#DD0000', onPress: this.deleteRecording }] : [];
 
     return (
       <View>
@@ -91,42 +164,49 @@ class SoundBoard extends Component {
             <View style={ showDashboardStyles.soundBoardView }>
               <View style={{ flex: 1, flexDirection: 'row' }}>
                 <View style={ showDashboardStyles.buttonView }>
-                  <Button type="surface" size="large" theme="red" onPress={ this.startRecording }>
-                    <Text>{recIcon}</Text>
-                    <Text style={layoutStyles.buttonText}>Rec</Text>
-                  </Button>
+                  { !showState.is_recording &&
+                    <Button type="surface" size="large" theme="red" onPress={ showActions.toggleReplaceRecordingConfirm }>
+                      <Text>{recIcon}</Text>
+                      <Text style={layoutStyles.buttonText}>Rec</Text>
+                    </Button> }
+                  { showState.is_recording &&
+                    <Button type="surface" size="large" theme="red" selfStyle={ { borderColor: '#FF0000', borderWidth: 2 } } onPress={ this.stopRecording }>
+                      <Text>{stopIcon}</Text>
+                      <Text style={layoutStyles.buttonText}>Stop</Text>
+                    </Button> }
+
                   <Text style={{ color: '#CCCCCC', marginTop: 3, fontSize: normalizeWidth(10), alignSelf: 'center', alignItems: 'center' }}>swipe { backIcon } to del</Text>
                 </View>
                 <View style={{ flex: 1 }}>
                   <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
                     <View style={ showDashboardStyles.playbackControlView }>
-                      <Button type="surface" size="default" theme="gray" onPress={ () => { alert('rewind') } }>
-                        <Text style={{ left: -2, width: 20 }}>{rewindIcon}</Text>
+                      <Button type="surface" size="default" theme="gray" onPress={ this.rewind }>
+                        <Text style={{ left: -2, width: 20 }}>{showState.is_recording ? rewindIconDisabled : rewindIcon}</Text>
                       </Button>
                     </View>
                     <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-                      <Text style={ [showDashboardStyles.timerText, { marginLeft: 10 }] }>{ this.displayShowTime() }</Text>
+                      <Text style={ [showDashboardStyles.timerText, { marginLeft: 10, color: showState.is_recording ? '#DD4444' : '#FFFFFF' }] }>{ this.displayShowTime() }</Text>
                     </View>
                     <View style={ showDashboardStyles.playbackControlView }>
-                      <Button type="surface" size="default" theme="gray" onPress={ () => { alert('ffwd') } }>
-                        <Text style={{ left: -2, width: 20 }}>{fastForwardIcon}</Text>
+                      <Button type="surface" size="default" theme="gray" onPress={ this.fastForward }>
+                        <Text style={{ left: -2, width: 20 }}>{showState.is_recording ? fastForwardIconDisabled : fastForwardIcon}</Text>
                       </Button>
                     </View>
                   </View>
                   <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
                     <View style={ [showDashboardStyles.playbackControlView, { marginBottom: 5 }] }>
-                      <Button type="surface" size="default" theme="gray" onPress={ () => { alert('back30') } }>
-                        <Text style={{ left: -2, width: 20 }}>{back30Icon}</Text>
+                      <Button type="surface" size="default" theme="gray" onPress={ this.back30 }>
+                        <Text style={{ left: -2, width: 20 }}>{showState.is_recording ? back30IconDisabled : back30Icon}</Text>
                       </Button>
                     </View>
                     <View style={ [showDashboardStyles.playbackControlView, { marginBottom: 5 }] }>
-                      <Button type="surface" size="default" theme="gray" onPress={ () => { alert('play') } }>
-                        <Text style={{ left: -2, width: 20 }}>{playIcon}</Text>
+                      <Button type="surface" size="default" theme="gray" onPress={ this.pressPlayPauseStop }>
+                        <Text style={{ left: -2, width: 20 }}>{ showState.is_recording ? stopIcon : showState.is_playing ? pauseIcon : playIcon}</Text>
                       </Button>
                     </View>
                     <View style={ [showDashboardStyles.playbackControlView, { marginBottom: 5 }] }>
-                      <Button type="surface" size="default" theme="gray" onPress={ () => { alert('forward30') } }>
-                        <Text style={{ left: -2, width: 20 }}>{forward30Icon}</Text>
+                      <Button type="surface" size="default" theme="gray" onPress={ this.forward30 }>
+                        <Text style={{ left: -2, width: 20 }}>{showState.is_recording ? forward30IconDisabled : forward30Icon}</Text>
                       </Button>
                     </View>
                   </View>
@@ -140,8 +220,8 @@ class SoundBoard extends Component {
             <View style={{ flexDirection: 'row', flex: 1 }}>
               <View style={ showDashboardStyles.buttonView }>
                 <Button type="surface" size="large" theme="red" onPress={ this.startRecording }>
-                  <Text>{recIcon}</Text>
-                  <Text style={layoutStyles.buttonText}>Rec</Text>
+                  <Text>{showState.timer_running ? recIconDisabled : recIcon}</Text>
+                  <Text style={[layoutStyles.buttonText, { color: showState.timer_running ? '#CCC' : '#FFF' }]}>Rec</Text>
                 </Button>
               </View>
               <View style={ showDashboardStyles.buttonView }>
@@ -151,7 +231,7 @@ class SoundBoard extends Component {
                     <Text style={layoutStyles.buttonText}>Time</Text>
                   </Button> }
                 { showState.timer_running &&
-                  <Button type="surface" size="large" theme="gray" selfStyle={ { borderColor: '#FF0000' } } onPress={ this.stopTimer }>
+                  <Button type="surface" size="large" theme="gray" selfStyle={ { borderColor: '#FF0000', borderWidth: 2 } } onPress={ this.stopTimer }>
                     <Text>{stopIcon}</Text>
                     <Text style={layoutStyles.buttonText}>Stop</Text>
                   </Button> }

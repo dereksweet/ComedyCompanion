@@ -6,7 +6,10 @@ const initialState = {
   show: new Show(),
   timer_running: false,
   start_time: null,
-  delete_recording_confirm: false
+  is_recording: false,
+  is_playing: false,
+  delete_recording_confirm: false,
+  replace_recording_confirm: false
 };
 
 export default function show(state = initialState, action = {}) {
@@ -105,6 +108,30 @@ export default function show(state = initialState, action = {}) {
       return {
         ...state,
         delete_recording_confirm: !state.delete_recording_confirm
+      };
+      break;
+    case types.TOGGLE_REPLACE_RECORDING_CONFIRM:
+      return {
+        ...state,
+        replace_recording_confirm: !state.replace_recording_confirm
+      };
+      break;
+    case types.START_RECORDING:
+      new_show._show_time_seconds = 0;
+
+      return {
+        ...state,
+        show: new_show,
+        start_time: new Date(),
+        timer_running: true,
+        is_recording: true
+      };
+      break;
+    case types.STOP_RECORDING:
+      return {
+        ...state,
+        timer_running: false,
+        is_recording: false
       };
       break;
     default:
