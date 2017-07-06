@@ -219,9 +219,9 @@ class SoundBoard extends Component {
           <View style={ showDashboardStyles.soundBoardView }>
             <View style={{ flexDirection: 'row', flex: 1 }}>
               <View style={ showDashboardStyles.buttonView }>
-                <Button type="surface" size="large" theme="red" onPress={ this.startRecording }>
+                <Button type="surface" size="large" theme={ showState.timer_running ? "gray" : "red" } onPress={ this.startRecording }>
                   <Text>{showState.timer_running ? recIconDisabled : recIcon}</Text>
-                  <Text style={[layoutStyles.buttonText, { color: showState.timer_running ? '#CCC' : '#FFF' }]}>Rec</Text>
+                  <Text style={[layoutStyles.buttonText, { color: showState.timer_running ? '#AAA' : '#FFF' }]}>Rec</Text>
                 </Button>
               </View>
               <View style={ showDashboardStyles.buttonView }>
