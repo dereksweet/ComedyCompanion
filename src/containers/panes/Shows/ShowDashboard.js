@@ -13,6 +13,8 @@ import SetListViewer from './ShowDashboard/SetListViewer';
 
 import * as showActions from '../../../actions/showActions';
 
+import Show from '../../../models/show';
+
 import layoutStyles from '../../../stylesheets/layoutStyles';
 
 class ShowDashboard extends Component {
@@ -50,8 +52,13 @@ class ShowDashboard extends Component {
   deleteRecording() {
     this.props.showActions.setHasRecording(false);
     this.props.showActions.toggleDeleteRecordingConfirm();
-    this.props.showState.show.save();
     this.props.showActions.resetShowTimer();
+
+    // Unfortunately we have to also modify and save the show saved in the state, just updating the show in redux state is not enough
+    let show = new Show(this.props.showState.show);
+    show._has_recording = false;
+    show._show_time_seconds = 0;
+    show.save();
   }
 
   replaceRecording() {
