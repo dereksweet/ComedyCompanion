@@ -48,6 +48,7 @@
 		82F066011E91F614008C8A36 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 82F065DE1E91F5AE008C8A36 /* Zocial.ttf */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		846924FAEA1D41609965E83C /* libRNAudio.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 005CB463474943F088109AF9 /* libRNAudio.a */; };
+		BE3FE5E36CFF468BA3AF5285 /* libRNSound.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B07FBD3ED6A4CBD809FFA07 /* libRNSound.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -233,6 +234,13 @@
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = RCTLinking;
 		};
+		82A23A051F109ED500DC7DFB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 36148F17DC8F4C9ABD91E6E1 /* RNSound.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 19825A1E1BD4A89800EE0337;
+			remoteInfo = RNSound;
+		};
 		82F907131F061EE1009DF056 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B789FC2908B34BE89C7757D7 /* RNAudio.xcodeproj */;
@@ -279,6 +287,7 @@
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* ComedyCompanion-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ComedyCompanion-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* ComedyCompanion-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ComedyCompanion-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		36148F17DC8F4C9ABD91E6E1 /* RNSound.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNSound.xcodeproj; path = "../node_modules/react-native-sound/RNSound.xcodeproj"; sourceTree = "<group>"; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		824954171EC6D3DB00A51052 /* ComedyCompanion.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = ComedyCompanion.entitlements; path = ComedyCompanion/ComedyCompanion.entitlements; sourceTree = "<group>"; };
@@ -293,6 +302,7 @@
 		82F065DD1E91F5AE008C8A36 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SimpleLineIcons.ttf; sourceTree = "<group>"; };
 		82F065DE1E91F5AE008C8A36 /* Zocial.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Zocial.ttf; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
+		8B07FBD3ED6A4CBD809FFA07 /* libRNSound.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNSound.a; sourceTree = "<group>"; };
 		B789FC2908B34BE89C7757D7 /* RNAudio.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNAudio.xcodeproj; path = "../node_modules/react-native-audio/ios/RNAudio.xcodeproj"; sourceTree = "<group>"; };
 		BEAA30C73C2C4B1D9438A293 /* libicloudstorage.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libicloudstorage.a; sourceTree = "<group>"; };
 		D5C6D1E83BFB4BEDBAB1EF76 /* icloudstorage.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = icloudstorage.xcodeproj; path = "../node_modules/react-native-icloudstore/icloudstorage.xcodeproj"; sourceTree = "<group>"; };
@@ -324,6 +334,7 @@
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				7EA2912B56964BCCBCAF88A3 /* libicloudstorage.a in Frameworks */,
 				846924FAEA1D41609965E83C /* libRNAudio.a in Frameworks */,
+				BE3FE5E36CFF468BA3AF5285 /* libRNSound.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -477,6 +488,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		82A239E71F109ED500DC7DFB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				82A23A061F109ED500DC7DFB /* libRNSound.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		82F065D41E91F5AE008C8A36 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -527,6 +546,7 @@
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
 				D5C6D1E83BFB4BEDBAB1EF76 /* icloudstorage.xcodeproj */,
 				B789FC2908B34BE89C7757D7 /* RNAudio.xcodeproj */,
+				36148F17DC8F4C9ABD91E6E1 /* RNSound.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -735,6 +755,10 @@
 					ProductGroup = 82F906F61F061EE1009DF056 /* Products */;
 					ProjectRef = B789FC2908B34BE89C7757D7 /* RNAudio.xcodeproj */;
 				},
+				{
+					ProductGroup = 82A239E71F109ED500DC7DFB /* Products */;
+					ProjectRef = 36148F17DC8F4C9ABD91E6E1 /* RNSound.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -915,6 +939,13 @@
 			remoteRef = 78C398B81ACF4ADC00677621 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		82A23A061F109ED500DC7DFB /* libRNSound.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNSound.a;
+			remoteRef = 82A23A051F109ED500DC7DFB /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		82F907141F061EE1009DF056 /* libRNAudio.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1088,12 +1119,14 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-icloudstore",
 					"$(SRCROOT)/../node_modules/react-native-audio/ios",
+					"$(SRCROOT)/../node_modules/react-native-sound/RNSound",
 				);
 				INFOPLIST_FILE = ComedyCompanionTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
@@ -1115,12 +1148,14 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-icloudstore",
 					"$(SRCROOT)/../node_modules/react-native-audio/ios",
+					"$(SRCROOT)/../node_modules/react-native-sound/RNSound",
 				);
 				INFOPLIST_FILE = ComedyCompanionTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
@@ -1145,6 +1180,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-icloudstore",
 					"$(SRCROOT)/../node_modules/react-native-audio/ios",
+					"$(SRCROOT)/../node_modules/react-native-sound/RNSound",
 				);
 				INFOPLIST_FILE = ComedyCompanion/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1171,6 +1207,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-icloudstore",
 					"$(SRCROOT)/../node_modules/react-native-audio/ios",
+					"$(SRCROOT)/../node_modules/react-native-sound/RNSound",
 				);
 				INFOPLIST_FILE = ComedyCompanion/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1202,11 +1239,13 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-icloudstore",
 					"$(SRCROOT)/../node_modules/react-native-audio/ios",
+					"$(SRCROOT)/../node_modules/react-native-sound/RNSound",
 				);
 				INFOPLIST_FILE = "ComedyCompanion-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
@@ -1238,11 +1277,13 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-icloudstore",
 					"$(SRCROOT)/../node_modules/react-native-audio/ios",
+					"$(SRCROOT)/../node_modules/react-native-sound/RNSound",
 				);
 				INFOPLIST_FILE = "ComedyCompanion-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
@@ -1275,6 +1316,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.ComedyCompanion-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1299,6 +1341,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);

@@ -9,6 +9,8 @@ import Swipeout from 'react-native-swipeout';
 
 import { normalizeHeight, normalizeWidth } from '../../../../helpers/sizeHelper';
 
+import AudioRecorderService from '../../../../services/AudioRecorderService';
+
 import layoutStyles from '../../../../stylesheets/layoutStyles';
 import showDashboardStyles from '../../../../stylesheets/showDashboardStyles';
 
@@ -36,6 +38,8 @@ import {AudioRecorder, AudioUtils} from 'react-native-audio';
 class SoundBoard extends Component {
   constructor(props) {
     super(props);
+
+    this.audio_recorder_service = new AudioRecorderService({ show_id: this.props.showState.show._id });
 
     this.startTimer = this.startTimer.bind(this);
     this.stopTimer = this.stopTimer.bind(this);
@@ -110,6 +114,8 @@ class SoundBoard extends Component {
       this.props.showActions.startRecording();
 
       this.props.startTimerInterval();
+
+      this.audio_recorder_service.record();
     }
   }
 
@@ -119,14 +125,20 @@ class SoundBoard extends Component {
     this.props.stopTimerInterval();
 
     this.props.showState.show.save();
+
+    this.audio_recorder_service.stop();
   }
 
   play() {
-    alert('playing');
+    this.props.startTimerInterval();
+
+    this.audio_recorder_service.play();
   }
 
   stop() {
-    alert('stopping');
+    this.props.stopTimerInterval();
+
+    this.audio_recorder_service.stop();
   }
 
   rewind() {
