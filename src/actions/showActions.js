@@ -96,3 +96,15 @@ export function stopRecording() {
     type: types.STOP_RECORDING
   }
 }
+
+export function startPlaying() {
+  return {
+    type: types.START_PLAYING
+  }
+}
+
+export function stopPlaying() {
+  return {
+    type: types.STOP_PLAYING
+  }
+}

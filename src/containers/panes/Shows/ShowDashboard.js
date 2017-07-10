@@ -71,10 +71,6 @@ class ShowDashboard extends Component {
   render() {
     const { showState, showActions } = this.props;
 
-    // const showDateString = moment(showState.show._date).format('MMddYYYY');
-    // const showIDString = showState.show._id.toString();
-    // let audioPath = AudioUtils.DocumentDirectoryPath + '/ComComp/showAudio_' + showDateString + '_' + showIDString + '.aac';
-
     return (
       <View style={{ flex: 1 }}>
         <View style={layoutStyles.statusBarBuffer} />

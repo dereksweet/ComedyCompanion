@@ -58,3 +58,5 @@ export const TOGGLE_DELETE_RECORDING_CONFIRM = 'show/toggle_delete_recording_con
 export const TOGGLE_REPLACE_RECORDING_CONFIRM = 'show/toggle_replace_recording_confirm';
 export const START_RECORDING = 'show/start_recording';
 export const STOP_RECORDING = 'show/stop_recording';
+export const START_PLAYING = 'show/start_playing';
+export const STOP_PLAYING = 'show/stop_playing';

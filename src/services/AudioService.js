@@ -10,9 +10,10 @@ export default class AudioRecorderService extends Component {
     super(props);
 
     this.state = {
-      audio_path: AudioUtils.DocumentDirectoryPath + '/ComComp/showAudio_' + props.show_id + '.aac',
+      audio_path: AudioUtils.DocumentDirectoryPath + '/ComComp_showAudio_' + props.show_id + '.aac',
       currentTime: 0.0,
       recording: false,
+      playing: false,
       stoppedRecording: true,
       finished: false,
       hasPermission: undefined
@@ -22,8 +23,6 @@ export default class AudioRecorderService extends Component {
       this.state.hasPermission = hasPermission;
 
       if (!hasPermission) return;
-
-      this.prepareRecordingPath(this.state.audio_path);
 
       AudioRecorder.onProgress = (data) => {
         console.log(data.currentTime);
@@ -44,6 +43,8 @@ export default class AudioRecorderService extends Component {
   }
 
   prepareRecordingPath(){
+    console.log('preparing Recording at path: ' + this.state.auto_path);
+
     AudioRecorder.prepareRecordingAtPath(this.state.audio_path, {
       SampleRate: 22050,
       Channels: 1,
@@ -89,7 +90,7 @@ export default class AudioRecorderService extends Component {
     }
   }
 
-  async stop() {
+  async stop_recording() {
     if (!this.state.recording) {
       console.warn('Can\'t stop, not recording!');
       return;
@@ -110,14 +111,19 @@ export default class AudioRecorderService extends Component {
     }
   }
 
+  async stop_playing() {
+
+  }
+
   async play() {
     if (this.state.recording) {
-      await this.stop();
+      await this.stop_recording();
     }
 
     // These timeouts are a hacky workaround for some issues with react-native-sound.
     // See https://github.com/zmxv/react-native-sound/issues/89.
     setTimeout(() => {
+      console.log('Playing sound at location ' + this.state.audio_path);
       var sound = new Sound(this.state.audio_path, '', (error) => {
         if (error) {
           console.log('failed to load the sound', error);

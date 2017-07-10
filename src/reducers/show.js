@@ -1,5 +1,6 @@
 import * as types from '../actions/actionTypes';
 
+import AudioService from '../services/AudioService';
 import Show from '../models/show';
 
 const initialState = {
@@ -9,7 +10,8 @@ const initialState = {
   is_recording: false,
   is_playing: false,
   delete_recording_confirm: false,
-  replace_recording_confirm: false
+  replace_recording_confirm: false,
+  audio_service: null
 };
 
 export default function show(state = initialState, action = {}) {
@@ -19,7 +21,8 @@ export default function show(state = initialState, action = {}) {
     case types.SET_SHOW:
       return {
         ...state,
-        show: action.show
+        show: action.show,
+        audio_service: new AudioService({ show_id: action.show._id })
       };
       break;
     case types.SET_SHOW_VENUE:
@@ -132,6 +135,24 @@ export default function show(state = initialState, action = {}) {
         ...state,
         is_timing: false,
         is_recording: false
+      };
+      break;
+    case types.START_PLAYING:
+      new_show._show_time_seconds = 0;
+
+      return {
+        ...state,
+        show: new_show,
+        start_time: new Date(),
+        is_timing: true,
+        is_playing: true
+      };
+      break;
+    case types.STOP_PLAYING:
+      return {
+        ...state,
+        is_timing: false,
+        is_playing: false
       };
       break;
     default:

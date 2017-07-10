@@ -9,8 +9,6 @@ import Swipeout from 'react-native-swipeout';
 
 import { normalizeHeight, normalizeWidth } from '../../../../helpers/sizeHelper';
 
-import AudioRecorderService from '../../../../services/AudioRecorderService';
-
 import layoutStyles from '../../../../stylesheets/layoutStyles';
 import showDashboardStyles from '../../../../stylesheets/showDashboardStyles';
 
@@ -39,22 +37,20 @@ class SoundBoard extends Component {
   constructor(props) {
     super(props);
 
-    this.audio_recorder_service = new AudioRecorderService({ show_id: this.props.showState.show._id });
-
     this.startTimer = this.startTimer.bind(this);
     this.stopTimer = this.stopTimer.bind(this);
     this.displayShowTime = this.displayShowTime.bind(this);
     this.startRecording = this.startRecording.bind(this);
     this.stopRecording = this.stopRecording.bind(this);
     this.pressPlayPauseStop = this.pressPlayPauseStop.bind(this);
-    this.stop = this.stop.bind(this);
+    this.stopPlaying = this.stopPlaying.bind(this);
     this.play = this.play.bind(this);
     this.rewind = this.rewind.bind(this);
     this.fastForward = this.fastForward.bind(this);
     this.back30 = this.back30.bind(this);
     this.forward30 = this.forward30.bind(this);
     this.deleteRecording = this.deleteRecording.bind(this);
-    this.stopRunningProcsses = this.stopRunningProcsses.bind(this);
+    this.stopRunningProcesses = this.stopRunningProcesses.bind(this);
   }
 
   componentDidMount() {
@@ -62,10 +58,10 @@ class SoundBoard extends Component {
   }
 
   componentWillUnmount() {
-    this.stopRunningProcsses();
+    this.stopRunningProcesses();
   }
 
-  stopRunningProcsses() {
+  stopRunningProcesses() {
     if (this.props.showState.is_timing)
       this.stopTimer();
 
@@ -73,7 +69,7 @@ class SoundBoard extends Component {
       this.stopRecording();
 
     if (this.props.showState.is_playing)
-      this.stop();
+      this.stopPlaying();
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -115,7 +111,7 @@ class SoundBoard extends Component {
 
       this.props.startTimerInterval();
 
-      this.audio_recorder_service.record();
+      this.props.showState.audio_service.record();
     }
   }
 
@@ -126,19 +122,23 @@ class SoundBoard extends Component {
 
     this.props.showState.show.save();
 
-    this.audio_recorder_service.stop();
+    this.props.showState.audio_service.stop_recording();
   }
 
   play() {
+    this.props.showActions.startPlaying();
+
     this.props.startTimerInterval();
 
-    this.audio_recorder_service.play();
+    this.props.showState.audio_service.play();
   }
 
-  stop() {
+  stopPlaying() {
+    this.props.showActions.stopPlaying();
+
     this.props.stopTimerInterval();
 
-    this.audio_recorder_service.stop();
+    this.props.showState.audio_service.stop_playing();
   }
 
   rewind() {
@@ -165,7 +165,7 @@ class SoundBoard extends Component {
     if (this.props.showState.is_recording)
       this.stopRecording();
     else if (this.props.showState.is_playing)
-      this.stop();
+      this.stopPlaying();
     else
       this.play();
   }
