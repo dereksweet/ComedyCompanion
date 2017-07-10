@@ -130,7 +130,7 @@ class SoundBoard extends Component {
 
     this.props.startTimerInterval();
 
-    this.props.showState.audio_service.play();
+    this.props.showState.audio_service.play(this.stopPlaying);
   }
 
   stopPlaying() {
@@ -142,8 +142,15 @@ class SoundBoard extends Component {
   }
 
   rewind() {
-    if (!this.props.showState.is_recording)
-      alert('rewind');
+    if (!this.props.showState.is_recording) {
+      if (this.props.showState.is_playing) {
+        this.stopPlaying();
+      }
+
+      this.props.showActions.resetShowTimer();
+
+      this.props.showState.audio_service.setCurrentTime(0.0);
+    }
   }
 
   fastForward() {

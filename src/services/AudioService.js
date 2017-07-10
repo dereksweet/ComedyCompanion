@@ -17,7 +17,8 @@ export default class AudioRecorderService extends Component {
       playing: false,
       stoppedRecording: true,
       finished: false,
-      hasPermission: undefined
+      hasPermission: undefined,
+      sound: null
     };
 
     this.checkPermission().then((hasPermission) => {
@@ -113,10 +114,11 @@ export default class AudioRecorderService extends Component {
   }
 
   async stop_playing() {
-
+    // this.state.currentTime = this.state.sound.getCurrentTime();
+    this.state.sound.pause();
   }
 
-  async play() {
+  async play(onEnd) {
     if (this.state.recording) {
       await this.stop_recording();
     }
@@ -125,18 +127,22 @@ export default class AudioRecorderService extends Component {
     // See https://github.com/zmxv/react-native-sound/issues/89.
     setTimeout(() => {
       console.log('Playing sound at location ' + this.state.audio_path);
-      var sound = new Sound(this.state.audio_path, '', (error) => {
-        if (error) {
-          console.log('failed to load the sound', error);
-        }
-      });
+      if (!this.state.sound) {
+        this.state.sound = new Sound(this.state.audio_path, '', (error) => {
+          if (error) {
+            console.log('failed to load the sound', error);
+          }
+        });
+      }
 
       setTimeout(() => {
-        sound.play((success) => {
+        this.state.sound.play((success) => {
           if (success) {
             console.log('successfully finished playing');
+            onEnd();
           } else {
             console.log('playback failed due to audio decoding errors');
+            onEnd();
           }
         });
       }, 100);
@@ -163,11 +169,15 @@ export default class AudioRecorderService extends Component {
 
     try {
       console.log('start Recording');
-      const filePath = await AudioRecorder.startRecording();
+      await AudioRecorder.startRecording();
       console.log('recording started');
     } catch (error) {
       console.error(error);
     }
+  }
+
+  setCurrentTime(currentTime) {
+    this.state.currentTime = currentTime;
   }
 
   finishRecording(didSucceed, filePath) {
