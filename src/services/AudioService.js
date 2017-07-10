@@ -4,6 +4,7 @@ import React, {Component} from 'react';
 import { Platform, PermissionsAndroid } from 'react-native';
 import Sound from 'react-native-sound';
 import {AudioRecorder, AudioUtils} from 'react-native-audio';
+import RNFS from 'react-native-fs';
 
 export default class AudioRecorderService extends Component {
   constructor(props) {
@@ -172,6 +173,29 @@ export default class AudioRecorderService extends Component {
   finishRecording(didSucceed, filePath) {
     this.state.finished = didSucceed;
     console.log(`Finished recording of duration ${this.state.currentTime} seconds at path: ${filePath}`);
+  }
+
+  deleteAudioFile() {
+
+    RNFS.exists(this.state.audio_path)
+      .then( (result) => {
+        console.log("file exists: ", result);
+
+        if(result){
+          return RNFS.unlink(this.state.audio_path)
+            .then(() => {
+              console.log('FILE DELETED');
+            })
+            // `unlink` will throw an error, if the item to unlink does not exist
+            .catch((err) => {
+              console.log(err.message);
+            });
+        }
+
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
   }
 
   render() {

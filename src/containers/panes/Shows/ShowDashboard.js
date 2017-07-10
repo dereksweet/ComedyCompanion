@@ -59,6 +59,8 @@ class ShowDashboard extends Component {
     show._has_recording = false;
     show._show_time_seconds = 0;
     show.save();
+
+    this.props.showState.audio_service.deleteAudioFile();
   }
 
   replaceRecording() {
@@ -66,6 +68,8 @@ class ShowDashboard extends Component {
 
     this.props.showActions.startRecording();
     this.startTimerInterval();
+
+    this.props.showState.audio_service.record();
   }
 
   render() {
