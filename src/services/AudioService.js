@@ -27,7 +27,6 @@ export default class AudioRecorderService extends Component {
       if (!hasPermission) return;
 
       AudioRecorder.onProgress = (data) => {
-        console.log(data.currentTime);
         this.state.currentTime = Math.floor(data.currentTime);
       };
 
@@ -113,8 +112,7 @@ export default class AudioRecorderService extends Component {
     }
   }
 
-  async stop_playing() {
-    // this.state.currentTime = this.state.sound.getCurrentTime();
+  async pause() {
     this.state.sound.pause();
   }
 
@@ -177,7 +175,9 @@ export default class AudioRecorderService extends Component {
   }
 
   setCurrentTime(currentTime) {
-    this.state.currentTime = currentTime;
+    if (this.state.sound) {
+      this.state.sound.setCurrentTime(currentTime);
+    }
   }
 
   finishRecording(didSucceed, filePath) {

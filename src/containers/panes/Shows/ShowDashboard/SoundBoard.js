@@ -43,7 +43,7 @@ class SoundBoard extends Component {
     this.startRecording = this.startRecording.bind(this);
     this.stopRecording = this.stopRecording.bind(this);
     this.pressPlayPauseStop = this.pressPlayPauseStop.bind(this);
-    this.stopPlaying = this.stopPlaying.bind(this);
+    this.pause = this.pause.bind(this);
     this.play = this.play.bind(this);
     this.rewind = this.rewind.bind(this);
     this.fastForward = this.fastForward.bind(this);
@@ -74,10 +74,11 @@ class SoundBoard extends Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     const showTimerChanged = this.props.showState.is_timing !== nextProps.showState.is_timing;
+    const showPlayingChanged = this.props.showState.is_playing !== nextProps.showState.is_playing;
     const showSecondsChanged = this.props.showState.show._show_time_seconds !== nextProps.showState.show._show_time_seconds;
     const hasRecordingChanged = this.props.showState.show._has_recording !== nextProps.showState.show._has_recording;
 
-    return showTimerChanged || showSecondsChanged || hasRecordingChanged;
+    return showTimerChanged || showPlayingChanged || showSecondsChanged || hasRecordingChanged;
   }
 
   startTimer() {
@@ -130,21 +131,21 @@ class SoundBoard extends Component {
 
     this.props.startTimerInterval();
 
-    this.props.showState.audio_service.play(this.stopPlaying);
+    this.props.showState.audio_service.play(this.pause);
   }
 
-  stopPlaying() {
+  pause() {
     this.props.showActions.stopPlaying();
 
     this.props.stopTimerInterval();
 
-    this.props.showState.audio_service.stop_playing();
+    this.props.showState.audio_service.pause();
   }
 
   rewind() {
     if (!this.props.showState.is_recording) {
       if (this.props.showState.is_playing) {
-        this.stopPlaying();
+        this.pause();
       }
 
       this.props.showActions.resetShowTimer();
@@ -172,7 +173,7 @@ class SoundBoard extends Component {
     if (this.props.showState.is_recording)
       this.stopRecording();
     else if (this.props.showState.is_playing)
-      this.stopPlaying();
+      this.pause();
     else
       this.play();
   }
