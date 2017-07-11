@@ -31,7 +31,13 @@ class ShowDashboard extends Component {
   }
 
   updateShowTimer() {
-    this.props.showActions.updateShowTimer();
+    if (this.props.showState.is_playing) {
+      this.props.showState.audio_service.state.sound.getCurrentTime((time) => {
+        this.props.showActions.updateShowTimer(time);
+      });
+    } else {
+      this.props.showActions.updateShowTimer();
+    }
   };
 
   startTimerInterval() {

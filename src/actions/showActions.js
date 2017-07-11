@@ -60,9 +60,10 @@ export function stopShowTimer() {
   }
 }
 
-export function updateShowTimer() {
+export function updateShowTimer(time = null) {
   return {
-    type: types.UPDATE_SHOW_TIMER
+    type: types.UPDATE_SHOW_TIMER,
+    time
   }
 }
 

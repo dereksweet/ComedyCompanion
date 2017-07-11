@@ -92,7 +92,11 @@ export default function show(state = initialState, action = {}) {
       };
       break;
     case types.UPDATE_SHOW_TIMER:
-      new_show._show_time_seconds = Math.floor((new Date() - state.start_time) / 1000);
+      if (action.time) {
+        new_show._show_time_seconds = Math.round(action.time);
+      } else {
+        new_show._show_time_seconds = Math.floor((new Date() - state.start_time) / 1000);
+      }
 
       return {
         ...state,
@@ -138,20 +142,14 @@ export default function show(state = initialState, action = {}) {
       };
       break;
     case types.START_PLAYING:
-      new_show._show_time_seconds = 0;
-
       return {
         ...state,
-        show: new_show,
-        start_time: new Date(),
-        is_timing: true,
         is_playing: true
       };
       break;
     case types.STOP_PLAYING:
       return {
         ...state,
-        is_timing: false,
         is_playing: false
       };
       break;
