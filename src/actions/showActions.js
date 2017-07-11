@@ -42,9 +42,10 @@ export function setShowSetList(set_list) {
   }
 }
 
-export function resetShowTimer() {
+export function resetShowTimer(time = null) {
   return {
-    type: types.RESET_SHOW_TIMER
+    type: types.RESET_SHOW_TIMER,
+    time
   }
 }
 

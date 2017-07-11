@@ -127,6 +127,14 @@ class SoundBoard extends Component {
   }
 
   play() {
+    const current_timer = Math.floor(this.props.showState.show._show_time_seconds);
+    const recording_length = Math.floor(this.props.showState.audio_service.state.sound.getDuration());
+
+    if (current_timer == recording_length) {
+      this.props.showActions.resetShowTimer();
+      this.props.showState.audio_service.setCurrentTime(0.0);
+    }
+
     this.props.showActions.startPlaying();
 
     this.props.startTimerInterval();
@@ -155,8 +163,13 @@ class SoundBoard extends Component {
   }
 
   fastForward() {
-    if (!this.props.showState.is_recording)
-      alert('fast foward');
+    if (!this.props.showState.is_recording) {
+      const recording_length = Math.floor(this.props.showState.audio_service.state.sound.getDuration());
+
+      this.props.showActions.resetShowTimer(recording_length);
+
+      this.props.showState.audio_service.setCurrentTime(recording_length);
+    }
   }
 
   back30() {

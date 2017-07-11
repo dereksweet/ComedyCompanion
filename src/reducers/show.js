@@ -66,7 +66,11 @@ export default function show(state = initialState, action = {}) {
       };
       break;
     case types.RESET_SHOW_TIMER:
-      new_show._show_time_seconds = 0;
+      if (action.time) {
+        new_show._show_time_seconds = Math.round(action.time);
+      } else {
+        new_show._show_time_seconds = 0;
+      }
 
       return {
         ...state,
@@ -95,7 +99,7 @@ export default function show(state = initialState, action = {}) {
       if (action.time) {
         new_show._show_time_seconds = Math.round(action.time);
       } else {
-        new_show._show_time_seconds = Math.floor((new Date() - state.start_time) / 1000);
+        new_show._show_time_seconds = Math.round((new Date() - state.start_time) / 1000);
       }
 
       return {

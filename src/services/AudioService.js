@@ -26,6 +26,16 @@ export default class AudioRecorderService extends Component {
 
       if (!hasPermission) return;
 
+      RNFS.exists(this.state.audio_path).then((exists) => {
+        if (exists) {
+          this.state.sound = new Sound(this.state.audio_path, '', (error) => {
+            if (error) {
+              console.log('failed to load the sound', error);
+            }
+          });
+        }
+      });
+
       AudioRecorder.onProgress = (data) => {
         this.state.currentTime = Math.floor(data.currentTime);
       };
@@ -40,7 +50,7 @@ export default class AudioRecorderService extends Component {
   }
 
   componentDidMount() {
-    console.log('mounted boyee');
+
   }
 
   prepareRecordingPath(){
@@ -106,6 +116,13 @@ export default class AudioRecorderService extends Component {
       if (Platform.OS === 'android') {
         this.finishRecording(true, filePath);
       }
+
+      this.state.sound = new Sound(this.state.audio_path, '', (error) => {
+        if (error) {
+          console.log('failed to load the sound', error);
+        }
+      });
+
       return filePath;
     } catch (error) {
       console.error(error);
