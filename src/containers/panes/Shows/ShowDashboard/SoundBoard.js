@@ -69,7 +69,7 @@ class SoundBoard extends Component {
       this.stopRecording();
 
     if (this.props.showState.is_playing)
-      this.stopPlaying();
+      this.pause();
   }
 
   shouldComponentUpdate(nextProps, nextState) {
