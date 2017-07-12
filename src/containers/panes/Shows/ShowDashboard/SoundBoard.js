@@ -143,7 +143,7 @@ class SoundBoard extends Component {
 
   startPlaying() {
     const current_timer = this.props.showState.display_time_seconds;
-    const recording_length = this.props.showState.audio_service.state.sound.getDuration();
+    const recording_length = this.props.showState.show._show_time_seconds;
 
     if (Math.abs(current_timer - recording_length) <= 1.0) {
       this.props.showActions.setDisplayTimer(0.0);
