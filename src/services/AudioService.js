@@ -37,6 +37,7 @@ export default class AudioRecorderService extends Component {
       });
 
       AudioRecorder.onProgress = (data) => {
+        console.log(data.currentTime);
         this.state.currentTime = Math.floor(data.currentTime);
       };
 

@@ -68,6 +68,13 @@ export function updateShowTimer(time = null) {
   }
 }
 
+export function setDisplayTimer(time) {
+  return {
+    type: types.SET_DISPLAY_TIMER,
+    time
+  }
+}
+
 export function setHasRecording(has_recording) {
   return {
     type: types.SET_HAS_RECORDING,

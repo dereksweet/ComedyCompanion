@@ -6,12 +6,13 @@ import Show from '../models/show';
 const initialState = {
   show: new Show(),
   is_timing: false,
-  start_time: null,
+  timer_start: null,
   is_recording: false,
   is_playing: false,
   delete_recording_confirm: false,
   replace_recording_confirm: false,
-  audio_service: null
+  audio_service: null,
+  display_time_seconds: 0
 };
 
 export default function show(state = initialState, action = {}) {
@@ -65,27 +66,13 @@ export default function show(state = initialState, action = {}) {
         show: new_show
       };
       break;
-    case types.RESET_SHOW_TIMER:
-      if (action.time) {
-        new_show._show_time_seconds = Math.round(action.time);
-      } else {
-        new_show._show_time_seconds = 0;
-      }
-
-      return {
-        ...state,
-        show: new_show,
-        start_time: null,
-        is_timing: false
-      };
-      break;
     case types.START_SHOW_TIMER:
       new_show._show_time_seconds = 0;
 
       return {
         ...state,
         show: new_show,
-        start_time: new Date(),
+        timer_start: new Date(),
         is_timing: true
       };
       break;
@@ -95,16 +82,28 @@ export default function show(state = initialState, action = {}) {
         is_timing: false
       };
       break;
+    case types.RESET_SHOW_TIMER:
+      new_show._show_time_seconds = 0;
+
+      return {
+        ...state,
+        show: new_show,
+        timer_start: null,
+        is_timing: false
+      };
+      break;
     case types.UPDATE_SHOW_TIMER:
-      if (action.time) {
-        new_show._show_time_seconds = Math.round(action.time);
-      } else {
-        new_show._show_time_seconds = Math.round((new Date() - state.start_time) / 1000);
-      }
+      new_show._show_time_seconds = action.time;
 
       return {
         ...state,
         show: new_show
+      };
+      break;
+    case types.SET_DISPLAY_TIMER:
+      return {
+        ...state,
+        display_time_seconds: Math.floor(action.time)
       };
       break;
     case types.SET_HAS_RECORDING:
@@ -128,20 +127,14 @@ export default function show(state = initialState, action = {}) {
       };
       break;
     case types.START_RECORDING:
-      new_show._show_time_seconds = 0;
-
       return {
         ...state,
-        show: new_show,
-        start_time: new Date(),
-        is_timing: true,
         is_recording: true
       };
       break;
     case types.STOP_RECORDING:
       return {
         ...state,
-        is_timing: false,
         is_recording: false
       };
       break;

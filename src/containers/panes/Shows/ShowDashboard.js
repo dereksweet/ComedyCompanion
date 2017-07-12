@@ -23,27 +23,29 @@ class ShowDashboard extends Component {
 
     this.deleteRecording = this.deleteRecording.bind(this);
     this.replaceRecording = this.replaceRecording.bind(this);
-    this.updateShowTimer = this.updateShowTimer.bind(this);
+    this.updateDisplayTimer = this.updateDisplayTimer.bind(this);
     this.startTimerInterval = this.startTimerInterval.bind(this);
     this.stopTimerInterval = this.stopTimerInterval.bind(this);
 
     this.timerInterval = null;
   }
 
-  updateShowTimer() {
+  updateDisplayTimer() {
     if (this.props.showState.is_playing) {
       this.props.showState.audio_service.state.sound.getCurrentTime((time) => {
-        this.props.showActions.updateShowTimer(time);
+        this.props.showActions.setDisplayTimer(time);
       });
     } else if (this.props.showState.is_recording) {
-      this.props.showActions.updateShowTimer(this.props.showState.audio_service.state.currentTime);
+      this.props.showActions.setDisplayTimer(this.props.showState.audio_service.state.currentTime);
     } else {
-      this.props.showActions.updateShowTimer();
+      let new_show_time_seconds = Math.floor((new Date() - this.props.showState.timer_start) / 1000);
+      this.props.showActions.updateShowTimer(new_show_time_seconds);
+      this.props.showActions.setDisplayTimer(new_show_time_seconds);
     }
   };
 
   startTimerInterval() {
-    this.timerInterval = setInterval(this.updateShowTimer, 1000);
+    this.timerInterval = setInterval(this.updateDisplayTimer, 100);
   }
 
   stopTimerInterval() {
@@ -61,6 +63,7 @@ class ShowDashboard extends Component {
     this.props.showActions.setHasRecording(false);
     this.props.showActions.toggleDeleteRecordingConfirm();
     this.props.showActions.resetShowTimer();
+    this.props.showActions.setDisplayTimer(0.0);
 
     // Unfortunately we have to also modify and save the show saved in the state, just updating the show in redux state is not enough
     let show = new Show(this.props.showState.show);
@@ -73,6 +76,8 @@ class ShowDashboard extends Component {
 
   replaceRecording() {
     this.props.showActions.toggleReplaceRecordingConfirm();
+
+    this.props.showActions.setDisplayTimer(0.0);
 
     this.props.showActions.startRecording();
     this.startTimerInterval();

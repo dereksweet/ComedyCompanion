@@ -7,7 +7,9 @@ import { connect } from 'react-redux';
 import {Button} from 'react-native-ui-xg';
 import Swipeout from 'react-native-swipeout';
 
-import { normalizeHeight, normalizeWidth } from '../../../../helpers/sizeHelper';
+import { normalizeWidth } from '../../../../helpers/sizeHelper';
+
+import Show from '../../../../models/show';
 
 import layoutStyles from '../../../../stylesheets/layoutStyles';
 import showDashboardStyles from '../../../../stylesheets/showDashboardStyles';
@@ -37,14 +39,14 @@ class SoundBoard extends Component {
   constructor(props) {
     super(props);
 
-    this.startTimer = this.startTimer.bind(this);
-    this.stopTimer = this.stopTimer.bind(this);
-    this.displayShowTime = this.displayShowTime.bind(this);
+    this.startTiming = this.startTiming.bind(this);
+    this.stopTiming = this.stopTiming.bind(this);
+    this.formatDisplayTime = this.formatDisplayTime.bind(this);
     this.startRecording = this.startRecording.bind(this);
     this.stopRecording = this.stopRecording.bind(this);
     this.pressPlayPauseStop = this.pressPlayPauseStop.bind(this);
-    this.pause = this.pause.bind(this);
-    this.play = this.play.bind(this);
+    this.stopPlaying = this.stopPlaying.bind(this);
+    this.startPlaying = this.startPlaying.bind(this);
     this.rewind = this.rewind.bind(this);
     this.fastForward = this.fastForward.bind(this);
     this.back30 = this.back30.bind(this);
@@ -54,7 +56,7 @@ class SoundBoard extends Component {
   }
 
   componentDidMount() {
-
+    this.props.showActions.setDisplayTimer(this.props.showState.show._show_time_seconds);
   }
 
   componentWillUnmount() {
@@ -63,31 +65,36 @@ class SoundBoard extends Component {
 
   stopRunningProcesses() {
     if (this.props.showState.is_timing)
-      this.stopTimer();
+      this.stopTiming();
 
     if (this.props.showState.is_recording)
       this.stopRecording();
 
     if (this.props.showState.is_playing)
-      this.pause();
+      this.stopPlaying();
   }
 
   shouldComponentUpdate(nextProps, nextState) {
     const showTimerChanged = this.props.showState.is_timing !== nextProps.showState.is_timing;
     const showPlayingChanged = this.props.showState.is_playing !== nextProps.showState.is_playing;
-    const showSecondsChanged = this.props.showState.show._show_time_seconds !== nextProps.showState.show._show_time_seconds;
+    const displayTimeChanged = this.props.showState.display_time_seconds !== nextProps.showState.display_time_seconds;
     const hasRecordingChanged = this.props.showState.show._has_recording !== nextProps.showState.show._has_recording;
+    const isRecordingChanged = this.props.showState.is_recording !== nextProps.showState.is_recording;
+    const isPlayingChanged = this.props.showState.is_playing !== nextProps.showState.is_playing;
+    const isTimingChanged = this.props.showState.is_timing !== nextProps.showState.is_timing;
 
-    return showTimerChanged || showPlayingChanged || showSecondsChanged || hasRecordingChanged;
+    return showTimerChanged || showPlayingChanged || displayTimeChanged || hasRecordingChanged || isRecordingChanged || isPlayingChanged || isTimingChanged;
   }
 
-  startTimer() {
+  startTiming() {
+    this.props.showActions.setDisplayTimer(0.0);
+
     this.props.showActions.startShowTimer();
 
     this.props.startTimerInterval();
   }
 
-  stopTimer() {
+  stopTiming() {
     this.props.showActions.stopShowTimer();
 
     this.props.stopTimerInterval();
@@ -95,8 +102,8 @@ class SoundBoard extends Component {
     this.props.showState.show.save();
   }
 
-  displayShowTime() {
-    const total_seconds = this.props.showState.show._show_time_seconds;
+  formatDisplayTime() {
+    const total_seconds = this.props.showState.display_time_seconds;
 
     const hours = Math.floor(total_seconds / 3600);
     const minutes = Math.floor((total_seconds - (hours * 3600)) / 60);
@@ -110,6 +117,8 @@ class SoundBoard extends Component {
       this.props.showActions.setHasRecording(true);
       this.props.showActions.startRecording();
 
+      this.props.showActions.setDisplayTimer(0.0);
+
       this.props.startTimerInterval();
 
       this.props.showState.audio_service.record();
@@ -121,17 +130,23 @@ class SoundBoard extends Component {
 
     this.props.stopTimerInterval();
 
-    this.props.showState.show.save();
+    let recordingTime = Math.floor(this.props.showState.audio_service.state.currentTime);
+    this.props.showActions.updateShowTimer(recordingTime);
+    this.props.showActions.setDisplayTimer(recordingTime);
+
+    let new_show = new Show(this.props.showState.show);
+    new_show._show_time_seconds = recordingTime;
+    new_show.save();
 
     this.props.showState.audio_service.stop_recording();
   }
 
-  play() {
-    const current_timer = Math.floor(this.props.showState.show._show_time_seconds);
+  startPlaying() {
+    const current_timer = Math.floor(this.props.showState.display_time_seconds);
     const recording_length = Math.floor(this.props.showState.audio_service.state.sound.getDuration());
 
     if (current_timer == recording_length) {
-      this.props.showActions.resetShowTimer();
+      this.props.showActions.setDisplayTimer(0.0);
       this.props.showState.audio_service.setCurrentTime(0.0);
     }
 
@@ -139,10 +154,10 @@ class SoundBoard extends Component {
 
     this.props.startTimerInterval();
 
-    this.props.showState.audio_service.play(this.pause);
+    this.props.showState.audio_service.play(this.stopPlaying);
   }
 
-  pause() {
+  stopPlaying() {
     this.props.showActions.stopPlaying();
 
     this.props.stopTimerInterval();
@@ -153,21 +168,19 @@ class SoundBoard extends Component {
   rewind() {
     if (!this.props.showState.is_recording) {
       if (this.props.showState.is_playing) {
-        this.pause();
+        this.stopPlaying();
       }
 
-      this.props.showActions.resetShowTimer();
-
+      this.props.showActions.setDisplayTimer(0.0);
       this.props.showState.audio_service.setCurrentTime(0.0);
     }
   }
 
   fastForward() {
     if (!this.props.showState.is_recording) {
-      const recording_length = Math.floor(this.props.showState.audio_service.state.sound.getDuration());
+      const recording_length = Math.floor(this.props.showState.show._show_time_seconds);
 
-      this.props.showActions.resetShowTimer(recording_length);
-
+      this.props.showActions.setDisplayTimer(recording_length);
       this.props.showState.audio_service.setCurrentTime(recording_length);
     }
   }
@@ -186,9 +199,9 @@ class SoundBoard extends Component {
     if (this.props.showState.is_recording)
       this.stopRecording();
     else if (this.props.showState.is_playing)
-      this.pause();
+      this.stopPlaying();
     else
-      this.play();
+      this.startPlaying();
   }
 
   deleteRecording() {
@@ -230,7 +243,7 @@ class SoundBoard extends Component {
                       </Button>
                     </View>
                     <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-                      <Text style={ [showDashboardStyles.timerText, { marginLeft: 10, color: showState.is_recording ? '#DD4444' : '#FFFFFF' }] }>{ this.displayShowTime() }</Text>
+                      <Text style={ [showDashboardStyles.timerText, { marginLeft: 10, color: showState.is_recording ? '#DD4444' : '#FFFFFF' }] }>{ this.formatDisplayTime() }</Text>
                     </View>
                     <View style={ showDashboardStyles.playbackControlView }>
                       <Button type="surface" size="default" theme="gray" onPress={ this.fastForward }>
@@ -271,18 +284,18 @@ class SoundBoard extends Component {
               </View>
               <View style={ showDashboardStyles.buttonView }>
                 { !showState.is_timing &&
-                  <Button type="surface" size="large" theme="gray" onPress={ this.startTimer }>
+                  <Button type="surface" size="large" theme="gray" onPress={ this.startTiming }>
                     <Text>{timerIcon}</Text>
                     <Text style={layoutStyles.buttonText}>Time</Text>
                   </Button> }
                 { showState.is_timing &&
-                  <Button type="surface" size="large" theme="gray" selfStyle={ { borderColor: '#FF0000', borderWidth: 2 } } onPress={ this.stopTimer }>
+                  <Button type="surface" size="large" theme="gray" selfStyle={ { borderColor: '#FF0000', borderWidth: 2 } } onPress={ this.stopTiming }>
                     <Text>{stopIcon}</Text>
                     <Text style={layoutStyles.buttonText}>Stop</Text>
                   </Button> }
               </View>
               <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                <Text style={ showDashboardStyles.timerText }>{ this.displayShowTime() }</Text>
+                <Text style={ showDashboardStyles.timerText }>{ this.formatDisplayTime() }</Text>
               </View>
             </View>
           </View>
