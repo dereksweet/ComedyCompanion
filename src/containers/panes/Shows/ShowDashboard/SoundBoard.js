@@ -113,7 +113,7 @@ class SoundBoard extends Component {
   }
 
   startRecording() {
-    if (!this.props.showState.is_timing) {
+    if ((!this.props.showState.is_timing) && (!this.props.showState.is_playing)) {
       this.props.showActions.setHasRecording(true);
       this.props.showActions.startRecording();
 
@@ -223,9 +223,9 @@ class SoundBoard extends Component {
               <View style={{ flex: 1, flexDirection: 'row' }}>
                 <View style={ showDashboardStyles.buttonView }>
                   { !showState.is_recording &&
-                    <Button type="surface" size="large" theme="red" onPress={ showActions.toggleReplaceRecordingConfirm }>
-                      <Text>{recIcon}</Text>
-                      <Text style={layoutStyles.buttonText}>Rec</Text>
+                    <Button type="surface" size="large" theme={ showState.is_playing ? "gray" : "red" } onPress={ showState.is_playing ? () => {} : showActions.toggleReplaceRecordingConfirm }>
+                      <Text>{showState.is_playing ? recIconDisabled : recIcon}</Text>
+                      <Text style={[layoutStyles.buttonText, { color: showState.is_timing ? '#AAA' : '#FFF' }]}>Rec</Text>
                     </Button> }
                   { showState.is_recording &&
                     <Button type="surface" size="large" theme="red" selfStyle={ { borderColor: '#FF0000', borderWidth: 2 } } onPress={ this.stopRecording }>
