@@ -186,13 +186,27 @@ class SoundBoard extends Component {
   }
 
   back30() {
-    if (!this.props.showState.is_recording)
-      alert('back30');
+    if (!this.props.showState.is_recording) {
+      const minus_30 = this.props.showState.display_time_seconds - 30;
+
+      const new_seconds = minus_30 < 0 ? 0 : minus_30;
+
+      this.props.showActions.setDisplayTimer(new_seconds);
+      this.props.showState.audio_service.setCurrentTime(new_seconds);
+    }
+
   }
 
   forward30() {
-    if (!this.props.showState.is_recording)
-      alert('forward30');
+    if (!this.props.showState.is_recording) {
+      const plus_30 = this.props.showState.display_time_seconds + 30;
+      const recording_length = Math.floor(this.props.showState.show._show_time_seconds);
+
+      const new_seconds = plus_30 > recording_length ? recording_length : plus_30;
+
+      this.props.showActions.setDisplayTimer(new_seconds);
+      this.props.showState.audio_service.setCurrentTime(new_seconds);
+    }
   }
 
   pressPlayPauseStop() {
