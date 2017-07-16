@@ -1,5 +1,6 @@
 import Model from './Model';
 import SetList from './set_list';
+import AudioService from '../services/AudioService';
 
 import uuidV4 from 'uuid/v4';
 
@@ -58,5 +59,16 @@ export default class Show extends Model {
     this._has_recording     = data._has_recording || defaults._has_recording;
     this._created_at        = data._created_at;
     this._updated_at        = data._updated_at;
+  }
+
+  destroy() {
+    if (this._has_recording) {
+      console.log('destroying show with audio file. DELETE IT!');
+
+      let audio_service = new AudioService({ show_id: this._id });
+      audio_service.deleteAudioFile();
+    }
+
+    super.destroy();
   }
 }
