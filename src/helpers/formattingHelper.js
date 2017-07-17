@@ -7,3 +7,7 @@ export function formatDisplayTime(total_seconds) {
 
   return `${hours > 0 ? hours.toString() + ':' : ''}${minutes > 9 ? minutes.toString() : '0' + minutes.toString()}:${seconds > 9 ? seconds.toString() : '0' + seconds.toString()}`;
 }
+
+export function formatBytesInGigabytes(bytes) {
+  return `${(bytes / 1000000000).toFixed(2)} Gb`
+}

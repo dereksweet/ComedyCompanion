@@ -15,7 +15,7 @@ import * as showActions from '../../../actions/showActions';
 
 import Show from '../../../models/show';
 
-import { formatDisplayTime } from '../../../helpers/formattingHelper';
+import { formatDisplayTime, formatBytesInGigabytes } from '../../../helpers/formattingHelper';
 
 import layoutStyles from '../../../stylesheets/layoutStyles';
 
@@ -55,12 +55,17 @@ class ShowDashboard extends Component {
     clearInterval(this.timerInterval);
   }
 
+  componentDidMount() {
+    this.props.showState.audio_service.updateFSInfo();
+  }
+
   shouldComponentUpdate(nextProps, nextState) {
     const deleteRecordingConfirmChanged = this.props.showState.delete_recording_confirm !== nextProps.showState.delete_recording_confirm;
     const replaceRecordingConfirmChanged = this.props.showState.replace_recording_confirm !== nextProps.showState.replace_recording_confirm;
     const showRecordingInfoChanged = this.props.showState.show_recording_info !== nextProps.showState.show_recording_info;
+    const freeSpaceChanged = (this.props.showState.audio_service.state.fs_info && this.props.showState.audio_service.state.fs_info.freeSpace !== nextProps.showState.audio_service.state.fs_info.freeSpace) || false;
 
-    return deleteRecordingConfirmChanged || replaceRecordingConfirmChanged || showRecordingInfoChanged;
+    return deleteRecordingConfirmChanged || replaceRecordingConfirmChanged || showRecordingInfoChanged || freeSpaceChanged;
   }
 
   deleteRecording() {
@@ -130,7 +135,10 @@ class ShowDashboard extends Component {
         { showState.show_recording_info &&
           <View style={ layoutStyles.confirmBox }>
             <Text style={{ textAlign: 'center', fontSize: 15 }}>
-              <Text style={{ fontWeight: 'bold' }}>Show Length</Text>: { formatDisplayTime(showState.show._show_time_seconds) }
+              <Text style={{ fontWeight: 'bold' }}>Recording Length</Text>: { formatDisplayTime(showState.show._show_time_seconds) }
+            </Text>
+            <Text style={{ textAlign: 'center', fontSize: 15 }}>
+              <Text style={{ fontWeight: 'bold' }}>Remaining Space</Text>: { formatBytesInGigabytes(showState.audio_service.state.fs_info.freeSpace) }
             </Text>
             <View style={{ paddingTop: 25 }}>
               <Button type="surface" size="large" theme="red" selfStyle={ layoutStyles.confirmButton } onPress={ this.toggleRecordingInfo }>

@@ -18,7 +18,8 @@ export default class AudioRecorderService extends Component {
       stoppedRecording: true,
       finished: false,
       hasPermission: undefined,
-      sound: null
+      sound: null,
+      fs_info: null
     };
 
     this.checkPermission().then((hasPermission) => {
@@ -218,6 +219,29 @@ export default class AudioRecorderService extends Component {
             .catch((err) => {
               console.log(err.message);
             });
+        }
+
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }
+
+  updateFSInfo() {
+    RNFS.getFSInfo()
+      .then((fs_info) => {
+        console.log("FSInfo: ", fs_info);
+        this.state.fs_info = fs_info;
+      });
+  }
+
+  audioFileSizeMb() {
+    RNFS.exists(this.state.audio_path)
+      .then( (result) => {
+        console.log("file exists (filesize): ", result);
+
+        if(result){
+
         }
 
       })
