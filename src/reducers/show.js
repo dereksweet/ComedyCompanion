@@ -11,6 +11,7 @@ const initialState = {
   is_playing: false,
   delete_recording_confirm: false,
   replace_recording_confirm: false,
+  show_recording_info: false,
   audio_service: null,
   display_time_seconds: 0
 };
@@ -124,6 +125,12 @@ export default function show(state = initialState, action = {}) {
       return {
         ...state,
         replace_recording_confirm: !state.replace_recording_confirm
+      };
+      break;
+    case types.TOGGLE_RECORDING_INFO:
+      return {
+        ...state,
+        show_recording_info: !state.show_recording_info
       };
       break;
     case types.START_RECORDING:

@@ -15,6 +15,8 @@ import * as showActions from '../../../actions/showActions';
 
 import Show from '../../../models/show';
 
+import { formatDisplayTime } from '../../../helpers/formattingHelper';
+
 import layoutStyles from '../../../stylesheets/layoutStyles';
 
 class ShowDashboard extends Component {
@@ -26,6 +28,7 @@ class ShowDashboard extends Component {
     this.updateDisplayTimer = this.updateDisplayTimer.bind(this);
     this.startTimerInterval = this.startTimerInterval.bind(this);
     this.stopTimerInterval = this.stopTimerInterval.bind(this);
+    this.toggleRecordingInfo = this.toggleRecordingInfo.bind(this);
 
     this.timerInterval = null;
   }
@@ -55,8 +58,9 @@ class ShowDashboard extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     const deleteRecordingConfirmChanged = this.props.showState.delete_recording_confirm !== nextProps.showState.delete_recording_confirm;
     const replaceRecordingConfirmChanged = this.props.showState.replace_recording_confirm !== nextProps.showState.replace_recording_confirm;
+    const showRecordingInfoChanged = this.props.showState.show_recording_info !== nextProps.showState.show_recording_info;
 
-    return deleteRecordingConfirmChanged || replaceRecordingConfirmChanged;
+    return deleteRecordingConfirmChanged || replaceRecordingConfirmChanged || showRecordingInfoChanged;
   }
 
   deleteRecording() {
@@ -83,6 +87,10 @@ class ShowDashboard extends Component {
     this.startTimerInterval();
 
     this.props.showState.audio_service.record();
+  }
+
+  toggleRecordingInfo() {
+    this.props.showActions.toggleRecordingInfo();
   }
 
   render() {
@@ -115,6 +123,18 @@ class ShowDashboard extends Component {
               </Button>
               <Button type="surface" size="large" theme="blue" selfStyle={ [layoutStyles.confirmButton, { marginLeft: 10 }] } onPress={ this.replaceRecording }>
                 <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>YES</Text>
+              </Button>
+            </View>
+          </View>
+        }
+        { showState.show_recording_info &&
+          <View style={ layoutStyles.confirmBox }>
+            <Text style={{ textAlign: 'center', fontSize: 15 }}>
+              <Text style={{ fontWeight: 'bold' }}>Show Length</Text>: { formatDisplayTime(showState.show._show_time_seconds) }
+            </Text>
+            <View style={{ paddingTop: 25 }}>
+              <Button type="surface" size="large" theme="red" selfStyle={ layoutStyles.confirmButton } onPress={ this.toggleRecordingInfo }>
+                <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>OK</Text>
               </Button>
             </View>
           </View>

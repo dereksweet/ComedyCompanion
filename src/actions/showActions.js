@@ -94,6 +94,12 @@ export function toggleReplaceRecordingConfirm() {
   }
 }
 
+export function toggleRecordingInfo() {
+  return {
+    type: types.TOGGLE_RECORDING_INFO
+  }
+}
+
 export function startRecording() {
   return {
     type: types.START_RECORDING

@@ -8,6 +8,7 @@ import {Button} from 'react-native-ui-xg';
 import Swipeout from 'react-native-swipeout';
 
 import { normalizeWidth } from '../../../../helpers/sizeHelper';
+import { formatDisplayTime } from '../../../../helpers/formattingHelper';
 
 import Show from '../../../../models/show';
 
@@ -41,7 +42,6 @@ class SoundBoard extends Component {
 
     this.startTiming = this.startTiming.bind(this);
     this.stopTiming = this.stopTiming.bind(this);
-    this.formatDisplayTime = this.formatDisplayTime.bind(this);
     this.startRecording = this.startRecording.bind(this);
     this.stopRecording = this.stopRecording.bind(this);
     this.pressPlayPauseStop = this.pressPlayPauseStop.bind(this);
@@ -53,6 +53,7 @@ class SoundBoard extends Component {
     this.forward30 = this.forward30.bind(this);
     this.deleteRecording = this.deleteRecording.bind(this);
     this.stopRunningProcesses = this.stopRunningProcesses.bind(this);
+    this.showRecordingInfo = this.showRecordingInfo.bind(this);
   }
 
   componentDidMount() {
@@ -100,16 +101,6 @@ class SoundBoard extends Component {
     this.props.stopTimerInterval();
 
     this.props.showState.show.save();
-  }
-
-  formatDisplayTime() {
-    const total_seconds = this.props.showState.display_time_seconds;
-
-    const hours = Math.floor(total_seconds / 3600);
-    const minutes = Math.floor((total_seconds - (hours * 3600)) / 60);
-    const seconds = Math.floor(total_seconds - (hours * 3600) - (minutes * 60));
-
-    return `${hours > 0 ? hours.toString() + ':' : ''}${minutes > 9 ? minutes.toString() : '0' + minutes.toString()}:${seconds > 9 ? seconds.toString() : '0' + seconds.toString()}`;
   }
 
   startRecording() {
@@ -224,10 +215,14 @@ class SoundBoard extends Component {
     }
   }
 
+  showRecordingInfo() {
+    this.props.showActions.toggleRecordingInfo();
+  }
+
   render() {
     const { showState, showActions } = this.props;
 
-    const swipeoutButtons = showState.show._has_recording ? [{ text: 'Delete', backgroundColor: '#FF0000', underlayColor: '#DD0000', onPress: this.deleteRecording }] : [];
+    const swipeoutButtons = showState.show._has_recording ? [{ text: 'Info', backgroundColor: '#CCCCCC', underLayColor: '#999999', onPress: this.showRecordingInfo }, { text: 'Delete', backgroundColor: '#FF0000', underlayColor: '#DD0000', onPress: this.deleteRecording }] : [];
 
     return (
       <View>
@@ -257,7 +252,7 @@ class SoundBoard extends Component {
                       </Button>
                     </View>
                     <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-                      <Text style={ [showDashboardStyles.timerText, { marginLeft: 10, color: showState.is_recording ? '#DD4444' : '#FFFFFF' }] }>{ this.formatDisplayTime() }</Text>
+                      <Text style={ [showDashboardStyles.timerText, { marginLeft: 10, color: showState.is_recording ? '#DD4444' : '#FFFFFF' }] }>{ formatDisplayTime(showState.display_time_seconds) }</Text>
                     </View>
                     <View style={ showDashboardStyles.playbackControlView }>
                       <Button type="surface" size="default" theme="gray" onPress={ this.fastForward }>
@@ -309,7 +304,7 @@ class SoundBoard extends Component {
                   </Button> }
               </View>
               <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                <Text style={ showDashboardStyles.timerText }>{ this.formatDisplayTime() }</Text>
+                <Text style={ showDashboardStyles.timerText }>{ formatDisplayTime(showState.display_time_seconds) }</Text>
               </View>
             </View>
           </View>
