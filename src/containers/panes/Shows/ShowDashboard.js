@@ -15,7 +15,7 @@ import * as showActions from '../../../actions/showActions';
 
 import Show from '../../../models/show';
 
-import { formatDisplayTime, formatBytesInGigabytes } from '../../../helpers/formattingHelper';
+import { formatDisplayTime, formatBytesInMegabytes, formatBytesInGigabytes } from '../../../helpers/formattingHelper';
 
 import layoutStyles from '../../../stylesheets/layoutStyles';
 
@@ -56,6 +56,7 @@ class ShowDashboard extends Component {
   }
 
   componentDidMount() {
+    this.props.showState.audio_service.updateFileInfo();
     this.props.showState.audio_service.updateFSInfo();
   }
 
@@ -63,9 +64,10 @@ class ShowDashboard extends Component {
     const deleteRecordingConfirmChanged = this.props.showState.delete_recording_confirm !== nextProps.showState.delete_recording_confirm;
     const replaceRecordingConfirmChanged = this.props.showState.replace_recording_confirm !== nextProps.showState.replace_recording_confirm;
     const showRecordingInfoChanged = this.props.showState.show_recording_info !== nextProps.showState.show_recording_info;
+    const fileSizeChanged = (this.props.showState.audio_service.state.file_info && this.props.showState.audio_service.state.file_info.size !== nextProps.showState.audio_service.state.file_info.size) || false;
     const freeSpaceChanged = (this.props.showState.audio_service.state.fs_info && this.props.showState.audio_service.state.fs_info.freeSpace !== nextProps.showState.audio_service.state.fs_info.freeSpace) || false;
 
-    return deleteRecordingConfirmChanged || replaceRecordingConfirmChanged || showRecordingInfoChanged || freeSpaceChanged;
+    return deleteRecordingConfirmChanged || replaceRecordingConfirmChanged || showRecordingInfoChanged || fileSizeChanged || freeSpaceChanged;
   }
 
   deleteRecording() {
@@ -138,7 +140,13 @@ class ShowDashboard extends Component {
               <Text style={{ fontWeight: 'bold' }}>Recording Length</Text>: { formatDisplayTime(showState.show._show_time_seconds) }
             </Text>
             <Text style={{ textAlign: 'center', fontSize: 15 }}>
+              <Text style={{ fontWeight: 'bold' }}>Recording Size</Text>: { formatBytesInMegabytes(showState.audio_service.state.file_info.size) }
+            </Text>
+            <Text style={{ textAlign: 'center', fontSize: 15 }}>
               <Text style={{ fontWeight: 'bold' }}>Remaining Space</Text>: { formatBytesInGigabytes(showState.audio_service.state.fs_info.freeSpace) }
+            </Text>
+            <Text style={{ textAlign: 'center', fontSize: 15, paddingTop: 10, paddingBottom: 10 }}>
+              You could hold { Math.floor(showState.audio_service.state.fs_info.freeSpace / showState.audio_service.state.file_info.size).toLocaleString() } more recordings this size
             </Text>
             <View style={{ paddingTop: 25 }}>
               <Button type="surface" size="large" theme="red" selfStyle={ layoutStyles.confirmButton } onPress={ this.toggleRecordingInfo }>

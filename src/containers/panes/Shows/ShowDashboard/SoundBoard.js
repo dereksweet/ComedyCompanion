@@ -130,6 +130,9 @@ class SoundBoard extends Component {
     new_show.save();
 
     this.props.showState.audio_service.stop_recording();
+
+    this.props.showState.audio_service.updateFileInfo();
+    this.props.showState.audio_service.updateFSInfo();
   }
 
   startPlaying() {

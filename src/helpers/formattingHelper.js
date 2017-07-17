@@ -11,3 +11,7 @@ export function formatDisplayTime(total_seconds) {
 export function formatBytesInGigabytes(bytes) {
   return `${(bytes / 1000000000).toFixed(2)} Gb`
 }
+
+export function formatBytesInMegabytes(bytes) {
+  return `${(bytes / 1000000).toFixed(2)} Mb`
+}
