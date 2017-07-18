@@ -229,11 +229,15 @@ export default class AudioRecorderService extends Component {
   }
 
   updateFileInfo() {
-    RNFS.stat(this.state.audio_path)
-      .then((file_info) => {
-        console.log("File Info: ", file_info);
-        this.state.file_info = file_info;
-      });
+    RNFS.exists(this.state.audio_path).then((exists) => {
+      if (exists) {
+        RNFS.stat(this.state.audio_path)
+          .then((file_info) => {
+            console.log("File Info: ", file_info);
+            this.state.file_info = file_info;
+          });
+      }
+    });
   }
 
   updateFSInfo() {

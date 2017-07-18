@@ -40,6 +40,9 @@ export default showListStyles = StyleSheet.create({
   },
   sortButtonText: {
     fontSize: 10,
-    color: '#FFFFFF',
+    color: '#FFFFFF'
+  },
+  recIconBadgeView: {
+    paddingBottom: 14
   }
 });

@@ -16,6 +16,7 @@ import * as showActions from '../../../actions/showActions';
 import Show from '../../../models/show';
 
 import { formatDisplayTime, formatBytesInMegabytes, formatBytesInGigabytes } from '../../../helpers/formattingHelper';
+import ShowListHelper from '../../../helpers/showListHelper';
 
 import layoutStyles from '../../../stylesheets/layoutStyles';
 
@@ -56,8 +57,10 @@ class ShowDashboard extends Component {
   }
 
   componentDidMount() {
-    this.props.showState.audio_service.updateFileInfo();
-    this.props.showState.audio_service.updateFSInfo();
+    if (this.props.showState.show._has_recording) {
+      this.props.showState.audio_service.updateFileInfo();
+      this.props.showState.audio_service.updateFSInfo();
+    }
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -83,6 +86,8 @@ class ShowDashboard extends Component {
     show.save();
 
     this.props.showState.audio_service.deleteAudioFile();
+
+    ShowListHelper.refreshShowList();
   }
 
   replaceRecording() {

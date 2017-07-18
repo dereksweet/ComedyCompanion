@@ -22,7 +22,7 @@ import * as routingActions from '../../../actions/routingActions';
 import layoutStyles from '../../../stylesheets/layoutStyles';
 import showListStyles from '../../../stylesheets/showListStyles';
 
-import {addIcon} from '../../../helpers/icons';
+import {addIcon, recIconBadge} from '../../../helpers/icons';
 
 class ShowsList extends Component {
   constructor(props) {
@@ -84,7 +84,8 @@ class ShowsList extends Component {
               <Text style={ showListStyles.showName }>{ show._venue }</Text>
               <Text style={ showListStyles.updatedText }>{ moment(show._date).utc().format("MMM DD, YYYY") } in { show._city }, { show._state }</Text>
             </View>
-            <View style={{ alignItems: 'flex-end' }}>
+            <View style={{ alignItems: 'flex-end', flexDirection: 'row' }}>
+              <View style={ showListStyles.recIconBadgeView }>{ show._has_recording && recIconBadge }</View>
               <View style={ showListStyles.showInfoView }>
                 <TouchableHighlight underlayColor="#EEEEEE" onPress={ () => viewSetList(show._id) } style={{ flex: 1, marginLeft: 10 }}>
                   <View style={{ flex: 1, alignItems: 'flex-end', backgroundColor: '#EEFFEE', padding: 10, borderColor: '#EEEEEE', borderWidth: 1 }}>

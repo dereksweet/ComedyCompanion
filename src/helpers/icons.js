@@ -19,6 +19,7 @@ export const closeIcon = (<MaterialIcon name="close" size={32} color="#000" styl
 export const bulletIcon = (<MaterialIcon name="fiber-manual-record" size={10} color="#000" style={statusBarStyles.navLinkIcon} />);
 export const recIcon = (<MaterialIcon name="fiber-smart-record" size={25} color="#000" style={statusBarStyles.navLinkIcon} />);
 export const recIconDisabled = (<MaterialIcon name="fiber-smart-record" size={25} color="#AAA" style={statusBarStyles.navLinkIcon} />);
+export const recIconBadge = (<MaterialIcon name="fiber-smart-record" size={15} color="#F00" style={statusBarStyles.navLinkIcon} />);
 export const timerIcon = (<MaterialIcon name="timer" size={25} color="#000" style={statusBarStyles.navLinkIcon} />);
 export const pauseIcon = (<MaterialIcon name="pause" size={25} color="#000" style={statusBarStyles.navLinkIcon} />);
 export const stopIcon = (<MaterialIcon name="stop" size={25} color="#000" style={statusBarStyles.navLinkIcon} />);

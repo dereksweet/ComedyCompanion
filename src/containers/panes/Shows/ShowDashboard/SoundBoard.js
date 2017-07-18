@@ -17,6 +17,8 @@ import showDashboardStyles from '../../../../stylesheets/showDashboardStyles';
 
 import * as showActions from '../../../../actions/showActions';
 
+import ShowListHelper from '../../../../helpers/showListHelper';
+
 import {
   backIcon,
   recIcon,
@@ -133,6 +135,8 @@ class SoundBoard extends Component {
 
     this.props.showState.audio_service.updateFileInfo();
     this.props.showState.audio_service.updateFSInfo();
+
+    ShowListHelper.refreshShowList();
   }
 
   startPlaying() {
