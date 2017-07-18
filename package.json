@@ -15,6 +15,7 @@
     "react-native-fs": "^2.3.3",
     "react-native-hamburger": "0.0.2",
     "react-native-icloudstore": "^0.9.0",
+    "react-native-keep-awake": "^2.0.4",
     "react-native-material-design-searchbar": "^1.1.2",
     "react-native-radio-buttons": "^0.14.0",
     "react-native-sliding-panes": "1.0.1",
