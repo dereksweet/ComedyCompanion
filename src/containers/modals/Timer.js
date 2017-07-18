@@ -17,14 +17,21 @@ class About extends Component {
     super(props);
 
     this.state = {
-
+      orientation: 'v'
     };
+
+    this.toggleOrientation = this.toggleOrientation.bind(this);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
+    const orientationChanged = this.state.orientation !== nextState.orientation;
     const displayTimeChanged = this.props.showState.display_time_seconds !== nextProps.showState.display_time_seconds;
 
-    return displayTimeChanged;
+    return orientationChanged || displayTimeChanged;
+  }
+
+  toggleOrientation() {
+    this.setState({ orientation: this.state.orientation == 'v' ? 'h' : 'v' });
   }
 
   render() {
@@ -34,12 +41,16 @@ class About extends Component {
       routingActions.toggleTimer();
     };
 
+    const horiz = this.state.orientation == 'v';
+
     return (
       <View style={[layoutStyles.modal, layoutStyles.centeredFlex]}>
         <View style={layoutStyles.statusBarBuffer} />
         <View style={layoutStyles.modalContent}>
           <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <Text style={{ fontSize: normalizeWidth(75) }}>{ formatDisplayTime(showState.display_time_seconds) }</Text>
+            <TouchableHighlight underlayColor="rgba(0,0,0,0)" onPress={ this.toggleOrientation }>
+              <Text style={{ fontSize: normalizeWidth(horiz ? 75 : 90), transform: [{ rotate: horiz ? '0deg' : '90deg'}] }}>{ formatDisplayTime(showState.display_time_seconds) }</Text>
+            </TouchableHighlight>
           </View>
           <View style={{ flexDirection: 'row', width: '100%', borderTopColor: '#999999', borderTopWidth: 1 }}>
             <View style={ { flex: 1 } }>
