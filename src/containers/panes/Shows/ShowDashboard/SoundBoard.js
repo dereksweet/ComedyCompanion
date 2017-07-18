@@ -19,6 +19,8 @@ import * as showActions from '../../../../actions/showActions';
 
 import ShowListHelper from '../../../../helpers/showListHelper';
 
+import KeepAwake from 'react-native-keep-awake';
+
 import {
   backIcon,
   recIcon,
@@ -95,6 +97,8 @@ class SoundBoard extends Component {
     this.props.showActions.startShowTimer();
 
     this.props.startTimerInterval();
+
+    KeepAwake.activate();
   }
 
   stopTiming() {
@@ -103,6 +107,8 @@ class SoundBoard extends Component {
     this.props.stopTimerInterval();
 
     this.props.showState.show.save();
+
+    KeepAwake.deactivate();
   }
 
   startRecording() {
@@ -115,6 +121,8 @@ class SoundBoard extends Component {
       this.props.startTimerInterval();
 
       this.props.showState.audio_service.record();
+
+      KeepAwake.activate();
     }
   }
 
@@ -132,6 +140,8 @@ class SoundBoard extends Component {
     new_show.save();
 
     this.props.showState.audio_service.stop_recording();
+
+    KeepAwake.deactivate();
 
     this.props.showState.audio_service.updateFileInfo();
     this.props.showState.audio_service.updateFSInfo();
@@ -153,6 +163,8 @@ class SoundBoard extends Component {
     this.props.startTimerInterval();
 
     this.props.showState.audio_service.play(this.stopPlaying);
+
+    KeepAwake.activate();
   }
 
   stopPlaying() {
@@ -161,6 +173,8 @@ class SoundBoard extends Component {
     this.props.stopTimerInterval();
 
     this.props.showState.audio_service.pause();
+
+    KeepAwake.deactivate();
   }
 
   rewind() {

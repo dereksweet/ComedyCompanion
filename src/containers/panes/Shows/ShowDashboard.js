@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import {Button} from 'react-native-ui-xg';
 
 import {AudioRecorder, AudioUtils} from 'react-native-audio';
+import KeepAwake from 'react-native-keep-awake';
 
 import SoundBoard from './ShowDashboard/SoundBoard';
 import SetListViewer from './ShowDashboard/SetListViewer';
@@ -99,6 +100,8 @@ class ShowDashboard extends Component {
     this.startTimerInterval();
 
     this.props.showState.audio_service.record();
+
+    KeepAwake.activate();
   }
 
   toggleRecordingInfo() {
