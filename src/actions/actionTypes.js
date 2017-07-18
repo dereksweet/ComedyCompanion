@@ -7,6 +7,7 @@ export const CLOSE_MODAL = 'routing/close_modal';
 export const TOGGLE_SETTINGS = 'routing/toggle_settings';
 export const TOGGLE_ABOUT = 'routing/toggle_about';
 export const HIDE_LOADING = 'routing/hide_loading';
+export const TOGGLE_TIMER = 'routing/toggle_timer';
 
 export const TOGGLE_HAMBURGER_ACTIVE = 'statusBar/toggle_hamburger_active';
 

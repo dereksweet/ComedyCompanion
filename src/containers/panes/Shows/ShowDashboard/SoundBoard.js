@@ -1,7 +1,7 @@
 'use strict';
 
 import React, {Component} from 'react';
-import { View, Text, TouchableHighlight } from 'react-native';
+import { View, Text, TouchableHighlight, Modal } from 'react-native';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 import {Button} from 'react-native-ui-xg';
@@ -10,12 +10,15 @@ import Swipeout from 'react-native-swipeout';
 import { normalizeWidth } from '../../../../helpers/sizeHelper';
 import { formatDisplayTime } from '../../../../helpers/formattingHelper';
 
+import Timer from '../../../modals/Timer';
+
 import Show from '../../../../models/show';
 
 import layoutStyles from '../../../../stylesheets/layoutStyles';
 import showDashboardStyles from '../../../../stylesheets/showDashboardStyles';
 
 import * as showActions from '../../../../actions/showActions';
+import * as routingActions from '../../../../actions/routingActions';
 
 import ShowListHelper from '../../../../helpers/showListHelper';
 
@@ -58,6 +61,7 @@ class SoundBoard extends Component {
     this.deleteRecording = this.deleteRecording.bind(this);
     this.stopRunningProcesses = this.stopRunningProcesses.bind(this);
     this.showRecordingInfo = this.showRecordingInfo.bind(this);
+    this.showTimer = this.showTimer.bind(this);
   }
 
   componentDidMount() {
@@ -87,8 +91,9 @@ class SoundBoard extends Component {
     const isRecordingChanged = this.props.showState.is_recording !== nextProps.showState.is_recording;
     const isPlayingChanged = this.props.showState.is_playing !== nextProps.showState.is_playing;
     const isTimingChanged = this.props.showState.is_timing !== nextProps.showState.is_timing;
+    const timerVisibleChanged = this.props.routingState.timer_visible !== nextProps.routingState.timer_visible;
 
-    return showTimerChanged || showPlayingChanged || displayTimeChanged || hasRecordingChanged || isRecordingChanged || isPlayingChanged || isTimingChanged;
+    return showTimerChanged || showPlayingChanged || displayTimeChanged || hasRecordingChanged || isRecordingChanged || isPlayingChanged || isTimingChanged || timerVisibleChanged;
   }
 
   startTiming() {
@@ -240,8 +245,14 @@ class SoundBoard extends Component {
     this.props.showActions.toggleRecordingInfo();
   }
 
+  showTimer() {
+    if (this.props.showState.is_recording || this.props.showState.is_timing) {
+      this.props.routingActions.toggleTimer();
+    }
+  }
+
   render() {
-    const { showState, showActions } = this.props;
+    const { showState, routingState, showActions } = this.props;
 
     const swipeoutButtons = showState.show._has_recording ? [{ text: 'Info', backgroundColor: '#CCCCCC', underLayColor: '#999999', onPress: this.showRecordingInfo }, { text: 'Delete', backgroundColor: '#FF0000', underlayColor: '#DD0000', onPress: this.deleteRecording }] : [];
 
@@ -273,7 +284,9 @@ class SoundBoard extends Component {
                       </Button>
                     </View>
                     <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-                      <Text style={ [showDashboardStyles.timerText, { marginLeft: 10, color: showState.is_recording ? '#DD4444' : '#FFFFFF' }] }>{ formatDisplayTime(showState.display_time_seconds) }</Text>
+                      <TouchableHighlight underlayColor='rgba(0,0,0,0)' onPress={ this.showTimer }>
+                        <Text style={ [showDashboardStyles.timerText, { marginLeft: 10, color: showState.is_recording ? '#DD4444' : '#FFFFFF' }] }>{ formatDisplayTime(showState.display_time_seconds) }</Text>
+                      </TouchableHighlight>
                     </View>
                     <View style={ showDashboardStyles.playbackControlView }>
                       <Button type="surface" size="default" theme="gray" onPress={ this.fastForward }>
@@ -325,20 +338,31 @@ class SoundBoard extends Component {
                   </Button> }
               </View>
               <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                <Text style={ showDashboardStyles.timerText }>{ formatDisplayTime(showState.display_time_seconds) }</Text>
+                <TouchableHighlight underlayColor='rgba(0,0,0,0)' onPress={ this.showTimer }>
+                  <Text style={ showDashboardStyles.timerText }>{ formatDisplayTime(showState.display_time_seconds) }</Text>
+                </TouchableHighlight>
               </View>
             </View>
           </View>
         }
+        <Modal style={ layoutStyles.modal }
+               animationType={ "fade" }
+               transparent={false}
+               visible={routingState.timer_visible}
+               onRequestClose={() => { }}>
+          <Timer />
+        </Modal>
       </View>
     );
   }
 }
 
 export default connect(state => ({
-    showState: state.show
+    showState: state.show,
+    routingState: state.routing
   }),
   (dispatch) => ({
-    showActions: bindActionCreators(showActions, dispatch)
+    showActions: bindActionCreators(showActions, dispatch),
+    routingActions: bindActionCreators(routingActions, dispatch)
   })
 )(SoundBoard);
