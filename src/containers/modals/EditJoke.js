@@ -27,10 +27,14 @@ class EditJoke extends Component {
       keyboard_height: 0,
       show_delete_confirm: false,
       show_cancel_confirm: false,
-      name_input_valid: true
+      name_input_valid: true,
+      allow_keyboard: true,
+      allow_scroll_code: true
     };
 
     this.dirty = false;
+    this.allowKeyboardTimeout = null;
+    this.allowScollCodeTimeout = null;
   }
 
   componentWillMount () {
@@ -41,9 +45,11 @@ class EditJoke extends Component {
   }
 
   keyboardDidShow (e) {
-    this.setState({
-      keyboard_height: e.endCoordinates.height
-    });
+    if (this.state.allow_keyboard) {
+      this.setState({
+        keyboard_height: e.endCoordinates.height
+      });
+    }
   }
 
   keyboardDidHide (e) {
@@ -53,6 +59,19 @@ class EditJoke extends Component {
   }
 
   componentWillUnmount () {
+    this.setState({
+      allow_keyboard: false,
+      allow_scroll_code: false
+    });
+
+    if (this.allowKeyboardTimeout) {
+      clearTimeout(this.allowKeyboardTimeout);
+    }
+
+    if (this.allowScrollCodeTimeout) {
+      clearTimeout(this.allowScrollCodeTimeout);
+    }
+
     this.keyboardDidShowListener.remove();
     this.keyboardDidHideListener.remove();
 
@@ -134,6 +153,29 @@ class EditJoke extends Component {
       this.dirty = true;
     };
 
+    const onMultilineScroll = () => {
+      if (this.state.allow_scroll_code) {
+        if (this.allowKeyboardTimeout) {
+          clearTimeout(this.allowKeyboardTimeout)
+        }
+
+        this.setState({allow_keyboard: false});
+        this.allowKeyboardTimeout = setTimeout(() => this.setState({allow_keyboard: true}), 500);
+      }
+    };
+
+    const onMultilineFocus = () => {
+      if (this.allowScrollCodeTimeout) {
+        clearTimeout(this.allowScrollCodeTimeout)
+      }
+
+      this.setState({ allow_scroll_code: false });
+    };
+
+    const onMultilineBlur = () => {
+      this.setState({ allow_scroll_code: true });
+    };
+
     return (
       <ShakingView ref={(editJokeView) => this.editJokeView = editJokeView}
                    style={[layoutStyles.modal, layoutStyles.centeredFlex]}>
@@ -160,9 +202,13 @@ class EditJoke extends Component {
               <View style={ [layoutStyles.modalContentSection, {flex: 1} ] }>
                 <MultilineTextInput style={ editJokeStyles.notesInput }
                            underlineColorAndroid='transparent'
+                           editable={ this.state.allow_keyboard }
                            placeholder="Type your joke notes here..."
                            autoComplete={ false }
                            onChangeText={(text) => { jokeActions.setNotes(text); setDirty(); }}
+                           onScroll={ onMultilineScroll }
+                           onFocus={ onMultilineFocus }
+                           onBlur={ onMultilineBlur }
                            value={ jokeState.joke._notes } />
               </View>
               <View style={ { flexDirection: 'row' }}>
