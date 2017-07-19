@@ -34,7 +34,6 @@ class EditJoke extends Component {
 
     this.dirty = false;
     this.allowKeyboardTimeout = null;
-    this.allowScollCodeTimeout = null;
   }
 
   componentWillMount () {
@@ -66,10 +65,6 @@ class EditJoke extends Component {
 
     if (this.allowKeyboardTimeout) {
       clearTimeout(this.allowKeyboardTimeout);
-    }
-
-    if (this.allowScrollCodeTimeout) {
-      clearTimeout(this.allowScrollCodeTimeout);
     }
 
     this.keyboardDidShowListener.remove();
@@ -165,10 +160,6 @@ class EditJoke extends Component {
     };
 
     const onMultilineFocus = () => {
-      if (this.allowScrollCodeTimeout) {
-        clearTimeout(this.allowScrollCodeTimeout)
-      }
-
       this.setState({ allow_scroll_code: false });
     };
 
