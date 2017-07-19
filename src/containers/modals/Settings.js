@@ -392,6 +392,9 @@ class Settings extends Component {
                     <Text style={{ color: '#FFFFFF' }}>Read from iCloud</Text>
                   </Button>
                 </View>
+                <View style={ {paddingTop: 5 } }>
+                  <Text style={{ fontWeight: '100', fontSize: 10 }}>Note: Your audio recordings are not backed up / restored</Text>
+                </View>
               </View>
             }
           </ScrollView>

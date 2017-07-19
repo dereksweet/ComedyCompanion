@@ -17,7 +17,7 @@ export default showListStyles = StyleSheet.create({
     fontSize: 12
   },
   showInfoView: {
-    width: 70,
+    width: 90,
     borderLeftColor: '#DDDDDD',
     borderLeftWidth: 1
   },
@@ -40,6 +40,9 @@ export default showListStyles = StyleSheet.create({
   },
   sortButtonText: {
     fontSize: 10,
-    color: '#FFFFFF',
+    color: '#FFFFFF'
+  },
+  recIconBadgeView: {
+    paddingBottom: 14
   }
 });

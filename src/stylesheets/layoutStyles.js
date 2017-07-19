@@ -36,7 +36,8 @@ export default layoutStyles = StyleSheet.create({
   buttonText: {
     color: '#FFFFFF',
     paddingLeft: 10,
-    paddingTop: 4
+    paddingTop: 4,
+    fontWeight: 'bold'
   },
   modal: {
     backgroundColor: "#EEEEEE",

@@ -7,6 +7,7 @@ export const CLOSE_MODAL = 'routing/close_modal';
 export const TOGGLE_SETTINGS = 'routing/toggle_settings';
 export const TOGGLE_ABOUT = 'routing/toggle_about';
 export const HIDE_LOADING = 'routing/hide_loading';
+export const TOGGLE_TIMER = 'routing/toggle_timer';
 
 export const TOGGLE_HAMBURGER_ACTIVE = 'statusBar/toggle_hamburger_active';
 
@@ -49,3 +50,16 @@ export const SET_SHOW_DATE = 'show/set_show_date';
 export const SET_SHOW_CITY = 'show/set_show_city';
 export const SET_SHOW_STATE = 'show/set_show_state';
 export const SET_SHOW_SET_LIST = 'show/set_show_set_list';
+export const START_SHOW_TIMER = 'show/start_show_timer';
+export const STOP_SHOW_TIMER = 'show/stop_show_timer';
+export const RESET_SHOW_TIMER = 'show/reset_show_timer';
+export const UPDATE_SHOW_TIMER = 'show/update_show_timer';
+export const SET_DISPLAY_TIMER = 'show/set_display_timer';
+export const SET_HAS_RECORDING = 'show/set_show_has_recording';
+export const TOGGLE_DELETE_RECORDING_CONFIRM = 'show/toggle_delete_recording_confirm';
+export const TOGGLE_REPLACE_RECORDING_CONFIRM = 'show/toggle_replace_recording_confirm';
+export const TOGGLE_RECORDING_INFO = 'show/toggle_recording_info';
+export const START_RECORDING = 'show/start_recording';
+export const STOP_RECORDING = 'show/stop_recording';
+export const START_PLAYING = 'show/start_playing';
+export const STOP_PLAYING = 'show/stop_playing';

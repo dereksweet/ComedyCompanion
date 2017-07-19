@@ -141,7 +141,7 @@ class MainApp extends Component {
                onRequestClose={() => { }}>
           <About />
         </Modal>
-        { routingState.show_loading && 
+        { routingState.show_loading &&
           <View style={ layoutStyles.loadingScreen }>
             <Image style={{ width: 300, height: 300, marginTop: 15 }} source={ require('../images/Loading.png') } />
           </View>

@@ -7,6 +7,7 @@ const initialState = {
   modal_visible: false,
   settings_visible: false,
   about_visible: false,
+  timer_visible: false,
   show_loading: true
 };
 
@@ -72,6 +73,12 @@ export default function routing(state = initialState, action = {}) {
       return {
         ...state,
         show_loading: false
+      };
+      break;
+    case types.TOGGLE_TIMER:
+      return {
+        ...state,
+        timer_visible: !state.timer_visible
       };
       break;
     default:

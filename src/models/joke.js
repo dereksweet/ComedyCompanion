@@ -2,6 +2,14 @@ import Model from './Model';
 
 import uuidV4 from 'uuid/v4';
 
+const defaults = {
+  _uuid: uuidV4(),
+  _in_development: false,
+  _name: '',
+  _notes: '',
+  _rating: 0.0
+};
+
 export default class Joke extends Model {
   static databaseName() {
     return "CCDB";
@@ -17,11 +25,11 @@ export default class Joke extends Model {
 
   constructor(data = {
     _id: -1,
-    _uuid: uuidV4(),
-    _in_development: false,
-    _name: '',
-    _notes: '',
-    _rating: 0.0,
+    _uuid: defaults._uuid,
+    _in_development: defaults._in_development,
+    _name: defaults._name,
+    _notes: defaults._notes,
+    _rating: defaults._rating,
     _created_at: new Date(),
     _updated_at: new Date()
   })
@@ -29,11 +37,11 @@ export default class Joke extends Model {
     super();
 
     this._id             = data._id;
-    this._uuid           = data._uuid;
-    this._in_development = data._in_development;
-    this._name           = data._name;
-    this._notes          = data._notes;
-    this._rating         = data._rating;
+    this._uuid           = data._uuid || defaults._uuid;
+    this._in_development = data._in_development || defaults._in_development;
+    this._name           = data._name || defaults._name;
+    this._notes          = data._notes || defaults._notes;
+    this._rating         = data._rating || defaults._rating;
     this._created_at     = data._created_at;
     this._updated_at     = data._updated_at;
   }
