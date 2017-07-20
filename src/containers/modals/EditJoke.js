@@ -10,6 +10,7 @@ import * as routingActions from '../../actions/routingActions';
 import * as jokeActions from '../../actions/jokeActions';
 import * as jokeListActions from '../../actions/jokeListActions';
 
+import ShakingView from '../../components/ShakingView';
 import MultilineTextInput from '../../components/MultilineTextinput';
 
 import JokeListHelper from '../../helpers/jokeListHelper';
@@ -25,7 +26,8 @@ class EditJoke extends Component {
       modal_height: 0,
       keyboard_height: 0,
       show_delete_confirm: false,
-      show_cancel_confirm: false
+      show_cancel_confirm: false,
+      name_input_valid: true
     };
 
     this.dirty = false;
@@ -69,14 +71,33 @@ class EditJoke extends Component {
   }
 
   render() {
-    const { jokeState, jokeListState, jokeActions, jokeListActions, routingActions } = this.props;
+    const { jokeState, jokeActions, routingActions } = this.props;
+
+    const validateFields = () => {
+      let fields_valid = true;
+
+      if (jokeState.joke._name === '') {
+        fields_valid = false;
+        this.setState({
+          name_input_valid: false
+        });
+      }
+
+      if (!fields_valid) {
+        this.editJokeView.performShake();
+      }
+
+      return fields_valid;
+    };
 
     const save = () => {
-      jokeState.joke.save(() => {
-        JokeListHelper.refreshJokeList();
-        JokeListHelper.refreshJokeListEmpty();
-      });
-      cancel();
+      if (validateFields()) {
+        jokeState.joke.save(() => {
+          JokeListHelper.refreshJokeList();
+          JokeListHelper.refreshJokeListEmpty();
+        });
+        cancel();
+      }
     };
 
     const cancel = () => {
@@ -114,7 +135,8 @@ class EditJoke extends Component {
     };
 
     return (
-      <View style={[layoutStyles.modal, layoutStyles.centeredFlex]}>
+      <ShakingView ref={(editJokeView) => this.editJokeView = editJokeView}
+                   style={[layoutStyles.modal, layoutStyles.centeredFlex]}>
         <View style={layoutStyles.statusBarBuffer} />
         <View style={layoutStyles.modalContent} onLayout={(event) => this.measureModalView(event)}>
           <TouchableWithoutFeedback onPress={ Keyboard.dismiss }>
@@ -129,7 +151,7 @@ class EditJoke extends Component {
               </View>
               <View style={ [layoutStyles.modalContentSection, { flexDirection: 'row', alignItems: 'center'  }] }>
                 <Text style={ layoutStyles.inputLabel }>Name:</Text>
-                <TextInput style={ editJokeStyles.nameInput }
+                <TextInput style={ [editJokeStyles.nameInput, this.state.name_input_valid ? {} : layoutStyles.errorInput] }
                            underlineColorAndroid='transparent'
                            placeholder="Name your joke here..."
                            onChangeText={(text) => { jokeActions.setName(text); setDirty(); }}
@@ -191,18 +213,16 @@ class EditJoke extends Component {
             </View>
           }
         </View>
-      </View>
+      </ShakingView>
     );
   }
 }
 
 export default connect(state => ({
-    jokeState: state.joke,
-    jokeListState: state.joke_list
+    jokeState: state.joke
   }),
   (dispatch) => ({
     routingActions: bindActionCreators(routingActions, dispatch),
-    jokeActions: bindActionCreators(jokeActions, dispatch),
-    jokeListActions: bindActionCreators(jokeListActions, dispatch)
+    jokeActions: bindActionCreators(jokeActions, dispatch)
   })
 )(EditJoke);

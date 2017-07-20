@@ -41,3 +41,85 @@ export function setShowSetList(set_list) {
     set_list
   }
 }
+
+export function resetShowTimer(time = null) {
+  return {
+    type: types.RESET_SHOW_TIMER,
+    time
+  }
+}
+
+export function startShowTimer() {
+  return {
+    type: types.START_SHOW_TIMER
+  }
+}
+
+export function stopShowTimer() {
+  return {
+    type: types.STOP_SHOW_TIMER
+  }
+}
+
+export function updateShowTimer(time = null) {
+  return {
+    type: types.UPDATE_SHOW_TIMER,
+    time
+  }
+}
+
+export function setDisplayTimer(time) {
+  return {
+    type: types.SET_DISPLAY_TIMER,
+    time
+  }
+}
+
+export function setHasRecording(has_recording) {
+  return {
+    type: types.SET_HAS_RECORDING,
+    has_recording
+  }
+}
+
+export function toggleDeleteRecordingConfirm() {
+  return {
+    type: types.TOGGLE_DELETE_RECORDING_CONFIRM
+  }
+}
+
+export function toggleReplaceRecordingConfirm() {
+  return {
+    type: types.TOGGLE_REPLACE_RECORDING_CONFIRM
+  }
+}
+
+export function toggleRecordingInfo() {
+  return {
+    type: types.TOGGLE_RECORDING_INFO
+  }
+}
+
+export function startRecording() {
+  return {
+    type: types.START_RECORDING
+  }
+}
+
+export function stopRecording() {
+  return {
+    type: types.STOP_RECORDING
+  }
+}
+
+export function startPlaying() {
+  return {
+    type: types.START_PLAYING
+  }
+}
+
+export function stopPlaying() {
+  return {
+    type: types.STOP_PLAYING
+  }
+}

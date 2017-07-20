@@ -36,7 +36,8 @@ export default layoutStyles = StyleSheet.create({
   buttonText: {
     color: '#FFFFFF',
     paddingLeft: 10,
-    paddingTop: 4
+    paddingTop: 4,
+    fontWeight: 'bold'
   },
   modal: {
     backgroundColor: "#EEEEEE",
@@ -129,5 +130,9 @@ export default layoutStyles = StyleSheet.create({
   deleteButton: {
     backgroundColor: '#DD0000',
     borderColor: '#CC0000'
+  },
+  errorInput: {
+    borderColor: '#FF0000',
+    borderWidth: 2
   }
 });

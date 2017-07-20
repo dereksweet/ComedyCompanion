@@ -1,6 +1,6 @@
 'use strict';
 
-const VERSION=1.1;
+const VERSION=1.2;
 
 import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
@@ -141,7 +141,7 @@ class MainApp extends Component {
                onRequestClose={() => { }}>
           <About />
         </Modal>
-        { routingState.show_loading && 
+        { routingState.show_loading &&
           <View style={ layoutStyles.loadingScreen }>
             <Image style={{ width: 300, height: 300, marginTop: 15 }} source={ require('../images/Loading.png') } />
           </View>

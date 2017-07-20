@@ -37,40 +37,49 @@ class About extends Component {
                 </View>
                 <View style={{ paddingTop: 10, justifyContent: 'center', alignItems: 'center' }}>
                   <View style={{ borderBottomWidth: 1 }}>
-                    <Text style={{ fontWeight: 'bold' }}>The Comedy Companion v1.1</Text>
+                    <Text style={{ fontWeight: 'bold' }}>The Comedy Companion v1.2</Text>
                   </View>
                 </View>
                 <View style={{ paddingTop: 10, justifyContent: 'center', alignItems: 'center' }}>
                   <Text style={{ textAlign: 'center' }}>
-                    Wow, the interest in the app since it launched has been
-                    just amazing. More than 500 comics have already downloaded the app, and a big thanks to
-                    everyone who wrote me with feedback and feature requests. I decided a few emergency features
-                    had to be released immediately due to your feedback, here they are:
+                    Hey! What's up? Just your friendly neighborhood spiderman, bringing you
+                    version 1.2 of The Comedy Companion! The biggest new feature is for sure the
+                    Show Dashboard that will allow you to time or record the audio of your shows.
+                    Here are all the new features:
                   </Text>
                 </View>
                 <View style={{ paddingTop: 10, justifyContent: 'flex-start', alignItems: 'flex-start', padding: 20 }}>
                   <View style={{ flexDirection: 'row' }}>
                     <Text style={{ paddingTop: 9 }}>{bulletIcon}</Text>
                     <Text style={{ textAlign: 'left', fontWeight: 'bold', marginTop: 5, marginLeft: 5 }}>
-                      You can now duplicate Set Lists
+                      SHOW DASHBOARD! You can now time and record the audio of your shows.
                     </Text>
                   </View>
                   <View style={{ flexDirection: 'row' }}>
                     <Text style={{ paddingTop: 9 }}>{bulletIcon}</Text>
                     <Text style={{ textAlign: 'left', fontWeight: 'bold', marginTop: 5, marginLeft: 5 }}>
-                      Android users should ALL be able to put carriage returns in their joke notes
+                      Tap the timer to enlarge it to full screen, tap it on full screen mode to toggle between
+                      portrait and landscape orientation.
                     </Text>
                   </View>
                   <View style={{ flexDirection: 'row' }}>
                     <Text style={{ paddingTop: 9 }}>{bulletIcon}</Text>
                     <Text style={{ textAlign: 'left', fontWeight: 'bold', marginTop: 5, marginLeft: 5 }}>
-                      Tap anywhere outside of a text input to dismiss the keyboard
+                      Shows with a recording will have a red record badge on the Show List
                     </Text>
                   </View>
                   <View style={{ flexDirection: 'row' }}>
                     <Text style={{ paddingTop: 9 }}>{bulletIcon}</Text>
                     <Text style={{ textAlign: 'left', fontWeight: 'bold', marginTop: 5, marginLeft: 5 }}>
-                      You will be asked to confirm if you have made changes to something and want to cancel
+                      Joke notes larger than one page will now allow you to scroll without bringing up the
+                      keyboard each time.
+                    </Text>
+                  </View>
+                  <View style={{ flexDirection: 'row' }}>
+                    <Text style={{ paddingTop: 9 }}>{bulletIcon}</Text>
+                    <Text style={{ textAlign: 'left', fontWeight: 'bold', marginTop: 5, marginLeft: 5 }}>
+                      Basic validation will prevent you from creating jokes and set lists with no name, and
+                      shows with no venue.
                     </Text>
                   </View>
                 </View>
@@ -105,6 +114,13 @@ class About extends Component {
                       www.comediate.com
                     </Text>
                   </TouchableHighlight>
+                </View>
+                <View style={{ paddingTop: 10, paddingBottom: 20, justifyContent: 'center', alignItems: 'center' }}>
+                  <Text style={{ textAlign: 'center', color: '#FF0000' }}>
+                    Disclaimer: By using this application you are taking full responsibility for the integrity of
+                    the information stored on your device. None of the contributors to the development of The Comedy
+                    Companion are responsible for any loss of data that may occur.
+                  </Text>
                 </View>
               </View>
             </ScrollView>

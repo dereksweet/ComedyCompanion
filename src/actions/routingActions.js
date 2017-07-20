@@ -74,3 +74,9 @@ export function hideLoading() {
     type: types.HIDE_LOADING
   }
 }
+
+export function toggleTimer() {
+  return {
+    type: types.TOGGLE_TIMER
+  }
+}

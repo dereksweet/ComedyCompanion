@@ -7,6 +7,8 @@ import { connect } from 'react-redux';
 import {Button, DatePicker} from 'react-native-ui-xg';
 import moment from 'moment';
 
+import ShakingView from '../../components/ShakingView';
+
 import * as routingActions from '../../actions/routingActions';
 import * as showActions from '../../actions/showActions';
 import * as showListActions from '../../actions/showListActions';
@@ -27,7 +29,8 @@ class EditShow extends Component {
       keyboard_height: 0,
       show_set_list_select: false,
       set_lists: [],
-      show_delete_confirm: false
+      show_delete_confirm: false,
+      venue_input_valid: true
     }
   }
 
@@ -80,6 +83,23 @@ class EditShow extends Component {
   render() {
     const { showState, showListState, showActions, showListActions, routingActions } = this.props;
 
+    const validateFields = () => {
+      let fields_valid = true;
+
+      if (showState.show._venue === '') {
+        fields_valid = false;
+        this.setState({
+          venue_input_valid: false
+        });
+      }
+
+      if (!fields_valid) {
+        this.editShowView.performShake();
+      }
+
+      return fields_valid;
+    };
+
     const selectSetList = (set_list_id) => {
       SetList.get(set_list_id).then((set_list) => {
         showActions.setShowSetList(set_list);
@@ -88,11 +108,13 @@ class EditShow extends Component {
     };
 
     const save = () => {
-      showState.show.save(() => {
-        ShowListHelper.refreshShowList();
-        ShowListHelper.refreshShowListEmpty();
-      });
-      cancel();
+      if (validateFields()) {
+        showState.show.save(() => {
+          ShowListHelper.refreshShowList();
+          ShowListHelper.refreshShowListEmpty();
+        });
+        cancel();
+      }
     };
 
     const cancel = () => {
@@ -124,7 +146,8 @@ class EditShow extends Component {
     };
 
     return (
-      <View style={[layoutStyles.modal, layoutStyles.centeredFlex]}>
+      <ShakingView ref={(editShowView) => this.editShowView = editShowView}
+                   style={[layoutStyles.modal, layoutStyles.centeredFlex]}>
         <View style={layoutStyles.statusBarBuffer} />
         <View style={layoutStyles.modalContent} onLayout={(event) => this.measureModalView(event)}>
           { this.state.show_set_list_select &&
@@ -156,7 +179,7 @@ class EditShow extends Component {
               <View style={{ height: this.contentHeight() }}>
                 <View style={ [layoutStyles.modalContentSection, { flexDirection: 'row', alignItems: 'center'  }] }>
                   <Text style={ layoutStyles.inputLabel }>Venue:</Text>
-                  <TextInput style={ editShowStyles.venueInput }
+                  <TextInput style={ [editShowStyles.venueInput, this.state.venue_input_valid ? {} : layoutStyles.errorInput] }
                              underlineColorAndroid='transparent'
                              placeholder="Venue name here..."
                              onChangeText={(text) => showActions.setShowVenue(text)}
@@ -247,7 +270,7 @@ class EditShow extends Component {
             </TouchableWithoutFeedback>
           }
         </View>
-      </View>
+      </ShakingView>
     );
   }
 }
