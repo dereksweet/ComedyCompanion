@@ -71,7 +71,7 @@ class EditJoke extends Component {
   }
 
   render() {
-    const { jokeState, jokeListState, jokeActions, jokeListActions, routingActions } = this.props;
+    const { jokeState, jokeActions, routingActions } = this.props;
 
     const validateFields = () => {
       let fields_valid = true;
@@ -219,12 +219,10 @@ class EditJoke extends Component {
 }
 
 export default connect(state => ({
-    jokeState: state.joke,
-    jokeListState: state.joke_list
+    jokeState: state.joke
   }),
   (dispatch) => ({
     routingActions: bindActionCreators(routingActions, dispatch),
-    jokeActions: bindActionCreators(jokeActions, dispatch),
-    jokeListActions: bindActionCreators(jokeListActions, dispatch)
+    jokeActions: bindActionCreators(jokeActions, dispatch)
   })
 )(EditJoke);
