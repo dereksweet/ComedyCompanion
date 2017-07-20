@@ -238,7 +238,9 @@ class Settings extends Component {
       }
 
       for (let i = 0; i < cloud_shows.length; i++) {
-        const cloud_show = new Show(cloud_shows[i]);
+        let cloud_show = new Show(cloud_shows[i]);
+        cloud_show._has_recording = false;
+        cloud_show._show_time_seconds = 0;
         await cloud_show.save(null, true);
       }
 
@@ -407,7 +409,7 @@ class Settings extends Component {
                   <Text>{ this.state.cloudSetListsCount } Set Lists</Text>
                   <Text>{ this.state.cloudShowsCount } Shows</Text>
                   <Text style={{ textAlign: 'center', paddingTop: 25, fontWeight: 'bold' }}>ARE YOU SURE YOU WANT TO
-                    REPLACE EVERYTHING WITH WHAT IS ON ICLOUD?</Text>
+                    REPLACE EVERYTHING WITH WHAT IS ON ICLOUD AND LOSE ALL YOUR AUDIO RECORDINGS?</Text>
                   <View style={{ paddingTop: 25, flexDirection: 'row' }}>
                     <Button type="surface" size="large" theme="red" selfStyle={ layoutStyles.deleteButton }
                             onPress={ cancelReadFromiCloud }>
@@ -442,7 +444,7 @@ class Settings extends Component {
                   <Text>{ this.state.localSetListsCount } Set Lists</Text>
                   <Text>{ this.state.localShowsCount } Shows</Text>
                   <Text style={{ textAlign: 'center', paddingTop: 25, fontWeight: 'bold' }}>ARE YOU SURE YOU WANT TO
-                    OVERWRITE EVERYTHING ON ICLOUD?</Text>
+                    OVERWRITE EVERYTHING ON ICLOUD? YOUR AUDIO RECORDINGS WILL NOT BE BACKED UP!</Text>
                   <View style={{ paddingTop: 25, flexDirection: 'row' }}>
                     <Button type="surface" size="large" theme="red" selfStyle={ layoutStyles.deleteButton }
                             onPress={ cancelWriteToiCloud }>
