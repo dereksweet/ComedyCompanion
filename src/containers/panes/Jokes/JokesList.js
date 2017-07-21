@@ -115,7 +115,7 @@ class JokesList extends Component {
             <SearchBar
               ref={(searchBar) => { this.searchBar = searchBar }}
               onSearchChange={ nameFilterChanged }
-              height={30}
+              height={40}
               placeholder={'Search...'}
               autoCorrect={false}
               padding={0}

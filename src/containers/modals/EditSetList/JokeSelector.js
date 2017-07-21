@@ -87,7 +87,7 @@ class JokeSelector extends Component {
           <SearchBar
             ref={(searchBar) => { this.searchBar = searchBar }}
             onSearchChange={ nameFilterChanged }
-            height={30}
+            height={40}
             placeholder={'Search...'}
             inputProps={{ value: jokeListState.name_filter_selector }}
             autoCorrect={false}

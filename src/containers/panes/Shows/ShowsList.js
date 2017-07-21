@@ -139,7 +139,7 @@ class ShowsList extends Component {
             <SearchBar
               ref={(searchBar) => { this.searchBar = searchBar }}
               onSearchChange={ venueFilterChanged }
-              height={30}
+              height={40}
               placeholder={'Search...'}
               autoCorrect={false}
               padding={0}
