@@ -39,7 +39,6 @@ export default class AudioRecorderService extends Component {
       });
 
       AudioRecorder.onProgress = (data) => {
-        console.log(data.currentTime);
         this.state.currentTime = Math.floor(data.currentTime);
       };
 
@@ -57,7 +56,7 @@ export default class AudioRecorderService extends Component {
   }
 
   prepareRecordingPath(){
-    console.log('preparing Recording at path: ' + this.state.auto_path);
+    // console.log('preparing Recording at path: ' + this.state.auto_path);
 
     AudioRecorder.prepareRecordingAtPath(this.state.audio_path, {
       SampleRate: 22050,
@@ -144,7 +143,7 @@ export default class AudioRecorderService extends Component {
     // These timeouts are a hacky workaround for some issues with react-native-sound.
     // See https://github.com/zmxv/react-native-sound/issues/89.
     setTimeout(() => {
-      console.log('Playing sound at location ' + this.state.audio_path);
+      // console.log('Playing sound at location ' + this.state.audio_path);
       if (!this.state.sound) {
         this.state.sound = new Sound(this.state.audio_path, '', (error) => {
           if (error) {
@@ -156,7 +155,7 @@ export default class AudioRecorderService extends Component {
       setTimeout(() => {
         this.state.sound.play((success) => {
           if (success) {
-            console.log('successfully finished playing');
+            // console.log('successfully finished playing');
             onEnd();
           } else {
             console.log('playback failed due to audio decoding errors');
@@ -179,16 +178,14 @@ export default class AudioRecorderService extends Component {
     }
 
     if(this.state.stoppedRecording){
-      console.log('preparing path');
+      // console.log('preparing path');
       this.prepareRecordingPath(this.state.audioPath);
     }
 
     this.state.recording = true;
 
     try {
-      console.log('start Recording');
       await AudioRecorder.startRecording();
-      console.log('recording started');
     } catch (error) {
       console.error(error);
     }
@@ -202,19 +199,17 @@ export default class AudioRecorderService extends Component {
 
   finishRecording(didSucceed, filePath) {
     this.state.finished = didSucceed;
-    console.log(`Finished recording of duration ${this.state.currentTime} seconds at path: ${filePath}`);
+    // console.log(`Finished recording of duration ${this.state.currentTime} seconds at path: ${filePath}`);
   }
 
   deleteAudioFile() {
 
     RNFS.exists(this.state.audio_path)
       .then( (result) => {
-        console.log("file exists: ", result);
-
         if(result){
           return RNFS.unlink(this.state.audio_path)
             .then(() => {
-              console.log('FILE DELETED');
+              // console.log('FILE DELETED');
             })
             // `unlink` will throw an error, if the item to unlink does not exist
             .catch((err) => {
@@ -233,7 +228,6 @@ export default class AudioRecorderService extends Component {
       if (exists) {
         RNFS.stat(this.state.audio_path)
           .then((file_info) => {
-            console.log("File Info: ", file_info);
             this.state.file_info = file_info;
           });
       }
@@ -243,7 +237,6 @@ export default class AudioRecorderService extends Component {
   updateFSInfo() {
     RNFS.getFSInfo()
       .then((fs_info) => {
-        console.log("FSInfo: ", fs_info);
         this.state.fs_info = fs_info;
       });
   }

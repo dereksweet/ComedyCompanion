@@ -63,8 +63,6 @@ export default class Show extends Model {
 
   destroy() {
     if (this._has_recording) {
-      console.log('destroying show with audio file. DELETE IT!');
-
       let audio_service = new AudioService({ show_id: this._id });
       audio_service.deleteAudioFile();
     }

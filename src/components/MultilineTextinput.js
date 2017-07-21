@@ -76,12 +76,10 @@ export default class MultilineTextInput extends PureComponent {
   }
 
   onMultilineFocus() {
-    console.log("focus");
     this.setState({ allow_scroll_code: false });
   }
 
   onMultilineBlur() {
-    console.log("blur");
     this.setState({ allow_scroll_code: true });
   }
 

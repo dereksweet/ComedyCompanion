@@ -48,7 +48,7 @@ class About extends Component {
         <View style={layoutStyles.statusBarBuffer} />
         <View style={layoutStyles.modalContent}>
           <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <TouchableHighlight underlayColor="rgba(0,0,0,0)" onPress={ this.toggleOrientation }>
+            <TouchableHighlight style={{ flex: 1, width: '100%', alignItems: 'center', justifyContent: 'center' }} underlayColor="rgba(0,0,0,0)" onPress={ this.toggleOrientation }>
               <Text style={{ fontSize: normalizeWidth(horiz ? 75 : 90), transform: [{ rotate: horiz ? '0deg' : '90deg'}] }}>{ formatDisplayTime(showState.display_time_seconds) }</Text>
             </TouchableHighlight>
           </View>
