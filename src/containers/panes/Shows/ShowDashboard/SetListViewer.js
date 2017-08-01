@@ -57,13 +57,13 @@ class SetListViewer extends Component {
                 <TouchableHighlight onPress={ () => jokeClicked(joke._id) }>
                   <Text style={{ color: '#000000', padding: 10, textAlign: 'center' }}>{joke._name}</Text>
                 </TouchableHighlight>
-                <View style={ { maxHeight: this.state.jokeViews[joke._id] ? 200 : 0 } }>
-                  <View style={ { backgroundColor: '#EEEEEE', borderTopColor: '#CCCCCC', borderTopWidth: 1, borderBottomColor: '#CCCCCC', borderBottomWidth: 1 } }>
-                    <View style={{padding: 10}}>
-                      <Text style={ { fontSize: 10 }}>{ joke._notes }</Text>
+                  { this.state.jokeViews[joke._id] &&
+                    <View style={ { backgroundColor: '#EEEEEE', borderTopColor: '#CCCCCC', borderTopWidth: 1, borderBottomColor: '#CCCCCC', borderBottomWidth: 1 } }>
+                      <View style={{padding: 10}}>
+                        <Text style={ { fontSize: 10 }}>{ joke._notes }</Text>
+                      </View>
                     </View>
-                  </View>
-                </View>
+                  }
               </View>
             })
             }
