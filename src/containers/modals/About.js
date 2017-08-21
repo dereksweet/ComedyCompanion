@@ -37,7 +37,7 @@ class About extends Component {
                 </View>
                 <View style={{ paddingTop: 10, justifyContent: 'center', alignItems: 'center' }}>
                   <View style={{ borderBottomWidth: 1 }}>
-                    <Text style={{ fontWeight: 'bold' }}>The Comedy Companion v1.2</Text>
+                    <Text style={{ fontWeight: 'bold' }}>The Comedy Companion v1.2.1</Text>
                   </View>
                 </View>
                 <View style={{ paddingTop: 10, justifyContent: 'center', alignItems: 'center' }}>
