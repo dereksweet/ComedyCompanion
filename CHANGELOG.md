@@ -1,3 +1,7 @@
+## Version 1.2.1 (August 20, 2017)
+
+- Bug Fixes
+
 ## Version 1.2 (July 25, 2017)
 
 - SHOW DASHBOARD! You can now time and record the audio of your shows.
