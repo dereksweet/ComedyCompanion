@@ -1,4 +1,4 @@
-## Version 1.2 (August 20, 2017)
+## Version 1.2 (July 25, 2017)
 
 - SHOW DASHBOARD! You can now time and record the audio of your shows.
 - Tap the timer to enlarge it to full screen, tap it on full screen mode to toggle between portrait and landscape orientation.
