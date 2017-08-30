@@ -1,4 +1,4 @@
-import Model from './Model';
+import SweetModel from 'react-native-sweet-model';
 
 import uuidV4 from 'uuid/v4';
 
@@ -10,7 +10,7 @@ const defaults = {
   _rating: 0.0
 };
 
-export default class Joke extends Model {
+export default class Joke extends SweetModel {
   static databaseName() {
     return "CCDB";
   }

@@ -7,6 +7,8 @@
     "test": "jest"
   },
   "dependencies": {
+    "react-native-sliding-panes": "1.0.1",
+    "react-native-sweet-record": "file:../react-native-sweet-record",
     "debounce": "^1.0.2",
     "moment": "2.18.1",
     "react": "15.4.2",
@@ -18,7 +20,6 @@
     "react-native-keep-awake": "^2.0.4",
     "react-native-material-design-searchbar": "^1.1.2",
     "react-native-radio-buttons": "^0.14.0",
-    "react-native-sliding-panes": "1.0.1",
     "react-native-sortable-listview": "^0.2.2",
     "react-native-sound": "^0.10.3",
     "react-native-swipeout": "^2.1.3",
