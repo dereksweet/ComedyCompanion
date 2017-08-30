@@ -53,3 +53,9 @@ Please make all your pull requests on the `develop` branch. They will be merged 
 [**xgfe**](https://github.com/xgfe) - [**react-native-ui-xg**](https://github.com/xgfe/react-native-ui-xg) - The nicely styled buttons that you see throughout the app
 
 [**oblador**](https://github.com/oblador) - [**react-native-vector-icons**](https://github.com/oblador/react-native-vector-icons) - The package that serves up all the icons you see throughout the app
+
+[**jsierles**](https://github.com/jsierles) - [**react-native-audio**](https://github.com/jsierles/react-native-audio) - The amazing package that allows the audio for shows to be recorded. Awesome work. 
+
+[**zmxv**](https://github.com/zmxv) - [**react-native-sound**](https://github.com/zmxv/react-native-sound) - Another amazing package that allows for the playback of the audio recordings. Thanks man!
+
+[**corbt**](https://github.com/corbt) - [**react-native-keep-awake**](https://github.com/corbt/react-native-keep-awake) - Great little tool that prevents the device from going to sleep due to inactivity while recording/timing shows. Just what was needed. 
