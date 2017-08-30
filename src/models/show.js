@@ -1,4 +1,4 @@
-import SweetModel from 'react-native-sweet-model';
+import SweetModel from 'react-native-sweet-record';
 import SetList from './set_list';
 import AudioService from '../services/AudioService';
 

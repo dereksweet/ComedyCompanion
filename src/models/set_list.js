@@ -1,4 +1,4 @@
-import SweetModel from 'react-native-sweet-model';
+import SweetModel from 'react-native-sweet-record';
 import Joke from './joke';
 
 import uuidV4 from 'uuid/v4';

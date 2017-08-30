@@ -1,4 +1,4 @@
-import SweetModel from 'react-native-sweet-model';
+import SweetModel from 'react-native-sweet-record';
 
 const defaults = {
   _jokes_sort_field: '_updated_at',
