@@ -48,6 +48,8 @@ Please make all your pull requests on the `develop` branch. They will be merged 
 
 [**dereksweet**](https://github.com/dereksweet) - [**react-native-sliding-panes**](https://github.com/dereksweet/react-native-sliding-panes) - Hey it's me! This is the component that controls the 3 primary sliding panes for Jokes, Set Lists, and Shows
 
+[**dereksweet**](https://github.com/dereksweet) - [**react-native-sweet-record**](https://github.com/dereksweet/react-native-sweet-record) - Hey it's me, again! This is the component that is used for all persistent data storage in the app.
+
 [**deanmcpherson**](https://github.com/deanmcpherson) - [**react-native-sortable-listview**](https://github.com/deanmcpherson/react-native-sortable-listview) - The awesome sortable ListView on the right side of the Set List Editor
 
 [**xgfe**](https://github.com/xgfe) - [**react-native-ui-xg**](https://github.com/xgfe/react-native-ui-xg) - The nicely styled buttons that you see throughout the app
