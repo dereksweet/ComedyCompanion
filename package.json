@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "react-native-sliding-panes": "1.0.1",
-    "react-native-sweet-record": "file:../react-native-sweet-record",
+    "react-native-sweet-record": "1.0.0",
     "debounce": "^1.0.2",
     "moment": "2.18.1",
     "react": "15.4.2",
