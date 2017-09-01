@@ -1,4 +1,4 @@
-import Model from './Model';
+import SweetModel from 'react-native-sweet-record';
 import Joke from './joke';
 
 import uuidV4 from 'uuid/v4';
@@ -11,7 +11,7 @@ const defaults = {
 };
 
 
-export default class SetList extends Model {
+export default class SetList extends SweetModel {
   static databaseName() {
     return "CCDB";
   }

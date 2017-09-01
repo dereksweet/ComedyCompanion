@@ -1,4 +1,4 @@
-import Model from './Model';
+import SweetModel from 'react-native-sweet-record';
 import SetList from './set_list';
 import AudioService from '../services/AudioService';
 
@@ -15,7 +15,7 @@ const defaults = {
   _has_recording: false
 };
 
-export default class Show extends Model {
+export default class Show extends SweetModel {
   static databaseName() {
     return "CCDB";
   }
