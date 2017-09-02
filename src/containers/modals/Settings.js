@@ -6,17 +6,12 @@ import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 import {Button} from 'react-native-ui-xg';
 import { SegmentedControls } from 'react-native-radio-buttons';
-import iCloudStorage from 'react-native-icloudstore';
 
 import Setting from '../../models/setting';
 
 import JokeListHelper from '../../helpers/jokeListHelper';
 import SetListListHelper from '../../helpers/setListListHelper';
 import ShowListHelper from '../../helpers/showListHelper';
-
-import Joke from '../../models/joke';
-import SetList from '../../models/set_list';
-import Show from '../../models/show';
 
 import * as routingActions from '../../actions/routingActions';
 import * as jokeListActions from '../../actions/jokeListActions';

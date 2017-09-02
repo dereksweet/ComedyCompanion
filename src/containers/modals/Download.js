@@ -5,7 +5,6 @@ import { View, ScrollView, Text, Switch, AsyncStorage, Platform } from 'react-na
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 import {Button} from 'react-native-ui-xg';
-import { SegmentedControls } from 'react-native-radio-buttons';
 import iCloudStorage from 'react-native-icloudstore';
 
 import Setting from '../../models/setting';
