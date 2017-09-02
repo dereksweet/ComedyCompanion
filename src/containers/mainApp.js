@@ -15,6 +15,7 @@ import * as routingActions from '../actions/routingActions';
 import * as jokeListActions from '../actions/jokeListActions';
 import * as setListListActions from '../actions/setListListActions';
 import * as showListActions from '../actions/showListActions';
+import * as downloadActions from '../actions/downloadActions';
 
 import layoutStyles from '../stylesheets/layoutStyles';
 
@@ -54,6 +55,7 @@ class MainApp extends Component {
       this.props.setListListActions.setSLListSortOrder(this.setting._set_lists_sort_order);
       this.props.showListActions.setShowListSortField(this.setting._shows_sort_field);
       this.props.showListActions.setShowListSortOrder(this.setting._shows_sort_order);
+      this.props.downloadActions.setExportEmail(this.setting._export_email);
 
       JokeListHelper.refreshJokeList();
       SetListListHelper.refreshSLList();
@@ -166,6 +168,7 @@ export default connect(state => ({
     routingActions: bindActionCreators(routingActions, dispatch),
     jokeListActions: bindActionCreators(jokeListActions, dispatch),
     setListListActions: bindActionCreators(setListListActions, dispatch),
-    showListActions: bindActionCreators(showListActions, dispatch)
+    showListActions: bindActionCreators(showListActions, dispatch),
+    downloadActions: bindActionCreators(downloadActions, dispatch)
   })
 )(MainApp);

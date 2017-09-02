@@ -64,3 +64,5 @@ export const START_RECORDING = 'show/start_recording';
 export const STOP_RECORDING = 'show/stop_recording';
 export const START_PLAYING = 'show/start_playing';
 export const STOP_PLAYING = 'show/stop_playing';
+
+export const SET_EXPORT_EMAIL = 'download/set_export_email';

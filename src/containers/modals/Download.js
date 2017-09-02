@@ -1,7 +1,7 @@
 'use strict';
 
 import React, {Component} from 'react';
-import { View, ScrollView, Text, Switch, AsyncStorage, Platform } from 'react-native';
+import { View, ScrollView, Text, TextInput, AsyncStorage, Platform } from 'react-native';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 import {Button} from 'react-native-ui-xg';
@@ -18,8 +18,10 @@ import SetList from '../../models/set_list';
 import Show from '../../models/show';
 
 import * as routingActions from '../../actions/routingActions';
+import * as downloadActions from '../../actions/downloadActions';
 
 import layoutStyles from '../../stylesheets/layoutStyles';
+import downloadStyles from '../../stylesheets/downloadStyles';
 
 class Download extends Component {
   constructor(props) {
@@ -37,7 +39,8 @@ class Download extends Component {
       cloudShowsCount: 0,
       localJokesCount: 0,
       localSetListsCount: 0,
-      localShowsCount: 0
+      localShowsCount: 0,
+      export_email_valid: true
     };
 
     Setting.get(1).then((setting) => {
@@ -51,6 +54,8 @@ class Download extends Component {
     this.confirmReadFromiCloud = this.confirmReadFromiCloud.bind(this);
     this.cancelReadFromiCloud = this.cancelReadFromiCloud.bind(this);
     this.readFromiCloud = this.readFromiCloud.bind(this);
+    this.updateExportEmail = this.updateExportEmail.bind(this);
+    this.sendExportEmail = this.sendExportEmail.bind(this);
   }
 
   close() {
@@ -207,7 +212,20 @@ class Download extends Component {
     alert('Read from iCloud Complete!');
   };
 
+  updateExportEmail(text) {
+    this.setting._export_email = text;
+    this.setting.save();
+
+    this.props.downloadActions.setExportEmail(text);
+  }
+
+  sendExportEmail() {
+    alert('Email Export Sent!');
+  }
+
   render() {
+    const { downloadState } = this.props;
+
     return (
       <View style={[layoutStyles.modal, layoutStyles.centeredFlex]}>
         <View style={layoutStyles.statusBarBuffer} />
@@ -231,6 +249,31 @@ class Download extends Component {
               </View>
             </View>
             }
+            <View style={[layoutStyles.modalContentSection]}>
+              <View style={ {borderBottomColor: '#999999', borderBottomWidth: 1, paddingBottom: 5, marginBottom: 10} }>
+                <Text style={ layoutStyles.settingsSectionTitle }>Email Export <Text style={{ fontWeight: '100', fontSize: 10 }}>(must have email set up on device)</Text></Text>
+              </View>
+              <View>
+                <Text style={{ fontSize: 12, marginBottom: 10 }}>Send yourself an email with all of your jokes and set lists detailed. Just enter your email below and click "Send Email" and it should show up in your inbox momentarily.</Text>
+              </View>
+              <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
+                <Text style={ layoutStyles.inputLabel }>Email:</Text>
+                <TextInput style={ [downloadStyles.exportEmailInput, this.state.export_email_valid ? {} : layoutStyles.errorInput] }
+                           underlineColorAndroid='transparent'
+                           placeholder="Email Address here..."
+                           onChangeText={(text) => { this.updateExportEmail(text) }}
+                           autoCapitalize="none"
+                           value={ downloadState.export_email } />
+              </View>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Button type="surface" size="large" theme="blue" selfStyle={ layoutStyles.confirmButton } onPress={ this.sendExportEmail }>
+                  <Text style={{ color: '#FFFFFF' }}>Send Email</Text>
+                </Button>
+              </View>
+              <View style={ {paddingTop: 5 } }>
+                <Text style={{ fontWeight: '100', fontSize: 10 }}>Note: Your audio recordings are not emailed to you</Text>
+              </View>
+            </View>
           </ScrollView>
           { this.state.showReadConfirm &&
           <View style={ layoutStyles.confirmBox }>
@@ -316,9 +359,10 @@ class Download extends Component {
 }
 
 export default connect(state => ({
-
+    downloadState: state.download
   }),
   (dispatch) => ({
-    routingActions: bindActionCreators(routingActions, dispatch)
+    routingActions: bindActionCreators(routingActions, dispatch),
+    downloadActions: bindActionCreators(downloadActions, dispatch)
   })
 )(Download);
