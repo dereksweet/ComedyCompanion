@@ -14,7 +14,7 @@ import * as statusBarActions from '../actions/statusBarActions';
 import statusBarStyles from '../stylesheets/statusBarStyles';
 import layoutStyles from '../stylesheets/layoutStyles';
 
-import {jokesIcon, setListsIcon, showsIcon, settingsIcon, aboutIcon} from '../helpers/icons';
+import {jokesIcon, setListsIcon, showsIcon, settingsIcon, aboutIcon, downloadIcon} from '../helpers/icons';
 
 class StatusBar extends Component {
   constructor(props) {
@@ -24,6 +24,7 @@ class StatusBar extends Component {
     this.clickNavLink = this.clickNavLink.bind(this);
     this.clickSettings = this.clickSettings.bind(this);
     this.clickAbout = this.clickAbout.bind(this);
+    this.clickDownload = this.clickDownload.bind(this);
   }
 
   clickHamburger() {
@@ -53,6 +54,10 @@ class StatusBar extends Component {
     this.props.routingActions.toggleAbout();
   };
 
+  clickDownload() {
+    this.props.routingActions.toggleDownload();
+  };
+
   render() {
     const { statusBarState, routingState, statusBarActions, routingActions } = this.props;
 
@@ -75,6 +80,18 @@ class StatusBar extends Component {
                               style={{ flex: 1, alignItems: 'center', paddingTop: 7, paddingLeft: 7 }}
                               onPress={ this.clickAbout }>
             <Text style={{width: '100%'}}>{ aboutIcon }</Text>
+          </TouchableHighlight>
+        </View>
+      );
+    };
+
+    const renderDownloadButton = () => {
+      return (
+        <View style={ statusBarStyles.statusBarIcon }>
+          <TouchableHighlight underlayColor="#EEEEEE"
+                              style={{ flex: 1, alignItems: 'center', paddingTop: 7, paddingLeft: 7 }}
+                              onPress={ this.clickDownload }>
+            <Text style={{width: '100%'}}>{ downloadIcon }</Text>
           </TouchableHighlight>
         </View>
       );
@@ -118,6 +135,7 @@ class StatusBar extends Component {
           </View>
           <View style={{flex: 1, flexDirection: 'row', justifyContent: 'flex-end'}}>
             { renderAboutButton() }
+            { renderDownloadButton() }
             { renderSettingsButton() }
           </View>
         </View>

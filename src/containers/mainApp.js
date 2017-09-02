@@ -28,6 +28,7 @@ import Shows from './panes/Shows';
 import EditShow from './modals/EditShow';
 import Settings from './modals/Settings';
 import About from './modals/About';
+import Download from './modals/Download';
 
 import JokeListHelper from '../helpers/jokeListHelper';
 import SetListListHelper from '../helpers/setListListHelper';
@@ -140,6 +141,13 @@ class MainApp extends Component {
                visible={routingState.about_visible}
                onRequestClose={() => { }}>
           <About />
+        </Modal>
+        <Modal style={ layoutStyles.modal }
+               animationType={ "fade" }
+               transparent={false}
+               visible={routingState.download_visible}
+               onRequestClose={() => { }}>
+          <Download />
         </Modal>
         { routingState.show_loading &&
           <View style={ layoutStyles.loadingScreen }>
