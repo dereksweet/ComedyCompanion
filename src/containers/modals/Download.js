@@ -20,6 +20,8 @@ import Show from '../../models/show';
 import * as routingActions from '../../actions/routingActions';
 import * as downloadActions from '../../actions/downloadActions';
 
+import EmailService from '../../services/EmailService';
+
 import layoutStyles from '../../stylesheets/layoutStyles';
 import downloadStyles from '../../stylesheets/downloadStyles';
 
@@ -220,7 +222,8 @@ class Download extends Component {
   }
 
   sendExportEmail() {
-    alert('Email Export Sent!');
+    let email_service = new EmailService({'email': this.props.downloadState.export_email});
+    email_service.sendExportEmail();
   }
 
   render() {
