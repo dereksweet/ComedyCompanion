@@ -216,19 +216,25 @@ class Download extends Component {
     alert('Read from iCloud Complete!');
   };
 
-  updateExportEmail(text) {
-    this.setting._export_email = text;
+  updateExportEmail(email) {
+    this.setting._export_email = email;
     this.setting.save();
 
-    this.props.downloadActions.setExportEmail(text);
+    this.props.downloadActions.setExportEmail(email);
   }
 
   sendExportEmail() {
-    let email_service = new EmailService({'email': this.props.downloadState.export_email});
+    let email_service = new EmailService({
+      'email': this.props.downloadState.export_email,
+      'email_type': this.props.downloadState.export_email_type
+    });
     email_service.sendExportEmail();
   }
 
   exportEmailTypeButtonClicked(export_email_type) {
+    this.setting._export_email_type = export_email_type;
+    this.setting.save();
+
     this.props.downloadActions.setExportEmailType(export_email_type.value);
   }
 
