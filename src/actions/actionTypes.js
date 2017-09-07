@@ -66,3 +66,4 @@ export const START_PLAYING = 'show/start_playing';
 export const STOP_PLAYING = 'show/stop_playing';
 
 export const SET_EXPORT_EMAIL = 'download/set_export_email';
+export const SET_EXPORT_EMAIL_TYPE = 'download/set_export_email_type';

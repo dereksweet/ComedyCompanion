@@ -6,6 +6,7 @@ import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 import {Button} from 'react-native-ui-xg';
 import iCloudStorage from 'react-native-icloudstore';
+import { SegmentedControls } from 'react-native-radio-buttons';
 
 import Setting from '../../models/setting';
 
@@ -58,6 +59,7 @@ class Download extends Component {
     this.readFromiCloud = this.readFromiCloud.bind(this);
     this.updateExportEmail = this.updateExportEmail.bind(this);
     this.sendExportEmail = this.sendExportEmail.bind(this);
+    this.exportEmailTypeButtonClicked = this.exportEmailTypeButtonClicked.bind(this);
   }
 
   close() {
@@ -226,9 +228,13 @@ class Download extends Component {
     email_service.sendExportEmail();
   }
 
+  exportEmailTypeButtonClicked(export_email_type) {
+    this.props.downloadActions.setExportEmailType(export_email_type.value);
+  }
+
   render() {
     const { downloadState } = this.props;
-
+    
     return (
       <View style={[layoutStyles.modal, layoutStyles.centeredFlex]}>
         <View style={layoutStyles.statusBarBuffer} />
@@ -257,7 +263,7 @@ class Download extends Component {
                 <Text style={ layoutStyles.settingsSectionTitle }>Email Export <Text style={{ fontWeight: '100', fontSize: 10 }}>(must have email set up on device)</Text></Text>
               </View>
               <View>
-                <Text style={{ fontSize: 12, marginBottom: 10 }}>Send yourself an email with all of your jokes and set lists detailed. Just enter your email below and click "Send Email" and it should show up in your inbox momentarily.</Text>
+                <Text style={{ fontSize: 12, marginBottom: 10 }}>Send yourself an email with all of your jokes and set lists detailed. Just enter your email and select a type below and click "Send Email" and it should show up in your inbox momentarily. Note: Formatted emails may look terrible on some Android devices.</Text>
               </View>
               <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
                 <Text style={ layoutStyles.inputLabel }>Email:</Text>
@@ -267,6 +273,19 @@ class Download extends Component {
                            onChangeText={(text) => { this.updateExportEmail(text) }}
                            autoCapitalize="none"
                            value={ downloadState.export_email } />
+              </View>
+              <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
+                <SegmentedControls
+                  options={
+                  [{ label: 'Formatted', value: 'formatted' },
+                   { label: 'Plain Text', value: 'plain_text' }]
+                }
+                  onSelection={ (export_email_type) => this.exportEmailTypeButtonClicked(export_email_type) }
+                  selectedOption={ downloadState.export_email_type }
+                  containerStyle={{ flex: 1 }}
+                  extractText={ (option) => option.label }
+                  testOptionEqual={(selectedValue, option) => selectedValue === option.value}
+                />
               </View>
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Button type="surface" size="large" theme="blue" selfStyle={ layoutStyles.confirmButton } onPress={ this.sendExportEmail }>
