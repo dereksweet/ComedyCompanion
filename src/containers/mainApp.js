@@ -56,7 +56,8 @@ class MainApp extends Component {
       this.props.showListActions.setShowListSortField(this.setting._shows_sort_field);
       this.props.showListActions.setShowListSortOrder(this.setting._shows_sort_order);
       this.props.downloadActions.setExportEmail(this.setting._export_email);
-
+      this.props.downloadActions.setExportEmailType(this.setting._export_email_type);
+      
       JokeListHelper.refreshJokeList();
       SetListListHelper.refreshSLList();
       ShowListHelper.refreshShowList();

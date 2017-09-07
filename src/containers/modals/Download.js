@@ -235,7 +235,7 @@ class Download extends Component {
     this.setting._export_email_type = export_email_type;
     this.setting.save();
 
-    this.props.downloadActions.setExportEmailType(export_email_type.value);
+    this.props.downloadActions.setExportEmailType(export_email_type);
   }
 
   render() {
@@ -286,7 +286,7 @@ class Download extends Component {
                   [{ label: 'Formatted', value: 'formatted' },
                    { label: 'Plain Text', value: 'plain_text' }]
                 }
-                  onSelection={ (export_email_type) => this.exportEmailTypeButtonClicked(export_email_type) }
+                  onSelection={ (export_email_type) => this.exportEmailTypeButtonClicked(export_email_type.value) }
                   selectedOption={ downloadState.export_email_type }
                   containerStyle={{ flex: 1 }}
                   extractText={ (option) => option.label }

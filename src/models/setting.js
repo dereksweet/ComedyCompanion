@@ -8,6 +8,7 @@ const defaults = {
   _shows_sort_field: '_date',
   _shows_sort_order: 'DESC',
   _export_email: '',
+  _export_email_type: 'formatted',
   _about_version_seen: 0.0
 };
 
@@ -29,6 +30,7 @@ export default class Setting extends SweetModel {
     _shows_sort_field: defaults._shows_sort_field,
     _shows_sort_order: defaults._shows_sort_order,
     _export_email: defaults._export_email,
+    _export_email_type: defaults._export_email_type,
     _about_version_seen: defaults._about_version_seen
   })
   {
@@ -42,6 +44,7 @@ export default class Setting extends SweetModel {
     this._shows_sort_field     = data._shows_sort_field || defaults._shows_sort_field;
     this._shows_sort_order     = data._shows_sort_order || defaults._shows_sort_order;
     this._export_email         = data._export_email || defaults._export_email;
+    this._export_email_type    = data._export_email_type || defaults._export_email_type;
     this._about_version_seen   = data._about_version_seen || defaults._about_version_seen;
   }
 }
