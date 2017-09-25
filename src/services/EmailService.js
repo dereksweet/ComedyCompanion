@@ -30,7 +30,10 @@ export default class EmailService extends Component {
 
   deliverEmail() {
     let body = this.solid_bits + this.in_development_bits + this.set_lists;
-    body = body.replace(/(\r\n|\n|\r)/g,"<br>");
+
+    if (this.email_type == 'formatted') {
+      body = body.replace(/(\r\n|\n|\r)/g,"<br>");
+    }
 
     Mailer.mail({
       subject: 'Comedy Companion Export - ' + moment(new Date()).format("MMM DD, YYYY"),
