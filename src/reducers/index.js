@@ -6,7 +6,6 @@ import set_list from './set_list';
 import set_list_list from './set_list_list';
 import show from './show';
 import show_list from './show_list';
-import download from './download'
 
 export {
   routing,
@@ -16,6 +15,5 @@ export {
   set_list,
   set_list_list,
   show,
-  show_list,
-  download
+  show_list
 };
