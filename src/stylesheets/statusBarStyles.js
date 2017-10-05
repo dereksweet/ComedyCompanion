@@ -6,7 +6,13 @@ export default statusBarStyles = StyleSheet.create({
     borderRightColor: '#CCCCCC',
     borderRightWidth: 1
   },
-  statusBarIcon: {
+  gearIcon: {
+    width: 40,
+    borderLeftColor: '#CCCCCC',
+    borderLeftWidth: 1,
+    alignItems: 'center'
+  },
+  aboutIcon: {
     width: 40,
     borderLeftColor: '#CCCCCC',
     borderLeftWidth: 1,

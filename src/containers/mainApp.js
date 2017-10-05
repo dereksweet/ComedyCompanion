@@ -15,7 +15,6 @@ import * as routingActions from '../actions/routingActions';
 import * as jokeListActions from '../actions/jokeListActions';
 import * as setListListActions from '../actions/setListListActions';
 import * as showListActions from '../actions/showListActions';
-import * as downloadActions from '../actions/downloadActions';
 
 import layoutStyles from '../stylesheets/layoutStyles';
 
@@ -29,7 +28,6 @@ import Shows from './panes/Shows';
 import EditShow from './modals/EditShow';
 import Settings from './modals/Settings';
 import About from './modals/About';
-import Download from './modals/Download';
 
 import JokeListHelper from '../helpers/jokeListHelper';
 import SetListListHelper from '../helpers/setListListHelper';
@@ -55,9 +53,7 @@ class MainApp extends Component {
       this.props.setListListActions.setSLListSortOrder(this.setting._set_lists_sort_order);
       this.props.showListActions.setShowListSortField(this.setting._shows_sort_field);
       this.props.showListActions.setShowListSortOrder(this.setting._shows_sort_order);
-      this.props.downloadActions.setExportEmail(this.setting._export_email);
-      this.props.downloadActions.setExportEmailType(this.setting._export_email_type);
-      
+
       JokeListHelper.refreshJokeList();
       SetListListHelper.refreshSLList();
       ShowListHelper.refreshShowList();
@@ -145,13 +141,6 @@ class MainApp extends Component {
                onRequestClose={() => { }}>
           <About />
         </Modal>
-        <Modal style={ layoutStyles.modal }
-               animationType={ "fade" }
-               transparent={false}
-               visible={routingState.download_visible}
-               onRequestClose={() => { }}>
-          <Download />
-        </Modal>
         { routingState.show_loading &&
           <View style={ layoutStyles.loadingScreen }>
             <Image style={{ width: 300, height: 300, marginTop: 15 }} source={ require('../images/Loading.png') } />
@@ -169,7 +158,6 @@ export default connect(state => ({
     routingActions: bindActionCreators(routingActions, dispatch),
     jokeListActions: bindActionCreators(jokeListActions, dispatch),
     setListListActions: bindActionCreators(setListListActions, dispatch),
-    showListActions: bindActionCreators(showListActions, dispatch),
-    downloadActions: bindActionCreators(downloadActions, dispatch)
+    showListActions: bindActionCreators(showListActions, dispatch)
   })
 )(MainApp);
