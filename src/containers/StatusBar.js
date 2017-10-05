@@ -14,49 +14,59 @@ import * as statusBarActions from '../actions/statusBarActions';
 import statusBarStyles from '../stylesheets/statusBarStyles';
 import layoutStyles from '../stylesheets/layoutStyles';
 
-import {jokesIcon, setListsIcon, showsIcon, settingsIcon, aboutIcon} from '../helpers/icons';
+import {jokesIcon, setListsIcon, showsIcon, settingsIcon, aboutIcon, downloadIcon} from '../helpers/icons';
 
 class StatusBar extends Component {
   constructor(props) {
     super(props);
+
+    this.clickHamburger = this.clickHamburger.bind(this);
+    this.clickNavLink = this.clickNavLink.bind(this);
+    this.clickSettings = this.clickSettings.bind(this);
+    this.clickAbout = this.clickAbout.bind(this);
+    this.clickDownload = this.clickDownload.bind(this);
   }
+
+  clickHamburger() {
+    Keyboard.dismiss();
+
+    this.props.statusBarActions.toggleHamburgerActive();
+
+    this.props.statusBarState.hamburger_active ? this.navBarView.performShrink() : this.navBarView.performExpand();
+  };
+
+  clickNavLink(pane) {
+    Keyboard.dismiss();
+
+    this.props.routingActions.setPane(pane);
+    this.props.setActivePane(pane);
+    this.props.statusBarActions.toggleHamburgerActive();
+    this.hamburger._animate();
+
+    this.navBarView.performShrink();
+  };
+
+  clickSettings() {
+    this.props.routingActions.toggleSettings();
+  };
+
+  clickAbout() {
+    this.props.routingActions.toggleAbout();
+  };
+
+  clickDownload() {
+    this.props.routingActions.toggleDownload();
+  };
 
   render() {
     const { statusBarState, routingState, statusBarActions, routingActions } = this.props;
 
-    const clickHamburger = () => {
-      Keyboard.dismiss();
-
-      statusBarActions.toggleHamburgerActive();
-
-      statusBarState.hamburger_active ? this.navBarView.performShrink() : this.navBarView.performExpand();
-    };
-
-    const clickNavLink = (pane) => {
-      Keyboard.dismiss();
-      
-      routingActions.setPane(pane);
-      this.props.setActivePane(pane);
-      statusBarActions.toggleHamburgerActive();
-      this.hamburger._animate();
-
-      this.navBarView.performShrink();
-    };
-
-    const clickSettings = () => {
-      routingActions.toggleSettings();
-    };
-
-    const clickAbout = () => {
-      routingActions.toggleAbout();
-    };
-
     const renderSettingsButton = () => {
       return (
-        <View style={ statusBarStyles.gearIcon }>
+        <View style={ statusBarStyles.statusBarIcon }>
           <TouchableHighlight underlayColor="#EEEEEE"
                               style={{ flex: 1, alignItems: 'center', paddingTop: 7, paddingLeft: 7 }}
-                              onPress={ clickSettings }>
+                              onPress={ this.clickSettings }>
             <Text style={{width: '100%'}}>{ settingsIcon }</Text>
           </TouchableHighlight>
         </View>
@@ -65,11 +75,23 @@ class StatusBar extends Component {
 
     const renderAboutButton = () => {
       return (
-        <View style={ statusBarStyles.aboutIcon }>
+        <View style={ statusBarStyles.statusBarIcon }>
           <TouchableHighlight underlayColor="#EEEEEE"
                               style={{ flex: 1, alignItems: 'center', paddingTop: 7, paddingLeft: 7 }}
-                              onPress={ clickAbout }>
+                              onPress={ this.clickAbout }>
             <Text style={{width: '100%'}}>{ aboutIcon }</Text>
+          </TouchableHighlight>
+        </View>
+      );
+    };
+
+    const renderDownloadButton = () => {
+      return (
+        <View style={ statusBarStyles.statusBarIcon }>
+          <TouchableHighlight underlayColor="#EEEEEE"
+                              style={{ flex: 1, alignItems: 'center', paddingTop: 7, paddingLeft: 7 }}
+                              onPress={ this.clickDownload }>
+            <Text style={{width: '100%'}}>{ downloadIcon }</Text>
           </TouchableHighlight>
         </View>
       );
@@ -78,7 +100,7 @@ class StatusBar extends Component {
     const renderNavBarButton = (pane, icon, text, styles) => {
       return  <TouchableHighlight underlayColor="#EEEEEE"
                                   style={ [statusBarStyles.navLink, styles] }
-                                  onPress={() => clickNavLink(pane)}>
+                                  onPress={() => this.clickNavLink(pane)}>
                 <View style={ { flexDirection: 'row' } }>
                   { icon }
                   <Text style={statusBarStyles.navLinkText}>{text}</Text>
@@ -105,7 +127,7 @@ class StatusBar extends Component {
                        active={statusBarState.hamburger_active}
                        type="spinCross"
                        color="black"
-                       onPress={ clickHamburger }
+                       onPress={ this.clickHamburger }
             />
           </View>
           <View style={ { flexDirection: 'row' } }>
@@ -113,6 +135,7 @@ class StatusBar extends Component {
           </View>
           <View style={{flex: 1, flexDirection: 'row', justifyContent: 'flex-end'}}>
             { renderAboutButton() }
+            { renderDownloadButton() }
             { renderSettingsButton() }
           </View>
         </View>
