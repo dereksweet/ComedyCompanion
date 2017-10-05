@@ -6,6 +6,7 @@ export const OPEN_MODAL = 'routing/open_modal';
 export const CLOSE_MODAL = 'routing/close_modal';
 export const TOGGLE_SETTINGS = 'routing/toggle_settings';
 export const TOGGLE_ABOUT = 'routing/toggle_about';
+export const TOGGLE_DOWNLOAD = 'routing/toggle_download';
 export const HIDE_LOADING = 'routing/hide_loading';
 export const TOGGLE_TIMER = 'routing/toggle_timer';
 
@@ -63,3 +64,6 @@ export const START_RECORDING = 'show/start_recording';
 export const STOP_RECORDING = 'show/stop_recording';
 export const START_PLAYING = 'show/start_playing';
 export const STOP_PLAYING = 'show/stop_playing';
+
+export const SET_EXPORT_EMAIL = 'download/set_export_email';
+export const SET_EXPORT_EMAIL_TYPE = 'download/set_export_email_type';
