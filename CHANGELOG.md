@@ -1,3 +1,9 @@
+## Version 1.3 (October 6, 2017)
+
+- Export Menu! The iCloud backup feature for iOS users has been moved, and a new email export feature for ALL users has been added, to a new top nav section. Look for it in the top right of the app.
+- Email Export! You can now export your jokes and set lists at the touch of a button, using your own phone's email capabilities, to any email address you like.
+- HTML Formatted emails and Plain Text formatted emails are both supported.
+
 ## Version 1.2.1 (August 20, 2017)
 
 - Bug Fixes
