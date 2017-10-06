@@ -4,14 +4,14 @@ Developed in 100% React Native, "The Comedy Companion" is the world's first prod
 
 ### Upcoming Features
 
-- Email Export of Jokes, Set Lists, and Show recordings
 - Cloud Storage for Android Users
 - Customizable Categories, and filtering on those categories
 - Running rating of Joke performance by swiping left for good, right for bad on a given show
 - Web Browser editing of jokes through a websocket API
 
-### Currently Available Features (v1.2)
+### Currently Available Features (v1.3)
 
+- Email Export of Jokes, Set Lists, and Show recordings
 - Associate an Audio Recording with any Given Show
 - Track solid bits as well as those you're currently working on
 - Associate detailed notes with each bit
@@ -61,3 +61,5 @@ Please make all your pull requests on the `develop` branch. They will be merged 
 [**zmxv**](https://github.com/zmxv) - [**react-native-sound**](https://github.com/zmxv/react-native-sound) - Another amazing package that allows for the playback of the audio recordings. Thanks man!
 
 [**corbt**](https://github.com/corbt) - [**react-native-keep-awake**](https://github.com/corbt/react-native-keep-awake) - Great little tool that prevents the device from going to sleep due to inactivity while recording/timing shows. Just what was needed. 
+
+[**chirag04**](https://github.com/chirag04) - [**react-native-mail**](https://github.com/chirag04/react-native-mail) - The React Native package that allows the exporting of jokes and set lists via the device's own email capabilities. Great job dude!
