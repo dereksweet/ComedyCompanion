@@ -69,6 +69,12 @@ export function toggleAbout() {
   }
 }
 
+export function toggleDownload() {
+  return {
+    type: types.TOGGLE_DOWNLOAD
+  }
+}
+
 export function hideLoading() {
   return {
     type: types.HIDE_LOADING

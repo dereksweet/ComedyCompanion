@@ -7,6 +7,7 @@ const initialState = {
   modal_visible: false,
   settings_visible: false,
   about_visible: false,
+  download_visible: false,
   timer_visible: false,
   show_loading: true
 };
@@ -67,6 +68,12 @@ export default function routing(state = initialState, action = {}) {
       return {
         ...state,
         about_visible: !state.about_visible
+      };
+      break;
+    case types.TOGGLE_DOWNLOAD:
+      return {
+        ...state,
+        download_visible: !state.download_visible
       };
       break;
     case types.HIDE_LOADING:

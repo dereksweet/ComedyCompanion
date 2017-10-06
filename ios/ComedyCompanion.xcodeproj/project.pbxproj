@@ -42,6 +42,7 @@
 		513054B57D804BB4B31601CA /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0F5CD3D72A643CA9C68ECF0 /* EvilIcons.ttf */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		7EA2912B56964BCCBCAF88A3 /* libicloudstorage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BEAA30C73C2C4B1D9438A293 /* libicloudstorage.a */; };
+		824B1EC61F5AD6600072537F /* libRNMail.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 823D78171F5AD02100F8D35B /* libRNMail.a */; };
 		82F065F81E91F614008C8A36 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 82F065D51E91F5AE008C8A36 /* Entypo.ttf */; };
 		82F065F91E91F614008C8A36 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 82F065D61E91F5AE008C8A36 /* EvilIcons.ttf */; };
 		82F065FA1E91F614008C8A36 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 82F065D71E91F5AE008C8A36 /* FontAwesome.ttf */; };
@@ -247,6 +248,20 @@
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = RCTLinking;
 		};
+		823D78161F5AD02100F8D35B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 823D77F31F5AD02100F8D35B /* RNMail.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 46FEDE7F1AFF192F00D3261C;
+			remoteInfo = RNMail;
+		};
+		823D78181F5AD02100F8D35B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 823D77F31F5AD02100F8D35B /* RNMail.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 46FEDE8A1AFF192F00D3261C;
+			remoteInfo = RNMailTests;
+		};
 		827538021F1DB1FC00D80941 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7403C19EB4B44D74BB8F3978 /* KCKeepAwake.xcodeproj */;
@@ -338,6 +353,7 @@
 		7403C19EB4B44D74BB8F3978 /* KCKeepAwake.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = KCKeepAwake.xcodeproj; path = "../node_modules/react-native-keep-awake/ios/KCKeepAwake.xcodeproj"; sourceTree = "<group>"; };
 		771D2E20CBB14DC5917F90F9 /* libRNFS.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNFS.a; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
+		823D77F31F5AD02100F8D35B /* RNMail.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNMail.xcodeproj; path = "../node_modules/react-native-mail/RNMail.xcodeproj"; sourceTree = "<group>"; };
 		824954171EC6D3DB00A51052 /* ComedyCompanion.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = ComedyCompanion.entitlements; path = ComedyCompanion/ComedyCompanion.entitlements; sourceTree = "<group>"; };
 		82F065D51E91F5AE008C8A36 /* Entypo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Entypo.ttf; sourceTree = "<group>"; };
 		82F065D61E91F5AE008C8A36 /* EvilIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = EvilIcons.ttf; sourceTree = "<group>"; };
@@ -378,6 +394,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				824B1EC61F5AD6600072537F /* libRNMail.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
@@ -548,6 +565,28 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		8237DD671F8725EA003433B7 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				BEAA30C73C2C4B1D9438A293 /* libicloudstorage.a */,
+				005CB463474943F088109AF9 /* libRNAudio.a */,
+				8B07FBD3ED6A4CBD809FFA07 /* libRNSound.a */,
+				771D2E20CBB14DC5917F90F9 /* libRNFS.a */,
+				A3AA9C0B731942168DBFD9E5 /* libKCKeepAwake.a */,
+				6AF3172E44974C88A9398809 /* libRNVectorIcons.a */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		823D77F41F5AD02100F8D35B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				823D78171F5AD02100F8D35B /* libRNMail.a */,
+				823D78191F5AD02100F8D35B /* RNMailTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		827537FE1F1DB1FC00D80941 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -618,6 +657,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				823D77F31F5AD02100F8D35B /* RNMail.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
 				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
@@ -657,6 +697,7 @@
 				00E356EF1AD99517003FC87E /* ComedyCompanionTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				B4119801C5DD41168945FEC8 /* Resources */,
+				8237DD671F8725EA003433B7 /* Recovered References */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -870,6 +911,10 @@
 					ProjectRef = B7160B4F21A94188914D605E /* RNFS.xcodeproj */;
 				},
 				{
+					ProductGroup = 823D77F41F5AD02100F8D35B /* Products */;
+					ProjectRef = 823D77F31F5AD02100F8D35B /* RNMail.xcodeproj */;
+				},
+				{
 					ProductGroup = 82A239E71F109ED500DC7DFB /* Products */;
 					ProjectRef = 36148F17DC8F4C9ABD91E6E1 /* RNSound.xcodeproj */;
 				},
@@ -1055,6 +1100,20 @@
 			fileType = archive.ar;
 			path = libRCTLinking.a;
 			remoteRef = 78C398B81ACF4ADC00677621 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		823D78171F5AD02100F8D35B /* libRNMail.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNMail.a;
+			remoteRef = 823D78161F5AD02100F8D35B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		823D78191F5AD02100F8D35B /* RNMailTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = RNMailTests.xctest;
+			remoteRef = 823D78181F5AD02100F8D35B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		827538031F1DB1FC00D80941 /* libKCKeepAwake.a */ = {

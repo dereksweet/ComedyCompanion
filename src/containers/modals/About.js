@@ -37,49 +37,47 @@ class About extends Component {
                 </View>
                 <View style={{ paddingTop: 10, justifyContent: 'center', alignItems: 'center' }}>
                   <View style={{ borderBottomWidth: 1 }}>
-                    <Text style={{ fontWeight: 'bold' }}>The Comedy Companion v1.2.1</Text>
+                    <Text style={{ fontWeight: 'bold' }}>The Comedy Companion v1.3</Text>
                   </View>
                 </View>
                 <View style={{ paddingTop: 10, justifyContent: 'center', alignItems: 'center' }}>
                   <Text style={{ textAlign: 'center' }}>
-                    Hey! What's up? Just your friendly neighborhood spiderman, bringing you
-                    version 1.2 of The Comedy Companion! The biggest new feature is for sure the
-                    Show Dashboard that will allow you to time or record the audio of your shows.
-                    Here are all the new features:
+                    Woah, it feels like a lifetime since I put out an update for this app. See,
+                    this game called "Destiny 2" came out and I've been holed up like a fucking
+                    hermit at night giving away hours of my life to watch an objectively
+                    meaningless number slowly climb closer to 300 rather than bring you updates.
+                    I'm not proud of it, but it's the truth. I will chastise myself with 100
+                    lashes nightly in repentance. Here are the new features for version 1.3 of
+                    The Comedy Companion:
                   </Text>
                 </View>
                 <View style={{ paddingTop: 10, justifyContent: 'flex-start', alignItems: 'flex-start', padding: 20 }}>
                   <View style={{ flexDirection: 'row' }}>
                     <Text style={{ paddingTop: 9 }}>{bulletIcon}</Text>
                     <Text style={{ textAlign: 'left', fontWeight: 'bold', marginTop: 5, marginLeft: 5 }}>
-                      SHOW DASHBOARD! You can now time and record the audio of your shows.
+                      Export Menu! The iCloud backup feature for iOS users has been moved, and a new email
+                      export feature for ALL users has been added, to a new top nav section. Look for it
+                      in the top right of the app.
                     </Text>
                   </View>
                   <View style={{ flexDirection: 'row' }}>
                     <Text style={{ paddingTop: 9 }}>{bulletIcon}</Text>
                     <Text style={{ textAlign: 'left', fontWeight: 'bold', marginTop: 5, marginLeft: 5 }}>
-                      Tap the timer to enlarge it to full screen, tap it on full screen mode to toggle between
-                      portrait and landscape orientation.
+                      Email Export! You can now export your jokes and set lists at the touch of a button,
+                      using your own phone's email capabilities, to any email address you like.
                     </Text>
                   </View>
                   <View style={{ flexDirection: 'row' }}>
                     <Text style={{ paddingTop: 9 }}>{bulletIcon}</Text>
                     <Text style={{ textAlign: 'left', fontWeight: 'bold', marginTop: 5, marginLeft: 5 }}>
-                      Shows with a recording will have a red record badge on the Show List
+                      HTML Formatted emails and Plain Text formatted emails are both supported.
                     </Text>
                   </View>
                   <View style={{ flexDirection: 'row' }}>
                     <Text style={{ paddingTop: 9 }}>{bulletIcon}</Text>
                     <Text style={{ textAlign: 'left', fontWeight: 'bold', marginTop: 5, marginLeft: 5 }}>
-                      Joke notes larger than one page will now allow you to scroll without bringing up the
-                      keyboard each time.
-                    </Text>
-                  </View>
-                  <View style={{ flexDirection: 'row' }}>
-                    <Text style={{ paddingTop: 9 }}>{bulletIcon}</Text>
-                    <Text style={{ textAlign: 'left', fontWeight: 'bold', marginTop: 5, marginLeft: 5 }}>
-                      Basic validation will prevent you from creating jokes and set lists with no name, and
-                      shows with no venue.
+                      NOTE: Some Android users may not see anything but weird spacing for the formatted
+                      emails. If you experience problems please let me know on the Facebook group.
                     </Text>
                   </View>
                 </View>
