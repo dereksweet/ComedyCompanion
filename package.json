@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "debounce": "^1.0.2",
-    "moment": "2.18.1",
+    "moment": "2.19.3",
     "react": "15.4.2",
     "react-native": "0.42.3",
     "react-native-audio": "^3.2.2",
