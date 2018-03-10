@@ -58,7 +58,7 @@ class SetListsList extends Component {
               <View style={ setListListStyles.setListInfoView }>
                 <Text style={ setListListStyles.updatedText }>Last Updated:</Text>
                 <Text style={ setListListStyles.updatedText }>{ moment(set_list._updated_at).format("MMM DD, YYYY") }</Text>
-                <Text style={ setListListStyles.lengthText }>Length: { set_list._length } min</Text>
+                <Text style={ setListListStyles.lengthText }>Length: { set_list._length || set_list.setListLength() } min</Text>
               </View>
             </View>
           </View>

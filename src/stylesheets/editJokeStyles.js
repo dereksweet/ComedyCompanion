@@ -23,5 +23,15 @@ export default editJokeStyles = StyleSheet.create({
     paddingRight: 10,
     backgroundColor: '#FFFFFF',
     fontSize: 18
+  },
+  timeInput: {
+    width: 55,
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    paddingLeft: 10,
+    paddingRight: 10,
+    backgroundColor: '#FFFFFF',
+    textAlign: 'center'
   }
 });

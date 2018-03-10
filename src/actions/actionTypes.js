@@ -36,6 +36,8 @@ export const SET_SHOW_LIST_FILTER = 'show_list/set_show_list_filter';
 export const SET_JOKE = 'joke/set_joke';
 export const TOGGLE_IN_DEVELOPMENT = 'joke/toggle_in_development';
 export const SET_NAME = 'joke/set_name';
+export const SET_MINUTES = 'joke/set_minutes';
+export const SET_SECONDS = 'joke/set_seconds';
 export const SET_NOTES = 'joke/set_notes';
 
 export const SET_SL = 'set_list/set_sl';

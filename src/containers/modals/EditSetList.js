@@ -137,7 +137,7 @@ class EditSetList extends Component {
                   <Text style={ layoutStyles.inputLabel }>Length:</Text>
                   <TextInput style={ editSetListStyles.lengthInput }
                              underlineColorAndroid='transparent'
-                             placeholder=""
+                             placeholder={setListState.set_list.setListLength()}
                              onChangeText={(text) => setListActions.setSLLength(text)}
                              keyboardType="numeric"
                              value={ setListState.set_list._length ? setListState.set_list._length.toString() : '' } />

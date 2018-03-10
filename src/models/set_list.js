@@ -38,6 +38,18 @@ export default class SetList extends SweetModel {
     return false;
   }
 
+  setListLength() {
+    let totalSeconds = 0;
+
+    for (let i = 0; i < this._jokes.length; i++) {
+      const joke = this._jokes[i];
+
+      totalSeconds += ((joke._minutes || 0) * 60) + (joke._seconds || 0);
+    }
+
+    return (totalSeconds / 60).toFixed(0).toString();
+  }
+
   constructor(data = {
     _id: -1,
     _uuid: defaults._uuid,

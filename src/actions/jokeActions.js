@@ -20,6 +20,36 @@ export function setName(name) {
   }
 }
 
+export function setMinutes(minutes_text) {
+  let minutes = -1;
+
+  if (minutes_text === '') {
+    minutes = null;
+  } else {
+    minutes = parseInt(minutes_text);
+  }
+
+  return {
+    type: types.SET_MINUTES,
+    minutes
+  }
+}
+
+export function setSeconds(seconds_text) {
+  let seconds = -1;
+
+  if (seconds_text === '') {
+    seconds = null;
+  } else {
+    seconds = parseInt(seconds_text);
+  }
+
+  return {
+    type: types.SET_SECONDS,
+    seconds
+  }
+}
+
 export function setNotes(notes) {
   return {
     type: types.SET_NOTES,

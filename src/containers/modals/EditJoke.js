@@ -17,6 +17,7 @@ import JokeListHelper from '../../helpers/jokeListHelper';
 
 import layoutStyles from '../../stylesheets/layoutStyles';
 import editJokeStyles from '../../stylesheets/editJokeStyles';
+import editSetListStyles from "../../stylesheets/editSetListStyles";
 
 class EditJoke extends Component {
   constructor(props) {
@@ -148,6 +149,19 @@ class EditJoke extends Component {
                 <View style={{flex: 1, flexDirection: 'row', justifyContent: 'flex-end'}}>
                   <Text style={ layoutStyles.inputLabel }></Text>
                 </View>
+                <TextInput style={ editJokeStyles.timeInput }
+                           underlineColorAndroid='transparent'
+                           placeholder="min"
+                           onChangeText={(text) => jokeActions.setMinutes(text)}
+                           keyboardType="default"
+                           value={ jokeState.joke._minutes ? jokeState.joke._minutes.toString() : '' } />
+                <Text style={[layoutStyles.inputLabel, { paddingLeft: 5, paddingRight: 5 }]}>:</Text>
+                <TextInput style={ editJokeStyles.timeInput }
+                           underlineColorAndroid='transparent'
+                           placeholder="sec"
+                           onChangeText={(text) => jokeActions.setSeconds(text)}
+                           keyboardType="default"
+                           value={ jokeState.joke._seconds ? jokeState.joke._seconds.toString() : '' } />
               </View>
               <View style={ [layoutStyles.modalContentSection, { flexDirection: 'row', alignItems: 'center'  }] }>
                 <Text style={ layoutStyles.inputLabel }>Name:</Text>
