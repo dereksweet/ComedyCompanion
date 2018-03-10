@@ -28,6 +28,16 @@ export default class SetList extends SweetModel {
     return [{ field: '_jokes', class: Joke, array: true}];
   }
 
+  containsJoke(joke) {
+    for (let i = 0; i < this._jokes.length; i++) {
+      if (this._jokes[i]._id === joke._id) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   constructor(data = {
     _id: -1,
     _uuid: defaults._uuid,

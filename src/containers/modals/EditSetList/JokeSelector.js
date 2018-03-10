@@ -27,7 +27,7 @@ class JokeSelector extends Component {
   }
 
   render() {
-    const { jokeListState, jokeListActions, setListActions } = this.props;
+    const { jokeListState, setListState, jokeListActions, setListActions } = this.props;
 
     let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     const jokeListDS = ds.cloneWithRows(jokeListState.joke_list_selector.map((joke) => { return joke.name }));
@@ -42,23 +42,27 @@ class JokeSelector extends Component {
       let joke = jokeListState.joke_list_selector[rowID];
 
       return (
-        <TouchableHighlight onPress={ () => selectJoke(joke._id) }>
-          <View style={ setListListStyles.jokeSelectorRow }>
-            <Text style={ [jokeListStyles.jokeName, { textAlign: 'center' }] }>{ joke._name }</Text>
-          </View>
-        </TouchableHighlight>
+        !setListState.set_list.containsJoke(joke) &&
+          <TouchableHighlight onPress={ () => selectJoke(joke._id) }>
+            <View style={ setListListStyles.jokeSelectorRow }>
+              <Text style={ [jokeListStyles.jokeName, { textAlign: 'center' }] }>{ joke._name }</Text>
+            </View>
+          </TouchableHighlight>
       );
     };
 
     const renderSeparator = (sectionID, rowID, adjacentRowHighlighted) => {
+      let joke = jokeListState.joke_list_selector[rowID];
+
       return (
-        <View
-          key={`${sectionID}-${rowID}`}
-          style={{
-            height: 1,
-            backgroundColor: '#CCCCCC',
-          }}
-        />
+        !setListState.set_list.containsJoke(joke) &&
+          <View
+            key={`${sectionID}-${rowID}`}
+            style={{
+              height: 1,
+              backgroundColor: '#CCCCCC',
+            }}
+          />
       );
     };
 
@@ -115,7 +119,8 @@ class JokeSelector extends Component {
 }
 
 export default connect(state => ({
-    jokeListState: state.joke_list
+    jokeListState: state.joke_list,
+    setListState: state.set_list,
   }),
   (dispatch) => ({
     jokeListActions: bindActionCreators(jokeListActions, dispatch),
