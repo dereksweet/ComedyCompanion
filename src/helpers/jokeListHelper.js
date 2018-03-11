@@ -35,6 +35,7 @@ export default class JokeListHelper extends Component {
 
     static refreshJokeListSelector({ name_filter = null, in_development_filter = null, sort_field = null, sort_order = null } = {}) {
         const jokeListState = store.getState().joke_list;
+        const setListState = store.getState().set_list;
 
         const my_name_filter = name_filter || jokeListState.name_filter_selector;
         const my_in_development_filter = in_development_filter || jokeListState.in_development_selector;
@@ -47,7 +48,20 @@ export default class JokeListHelper extends Component {
           my_sort_field,
           my_sort_order
         ).then((jokes) => {
-            store.dispatch(jokeListActions.setJokeListSelector(jokes));
+            let finalJokes = [];
+
+            if (setListState.set_list) {
+              for (let i = 0; i < jokes.length; i++){
+                if (!setListState.set_list.containsJoke(jokes[i])) {
+                  finalJokes.push(jokes[i]);
+                }
+              }
+            }
+            else {
+              finalJokes = jokes;
+            }
+
+            store.dispatch(jokeListActions.setJokeListSelector(finalJokes));
         });
     }
 }

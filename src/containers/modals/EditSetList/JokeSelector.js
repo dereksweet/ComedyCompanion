@@ -30,11 +30,13 @@ class JokeSelector extends Component {
     const { jokeListState, setListState, jokeListActions, setListActions } = this.props;
 
     let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    const jokeListDS = ds.cloneWithRows(jokeListState.joke_list_selector.map((joke) => { return joke.name }));
-    
+    const jokeListDS = ds.cloneWithRows(jokeListState.joke_list_selector
+      .map((joke) => { return joke.name }));
+
     const selectJoke = (id) => {
       Joke.get(id).then((joke) => {
         setListActions.addJokeToSL(joke);
+        JokeListHelper.refreshJokeListSelector();
       });
     };
 
@@ -42,27 +44,23 @@ class JokeSelector extends Component {
       let joke = jokeListState.joke_list_selector[rowID];
 
       return (
-        !setListState.set_list.containsJoke(joke) &&
-          <TouchableHighlight onPress={ () => selectJoke(joke._id) }>
-            <View style={ setListListStyles.jokeSelectorRow }>
-              <Text style={ [jokeListStyles.jokeName, { textAlign: 'center' }] }>{ joke._name }</Text>
-            </View>
-          </TouchableHighlight>
+        <TouchableHighlight onPress={ () => selectJoke(joke._id) }>
+          <View style={ setListListStyles.jokeSelectorRow }>
+            <Text style={ [jokeListStyles.jokeName, { textAlign: 'center' }] }>{ joke._name }</Text>
+          </View>
+        </TouchableHighlight>
       );
     };
 
     const renderSeparator = (sectionID, rowID, adjacentRowHighlighted) => {
-      let joke = jokeListState.joke_list_selector[rowID];
-
       return (
-        !setListState.set_list.containsJoke(joke) &&
-          <View
-            key={`${sectionID}-${rowID}`}
-            style={{
-              height: 1,
-              backgroundColor: '#CCCCCC',
-            }}
-          />
+        <View
+          key={`${sectionID}-${rowID}`}
+          style={{
+            height: 1,
+            backgroundColor: '#CCCCCC',
+          }}
+        />
       );
     };
 
