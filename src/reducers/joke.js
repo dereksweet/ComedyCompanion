@@ -28,6 +28,7 @@ export default function joke(state = initialState, action = {}) {
         joke: state.joke
       };
     case types.SET_MINUTES:
+      console.log(action.minutes);
       state.joke._minutes = action.minutes;
 
       return {

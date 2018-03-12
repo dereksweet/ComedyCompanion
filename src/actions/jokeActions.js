@@ -23,10 +23,10 @@ export function setName(name) {
 export function setMinutes(minutes_text) {
   let minutes = -1;
 
-  if (minutes_text === '') {
-    minutes = null;
-  } else {
+  if (isNumeric(minutes_text)) {
     minutes = parseInt(minutes_text);
+  } else {
+    minutes = null;
   }
 
   return {
@@ -38,10 +38,10 @@ export function setMinutes(minutes_text) {
 export function setSeconds(seconds_text) {
   let seconds = -1;
 
-  if (seconds_text === '') {
-    seconds = null;
-  } else {
+  if (isNumeric(seconds_text)) {
     seconds = parseInt(seconds_text);
+  } else {
+    seconds = null;
   }
 
   return {
@@ -55,4 +55,10 @@ export function setNotes(notes) {
     type: types.SET_NOTES,
     notes
   }
+}
+
+/* ---------- private ------------- */
+
+function isNumeric(n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
 }

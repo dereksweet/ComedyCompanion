@@ -46,9 +46,13 @@ export default class Joke extends SweetModel {
     this._name           = data._name || defaults._name;
     this._notes          = data._notes || defaults._notes;
     this._rating         = data._rating || defaults._rating;
-    this._minutes        = data._minutes || defaults._minutes;
-    this._seconds        = data._seconds || defaults._seconds;
+    this._minutes        = isNumeric(data._minutes) ? data._minutes : defaults._minutes;
+    this._seconds        = isNumeric(data._seconds) ? data._seconds : defaults._seconds;
     this._created_at     = data._created_at;
     this._updated_at     = data._updated_at;
   }
+}
+
+function isNumeric(n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
 }

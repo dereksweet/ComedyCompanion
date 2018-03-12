@@ -135,6 +135,17 @@ class EditJoke extends Component {
       this.dirty = true;
     };
 
+    let secondsString;
+    if (jokeState.joke._seconds !== null) {
+      if ((jokeState.joke._seconds < 10) && (jokeState.joke._seconds >= 0))
+        secondsString = "0" + jokeState.joke._seconds.toString();
+      else
+        secondsString = jokeState.joke._seconds.toString();
+    } else {
+      secondsString = "";
+    }
+
+
     return (
       <ShakingView ref={(editJokeView) => this.editJokeView = editJokeView}
                    style={[layoutStyles.modal, layoutStyles.centeredFlex]}>
@@ -152,16 +163,16 @@ class EditJoke extends Component {
                 <TextInput style={ editJokeStyles.timeInput }
                            underlineColorAndroid='transparent'
                            placeholder="min"
+                           keyboardType="numeric"
                            onChangeText={(text) => jokeActions.setMinutes(text)}
-                           keyboardType="default"
-                           value={ jokeState.joke._minutes ? jokeState.joke._minutes.toString() : '' } />
+                           value={ jokeState.joke._minutes !== null ? jokeState.joke._minutes.toString() : '' } />
                 <Text style={[layoutStyles.inputLabel, { paddingLeft: 5, paddingRight: 5 }]}>:</Text>
                 <TextInput style={ editJokeStyles.timeInput }
                            underlineColorAndroid='transparent'
                            placeholder="sec"
+                           keyboardType="numeric"
                            onChangeText={(text) => jokeActions.setSeconds(text)}
-                           keyboardType="default"
-                           value={ jokeState.joke._seconds ? jokeState.joke._seconds.toString() : '' } />
+                           value={ secondsString } />
               </View>
               <View style={ [layoutStyles.modalContentSection, { flexDirection: 'row', alignItems: 'center'  }] }>
                 <Text style={ layoutStyles.inputLabel }>Name:</Text>
