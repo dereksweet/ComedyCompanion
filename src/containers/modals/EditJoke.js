@@ -135,17 +135,6 @@ class EditJoke extends Component {
       this.dirty = true;
     };
 
-    let secondsString;
-    if (jokeState.joke._seconds !== null) {
-      if ((jokeState.joke._seconds < 10) && (jokeState.joke._seconds >= 0))
-        secondsString = "0" + jokeState.joke._seconds.toString();
-      else
-        secondsString = jokeState.joke._seconds.toString();
-    } else {
-      secondsString = "";
-    }
-
-
     return (
       <ShakingView ref={(editJokeView) => this.editJokeView = editJokeView}
                    style={[layoutStyles.modal, layoutStyles.centeredFlex]}>
@@ -172,7 +161,7 @@ class EditJoke extends Component {
                            placeholder="sec"
                            keyboardType="numeric"
                            onChangeText={(text) => jokeActions.setSeconds(text)}
-                           value={ secondsString } />
+                           value={ jokeState.joke._seconds !== null ? jokeState.joke._seconds.toString() : '' } />
               </View>
               <View style={ [layoutStyles.modalContentSection, { flexDirection: 'row', alignItems: 'center'  }] }>
                 <Text style={ layoutStyles.inputLabel }>Name:</Text>
