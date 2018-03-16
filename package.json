@@ -25,6 +25,7 @@
     "react-native-sweet-record": "1.0.0",
     "react-native-swipeout": "^2.1.3",
     "react-native-buttons": "git://github.com/dereksweet/react-native-buttons.git",
+    "react-native-datepicker": "~1.6.0",
     "react-native-vector-icons": "~4.5.0",
     "react-native-zoom-image": "0.1.0",
     "react-native-press-menu": "0.0.1",

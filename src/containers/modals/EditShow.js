@@ -5,7 +5,7 @@ import { View, ScrollView, TouchableHighlight, TouchableWithoutFeedback, Text, T
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 import {Button} from 'react-native-buttons';
-// import { DatePicker } from 'react-native-ui-xg';
+import { DatePicker } from 'react-native-datepicker';
 import moment from 'moment';
 
 import ShakingView from '../../components/ShakingView';
@@ -202,28 +202,28 @@ class EditShow extends Component {
                 </View>
                 <View style={ [layoutStyles.modalContentSection, { flexDirection: 'row', alignItems: 'center'  }] }>
                   <Text style={ layoutStyles.inputLabel }>Date:</Text>
-                  {/*<DatePicker*/}
-                    {/*style={{width: 200}}*/}
-                    {/*date={moment(showState.show._date).utc().format("YYYY-MM-DD")}*/}
-                    {/*mode="date"*/}
-                    {/*placeholder="select date"*/}
-                    {/*format="YYYY-MM-DD"*/}
-                    {/*confirmBtnText="Confirm"*/}
-                    {/*cancelBtnText="Cancel"*/}
-                    {/*customStyles={{*/}
-                      {/*dateIcon: {*/}
-                        {/*position: 'absolute',*/}
-                        {/*left: 0,*/}
-                        {/*top: 4,*/}
-                        {/*marginLeft: 0*/}
-                      {/*},*/}
-                      {/*dateInput: {*/}
-                        {/*marginLeft: 36,*/}
-                        {/*backgroundColor: '#FFFFFF'*/}
-                      {/*}*/}
-                    {/*}}*/}
-                    {/*onDateChange={(date) => { showActions.setShowDate(new Date(date))}}*/}
-                  {/*/>*/}
+                  <DatePicker
+                    style={{width: 200}}
+                    date={moment(showState.show._date).utc().format("YYYY-MM-DD")}
+                    mode="date"
+                    placeholder="select date"
+                    format="YYYY-MM-DD"
+                    confirmBtnText="Confirm"
+                    cancelBtnText="Cancel"
+                    customStyles={{
+                      dateIcon: {
+                        position: 'absolute',
+                        left: 0,
+                        top: 4,
+                        marginLeft: 0
+                      },
+                      dateInput: {
+                        marginLeft: 36,
+                        backgroundColor: '#FFFFFF'
+                      }
+                    }}
+                    onDateChange={(date) => { showActions.setShowDate(new Date(date))}}
+                  />
                 </View>
                 <View style={ [layoutStyles.modalContentSection, { flexDirection: 'row', alignItems: 'center'  }] }>
                   <Text style={ layoutStyles.inputLabel }>Set List:</Text>
