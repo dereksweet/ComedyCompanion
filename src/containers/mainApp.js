@@ -1,6 +1,6 @@
 'use strict';
 
-const VERSION=1.3;
+const VERSION=1.4;
 
 import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';

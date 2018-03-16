@@ -37,47 +37,30 @@ class About extends Component {
                 </View>
                 <View style={{ paddingTop: 10, justifyContent: 'center', alignItems: 'center' }}>
                   <View style={{ borderBottomWidth: 1 }}>
-                    <Text style={{ fontWeight: 'bold' }}>The Comedy Companion v1.3</Text>
+                    <Text style={{ fontWeight: 'bold' }}>The Comedy Companion v1.4</Text>
                   </View>
                 </View>
                 <View style={{ paddingTop: 10, justifyContent: 'center', alignItems: 'center' }}>
                   <Text style={{ textAlign: 'center' }}>
-                    Woah, it feels like a lifetime since I put out an update for this app. See,
-                    this game called "Destiny 2" came out and I've been holed up like a fucking
-                    hermit at night giving away hours of my life to watch an objectively
-                    meaningless number slowly climb closer to 300 rather than bring you updates.
-                    I'm not proud of it, but it's the truth. I will chastise myself with 100
-                    lashes nightly in repentance. Here are the new features for version 1.3 of
-                    The Comedy Companion:
+                    Long time no speak. I hope the app is serving you well. I am starting to pick up
+                    the code and develop some new features that have nagged me while using it the past
+                    few months. Here are the new features for version 1.4 of The Comedy Companion:
                   </Text>
                 </View>
                 <View style={{ paddingTop: 10, justifyContent: 'flex-start', alignItems: 'flex-start', padding: 20 }}>
                   <View style={{ flexDirection: 'row' }}>
                     <Text style={{ paddingTop: 9 }}>{bulletIcon}</Text>
                     <Text style={{ textAlign: 'left', fontWeight: 'bold', marginTop: 5, marginLeft: 5 }}>
-                      Export Menu! The iCloud backup feature for iOS users has been moved, and a new email
-                      export feature for ALL users has been added, to a new top nav section. Look for it
-                      in the top right of the app.
+                      Joke Times and Set List Length Calculation! You can now associate a number of minutes and
+                      seconds with each joke. Then, while building a set list, if you have not defined a length
+                      the calculated length will be displayed.
                     </Text>
                   </View>
                   <View style={{ flexDirection: 'row' }}>
                     <Text style={{ paddingTop: 9 }}>{bulletIcon}</Text>
                     <Text style={{ textAlign: 'left', fontWeight: 'bold', marginTop: 5, marginLeft: 5 }}>
-                      Email Export! You can now export your jokes and set lists at the touch of a button,
-                      using your own phone's email capabilities, to any email address you like.
-                    </Text>
-                  </View>
-                  <View style={{ flexDirection: 'row' }}>
-                    <Text style={{ paddingTop: 9 }}>{bulletIcon}</Text>
-                    <Text style={{ textAlign: 'left', fontWeight: 'bold', marginTop: 5, marginLeft: 5 }}>
-                      HTML Formatted emails and Plain Text formatted emails are both supported.
-                    </Text>
-                  </View>
-                  <View style={{ flexDirection: 'row' }}>
-                    <Text style={{ paddingTop: 9 }}>{bulletIcon}</Text>
-                    <Text style={{ textAlign: 'left', fontWeight: 'bold', marginTop: 5, marginLeft: 5 }}>
-                      NOTE: Some Android users may not see anything but weird spacing for the formatted
-                      emails. If you experience problems please let me know on the Facebook group.
+                      Set List Building Improvements! When editing a set list, the list of jokes on the left
+                      will no longer display jokes that have been added to the set list.
                     </Text>
                   </View>
                 </View>
@@ -97,19 +80,6 @@ class About extends Component {
                   <TouchableHighlight onPress={ () => Linking.openURL('http://www.github.com/dereksweet/ComedyCompanion') }>
                     <Text style={{ textAlign: 'center', color: '#0000FF' }}>
                       www.github.com/dereksweet/ComedyCompanion
-                    </Text>
-                  </TouchableHighlight>
-                </View>
-                <View style={{ paddingTop: 10, justifyContent: 'center', alignItems: 'center' }}>
-                  <Text style={{ textAlign: 'center' }}>
-                    Oh, and by the way, have you signed up for Comediate yet? It's the best new way for people to find your comedy
-                    and see your upcoming shows. It's also entirely free for fans and comics alike. Click the link below to join!
-                  </Text>
-                </View>
-                <View style={{ paddingTop: 10, paddingBottom: 20, justifyContent: 'center', alignItems: 'center' }}>
-                  <TouchableHighlight onPress={ () => Linking.openURL('http://www.comediate.com') }>
-                    <Text style={{ textAlign: 'center', color: '#0000FF' }}>
-                      www.comediate.com
                     </Text>
                   </TouchableHighlight>
                 </View>
