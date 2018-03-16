@@ -8,11 +8,11 @@
   },
   "dependencies": {
     "debounce": "^1.0.2",
-    "moment": "2.19.3",
     "react": "15.4.2",
+    "prop-types": "15.6.0",
     "react-native": "0.42.3",
     "react-native-audio": "^3.2.2",
-    "react-native-fs": "^2.3.3",
+    "react-native-fs": "~2.3.3",
     "react-native-hamburger": "0.0.2",
     "react-native-icloudstore": "^0.9.0",
     "react-native-keep-awake": "^2.0.4",
@@ -29,6 +29,7 @@
     "react-redux": "4.4.7",
     "redux": "3.6.0",
     "redux-thunk": "2.2.0",
+    "moment": "2.19.3",
     "uuid": "^3.0.1"
   },
   "devDependencies": {
