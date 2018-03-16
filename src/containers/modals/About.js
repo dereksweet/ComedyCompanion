@@ -60,7 +60,7 @@ class About extends Component {
                     <Text style={{ paddingTop: 9 }}>{bulletIcon}</Text>
                     <Text style={{ textAlign: 'left', fontWeight: 'bold', marginTop: 5, marginLeft: 5 }}>
                       Set List Building Improvements! When editing a set list, the list of jokes on the left
-                      will no longer display jokes that have been added to the set list.
+                      will no longer display jokes that have been added to the set list on the right.
                     </Text>
                   </View>
                 </View>
