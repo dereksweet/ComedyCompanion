@@ -4,7 +4,8 @@ import React, {Component} from 'react';
 import { View, ScrollView, TouchableHighlight, TouchableWithoutFeedback, Text, TextInput, Platform, Keyboard, Button as NativeButton } from 'react-native';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
-import {Button, DatePicker} from 'react-native-ui-xg';
+import {Button} from 'react-native-buttons';
+// import { DatePicker } from 'react-native-ui-xg';
 import moment from 'moment';
 
 import ShakingView from '../../components/ShakingView';
@@ -201,28 +202,28 @@ class EditShow extends Component {
                 </View>
                 <View style={ [layoutStyles.modalContentSection, { flexDirection: 'row', alignItems: 'center'  }] }>
                   <Text style={ layoutStyles.inputLabel }>Date:</Text>
-                  <DatePicker
-                    style={{width: 200}}
-                    date={moment(showState.show._date).utc().format("YYYY-MM-DD")}
-                    mode="date"
-                    placeholder="select date"
-                    format="YYYY-MM-DD"
-                    confirmBtnText="Confirm"
-                    cancelBtnText="Cancel"
-                    customStyles={{
-                      dateIcon: {
-                        position: 'absolute',
-                        left: 0,
-                        top: 4,
-                        marginLeft: 0
-                      },
-                      dateInput: {
-                        marginLeft: 36,
-                        backgroundColor: '#FFFFFF'
-                      }
-                    }}
-                    onDateChange={(date) => { showActions.setShowDate(new Date(date))}}
-                  />
+                  {/*<DatePicker*/}
+                    {/*style={{width: 200}}*/}
+                    {/*date={moment(showState.show._date).utc().format("YYYY-MM-DD")}*/}
+                    {/*mode="date"*/}
+                    {/*placeholder="select date"*/}
+                    {/*format="YYYY-MM-DD"*/}
+                    {/*confirmBtnText="Confirm"*/}
+                    {/*cancelBtnText="Cancel"*/}
+                    {/*customStyles={{*/}
+                      {/*dateIcon: {*/}
+                        {/*position: 'absolute',*/}
+                        {/*left: 0,*/}
+                        {/*top: 4,*/}
+                        {/*marginLeft: 0*/}
+                      {/*},*/}
+                      {/*dateInput: {*/}
+                        {/*marginLeft: 36,*/}
+                        {/*backgroundColor: '#FFFFFF'*/}
+                      {/*}*/}
+                    {/*}}*/}
+                    {/*onDateChange={(date) => { showActions.setShowDate(new Date(date))}}*/}
+                  {/*/>*/}
                 </View>
                 <View style={ [layoutStyles.modalContentSection, { flexDirection: 'row', alignItems: 'center'  }] }>
                   <Text style={ layoutStyles.inputLabel }>Set List:</Text>

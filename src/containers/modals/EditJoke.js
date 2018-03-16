@@ -4,7 +4,7 @@ import React, {Component} from 'react';
 import { View, Text, TouchableHighlight, TouchableWithoutFeedback, Switch, TextInput, KeyboardAvoidingView, Platform, Keyboard } from 'react-native';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
-import {Button} from 'react-native-ui-xg';
+import {Button} from 'react-native-buttons';
 
 import * as routingActions from '../../actions/routingActions';
 import * as jokeActions from '../../actions/jokeActions';

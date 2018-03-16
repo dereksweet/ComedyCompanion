@@ -4,7 +4,7 @@ import React, {Component} from 'react';
 import { View, Text, TextInput, TouchableHighlight, TouchableWithoutFeedback, Platform, Keyboard } from 'react-native';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
-import {Button} from 'react-native-ui-xg';
+import {Button} from 'react-native-buttons';
 
 import JokeSelector from './EditSetList/JokeSelector';
 import SetListJokes from './EditSetList/SetListJokes';

@@ -4,7 +4,7 @@ import React, {Component} from 'react';
 import { View, Text, ScrollView, TouchableHighlight, Linking, Image } from 'react-native';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
-import {Button} from 'react-native-ui-xg';
+import {Button} from 'react-native-buttons';
 
 import * as routingActions from '../../actions/routingActions';
 
