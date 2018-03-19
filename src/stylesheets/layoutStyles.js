@@ -61,6 +61,11 @@ export default layoutStyles = StyleSheet.create({
     paddingRight: 10,
     textAlignVertical: 'center'
   },
+  postLabel: {
+    marginLeft: 10,
+    textAlignVertical: 'center',
+    fontSize: 11
+  },
   settingsSectionTitle: {
     fontSize: 13,
     fontWeight: 'bold',
