@@ -52,8 +52,8 @@ class About extends Component {
                     <Text style={{ paddingTop: 9 }}>{bulletIcon}</Text>
                     <Text style={{ textAlign: 'left', fontWeight: 'bold', marginTop: 5, marginLeft: 5 }}>
                       Joke Times and Set List Length Calculation! You can now associate a number of minutes and
-                      seconds with each joke. Then, while building a set list, if you have not defined a length
-                      the calculated length will be displayed.
+                      seconds with each joke. Then, while building a set list, the estimated length of your
+                      set will be displayed.
                     </Text>
                   </View>
                   <View style={{ flexDirection: 'row' }}>
