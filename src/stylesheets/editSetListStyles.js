@@ -17,6 +17,7 @@ export default editSetListStyles = StyleSheet.create({
     borderWidth: 1,
     paddingLeft: 10,
     paddingRight: 10,
-    backgroundColor: '#FFFFFF'
+    backgroundColor: '#FFFFFF',
+    textAlign: 'center'
   }
 });

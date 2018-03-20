@@ -13,7 +13,6 @@ export default function joke(state = initialState, action = {}) {
         ...state,
         joke: action.joke
       };
-      break;
     case types.TOGGLE_IN_DEVELOPMENT:
       state.joke._in_development = !state.joke._in_development;
 
@@ -21,7 +20,6 @@ export default function joke(state = initialState, action = {}) {
         ...state,
         joke: state.joke
       };
-      break;
     case types.SET_NAME:
       state.joke._name = action.name;
 
@@ -29,7 +27,21 @@ export default function joke(state = initialState, action = {}) {
         ...state,
         joke: state.joke
       };
-      break;
+    case types.SET_MINUTES:
+      console.log(action.minutes);
+      state.joke._minutes = action.minutes;
+
+      return {
+        ...state,
+        joke: state.joke
+      };
+    case types.SET_SECONDS:
+      state.joke._seconds = action.seconds;
+
+      return {
+        ...state,
+        joke: state.joke
+      };
     case types.SET_NOTES:
       state.joke._notes = action.notes;
 
@@ -37,7 +49,6 @@ export default function joke(state = initialState, action = {}) {
         ...state,
         joke: state.joke
       };
-      break;
     default:
       return state;
   }

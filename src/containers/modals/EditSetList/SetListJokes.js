@@ -11,6 +11,7 @@ import * as routingActions from '../../../actions/routingActions';
 
 import jokeListStyles from '../../../stylesheets/jokeListStyles';
 import setListListStyles from '../../../stylesheets/setListListStyles';
+import JokeListHelper from "../../../helpers/jokeListHelper";
 
 class JokeSelector extends Component {
   constructor(props) {
@@ -57,6 +58,7 @@ class JokeSelector extends Component {
     const selectJoke = (joke) => {
       delete this.rowHeights[joke._id];
       setListActions.removeJokeFromSL(joke);
+      JokeListHelper.refreshJokeListSelector();
     };
 
     let data = {};

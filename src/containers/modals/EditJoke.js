@@ -17,6 +17,7 @@ import JokeListHelper from '../../helpers/jokeListHelper';
 
 import layoutStyles from '../../stylesheets/layoutStyles';
 import editJokeStyles from '../../stylesheets/editJokeStyles';
+import editSetListStyles from "../../stylesheets/editSetListStyles";
 
 class EditJoke extends Component {
   constructor(props) {
@@ -27,7 +28,9 @@ class EditJoke extends Component {
       keyboard_height: 0,
       show_delete_confirm: false,
       show_cancel_confirm: false,
-      name_input_valid: true
+      name_input_valid: true,
+      minutes_input_valid: true,
+      seconds_input_valid: true
     };
 
     this.dirty = false;
@@ -80,6 +83,38 @@ class EditJoke extends Component {
         fields_valid = false;
         this.setState({
           name_input_valid: false
+        });
+      }
+
+      try {
+        const intMinutes = parseInt(jokeState.joke._minutes);
+
+        if (intMinutes > 59 || intMinutes < 0) {
+          fields_valid = false;
+          this.setState({
+            minutes_input_valid: false
+          });
+        }
+      } catch(error) {
+        fields_valid = false;
+        this.setState({
+          minutes_input_valid: false
+        });
+      }
+
+      try {
+        const intSeconds = parseInt(jokeState.joke._seconds);
+
+        if (intSeconds > 59 || intSeconds < 0) {
+          fields_valid = false;
+          this.setState({
+            seconds_input_valid: false
+          });
+        }
+      } catch(error) {
+        fields_valid = false;
+        this.setState({
+          seconds_input_valid: false
         });
       }
 
@@ -148,6 +183,19 @@ class EditJoke extends Component {
                 <View style={{flex: 1, flexDirection: 'row', justifyContent: 'flex-end'}}>
                   <Text style={ layoutStyles.inputLabel }></Text>
                 </View>
+                <TextInput style={ [editJokeStyles.timeInput, this.state.minutes_input_valid ? {} : layoutStyles.errorInput] }
+                           underlineColorAndroid='transparent'
+                           placeholder="min"
+                           keyboardType="numeric"
+                           onChangeText={(text) => jokeActions.setMinutes(text)}
+                           value={ jokeState.joke._minutes !== null ? jokeState.joke._minutes.toString() : '' } />
+                <Text style={[layoutStyles.inputLabel, { paddingLeft: 5, paddingRight: 5 }]}>:</Text>
+                <TextInput style={ [editJokeStyles.timeInput, this.state.seconds_input_valid ? {} : layoutStyles.errorInput] }
+                           underlineColorAndroid='transparent'
+                           placeholder="sec"
+                           keyboardType="numeric"
+                           onChangeText={(text) => jokeActions.setSeconds(text)}
+                           value={ jokeState.joke._seconds !== null ? jokeState.joke._seconds.toString() : '' } />
               </View>
               <View style={ [layoutStyles.modalContentSection, { flexDirection: 'row', alignItems: 'center'  }] }>
                 <Text style={ layoutStyles.inputLabel }>Name:</Text>
@@ -166,7 +214,7 @@ class EditJoke extends Component {
                            value={ jokeState.joke._notes } />
               </View>
               <View style={ { flexDirection: 'row' }}>
-                { (jokeState.joke._id != -1) &&
+                { (jokeState.joke._id !== -1) &&
                 <View style={ { flex: 1 } }>
                   <Button type="surface" size="large" theme="red" selfStyle={ layoutStyles.deleteButton } onPress={ toggleDeleteConfirm }>
                     <Text style={layoutStyles.buttonText}>Delete</Text>

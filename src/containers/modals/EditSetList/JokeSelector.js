@@ -27,14 +27,16 @@ class JokeSelector extends Component {
   }
 
   render() {
-    const { jokeListState, jokeListActions, setListActions } = this.props;
+    const { jokeListState, setListState, jokeListActions, setListActions } = this.props;
 
     let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    const jokeListDS = ds.cloneWithRows(jokeListState.joke_list_selector.map((joke) => { return joke.name }));
-    
+    const jokeListDS = ds.cloneWithRows(jokeListState.joke_list_selector
+      .map((joke) => { return joke.name }));
+
     const selectJoke = (id) => {
       Joke.get(id).then((joke) => {
         setListActions.addJokeToSL(joke);
+        JokeListHelper.refreshJokeListSelector();
       });
     };
 
@@ -115,7 +117,8 @@ class JokeSelector extends Component {
 }
 
 export default connect(state => ({
-    jokeListState: state.joke_list
+    jokeListState: state.joke_list,
+    setListState: state.set_list,
   }),
   (dispatch) => ({
     jokeListActions: bindActionCreators(jokeListActions, dispatch),

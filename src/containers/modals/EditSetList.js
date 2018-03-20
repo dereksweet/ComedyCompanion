@@ -117,6 +117,8 @@ class EditSetList extends Component {
       setListActions.duplicateSL();
     };
 
+    const setListLengthString = setListState.set_list.setListLength();
+
     return (
       <ShakingView ref={(editSetListView) => this.editSetListView = editSetListView}
                    style={[layoutStyles.modal, layoutStyles.centeredFlex]}>
@@ -134,14 +136,23 @@ class EditSetList extends Component {
               </View>
               <View style={ [layoutStyles.modalContentSection, { flexDirection: 'row', alignItems: 'center', backgroundColor: '#EEEEEE'  }] }>
                 <View style={ { flex: 1, flexDirection: 'row', alignItems: 'center'  } }>
-                  <Text style={ layoutStyles.inputLabel }>Length:</Text>
+                  <View>
+                    <Text style={ layoutStyles.inputLabel }>Length:</Text>
+                    <Text style={ [layoutStyles.inputLabel, {marginLeft: 5}] }>(min)</Text>
+                  </View>
                   <TextInput style={ editSetListStyles.lengthInput }
                              underlineColorAndroid='transparent'
+                             placeholderTextColor='red'
                              placeholder=""
                              onChangeText={(text) => setListActions.setSLLength(text)}
                              keyboardType="numeric"
                              value={ setListState.set_list._length ? setListState.set_list._length.toString() : '' } />
-                  <Text style={ [layoutStyles.inputLabel, {marginLeft: 10}] }>min</Text>
+                  { setListLengthString !== '0' &&
+                    <View>
+                      <Text style={layoutStyles.postLabel}>Estimated: </Text>
+                      <Text style={layoutStyles.postLabel}>{setListLengthString + ' min'}</Text>
+                    </View>
+                  }
                 </View>
                 { setListState.set_list._id != -1 &&
                   <View>
