@@ -1,3 +1,8 @@
+## Version 1.4 (March 19, 2017)
+
+- Joke Times and Set List Length Calculation! You can now associate a number of minutes and seconds with each joke. Then, while building a set list, the estimated length of your set will be displayed.
+- Set List Building Improvements! When editing a set list, the list of jokes on the left will no longer display jokes that have been added to the set list on the right.
+
 ## Version 1.3 (October 6, 2017)
 
 - Export Menu! The iCloud backup feature for iOS users has been moved, and a new email export feature for ALL users has been added, to a new top nav section. Look for it in the top right of the app.
