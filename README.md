@@ -9,12 +9,13 @@ Developed in 100% React Native, "The Comedy Companion" is the world's first prod
 - Running rating of Joke performance by swiping left for good, right for bad on a given show
 - Web Browser editing of jokes through a websocket API
 
-### Currently Available Features (v1.3)
+### Currently Available Features (v1.4)
 
 - Email Export of Jokes, Set Lists, and Show recordings
 - Associate an Audio Recording with any Given Show
 - Track solid bits as well as those you're currently working on
 - Associate detailed notes with each bit
+- Associate a length in minutes and seconds with each joke and estimate set list lengths as you build them
 - Create set lists with ease, dragging and dropping jokes into place, and track their estimated length
 - Track every show you perform, which set list was used, the venue performed at including city and state
 - Reorder everything on the fly as well as search for specific keywords in your bits
