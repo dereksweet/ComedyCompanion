@@ -4,7 +4,7 @@ import React, {Component} from 'react';
 import { View, ScrollView, Text, TextInput, AsyncStorage, Platform } from 'react-native';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
-import {Button} from 'react-native-ui-xg';
+import {Button} from 'react-native-buttons';
 import iCloudStorage from 'react-native-icloudstore';
 import { SegmentedControls } from 'react-native-radio-buttons';
 

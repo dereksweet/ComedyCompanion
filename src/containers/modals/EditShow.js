@@ -4,7 +4,8 @@ import React, {Component} from 'react';
 import { View, ScrollView, TouchableHighlight, TouchableWithoutFeedback, Text, TextInput, Platform, Keyboard, Button as NativeButton } from 'react-native';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
-import {Button, DatePicker} from 'react-native-ui-xg';
+import {Button} from 'react-native-buttons';
+import {DatePicker} from 'react-native-datepicker';
 import moment from 'moment';
 
 import ShakingView from '../../components/ShakingView';

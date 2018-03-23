@@ -4,7 +4,7 @@ import React, {Component} from 'react';
 import { View, Text, TouchableHighlight, Modal } from 'react-native';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
-import {Button} from 'react-native-ui-xg';
+import {Button} from 'react-native-buttons';
 import Swipeout from 'react-native-swipeout';
 
 import { normalizeWidth } from '../../../../helpers/sizeHelper';

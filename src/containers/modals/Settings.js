@@ -4,7 +4,7 @@ import React, {Component} from 'react';
 import { View, ScrollView, Text, Switch, AsyncStorage, Platform } from 'react-native';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
-import {Button} from 'react-native-ui-xg';
+import {Button} from 'react-native-buttons';
 import { SegmentedControls } from 'react-native-radio-buttons';
 
 import Setting from '../../models/setting';
