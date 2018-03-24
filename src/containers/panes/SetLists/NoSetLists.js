@@ -33,7 +33,7 @@ class NoSetLists extends Component {
         {largeSetListsIcon}
         <Text style={ {paddingTop: 25} }>You do not appear to have any set lists yet!</Text>
         <Text style={ {paddingBottom: 20} }>Click the button below to add one..</Text>
-        <View style={ {paddingBottom: 100} }>
+        <View style={ {paddingBottom: 100, alignItems: 'center'} }>
           <Button type="surface" size="large" theme="red" onPress={ addSetList }>
             <Text>{addSetListIcon}</Text>
             <Text style={layoutStyles.buttonText}>Add Set List</Text>

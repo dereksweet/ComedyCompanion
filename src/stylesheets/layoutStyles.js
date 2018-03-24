@@ -2,7 +2,11 @@ import { StyleSheet, Platform } from 'react-native';
 
 export default layoutStyles = StyleSheet.create({
   mainContainer: {
-    backgroundColor: '#F8ECC2'
+    backgroundColor: '#F8ECC2',
+
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'stretch'
   },
   centeredFlex: {
     flex: 1,

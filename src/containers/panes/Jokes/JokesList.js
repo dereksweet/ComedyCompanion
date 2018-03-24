@@ -110,34 +110,32 @@ class JokesList extends Component {
 
     return (
       <View style={{ flex: 1 }}>
-        <View style={{ justifyContent: 'flex-start' }}>
-          <View style={{ backgroundColor: '#FFFFFF', width: '100%' }}>
-            <SearchBar
-              ref={(searchBar) => { this.searchBar = searchBar }}
-              onSearchChange={ nameFilterChanged }
-              height={40}
-              placeholder={'Search...'}
-              autoCorrect={false}
-              padding={0}
-              returnKeyType={'done'}
-            />
-          </View>
-          <ListView
-            dataSource={ jokeListDS }
-            renderRow={ renderRow }
-            renderSeparator={ renderSeparator }
-            enableEmptySections={ true }
-            style={{ backgroundColor: '#FFFFFF', flex: 1 }}
+        <View style={{ backgroundColor: '#FFFFFF' }}>
+          <SearchBar
+            ref={(searchBar) => { this.searchBar = searchBar }}
+            onSearchChange={ nameFilterChanged }
+            height={40}
+            placeholder={'Search...'}
+            autoCorrect={false}
+            padding={0}
+            returnKeyType={'done'}
           />
-          <View style={ layoutStyles.toolbar }>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Text style={ layoutStyles.inputLabel }>In Development:</Text>
-              <Switch onValueChange={ inDevelopmentChanged }
-                      value={jokeListState.in_development} />
-            </View>
-            <View style={{ flex: 1, alignItems: 'flex-end' }}>
-              { renderAddButton() }
-            </View>
+        </View>
+        <ListView
+          dataSource={ jokeListDS }
+          renderRow={ renderRow }
+          renderSeparator={ renderSeparator }
+          enableEmptySections={ true }
+          style={{ backgroundColor: '#FFFFFF', flex: 1 }}
+        />
+        <View style={ layoutStyles.toolbar }>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Text style={ layoutStyles.inputLabel }>In Development:</Text>
+            <Switch onValueChange={ inDevelopmentChanged }
+                    value={jokeListState.in_development} />
+          </View>
+          <View style={{ flex: 1, alignItems: 'flex-end' }}>
+            { renderAddButton() }
           </View>
         </View>
       </View>

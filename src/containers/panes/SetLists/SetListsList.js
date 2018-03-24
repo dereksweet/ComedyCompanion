@@ -92,21 +92,19 @@ class SetListsList extends Component {
 
     return (
       <View style={{ flex: 1 }}>
-        <View style={{ justifyContent: 'flex-start' }}>
-          <ListView
-            dataSource={ setListListDS }
-            renderRow={ renderRow }
-            renderSeparator={ renderSeparator }
-            enableEmptySections={ true }
-            style={{ backgroundColor: '#FFFFFF', flex: 1 }}
-          />
-          <View style={ layoutStyles.toolbar }>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Text></Text>
-            </View>
-            <View style={{ flex: 1, alignItems: 'flex-end' }}>
-              { renderAddButton() }
-            </View>
+        <ListView
+          dataSource={ setListListDS }
+          renderRow={ renderRow }
+          renderSeparator={ renderSeparator }
+          enableEmptySections={ true }
+          style={{ backgroundColor: '#FFFFFF', flex: 1 }}
+        />
+        <View style={ layoutStyles.toolbar }>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Text></Text>
+          </View>
+          <View style={{ flex: 1, alignItems: 'flex-end' }}>
+            { renderAddButton() }
           </View>
         </View>
       </View>

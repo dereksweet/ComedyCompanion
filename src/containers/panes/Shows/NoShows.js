@@ -33,7 +33,7 @@ class NoShows extends Component {
         {largeShowsIcon}
         <Text style={ {paddingTop: 25} }>You do not appear to have any shows yet!</Text>
         <Text style={ {paddingBottom: 20} }>Click the button below to add one..</Text>
-        <View style={ {paddingBottom: 100} }>
+        <View style={ {paddingBottom: 100, alignItems: 'center'} }>
           <Button type="surface" size="large" theme="red" onPress={ addShow }>
             <Text>{addShowIcon}</Text>
             <Text style={layoutStyles.buttonText}>Add Show</Text>

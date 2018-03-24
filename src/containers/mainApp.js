@@ -4,7 +4,7 @@ const VERSION=1.4;
 
 import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
-import { View, Image, Modal } from 'react-native';
+import { View, Image, Modal, Text } from 'react-native';
 import { connect } from 'react-redux';
 
 import {SlidingPane, SlidingPaneWrapper} from 'react-native-sliding-panes';
@@ -104,7 +104,7 @@ class MainApp extends Component {
     };
 
     return (
-      <View style={[layoutStyles.centeredFlex, layoutStyles.mainContainer]}>
+      <View style={layoutStyles.mainContainer}>
         <View style={{ flex: 1 }}>
           <StatusBar setActivePane={setActivePane} />
           <SlidingPaneWrapper style={{}} ref={(slidingPaneWrapper) => { this.slidingPaneWrapper = slidingPaneWrapper }}>
