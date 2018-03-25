@@ -44,8 +44,7 @@ export default layoutStyles = StyleSheet.create({
     fontWeight: 'bold'
   },
   modal: {
-    backgroundColor: "#EEEEEE",
-    height: '100%'
+    backgroundColor: "#EEEEEE"
   },
   modalContent: {
     flex: 1,
@@ -130,7 +129,8 @@ export default layoutStyles = StyleSheet.create({
   },
   cancelButton: {
     backgroundColor: '#999999',
-    borderColor: '#888888'
+    borderColor: '#888888',
+    width: '100%'
   },
   confirmButton: {
     backgroundColor: '#009900',

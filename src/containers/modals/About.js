@@ -92,8 +92,8 @@ class About extends Component {
                 </View>
               </View>
             </ScrollView>
-            <View style={{ flexDirection: 'row', width: '100%', borderTopColor: '#999999', borderTopWidth: 1 }}>
-              <View style={ { flex: 1 } }>
+            <View style={{ flexDirection: 'row', height: 47, borderTopColor: '#999999', borderTopWidth: 1 }}>
+              <View style={ { flex: 1, flexDirection: 'row' } }>
                 <Button type="surface" size="large" theme="gray" selfStyle={ layoutStyles.cancelButton } onPress={ close }>
                   <Text style={layoutStyles.buttonText}>Close</Text>
                 </Button>
