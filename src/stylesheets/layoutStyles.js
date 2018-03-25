@@ -49,7 +49,8 @@ export default layoutStyles = StyleSheet.create({
   modalContent: {
     flex: 1,
     borderTopColor: '#CCCCCC',
-    borderTopWidth: 1
+    borderTopWidth: 1,
+    width: '100%'
   },
   modalContentSection: {
     borderBottomWidth: 1,
@@ -134,11 +135,13 @@ export default layoutStyles = StyleSheet.create({
   },
   confirmButton: {
     backgroundColor: '#009900',
-    borderColor: '#008800'
+    borderColor: '#008800',
+    width: '100%'
   },
   deleteButton: {
     backgroundColor: '#DD0000',
-    borderColor: '#CC0000'
+    borderColor: '#CC0000',
+    width: '100%'
   },
   errorInput: {
     borderColor: '#FF0000',
