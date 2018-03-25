@@ -155,7 +155,7 @@ class EditSetList extends Component {
                   }
                 </View>
                 { setListState.set_list._id != -1 &&
-                  <View>
+                  <View style={{ width: 120, height: 45, alignItems: 'flex-end' }}>
                     <Button type="surface" size="large" theme="red" onPress={ duplicateSetList }>
                       <Text style={{ color: 'white', fontWeight: 'bold' }}>Duplicate</Text>
                     </Button>
@@ -170,7 +170,7 @@ class EditSetList extends Component {
                   <SetListJokes />
                 </View>
               </View>
-              <View style={ { flexDirection: 'row', width: '100%' }}>
+              <View style={ { flexDirection: 'row', width: '100%', height: 47 }}>
                 { (setListState.set_list._id != -1) &&
                   <View style={ { flex: 1 } }>
                     <Button type="surface" size="large" theme="red" selfStyle={ layoutStyles.deleteButton } onPress={ toggleDeleteConfirm }>

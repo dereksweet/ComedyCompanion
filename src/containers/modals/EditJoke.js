@@ -213,7 +213,7 @@ class EditJoke extends Component {
                            onChangeText={(text) => { jokeActions.setNotes(text); setDirty(); }}
                            value={ jokeState.joke._notes } />
               </View>
-              <View style={ { flexDirection: 'row', height: 47 }}>
+              <View style={ { flexDirection: 'row', height: 47, width: '100%' }}>
                 { (jokeState.joke._id !== -1) &&
                 <View style={ { flex: 1 } }>
                   <Button type="surface" size="large" theme="red" selfStyle={ layoutStyles.deleteButton } onPress={ toggleDeleteConfirm }>
