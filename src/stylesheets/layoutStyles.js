@@ -96,8 +96,7 @@ export default layoutStyles = StyleSheet.create({
   addButton: {
     flex: 1,
     alignItems: 'center',
-    paddingTop: 7,
-    paddingLeft: 7
+    paddingTop: 7
   },
   confirmBox: {
     borderColor: '#999999',

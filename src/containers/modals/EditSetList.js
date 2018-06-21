@@ -193,14 +193,20 @@ class EditSetList extends Component {
           </TouchableWithoutFeedback>
         { this.state.show_delete_confirm &&
           <View style={ layoutStyles.confirmBox }>
-            <Text style={{ textAlign: 'center', fontSize: 20 }}>Are you SURE you want to delete this set list?</Text>
+            <View style={{ paddingBottom: 40, paddingLeft: 20, paddingRight: 20 }}>
+              <Text style={{ textAlign: 'center', fontSize: 20 }}>Are you SURE you want to delete this set list?</Text>
+            </View>
             <View style={{ paddingTop: 25, flexDirection: 'row' }}>
-              <Button type="surface" size="large" theme="red" selfStyle={ layoutStyles.deleteButton } onPress={ toggleDeleteConfirm }>
-                <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>NO</Text>
-              </Button>
-              <Button type="surface" size="large" theme="blue" selfStyle={ [layoutStyles.confirmButton, { marginLeft: 10 }] } onPress={ destroy }>
-                <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>YES</Text>
-              </Button>
+              <View style={{ flex: 1 }}>
+                <Button type="surface" size="large" theme="red" selfStyle={ layoutStyles.deleteButton } onPress={ toggleDeleteConfirm }>
+                  <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>NO</Text>
+                </Button>
+              </View>
+              <View style={{ flex: 1, paddingRight: 10 }}>
+                <Button type="surface" size="large" theme="blue" selfStyle={ [layoutStyles.confirmButton, { marginLeft: 10 }] } onPress={ destroy }>
+                  <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>YES</Text>
+                </Button>
+              </View>
             </View>
           </View>
         }
