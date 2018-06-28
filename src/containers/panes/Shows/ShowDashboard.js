@@ -118,48 +118,64 @@ class ShowDashboard extends Component {
         <SetListViewer />
         { showState.delete_recording_confirm &&
           <View style={ layoutStyles.confirmBox }>
-            <Text style={{ textAlign: 'center', fontSize: 20 }}>Are you SURE you want to delete this recording?</Text>
+            <View style={{ paddingBottom: 40, paddingLeft: 20, paddingRight: 20 }}>
+              <Text style={{ textAlign: 'center', fontSize: 20 }}>Are you SURE you want to delete this recording?</Text>
+            </View>
             <View style={{ paddingTop: 25, flexDirection: 'row' }}>
-              <Button type="surface" size="large" theme="red" selfStyle={ layoutStyles.deleteButton } onPress={ showActions.toggleDeleteRecordingConfirm }>
-                <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>NO</Text>
-              </Button>
-              <Button type="surface" size="large" theme="blue" selfStyle={ [layoutStyles.confirmButton, { marginLeft: 10 }] } onPress={ this.deleteRecording }>
-                <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>YES</Text>
-              </Button>
+              <View style={{ flex: 1 }}>
+                <Button type="surface" size="large" theme="red" selfStyle={ layoutStyles.deleteButton } onPress={ showActions.toggleDeleteRecordingConfirm }>
+                  <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>NO</Text>
+                </Button>
+              </View>
+              <View style={{ flex: 1, marginRight: 10 }}>
+                <Button type="surface" size="large" theme="blue" selfStyle={ [layoutStyles.confirmButton, { marginLeft: 10 }] } onPress={ this.deleteRecording }>
+                  <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>YES</Text>
+                </Button>
+              </View>
             </View>
           </View>
         }
         { showState.replace_recording_confirm &&
           <View style={ layoutStyles.confirmBox }>
-            <Text style={{ textAlign: 'center', fontSize: 20 }}>Are you SURE you want to replace this recording?</Text>
+            <View style={{ paddingBottom: 40, paddingLeft: 20, paddingRight: 20 }}>
+              <Text style={{ textAlign: 'center', fontSize: 20 }}>Are you SURE you want to replace this recording?</Text>
+            </View>
             <View style={{ paddingTop: 25, flexDirection: 'row' }}>
-              <Button type="surface" size="large" theme="red" selfStyle={ layoutStyles.deleteButton } onPress={ showActions.toggleReplaceRecordingConfirm }>
-                <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>NO</Text>
-              </Button>
-              <Button type="surface" size="large" theme="blue" selfStyle={ [layoutStyles.confirmButton, { marginLeft: 10 }] } onPress={ this.replaceRecording }>
-                <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>YES</Text>
-              </Button>
+              <View style={{ flex: 1 }}>
+                <Button type="surface" size="large" theme="red" selfStyle={ layoutStyles.deleteButton } onPress={ showActions.toggleReplaceRecordingConfirm }>
+                  <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>NO</Text>
+                </Button>
+              </View>
+              <View style={{ flex: 1, marginRight: 10 }}>
+                <Button type="surface" size="large" theme="blue" selfStyle={ [layoutStyles.confirmButton, { marginLeft: 10 }] } onPress={ this.replaceRecording }>
+                  <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>YES</Text>
+                </Button>
+              </View>
             </View>
           </View>
         }
         { showState.show_recording_info &&
           <View style={ layoutStyles.confirmBox }>
-            <Text style={{ textAlign: 'center', fontSize: 15 }}>
-              <Text style={{ fontWeight: 'bold' }}>Recording Length</Text>: { formatDisplayTime(showState.show._show_time_seconds) }
-            </Text>
-            <Text style={{ textAlign: 'center', fontSize: 15 }}>
-              <Text style={{ fontWeight: 'bold' }}>Recording Size</Text>: { formatBytesInMegabytes(showState.audio_service.state.file_info.size) }
-            </Text>
-            <Text style={{ textAlign: 'center', fontSize: 15 }}>
-              <Text style={{ fontWeight: 'bold' }}>Remaining Space</Text>: { formatBytesInGigabytes(showState.audio_service.state.fs_info.freeSpace) }
-            </Text>
-            <Text style={{ textAlign: 'center', fontSize: 15, paddingTop: 10, paddingBottom: 10 }}>
-              You could hold { Math.floor(showState.audio_service.state.fs_info.freeSpace / showState.audio_service.state.file_info.size).toLocaleString() } more recordings this size
-            </Text>
-            <View style={{ paddingTop: 25 }}>
-              <Button type="surface" size="large" theme="red" selfStyle={ layoutStyles.confirmButton } onPress={ this.toggleRecordingInfo }>
-                <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>OK</Text>
-              </Button>
+            <View style={{ paddingBottom: 40, paddingLeft: 20, paddingRight: 20 }}>
+              <Text style={{ textAlign: 'center', fontSize: 15 }}>
+                <Text style={{ fontWeight: 'bold' }}>Recording Length</Text>: { formatDisplayTime(showState.show._show_time_seconds) }
+              </Text>
+              <Text style={{ textAlign: 'center', fontSize: 15 }}>
+                <Text style={{ fontWeight: 'bold' }}>Recording Size</Text>: { formatBytesInMegabytes(showState.audio_service.state.file_info.size) }
+              </Text>
+              <Text style={{ textAlign: 'center', fontSize: 15 }}>
+                <Text style={{ fontWeight: 'bold' }}>Remaining Space</Text>: { formatBytesInGigabytes(showState.audio_service.state.fs_info.freeSpace) }
+              </Text>
+              <Text style={{ textAlign: 'center', fontSize: 15, paddingTop: 10, paddingBottom: 10 }}>
+                You could hold { Math.floor(showState.audio_service.state.fs_info.freeSpace / showState.audio_service.state.file_info.size).toLocaleString() } more recordings this size
+              </Text>
+            </View>
+            <View style={{ paddingTop: 25, flexDirection: 'row' }}>
+              <View style={{ flex: 1 }}>
+                <Button type="surface" size="large" theme="red" selfStyle={ layoutStyles.confirmButton } onPress={ this.toggleRecordingInfo }>
+                  <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>OK</Text>
+                </Button>
+              </View>
             </View>
           </View>
         }

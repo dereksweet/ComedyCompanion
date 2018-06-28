@@ -263,6 +263,7 @@ class SoundBoard extends Component {
             <View style={ showDashboardStyles.soundBoardView }>
               <View style={{ flex: 1, flexDirection: 'row' }}>
                 <View style={ showDashboardStyles.buttonView }>
+                  <View style={{ flex: 1, flexDirection: 'row', marginTop: 10 }}>
                   { !showState.is_recording &&
                     <Button type="surface" size="large" theme={ showState.is_playing ? "gray" : "red" } onPress={ showState.is_playing ? () => {} : showActions.toggleReplaceRecordingConfirm }>
                       <Text>{showState.is_playing ? recIconDisabled : recIcon}</Text>
@@ -273,11 +274,13 @@ class SoundBoard extends Component {
                       <Text>{stopIcon}</Text>
                       <Text style={layoutStyles.buttonText}>Stop</Text>
                     </Button> }
-
-                  <Text style={{ color: '#CCCCCC', marginTop: 3, fontSize: normalizeWidth(10), alignSelf: 'center', alignItems: 'center' }}>swipe { backIcon } to del</Text>
+                  </View>
+                  <View style={{ marginBottom: 10 }}>
+                    <Text style={{ color: '#CCCCCC', marginTop: 3, fontSize: normalizeWidth(10), alignSelf: 'center', alignItems: 'center' }}>swipe { backIcon } to del</Text>
+                  </View>
                 </View>
                 <View style={{ flex: 1 }}>
-                  <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+                  <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center' }}>
                     <View style={ showDashboardStyles.playbackControlView }>
                       <Button type="surface" size="default" theme="gray" onPress={ this.rewind }>
                         <Text style={{ left: -2, width: 20 }}>{showState.is_recording ? rewindIconDisabled : rewindIcon}</Text>
@@ -294,7 +297,7 @@ class SoundBoard extends Component {
                       </Button>
                     </View>
                   </View>
-                  <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+                  <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center' }}>
                     <View style={ [showDashboardStyles.playbackControlView, { marginBottom: 5 }] }>
                       <Button type="surface" size="default" theme="gray" onPress={ this.back30 }>
                         <Text style={{ left: -2, width: 20 }}>{showState.is_recording ? back30IconDisabled : back30Icon}</Text>
