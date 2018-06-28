@@ -64,8 +64,6 @@ class JokeSelector extends Component {
   render() {
     const { setListState, setListActions } = this.props;
 
-    console.log("Here: ", setListState.set_list._jokes);
-
     const selectJoke = (joke) => {
       delete this.rowHeights[joke._id];
       setListActions.removeJokeFromSL(joke);
