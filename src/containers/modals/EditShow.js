@@ -158,7 +158,7 @@ class EditShow extends Component {
               </View>
               <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
                 { this.state.set_lists.map((set_list) => {
-                    return <View key={ set_list._id } style={ { flex: 1, backgroundColor: '#EEEEFF', borderBottomColor: '#CCCCCC', borderBottomWidth: 2 } }>
+                    return <View key={ set_list._id } style={ { flex: 1, backgroundColor: '#EEEEFF', borderBottomColor: '#CCCCCC', borderBottomWidth: 2, maxHeight: 40 } }>
                              <TouchableHighlight onPress={ () => selectSetList(set_list._id) }>
                                <Text style={{ color: '#000000', padding: 10, textAlign: 'center' }}>{set_list._name}</Text>
                              </TouchableHighlight>
