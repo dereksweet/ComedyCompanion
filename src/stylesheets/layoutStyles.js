@@ -2,7 +2,11 @@ import { StyleSheet, Platform } from 'react-native';
 
 export default layoutStyles = StyleSheet.create({
   mainContainer: {
-    backgroundColor: '#F8ECC2'
+    backgroundColor: '#F8ECC2',
+
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'stretch'
   },
   centeredFlex: {
     flex: 1,
@@ -40,13 +44,13 @@ export default layoutStyles = StyleSheet.create({
     fontWeight: 'bold'
   },
   modal: {
-    backgroundColor: "#EEEEEE",
-    height: '100%'
+    backgroundColor: "#EEEEEE"
   },
   modalContent: {
     flex: 1,
     borderTopColor: '#CCCCCC',
-    borderTopWidth: 1
+    borderTopWidth: 1,
+    width: '100%'
   },
   modalContentSection: {
     borderBottomWidth: 1,
@@ -92,8 +96,7 @@ export default layoutStyles = StyleSheet.create({
   addButton: {
     flex: 1,
     alignItems: 'center',
-    paddingTop: 7,
-    paddingLeft: 7
+    paddingTop: 7
   },
   confirmBox: {
     borderColor: '#999999',
@@ -126,15 +129,18 @@ export default layoutStyles = StyleSheet.create({
   },
   cancelButton: {
     backgroundColor: '#999999',
-    borderColor: '#888888'
+    borderColor: '#888888',
+    width: '100%'
   },
   confirmButton: {
     backgroundColor: '#009900',
-    borderColor: '#008800'
+    borderColor: '#008800',
+    width: '100%'
   },
   deleteButton: {
     backgroundColor: '#DD0000',
-    borderColor: '#CC0000'
+    borderColor: '#CC0000',
+    width: '100%'
   },
   errorInput: {
     borderColor: '#FF0000',

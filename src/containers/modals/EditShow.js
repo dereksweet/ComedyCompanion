@@ -4,7 +4,8 @@ import React, {Component} from 'react';
 import { View, ScrollView, TouchableHighlight, TouchableWithoutFeedback, Text, TextInput, Platform, Keyboard, Button as NativeButton } from 'react-native';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
-import {Button, DatePicker} from 'react-native-ui-xg';
+import {Button} from 'react-native-buttons';
+import DatePicker from 'react-native-datepicker';
 import moment from 'moment';
 
 import ShakingView from '../../components/ShakingView';
@@ -151,26 +152,26 @@ class EditShow extends Component {
         <View style={layoutStyles.statusBarBuffer} />
         <View style={layoutStyles.modalContent} onLayout={(event) => this.measureModalView(event)}>
           { this.state.show_set_list_select &&
-            <View>
-              <View style={ { width: '100%', backgroundColor: '#FFFFFF', borderBottomWidth: 1, borderBottomColor: '#CCCCCC', paddingBottom: 10, paddingTop: 10, alignItems: 'center' } }>
-                <Text style={ { fontWeight: 'bold', fontSize: 14 } }>Choose Set List</Text>
+            <View style={{ flex: 1 }}>
+              <View style={{ width: '100%', backgroundColor: '#FFFFFF', borderBottomWidth: 1, borderBottomColor: '#CCCCCC', paddingBottom: 10, paddingTop: 10, alignItems: 'center' }}>
+                <Text style={{ fontWeight: 'bold', fontSize: 14 }}>Choose Set List</Text>
               </View>
-              <View style={ { flex: 1 } }>
-                <ScrollView>
-                  { this.state.set_lists.map((set_list) => {
-                      return <View key={ set_list._id } style={ { flex: 1, backgroundColor: '#EEEEFF', borderBottomColor: '#CCCCCC', borderBottomWidth: 2 } }>
-                               <TouchableHighlight onPress={ () => selectSetList(set_list._id) }>
-                                 <Text style={{ color: '#000000', padding: 10, textAlign: 'center' }}>{set_list._name}</Text>
-                               </TouchableHighlight>
-                             </View>
-                    })
-                  }
-                </ScrollView>
-              </View>
-              <View style={ { width: '100%' } }>
-                <Button type="surface" size="large" theme="gray" selfStyle={ layoutStyles.cancelButton } onPress={ hideSetListSelect }>
-                  <Text style={layoutStyles.buttonText}>Cancel</Text>
-                </Button>
+              <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+                { this.state.set_lists.map((set_list) => {
+                    return <View key={ set_list._id } style={ { flex: 1, backgroundColor: '#EEEEFF', borderBottomColor: '#CCCCCC', borderBottomWidth: 2 } }>
+                             <TouchableHighlight onPress={ () => selectSetList(set_list._id) }>
+                               <Text style={{ color: '#000000', padding: 10, textAlign: 'center' }}>{set_list._name}</Text>
+                             </TouchableHighlight>
+                           </View>
+                  })
+                }
+              </ScrollView>
+              <View style={{ flexDirection: 'row', height: 47, borderTopColor: '#999999', borderTopWidth: 1 }}>
+                <View style={ { flex: 1, flexDirection: 'row' } }>
+                  <Button type="surface" size="large" theme="gray" selfStyle={ layoutStyles.cancelButton } onPress={ hideSetListSelect }>
+                    <Text style={layoutStyles.buttonText}>Cancel</Text>
+                  </Button>
+                </View>
               </View>
             </View>
           }
@@ -234,7 +235,7 @@ class EditShow extends Component {
                 <View style={ [layoutStyles.modalContentSection, {flex: 1} ] }>
 
                 </View>
-                <View style={ { flexDirection: 'row' }}>
+                <View style={ { flexDirection: 'row', height: 47, width: '100%' }}>
                   { (showState.show._id != -1) &&
                   <View style={ { flex: 1 } }>
                     <Button type="surface" size="large" theme="red" selfStyle={ layoutStyles.deleteButton } onPress={ toggleDeleteConfirm }>
@@ -255,14 +256,20 @@ class EditShow extends Component {
                 </View>
                 { this.state.show_delete_confirm &&
                   <View style={ layoutStyles.confirmBox }>
-                    <Text style={{ textAlign: 'center', fontSize: 20 }}>Are you SURE you want to delete this show?</Text>
+                    <View style={{ paddingBottom: 40, paddingLeft: 20, paddingRight: 20 }}>
+                      <Text style={{ textAlign: 'center', fontSize: 20 }}>Are you SURE you want to delete this show?</Text>
+                    </View>
                     <View style={{ paddingTop: 25, flexDirection: 'row' }}>
-                      <Button type="surface" size="large" theme="red" selfStyle={ layoutStyles.deleteButton } onPress={ toggleDeleteConfirm }>
-                        <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>NO</Text>
-                      </Button>
-                      <Button type="surface" size="large" theme="blue" selfStyle={ [layoutStyles.confirmButton, { marginLeft: 10 }] } onPress={ destroy }>
-                        <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>YES</Text>
-                      </Button>
+                      <View style={{ flex: 1 }}>
+                        <Button type="surface" size="large" theme="red" selfStyle={ layoutStyles.deleteButton } onPress={ toggleDeleteConfirm }>
+                          <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>NO</Text>
+                        </Button>
+                      </View>
+                      <View style={{ flex: 1, marginRight: 10 }}>
+                        <Button type="surface" size="large" theme="blue" selfStyle={ [layoutStyles.confirmButton, { marginLeft: 10 }] } onPress={ destroy }>
+                          <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>YES</Text>
+                        </Button>
+                      </View>
                     </View>
                   </View>
                 }

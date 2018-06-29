@@ -4,7 +4,7 @@ import React, {Component} from 'react';
 import { View, Text } from 'react-native';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
-import {Button} from 'react-native-ui-xg';
+import {Button} from 'react-native-buttons';
 
 import * as jokeActions from '../../../actions/jokeActions';
 import * as routingActions from '../../../actions/routingActions';
@@ -33,7 +33,7 @@ class NoJokes extends Component {
         {largeJokesIcon}
         <Text style={ {paddingTop: 25} }>You do not appear to have any jokes yet!</Text>
         <Text style={ {paddingBottom: 20} }>Click the button below to add one..</Text>
-        <View style={ {paddingBottom: 100} }>
+        <View style={ {paddingBottom: 100, alignItems: 'center'} }>
           <Button type="surface" size="large" theme="red" onPress={ addJoke }>
             <Text>{addJokeIcon}</Text>
             <Text style={layoutStyles.buttonText}>Add Joke</Text>

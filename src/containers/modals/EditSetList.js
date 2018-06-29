@@ -4,7 +4,7 @@ import React, {Component} from 'react';
 import { View, Text, TextInput, TouchableHighlight, TouchableWithoutFeedback, Platform, Keyboard } from 'react-native';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
-import {Button} from 'react-native-ui-xg';
+import {Button} from 'react-native-buttons';
 
 import JokeSelector from './EditSetList/JokeSelector';
 import SetListJokes from './EditSetList/SetListJokes';
@@ -155,7 +155,7 @@ class EditSetList extends Component {
                   }
                 </View>
                 { setListState.set_list._id != -1 &&
-                  <View>
+                  <View style={{ width: 120, height: 45, alignItems: 'flex-end' }}>
                     <Button type="surface" size="large" theme="red" onPress={ duplicateSetList }>
                       <Text style={{ color: 'white', fontWeight: 'bold' }}>Duplicate</Text>
                     </Button>
@@ -170,7 +170,7 @@ class EditSetList extends Component {
                   <SetListJokes />
                 </View>
               </View>
-              <View style={ { flexDirection: 'row', width: '100%' }}>
+              <View style={ { flexDirection: 'row', width: '100%', height: 47 }}>
                 { (setListState.set_list._id != -1) &&
                   <View style={ { flex: 1 } }>
                     <Button type="surface" size="large" theme="red" selfStyle={ layoutStyles.deleteButton } onPress={ toggleDeleteConfirm }>
@@ -193,14 +193,20 @@ class EditSetList extends Component {
           </TouchableWithoutFeedback>
         { this.state.show_delete_confirm &&
           <View style={ layoutStyles.confirmBox }>
-            <Text style={{ textAlign: 'center', fontSize: 20 }}>Are you SURE you want to delete this set list?</Text>
+            <View style={{ paddingBottom: 40, paddingLeft: 20, paddingRight: 20 }}>
+              <Text style={{ textAlign: 'center', fontSize: 20 }}>Are you SURE you want to delete this set list?</Text>
+            </View>
             <View style={{ paddingTop: 25, flexDirection: 'row' }}>
-              <Button type="surface" size="large" theme="red" selfStyle={ layoutStyles.deleteButton } onPress={ toggleDeleteConfirm }>
-                <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>NO</Text>
-              </Button>
-              <Button type="surface" size="large" theme="blue" selfStyle={ [layoutStyles.confirmButton, { marginLeft: 10 }] } onPress={ destroy }>
-                <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>YES</Text>
-              </Button>
+              <View style={{ flex: 1 }}>
+                <Button type="surface" size="large" theme="red" selfStyle={ layoutStyles.deleteButton } onPress={ toggleDeleteConfirm }>
+                  <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>NO</Text>
+                </Button>
+              </View>
+              <View style={{ flex: 1, paddingRight: 10 }}>
+                <Button type="surface" size="large" theme="blue" selfStyle={ [layoutStyles.confirmButton, { marginLeft: 10 }] } onPress={ destroy }>
+                  <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>YES</Text>
+                </Button>
+              </View>
             </View>
           </View>
         }

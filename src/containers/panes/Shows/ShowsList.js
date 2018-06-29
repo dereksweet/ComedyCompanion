@@ -4,7 +4,7 @@ import React, {Component} from 'react';
 import { View, Text, ListView, ScrollView, TouchableHighlight, Platform, Switch, Modal } from 'react-native';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
-import {Button} from 'react-native-ui-xg';
+import {Button} from 'react-native-buttons';
 import SearchBar from 'react-native-material-design-searchbar';
 import {AudioRecorder, AudioUtils} from 'react-native-audio';
 import moment from 'moment';
@@ -134,32 +134,30 @@ class ShowsList extends Component {
 
     return (
       <View style={{ flex: 1 }}>
-        <View style={{ justifyContent: 'flex-start' }}>
-          <View style={{ backgroundColor: '#FFFFFF', width: '100%' }}>
-            <SearchBar
-              ref={(searchBar) => { this.searchBar = searchBar }}
-              onSearchChange={ venueFilterChanged }
-              height={40}
-              placeholder={'Search...'}
-              autoCorrect={false}
-              padding={0}
-              returnKeyType={'done'}
-            />
-          </View>
-          <ListView
-            dataSource={ showListDS }
-            renderRow={ renderRow }
-            renderSeparator={ renderSeparator }
-            enableEmptySections={ true }
-            style={{ backgroundColor: '#FFFFFF', flex: 1 }}
+        <View style={{ backgroundColor: '#FFFFFF' }}>
+          <SearchBar
+            ref={(searchBar) => { this.searchBar = searchBar }}
+            onSearchChange={ venueFilterChanged }
+            height={40}
+            placeholder={'Search...'}
+            autoCorrect={false}
+            padding={0}
+            returnKeyType={'done'}
           />
-          <View style={ layoutStyles.toolbar }>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Text></Text>
-            </View>
-            <View style={{ flex: 1, alignItems: 'flex-end' }}>
-              { renderAddButton() }
-            </View>
+        </View>
+        <ListView
+          dataSource={ showListDS }
+          renderRow={ renderRow }
+          renderSeparator={ renderSeparator }
+          enableEmptySections={ true }
+          style={{ backgroundColor: '#FFFFFF', flex: 1 }}
+        />
+        <View style={ layoutStyles.toolbar }>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Text></Text>
+          </View>
+          <View style={{ flex: 1, alignItems: 'flex-end' }}>
+            { renderAddButton() }
           </View>
         </View>
         <Modal style={ layoutStyles.modal }
@@ -168,10 +166,12 @@ class ShowsList extends Component {
                visible={this.state.show_dashboard_visible}
                onRequestClose={() => { }}>
           <ShowDashboard />
-          <View>
-            <Button type="surface" size="large" theme="gray" selfStyle={ layoutStyles.cancelButton } onPress={ hideSetList }>
-              <Text style={layoutStyles.buttonText}>Close</Text>
-            </Button>
+          <View style={{ flexDirection: 'row', height: 47, borderTopColor: '#999999', borderTopWidth: 1 }}>
+            <View style={ { flex: 1, flexDirection: 'row' } }>
+              <Button type="surface" size="large" theme="gray" selfStyle={ layoutStyles.cancelButton } onPress={ hideSetList }>
+                <Text style={layoutStyles.buttonText}>Close</Text>
+              </Button>
+            </View>
           </View>
         </Modal>
       </View>

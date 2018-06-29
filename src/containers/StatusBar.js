@@ -65,7 +65,7 @@ class StatusBar extends Component {
       return (
         <View style={ statusBarStyles.statusBarIcon }>
           <TouchableHighlight underlayColor="#EEEEEE"
-                              style={{ flex: 1, alignItems: 'center', paddingTop: 7, paddingLeft: 7 }}
+                              style={{ flex: 1, alignItems: 'center', paddingTop: 7 }}
                               onPress={ this.clickSettings }>
             <Text style={{width: '100%'}}>{ settingsIcon }</Text>
           </TouchableHighlight>
@@ -77,7 +77,7 @@ class StatusBar extends Component {
       return (
         <View style={ statusBarStyles.statusBarIcon }>
           <TouchableHighlight underlayColor="#EEEEEE"
-                              style={{ flex: 1, alignItems: 'center', paddingTop: 7, paddingLeft: 7 }}
+                              style={{ flex: 1, alignItems: 'center', paddingTop: 7 }}
                               onPress={ this.clickAbout }>
             <Text style={{width: '100%'}}>{ aboutIcon }</Text>
           </TouchableHighlight>
@@ -89,7 +89,7 @@ class StatusBar extends Component {
       return (
         <View style={ statusBarStyles.statusBarIcon }>
           <TouchableHighlight underlayColor="#EEEEEE"
-                              style={{ flex: 1, alignItems: 'center', paddingTop: 7, paddingLeft: 7 }}
+                              style={{ flex: 1, alignItems: 'center', paddingTop: 7 }}
                               onPress={ this.clickDownload }>
             <Text style={{width: '100%'}}>{ downloadIcon }</Text>
           </TouchableHighlight>

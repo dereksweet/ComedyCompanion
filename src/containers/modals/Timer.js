@@ -4,13 +4,14 @@ import React, {Component} from 'react';
 import { View, Text, TouchableHighlight } from 'react-native';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
-import {Button} from 'react-native-ui-xg';
+import {Button} from 'react-native-buttons';
 
 import { formatDisplayTime } from '../../helpers/formattingHelper';
 
 import {normalizeWidth} from '../../helpers/sizeHelper';
 
 import * as routingActions from '../../actions/routingActions';
+import layoutStyles from "../../stylesheets/layoutStyles";
 
 class About extends Component {
   constructor(props) {
@@ -52,8 +53,8 @@ class About extends Component {
               <Text style={{ fontSize: normalizeWidth(horiz ? 75 : 90), transform: [{ rotate: horiz ? '0deg' : '90deg'}] }}>{ formatDisplayTime(showState.display_time_seconds) }</Text>
             </TouchableHighlight>
           </View>
-          <View style={{ flexDirection: 'row', width: '100%', borderTopColor: '#999999', borderTopWidth: 1 }}>
-            <View style={ { flex: 1 } }>
+          <View style={{ flexDirection: 'row', height: 47, borderTopColor: '#999999', borderTopWidth: 1 }}>
+            <View style={ { flex: 1, flexDirection: 'row' } }>
               <Button type="surface" size="large" theme="gray" selfStyle={ layoutStyles.cancelButton } onPress={ close }>
                 <Text style={layoutStyles.buttonText}>Close</Text>
               </Button>

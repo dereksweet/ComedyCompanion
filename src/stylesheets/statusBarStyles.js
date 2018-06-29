@@ -18,7 +18,6 @@ export default statusBarStyles = StyleSheet.create({
     marginRight: 10
   },
   navBar: {
-    height: 40,
     backgroundColor: '#EEFFEE',
     borderBottomColor: '#DDDDDD',
     borderBottomWidth: 1,

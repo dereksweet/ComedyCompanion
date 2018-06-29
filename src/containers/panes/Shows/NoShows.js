@@ -4,7 +4,7 @@ import React, {Component} from 'react';
 import { View, Text } from 'react-native';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
-import {Button} from 'react-native-ui-xg';
+import {Button} from 'react-native-buttons';
 
 import * as showActions from '../../../actions/showActions';
 import * as routingActions from '../../../actions/routingActions';
@@ -33,7 +33,7 @@ class NoShows extends Component {
         {largeShowsIcon}
         <Text style={ {paddingTop: 25} }>You do not appear to have any shows yet!</Text>
         <Text style={ {paddingBottom: 20} }>Click the button below to add one..</Text>
-        <View style={ {paddingBottom: 100} }>
+        <View style={ {paddingBottom: 100, alignItems: 'center'} }>
           <Button type="surface" size="large" theme="red" onPress={ addShow }>
             <Text>{addShowIcon}</Text>
             <Text style={layoutStyles.buttonText}>Add Show</Text>

@@ -4,7 +4,7 @@ import React, {Component} from 'react';
 import { View, Text, TouchableHighlight, TouchableWithoutFeedback, Switch, TextInput, KeyboardAvoidingView, Platform, Keyboard } from 'react-native';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
-import {Button} from 'react-native-ui-xg';
+import {Button} from 'react-native-buttons';
 
 import * as routingActions from '../../actions/routingActions';
 import * as jokeActions from '../../actions/jokeActions';
@@ -213,7 +213,7 @@ class EditJoke extends Component {
                            onChangeText={(text) => { jokeActions.setNotes(text); setDirty(); }}
                            value={ jokeState.joke._notes } />
               </View>
-              <View style={ { flexDirection: 'row' }}>
+              <View style={ { flexDirection: 'row', height: 47, width: '100%' }}>
                 { (jokeState.joke._id !== -1) &&
                 <View style={ { flex: 1 } }>
                   <Button type="surface" size="large" theme="red" selfStyle={ layoutStyles.deleteButton } onPress={ toggleDeleteConfirm }>
@@ -236,27 +236,39 @@ class EditJoke extends Component {
           </TouchableWithoutFeedback>
           { this.state.show_delete_confirm &&
             <View style={ layoutStyles.confirmBox }>
-              <Text style={{ textAlign: 'center', fontSize: 20 }}>Are you SURE you want to delete this joke?</Text>
+              <View style={{ paddingBottom: 40, paddingLeft: 20, paddingRight: 20 }}>
+                <Text style={{ textAlign: 'center', fontSize: 20 }}>Are you SURE you want to delete this joke?</Text>
+              </View>
               <View style={{ paddingTop: 25, flexDirection: 'row' }}>
-                <Button type="surface" size="large" theme="red" selfStyle={ layoutStyles.deleteButton } onPress={ toggleDeleteConfirm }>
-                  <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>NO</Text>
-                </Button>
-                <Button type="surface" size="large" theme="blue" selfStyle={ [layoutStyles.confirmButton, { marginLeft: 10 }] } onPress={ destroy }>
-                  <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>YES</Text>
-                </Button>
+                <View style={{ flex: 1 }}>
+                  <Button type="surface" size="large" theme="red" selfStyle={ layoutStyles.deleteButton } onPress={ toggleDeleteConfirm }>
+                    <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>NO</Text>
+                  </Button>
+                </View>
+                <View style={{ flex: 1, marginRight: 10 }}>
+                  <Button type="surface" size="large" theme="blue" selfStyle={ [layoutStyles.confirmButton, { marginLeft: 10 }] } onPress={ destroy }>
+                    <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>YES</Text>
+                  </Button>
+                </View>
               </View>
             </View>
           }
           { this.state.show_cancel_confirm &&
             <View style={ layoutStyles.confirmBox }>
-              <Text style={{ textAlign: 'center', fontSize: 20 }}>You have changes that will be lost. Are you SURE you want to cancel?</Text>
+              <View style={{ paddingBottom: 40, paddingLeft: 20, paddingRight: 20 }}>
+                <Text style={{ textAlign: 'center', fontSize: 20 }}>You have changes that will be lost. Are you SURE you want to cancel?</Text>
+              </View>
               <View style={{ paddingTop: 25, flexDirection: 'row' }}>
-                <Button type="surface" size="large" theme="red" selfStyle={ layoutStyles.deleteButton } onPress={ toggleCancelConfirm }>
-                  <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>NO</Text>
-                </Button>
-                <Button type="surface" size="large" theme="blue" selfStyle={ [layoutStyles.confirmButton, { marginLeft: 10 }] } onPress={ cancel }>
-                  <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>YES</Text>
-                </Button>
+                <View style={{ flex: 1 }}>
+                  <Button type="surface" size="large" theme="red" selfStyle={ layoutStyles.deleteButton } onPress={ toggleCancelConfirm }>
+                    <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>NO</Text>
+                  </Button>
+                </View>
+                <View style={{ flex: 1, marginRight: 10 }}>
+                  <Button type="surface" size="large" theme="blue" selfStyle={ [layoutStyles.confirmButton, { marginLeft: 10 }] } onPress={ cancel }>
+                    <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>YES</Text>
+                  </Button>
+                </View>
               </View>
             </View>
           }

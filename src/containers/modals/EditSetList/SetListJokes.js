@@ -19,6 +19,8 @@ class JokeSelector extends Component {
 
     this.listViewHeight = 0;
     this.rowHeights = {};
+
+    this.rowMoved = this.rowMoved.bind(this);
   }
 
   totalRowHeights() {
@@ -46,10 +48,17 @@ class JokeSelector extends Component {
 
     if (Object.keys(this.rowHeights).length == this.props.setListState.set_list._jokes.length) {
       if ((this.jokeAdded) && (this.totalRowHeights() >= this.listViewHeight)) {
-        this.listView.scrollResponder.scrollToEnd();
+        this.listView.refs.list.scrollToEnd();
         this.jokeAdded = false;
       }
     }
+  }
+
+  rowMoved(e) {
+    const { setListState, setListActions } = this.props;
+
+    setListState.set_list._jokes.splice(e.to, 0, setListState.set_list._jokes.splice(e.from, 1)[0]);
+    setListActions.setSL(setListState.set_list);
   }
 
   render() {
@@ -97,10 +106,7 @@ class JokeSelector extends Component {
             ref={(listView) => this.listView = listView}
             data={data}
             order={order}
-            onRowMoved={e => {
-              setListState.set_list._jokes.splice(e.to, 0, setListState.set_list._jokes.splice(e.from, 1)[0]);
-              setListActions.setSL(setListState.set_list);
-            }}
+            onRowMoved={this.rowMoved}
             renderRow={renderRow}
           />
        </View>
