@@ -205,7 +205,7 @@ class EditJoke extends Component {
                            onChangeText={(text) => { jokeActions.setName(text); setDirty(); }}
                            value={ jokeState.joke._name } />
               </View>
-              <View style={ [layoutStyles.modalContentSection, {flex: 1} ] }>
+              <View style={ [layoutStyles.modalContentSection, { flex: 1 } ] }>
                 <MultilineTextInput style={ editJokeStyles.notesInput }
                            underlineColorAndroid='transparent'
                            placeholder="Type your joke notes here..."
@@ -213,20 +213,20 @@ class EditJoke extends Component {
                            onChangeText={(text) => { jokeActions.setNotes(text); setDirty(); }}
                            value={ jokeState.joke._notes } />
               </View>
-              <View style={ { flexDirection: 'row', height: 47, width: '100%' }}>
+              <View style={{ flexDirection: 'row', height: 47, width: '100%' }}>
                 { (jokeState.joke._id !== -1) &&
-                <View style={ { flex: 1 } }>
+                <View style={{ flex: 1 }}>
                   <Button type="surface" size="large" theme="red" selfStyle={ layoutStyles.deleteButton } onPress={ toggleDeleteConfirm }>
                     <Text style={layoutStyles.buttonText}>Delete</Text>
                   </Button>
                 </View>
                 }
-                <View style={ { flex: 1 } }>
+                <View style={{ flex: 1 } }>
                   <Button type="surface" size="large" theme="gray" selfStyle={ layoutStyles.cancelButton } onPress={ toggleCancelConfirm }>
                     <Text style={layoutStyles.buttonText}>Cancel</Text>
                   </Button>
                 </View>
-                <View style={ { flex: 1 } }>
+                <View style={{ flex: 1 }}>
                   <Button type="surface" size="large" theme="blue" selfStyle={ layoutStyles.confirmButton } onPress={ save }>
                     <Text style={layoutStyles.buttonText}>Save</Text>
                   </Button>
