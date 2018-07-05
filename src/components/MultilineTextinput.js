@@ -1,10 +1,10 @@
-import React, {PureComponent} from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import {TextInput} from 'react-native';
+import { TextInput } from 'react-native';
 import debounce from 'debounce';
 
 /**
- * This is a workaround for the buggy react-native TextInput multiline on Android.
+ * This is a workaround obtained elsewhere for the buggy react-native TextInput multiline on Android.
  *
  * Can be removed once https://github.com/facebook/react-native/issues/12717
  * is fixed.

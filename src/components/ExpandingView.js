@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Animated } from 'react-native';
 
-export default class ExpandingView extends React.Component {
+export default class ExpandingView extends Component {
   constructor(props) {
     super(props);
 
@@ -9,23 +9,26 @@ export default class ExpandingView extends React.Component {
       heightAnim: new Animated.Value(0)
     };
   }
+
   performExpand() {
     Animated.spring(
       this.state.heightAnim,
-      {toValue: this.props.expandedHeight}
+      { toValue: this.props.expandedHeight }
     ).start();
   }
+
   performShrink() {
     Animated.spring(
       this.state.heightAnim,
-      {toValue: 0}
+      { toValue: 0 }
     ).start();
   }
+
   render() {
     return (
       <Animated.View
-        style={[...this.props.style, {maxHeight: this.state.heightAnim}]}>
-        {this.props.children}
+        style={[...this.props.style, { maxHeight: this.state.heightAnim }]}>
+        { this.props.children }
       </Animated.View>
     );
   }
