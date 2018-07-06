@@ -4,7 +4,7 @@ const VERSION=1.4;
 
 import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
-import { View, Image, Modal, Text } from 'react-native';
+import { View, Image, Modal } from 'react-native';
 import { connect } from 'react-redux';
 
 import {SlidingPane, SlidingPaneWrapper} from 'react-native-sliding-panes';
@@ -84,29 +84,31 @@ class MainApp extends Component {
     this.slidingPaneWrapper.childPanes = [this.jokesPane, this.setListsPane, this.showsPane];
   }
 
+  setActivePane = (pane) => {
+    const { routingActions } = this.props;
+
+    switch (pane) {
+      case 'jokes':
+        this.slidingPaneWrapper.setActive(0);
+        break;
+      case 'set_lists':
+        this.slidingPaneWrapper.setActive(1);
+        break;
+      case 'shows':
+        this.slidingPaneWrapper.setActive(2);
+        break;
+    }
+
+    routingActions.setPane(pane);
+  };
+
   render() {
-    const { routingState, routingActions } = this.props;
-
-    const setActivePane = (pane) => {
-      switch (pane) {
-        case 'jokes':
-          this.slidingPaneWrapper.setActive(0);
-          break;
-        case 'set_lists':
-          this.slidingPaneWrapper.setActive(1);
-          break;
-        case 'shows':
-          this.slidingPaneWrapper.setActive(2);
-          break;
-      }
-
-      routingActions.setPane(pane);
-    };
+    const { routingState } = this.props;
 
     return (
       <View style={layoutStyles.mainContainer}>
         <View style={{ flex: 1 }}>
-          <StatusBar setActivePane={setActivePane} />
+          <StatusBar setActivePane={this.setActivePane} />
           <SlidingPaneWrapper style={{}} ref={(slidingPaneWrapper) => { this.slidingPaneWrapper = slidingPaneWrapper }}>
             <SlidingPane style={[{borderColor: '#DDDDDD', borderWidth: 1}]}
                          ref={ (jokesPane) => { this.jokesPane = jokesPane} }>
@@ -127,9 +129,9 @@ class MainApp extends Component {
                transparent={false}
                visible={routingState.modal_visible}
                onRequestClose={() => { }}>
-          { routingState.pane == 'jokes' && <EditJoke /> }
-          { routingState.pane == 'set_lists' && <EditSetList /> }
-          { routingState.pane == 'shows' && <EditShow /> }
+          { routingState.pane === 'jokes' && <EditJoke /> }
+          { routingState.pane === 'set_lists' && <EditSetList /> }
+          { routingState.pane === 'shows' && <EditShow /> }
         </Modal>
         <Modal style={ layoutStyles.modal }
                animationType={ "fade" }
