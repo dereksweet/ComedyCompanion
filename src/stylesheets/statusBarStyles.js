@@ -12,6 +12,11 @@ export default statusBarStyles = StyleSheet.create({
     borderLeftWidth: 1,
     alignItems: 'center'
   },
+  statusBarButton: {
+    flex: 1,
+    alignItems: 'center',
+    paddingTop: 7
+  },
   title: {
     marginTop: 10,
     marginLeft: 10,

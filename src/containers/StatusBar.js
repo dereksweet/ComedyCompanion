@@ -1,5 +1,3 @@
-'use strict';
-
 import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import { View, Text, TouchableHighlight, Keyboard } from 'react-native';
@@ -58,65 +56,41 @@ class StatusBar extends Component {
     this.props.routingActions.toggleDownload();
   };
 
+  renderStatusBarButton = (onPress, icon) => {
+    return (
+      <View style={ statusBarStyles.statusBarIcon }>
+        <TouchableHighlight underlayColor="#EEEEEE"
+                            style={ statusBarStyles.statusBarButton }
+                            onPress={ onPress }>
+          <Text style={{width: '100%'}}>{ icon }</Text>
+        </TouchableHighlight>
+      </View>
+    );
+  };
+
+  renderNavBarButton = (pane, icon, text, styles) => {
+    return  <TouchableHighlight underlayColor="#EEEEEE"
+                                style={ [statusBarStyles.navLink, styles] }
+                                onPress={() => this.clickNavLink(pane)}>
+      <View style={ { flexDirection: 'row' } }>
+        { icon }
+        <Text style={statusBarStyles.navLinkText}>{text}</Text>
+      </View>
+    </TouchableHighlight>
+  };
+
+  renderNavBar = () => {
+    return  <ExpandingView ref={(navBarView) => this.navBarView = navBarView}
+                           style={ [statusBarStyles.navBar] }
+                           expandedHeight={40}>
+      { this.renderNavBarButton('jokes', jokesIcon, 'Jokes', { borderRightColor: '#CCCCCC', borderRightWidth: 1 }) }
+      { this.renderNavBarButton('set_lists', setListsIcon, 'Set Lists', { borderRightColor: '#CCCCCC', borderRightWidth: 1 }) }
+      { this.renderNavBarButton('shows', showsIcon, 'Shows') }
+    </ExpandingView>
+  };
+
   render() {
-    const { statusBarState, routingState, statusBarActions, routingActions } = this.props;
-
-    const renderSettingsButton = () => {
-      return (
-        <View style={ statusBarStyles.statusBarIcon }>
-          <TouchableHighlight underlayColor="#EEEEEE"
-                              style={{ flex: 1, alignItems: 'center', paddingTop: 7 }}
-                              onPress={ this.clickSettings }>
-            <Text style={{width: '100%'}}>{ settingsIcon }</Text>
-          </TouchableHighlight>
-        </View>
-      );
-    };
-
-    const renderAboutButton = () => {
-      return (
-        <View style={ statusBarStyles.statusBarIcon }>
-          <TouchableHighlight underlayColor="#EEEEEE"
-                              style={{ flex: 1, alignItems: 'center', paddingTop: 7 }}
-                              onPress={ this.clickAbout }>
-            <Text style={{width: '100%'}}>{ aboutIcon }</Text>
-          </TouchableHighlight>
-        </View>
-      );
-    };
-
-    const renderDownloadButton = () => {
-      return (
-        <View style={ statusBarStyles.statusBarIcon }>
-          <TouchableHighlight underlayColor="#EEEEEE"
-                              style={{ flex: 1, alignItems: 'center', paddingTop: 7 }}
-                              onPress={ this.clickDownload }>
-            <Text style={{width: '100%'}}>{ downloadIcon }</Text>
-          </TouchableHighlight>
-        </View>
-      );
-    };
-
-    const renderNavBarButton = (pane, icon, text, styles) => {
-      return  <TouchableHighlight underlayColor="#EEEEEE"
-                                  style={ [statusBarStyles.navLink, styles] }
-                                  onPress={() => this.clickNavLink(pane)}>
-                <View style={ { flexDirection: 'row' } }>
-                  { icon }
-                  <Text style={statusBarStyles.navLinkText}>{text}</Text>
-                </View>
-              </TouchableHighlight>
-    };
-
-    const renderNavBar = () => {
-      return  <ExpandingView ref={(navBarView) => this.navBarView = navBarView}
-                                style={ [statusBarStyles.navBar] }
-                                expandedHeight={40}>
-                { renderNavBarButton('jokes', jokesIcon, 'Jokes', { borderRightColor: '#CCCCCC', borderRightWidth: 1 }) }
-                { renderNavBarButton('set_lists', setListsIcon, 'Set Lists', { borderRightColor: '#CCCCCC', borderRightWidth: 1 }) }
-                { renderNavBarButton('shows', showsIcon, 'Shows') }
-              </ExpandingView>
-    };
+    const { statusBarState, routingState } = this.props;
 
     return (
       <View>
@@ -134,12 +108,12 @@ class StatusBar extends Component {
             <Text style={statusBarStyles.title}>{routingState.title}</Text>
           </View>
           <View style={{flex: 1, flexDirection: 'row', justifyContent: 'flex-end'}}>
-            { renderAboutButton() }
-            { renderDownloadButton() }
-            { renderSettingsButton() }
+            { this.renderStatusBarButton(this.clickAbout, aboutIcon) }
+            { this.renderStatusBarButton(this.clickDownload, downloadIcon) }
+            { this.renderStatusBarButton(this.clickSettings, settingsIcon) }
           </View>
         </View>
-        { renderNavBar() }
+        { this.renderNavBar() }
       </View>
     );
   }
