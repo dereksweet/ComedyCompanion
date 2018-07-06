@@ -17,12 +17,12 @@ export function setSLName(name) {
 export function setSLLength(length_text) {
   let length = -1;
 
-  if (length_text == '') {
+  if (length_text === '') {
     length = null;
   } else {
     length = parseInt(length_text);
   }
-  
+
   return {
     type: types.SET_SL_LENGTH,
     length

@@ -1,11 +1,9 @@
-'use strict';
-
-const VERSION=1.4;
+const VERSION = 1.4;
 
 import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
-import { View, Image, Modal } from 'react-native';
-import { connect } from 'react-redux';
+import {View, Image, Modal} from 'react-native';
+import {connect} from 'react-redux';
 
 import {SlidingPane, SlidingPaneWrapper} from 'react-native-sliding-panes';
 
@@ -57,7 +55,7 @@ class MainApp extends Component {
       this.props.showListActions.setShowListSortOrder(this.setting._shows_sort_order);
       this.props.downloadActions.setExportEmail(this.setting._export_email);
       this.props.downloadActions.setExportEmailType(this.setting._export_email_type);
-      
+
       JokeListHelper.refreshJokeList();
       SetListListHelper.refreshSLList();
       ShowListHelper.refreshShowList();
@@ -85,7 +83,7 @@ class MainApp extends Component {
   }
 
   setActivePane = (pane) => {
-    const { routingActions } = this.props;
+    const {routingActions} = this.props;
 
     switch (pane) {
       case 'jokes':
@@ -103,61 +101,73 @@ class MainApp extends Component {
   };
 
   render() {
-    const { routingState } = this.props;
+    const {routingState} = this.props;
 
     return (
       <View style={layoutStyles.mainContainer}>
-        <View style={{ flex: 1 }}>
-          <StatusBar setActivePane={this.setActivePane} />
-          <SlidingPaneWrapper style={{}} ref={(slidingPaneWrapper) => { this.slidingPaneWrapper = slidingPaneWrapper }}>
+        <View style={{flex: 1}}>
+          <StatusBar setActivePane={this.setActivePane}/>
+          <SlidingPaneWrapper style={{}} ref={(slidingPaneWrapper) => {
+            this.slidingPaneWrapper = slidingPaneWrapper
+          }}>
             <SlidingPane style={[{borderColor: '#DDDDDD', borderWidth: 1}]}
-                         ref={ (jokesPane) => { this.jokesPane = jokesPane} }>
-              <Jokes />
+                         ref={(jokesPane) => {
+                           this.jokesPane = jokesPane
+                         }}>
+              <Jokes/>
             </SlidingPane>
             <SlidingPane style={[{borderColor: '#DDDDDD', borderWidth: 1}]}
-                         ref={ (setListsPane) => { this.setListsPane = setListsPane} }>
-              <SetLists />
+                         ref={(setListsPane) => {
+                           this.setListsPane = setListsPane
+                         }}>
+              <SetLists/>
             </SlidingPane>
             <SlidingPane style={[{borderColor: '#DDDDDD', borderWidth: 1}]}
-                         ref={ (showsPane) => { this.showsPane = showsPane} }>
-              <Shows />
+                         ref={(showsPane) => {
+                           this.showsPane = showsPane
+                         }}>
+              <Shows/>
             </SlidingPane>
           </SlidingPaneWrapper>
         </View>
-        <Modal style={ layoutStyles.modal }
-               animationType={ "slide" }
+        <Modal style={layoutStyles.modal}
+               animationType={"slide"}
                transparent={false}
                visible={routingState.modal_visible}
-               onRequestClose={() => { }}>
-          { routingState.pane === 'jokes' && <EditJoke /> }
-          { routingState.pane === 'set_lists' && <EditSetList /> }
-          { routingState.pane === 'shows' && <EditShow /> }
+               onRequestClose={() => {
+               }}>
+          {routingState.pane === 'jokes' && <EditJoke/>}
+          {routingState.pane === 'set_lists' && <EditSetList/>}
+          {routingState.pane === 'shows' && <EditShow/>}
         </Modal>
-        <Modal style={ layoutStyles.modal }
-               animationType={ "fade" }
+        <Modal style={layoutStyles.modal}
+               animationType={"fade"}
                transparent={false}
                visible={routingState.settings_visible}
-               onRequestClose={() => { }}>
-          <Settings />
+               onRequestClose={() => {
+               }}>
+          <Settings/>
         </Modal>
-        <Modal style={ layoutStyles.modal }
-               animationType={ "fade" }
+        <Modal style={layoutStyles.modal}
+               animationType={"fade"}
                transparent={false}
                visible={routingState.about_visible}
-               onRequestClose={() => { }}>
-          <About />
+               onRequestClose={() => {
+               }}>
+          <About/>
         </Modal>
-        <Modal style={ layoutStyles.modal }
-               animationType={ "fade" }
+        <Modal style={layoutStyles.modal}
+               animationType={"fade"}
                transparent={false}
                visible={routingState.download_visible}
-               onRequestClose={() => { }}>
-          <Download />
+               onRequestClose={() => {
+               }}>
+          <Download/>
         </Modal>
-        { routingState.show_loading &&
-          <View style={ layoutStyles.loadingScreen }>
-            <Image style={{ width: 300, height: 300, marginTop: 15 }} source={ require('../images/Loading.png') } />
-          </View>
+        {routingState.show_loading &&
+        <View style={layoutStyles.loadingScreen}>
+          <Image style={{width: 300, height: 300, marginTop: 15}} source={require('../images/Loading.png')}/>
+        </View>
         }
       </View>
     );
