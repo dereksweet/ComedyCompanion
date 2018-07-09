@@ -19,7 +19,7 @@ export default statusBarStyles = StyleSheet.create({
     marginRight: 10
   },
   navBar: {
-    backgroundColor: '#f7f7f7',
+    backgroundColor: '#DDDDFF',
     borderTopWidth: 1,
     borderColor: '#ccc',
     flexDirection : 'row',

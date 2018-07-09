@@ -84,10 +84,7 @@ class StatusBar extends Component {
                           style={[statusBarStyles.navBar]}
                           expandedHeight={40}>
       {this.renderNavBarButton('jokes', jokesIcon, 'Jokes', {borderRightColor: '#CCCCCC', borderRightWidth: 1})}
-      {this.renderNavBarButton('set_lists', setListsIcon, 'Set Lists', {
-        borderRightColor: '#CCCCCC',
-        borderRightWidth: 1
-      })}
+      {this.renderNavBarButton('set_lists', setListsIcon, 'Set Lists', {borderRightColor: '#CCCCCC',borderRightWidth: 1})}
       {this.renderNavBarButton('shows', showsIcon, 'Shows')}
     </ExpandingView>
   };
