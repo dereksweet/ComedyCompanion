@@ -5,6 +5,7 @@ import {View, ScrollView, Text, TextInput, AsyncStorage, Platform} from 'react-n
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {Button} from 'react-native-buttons';
+import FooterButton from '../../components/FooterButton';
 import iCloudStorage from 'react-native-icloudstore';
 import {SegmentedControls} from 'react-native-radio-buttons';
 
@@ -389,13 +390,11 @@ class Download extends Component {
             }
           </View>
           }
-          <View style={{flexDirection: 'row', height: 47, borderTopColor: '#999999', borderTopWidth: 1}}>
-            <View style={{flex: 1, flexDirection: 'row'}}>
-              <Button type="surface" size="large" theme="gray" selfStyle={layoutStyles.cancelButton}
-                      onPress={this.close}>
-                <Text style={layoutStyles.buttonText}>Close</Text>
-              </Button>
-            </View>
+          <View style={{ flexDirection: 'row', width: '100%' }}>
+            <FooterButton
+              onPress={this.close}
+              buttonText="Close"
+            />
           </View>
         </View>
       </View>

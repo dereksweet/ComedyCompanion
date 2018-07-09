@@ -5,6 +5,7 @@ import { View, Text, TextInput, TouchableHighlight, TouchableWithoutFeedback, Pl
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 import {Button} from 'react-native-buttons';
+import FooterButton from '../../components/FooterButton';
 
 import JokeSelector from './EditSetList/JokeSelector';
 import SetListJokes from './EditSetList/SetListJokes';
@@ -170,24 +171,23 @@ class EditSetList extends Component {
                   <SetListJokes />
                 </View>
               </View>
-              <View style={ { flexDirection: 'row', width: '100%', height: 47 }}>
-                { (setListState.set_list._id != -1) &&
-                  <View style={ { flex: 1 } }>
-                    <Button type="surface" size="large" theme="red" selfStyle={ layoutStyles.deleteButton } onPress={ toggleDeleteConfirm }>
-                      <Text style={layoutStyles.buttonText}>Delete</Text>
-                    </Button>
-                  </View>
+              <View style={{ flexDirection: 'row', width: '100%' }}>
+                { (setListState.set_list._id !== -1) &&
+                <FooterButton
+                  onPress={toggleDeleteConfirm}
+                  buttonText="Delete"
+                  backgroundColor='red'
+                />
                 }
-                <View style={ { flex: 1 } }>
-                  <Button type="surface" size="large" theme="gray" selfStyle={ layoutStyles.cancelButton } onPress={ cancel }>
-                    <Text style={layoutStyles.buttonText}>Cancel</Text>
-                  </Button>
-                </View>
-                <View style={ { flex: 1 } }>
-                  <Button type="surface" size="large" theme="blue" selfStyle={ layoutStyles.confirmButton } onPress={ save }>
-                    <Text style={layoutStyles.buttonText}>Save</Text>
-                  </Button>
-                </View>
+                <FooterButton
+                  onPress={cancel}
+                  buttonText="Cancel"
+                />
+                <FooterButton
+                  onPress={save}
+                  buttonText="Save"
+                  backgroundColor='green'
+                />
               </View>
             </View>
           </TouchableWithoutFeedback>

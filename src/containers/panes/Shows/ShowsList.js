@@ -5,6 +5,7 @@ import { View, Text, ListView, ScrollView, TouchableHighlight, Platform, Switch,
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 import {Button} from 'react-native-buttons';
+import FooterButton from '../../../components/FooterButton';
 import SearchBar from 'react-native-material-design-searchbar';
 import {AudioRecorder, AudioUtils} from 'react-native-audio';
 import moment from 'moment';
@@ -166,12 +167,11 @@ class ShowsList extends Component {
                visible={this.state.show_dashboard_visible}
                onRequestClose={() => { }}>
           <ShowDashboard />
-          <View style={{ flexDirection: 'row', height: 47, borderTopColor: '#999999', borderTopWidth: 1 }}>
-            <View style={ { flex: 1, flexDirection: 'row' } }>
-              <Button type="surface" size="large" theme="gray" selfStyle={ layoutStyles.cancelButton } onPress={ hideSetList }>
-                <Text style={layoutStyles.buttonText}>Close</Text>
-              </Button>
-            </View>
+          <View style={{ flexDirection: 'row', width: '100%' }}>
+            <FooterButton
+              onPress={hideSetList}
+              buttonText="Close"
+            />
           </View>
         </Modal>
       </View>
