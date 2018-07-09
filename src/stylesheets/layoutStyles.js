@@ -22,8 +22,6 @@ export default layoutStyles = StyleSheet.create({
     height: 40,
     backgroundColor: '#EEEEFF',
     width: '100%',
-    borderBottomColor: '#DDDDDD',
-    borderBottomWidth: 1,
     borderTopColor: '#DDDDDD',
     borderTopWidth: 1,
     flexDirection: 'row'
@@ -50,7 +48,7 @@ export default layoutStyles = StyleSheet.create({
     flex: 1,
     borderTopColor: '#CCCCCC',
     borderTopWidth: 1,
-    width: '100%'
+    alignSelf: 'stretch'
   },
   modalContentSection: {
     borderBottomWidth: 1,

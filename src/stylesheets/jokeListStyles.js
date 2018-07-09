@@ -6,7 +6,7 @@ export default jokeListStyles = StyleSheet.create({
     minHeight: 60,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#FAFAFA',
+    backgroundColor: '#f7f7f7',
     paddingTop: 10,
     paddingBottom: 10,
     paddingLeft: 10,
