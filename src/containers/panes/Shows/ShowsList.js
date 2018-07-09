@@ -87,13 +87,23 @@ class ShowsList extends Component {
             </View>
             <View style={{ alignItems: 'flex-end', flexDirection: 'row' }}>
               <View style={ showListStyles.recIconBadgeView }>{ show._has_recording && recIconBadge }</View>
-              <View style={ showListStyles.showInfoView }>
-                <TouchableHighlight underlayColor="#EEEEEE" onPress={ () => viewSetList(show._id) } style={{ flex: 1, marginLeft: 10 }}>
-                  <View style={{ flex: 1, alignItems: 'flex-end', backgroundColor: '#EEFFEE', padding: 10, borderColor: '#EEEEEE', borderWidth: 1 }}>
-                    <Text style={{ textAlign: 'center', fontSize: 10 }}>Show Dashboard</Text>
-                  </View>
-                </TouchableHighlight>
-              </View>
+              <TouchableHighlight underlayColor="#EEEEEE" onPress={ () => viewSetList(show._id) } style={{ marginLeft: 10 }}>
+                <View style={{
+                  flex: 1,
+                  alignItems: 'flex-end',
+                  backgroundColor: '#fff',
+                  padding: 10,
+                  borderColor: '#ccc',
+                  borderWidth: 1,
+                  borderRadius: 3,
+                  shadowColor: 'black',
+                  shadowOffset: {width: 1,height: 1},
+                  shadowOpacity: 0.2,
+                  shadowRadius: 3
+                }}>
+                  <Text style={{ textAlign: 'center', fontSize: 10 }}>Set List & Timer/Rec</Text>
+                </View>
+              </TouchableHighlight>
             </View>
           </View>
         </TouchableHighlight>
