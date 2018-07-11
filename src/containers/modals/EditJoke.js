@@ -1,7 +1,7 @@
 'use strict';
 
 import React, {Component} from 'react';
-import { View, Text, TouchableHighlight, TouchableWithoutFeedback, Switch, TextInput, KeyboardAvoidingView, Platform, Keyboard } from 'react-native';
+import { View, Text, TouchableWithoutFeedback, Switch, TextInput, Platform, Keyboard } from 'react-native';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 
@@ -10,7 +10,7 @@ import * as jokeActions from '../../actions/jokeActions';
 
 import ShakingView from '../../components/ShakingView';
 import MultilineTextInput from '../../components/MultilineTextinput';
-import {Button} from 'react-native-buttons';
+import Button from '../../components/Button';
 import FooterButton from '../../components/FooterButton';
 
 import JokeListHelper from '../../helpers/jokeListHelper';
@@ -239,16 +239,18 @@ class EditJoke extends Component {
                 <Text style={{ textAlign: 'center', fontSize: 20 }}>Are you SURE you want to delete this joke?</Text>
               </View>
               <View style={{ paddingTop: 25, flexDirection: 'row' }}>
-                <View style={{ flex: 1 }}>
-                  <Button type="surface" size="large" theme="red" selfStyle={ layoutStyles.deleteButton } onPress={ toggleDeleteConfirm }>
-                    <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>NO</Text>
-                  </Button>
-                </View>
-                <View style={{ flex: 1, marginRight: 10 }}>
-                  <Button type="surface" size="large" theme="blue" selfStyle={ [layoutStyles.confirmButton, { marginLeft: 10 }] } onPress={ destroy }>
-                    <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>YES</Text>
-                  </Button>
-                </View>
+                <Button
+                  onPress={toggleDeleteConfirm}
+                  buttonText="NO"
+                  backgroundColor='red'
+                  additionalStyles={[layoutStyles.deleteButton, {marginRight: 10}]}
+                />
+                <Button
+                  onPress={destroy}
+                  buttonText="YES"
+                  backgroundColor='green'
+                  additionalStyles={layoutStyles.confirmButton}
+                />
               </View>
             </View>
           }
@@ -258,16 +260,18 @@ class EditJoke extends Component {
                 <Text style={{ textAlign: 'center', fontSize: 20 }}>You have changes that will be lost. Are you SURE you want to cancel?</Text>
               </View>
               <View style={{ paddingTop: 25, flexDirection: 'row' }}>
-                <View style={{ flex: 1 }}>
-                  <Button type="surface" size="large" theme="red" selfStyle={ layoutStyles.deleteButton } onPress={ toggleCancelConfirm }>
-                    <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>NO</Text>
-                  </Button>
-                </View>
-                <View style={{ flex: 1, marginRight: 10 }}>
-                  <Button type="surface" size="large" theme="blue" selfStyle={ [layoutStyles.confirmButton, { marginLeft: 10 }] } onPress={ cancel }>
-                    <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>YES</Text>
-                  </Button>
-                </View>
+                <Button
+                  onPress={toggleCancelConfirm}
+                  buttonText="NO"
+                  backgroundColor='red'
+                  additionalStyles={[layoutStyles.deleteButton, {marginRight: 10}]}
+                />
+                <Button
+                  onPress={cancel}
+                  buttonText="YES"
+                  backgroundColor='green'
+                  additionalStyles={layoutStyles.confirmButton}
+                />
               </View>
             </View>
           }

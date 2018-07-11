@@ -1,4 +1,4 @@
-import { StyleSheet, Platform } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 export default editSetListStyles = StyleSheet.create({
   nameInput: {
@@ -19,5 +19,9 @@ export default editSetListStyles = StyleSheet.create({
     paddingRight: 10,
     backgroundColor: '#FFFFFF',
     textAlign: 'center'
+  },
+  duplicateButton: {
+    width: 100,
+    height: 40
   }
 });

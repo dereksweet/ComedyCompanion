@@ -4,7 +4,6 @@ import React, {Component} from 'react';
 import { View, ScrollView, Text, Switch, AsyncStorage, Platform } from 'react-native';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
-import {Button} from 'react-native-buttons';
 import FooterButton from '../../components/FooterButton';
 import { SegmentedControls } from 'react-native-radio-buttons';
 

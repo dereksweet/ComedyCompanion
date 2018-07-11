@@ -4,7 +4,6 @@ import React, {Component} from 'react';
 import { View, Text, TouchableHighlight, Modal } from 'react-native';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
-import {Button} from 'react-native-buttons';
 import Swipeout from 'react-native-swipeout';
 
 import { normalizeWidth } from '../../../../helpers/sizeHelper';
@@ -19,6 +18,8 @@ import showDashboardStyles from '../../../../stylesheets/showDashboardStyles';
 
 import * as showActions from '../../../../actions/showActions';
 import * as routingActions from '../../../../actions/routingActions';
+
+import Button from '../../../../components/Button';
 
 import ShowListHelper from '../../../../helpers/showListHelper';
 
@@ -265,15 +266,21 @@ class SoundBoard extends Component {
                 <View style={ showDashboardStyles.buttonView }>
                   <View style={{ flex: 1, flexDirection: 'row', marginTop: 10 }}>
                   { !showState.is_recording &&
-                    <Button type="surface" size="large" theme={ showState.is_playing ? "gray" : "red" } onPress={ showState.is_playing ? () => {} : showActions.toggleReplaceRecordingConfirm }>
-                      <Text>{showState.is_playing ? recIconDisabled : recIcon}</Text>
-                      <Text style={[layoutStyles.buttonText, { color: showState.is_timing ? '#AAA' : '#FFF' }]}>Rec</Text>
-                    </Button> }
+                  <Button
+                    onPress={showState.is_playing ? () => {} : showActions.toggleReplaceRecordingConfirm}
+                    buttonText="Rec"
+                    backgroundColor={showState.is_playing ? "gray" : "red"}
+                    icon={showState.is_playing ? recIconDisabled : recIcon}
+                    additionalStyles={{width: 100, height: 40}}
+                  /> }
                   { showState.is_recording &&
-                    <Button type="surface" size="large" theme="red" selfStyle={ { borderColor: '#FF0000', borderWidth: 2 } } onPress={ this.stopRecording }>
-                      <Text>{stopIcon}</Text>
-                      <Text style={layoutStyles.buttonText}>Stop</Text>
-                    </Button> }
+                  <Button
+                    onPress={showState.is_playing ? () => {} : this.stopRecording}
+                    buttonText="Stop"
+                    backgroundColor="red"
+                    icon={stopIcon}
+                    additionalStyles={{width: 100, height: 40, borderColor: '#FF0000', borderWidth: 2}}
+                  /> }
                   </View>
                   <View style={{ marginBottom: 10 }}>
                     <Text style={{ color: '#CCCCCC', marginTop: 3, fontSize: normalizeWidth(10), alignSelf: 'center', alignItems: 'center' }}>swipe { backIcon } to del</Text>
@@ -282,9 +289,11 @@ class SoundBoard extends Component {
                 <View style={{ flex: 1 }}>
                   <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center' }}>
                     <View style={ showDashboardStyles.playbackControlView }>
-                      <Button type="surface" size="default" theme="gray" onPress={ this.rewind }>
-                        <Text style={{ left: -2, width: 20 }}>{showState.is_recording ? rewindIconDisabled : rewindIcon}</Text>
-                      </Button>
+                      <Button
+                        onPress={this.rewind}
+                        icon={showState.is_recording ? rewindIconDisabled : rewindIcon}
+                        additionalStyles={{width: 45, height: 32}}
+                      />
                     </View>
                     <View style={{ alignItems: 'center', justifyContent: 'center' }}>
                       <TouchableHighlight underlayColor='rgba(0,0,0,0)' onPress={ this.showTimer }>
@@ -292,26 +301,34 @@ class SoundBoard extends Component {
                       </TouchableHighlight>
                     </View>
                     <View style={ showDashboardStyles.playbackControlView }>
-                      <Button type="surface" size="default" theme="gray" onPress={ this.fastForward }>
-                        <Text style={{ left: -2, width: 20 }}>{showState.is_recording ? fastForwardIconDisabled : fastForwardIcon}</Text>
-                      </Button>
+                      <Button
+                        onPress={this.fastForward}
+                        icon={showState.is_recording ? fastForwardIconDisabled : fastForwardIcon}
+                        additionalStyles={{width: 45, height: 32}}
+                      />
                     </View>
                   </View>
                   <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center' }}>
                     <View style={ [showDashboardStyles.playbackControlView, { marginBottom: 5 }] }>
-                      <Button type="surface" size="default" theme="gray" onPress={ this.back30 }>
-                        <Text style={{ left: -2, width: 20 }}>{showState.is_recording ? back30IconDisabled : back30Icon}</Text>
-                      </Button>
+                      <Button
+                        onPress={this.back30}
+                        icon={showState.is_recording ? back30IconDisabled : back30Icon}
+                        additionalStyles={{width: 45, height: 32}}
+                      />
                     </View>
                     <View style={ [showDashboardStyles.playbackControlView, { marginBottom: 5 }] }>
-                      <Button type="surface" size="default" theme="gray" onPress={ this.pressPlayPauseStop }>
-                        <Text style={{ left: -2, width: 20 }}>{ showState.is_recording ? stopIcon : showState.is_playing ? pauseIcon : playIcon}</Text>
-                      </Button>
+                      <Button
+                        onPress={this.pressPlayPauseStop}
+                        icon={showState.is_recording ? stopIcon : showState.is_playing ? pauseIcon : playIcon}
+                        additionalStyles={{width: 45, height: 32}}
+                      />
                     </View>
                     <View style={ [showDashboardStyles.playbackControlView, { marginBottom: 5 }] }>
-                      <Button type="surface" size="default" theme="gray" onPress={ this.forward30 }>
-                        <Text style={{ left: -2, width: 20 }}>{showState.is_recording ? forward30IconDisabled : forward30Icon}</Text>
-                      </Button>
+                      <Button
+                        onPress={this.forward30}
+                        icon={showState.is_recording ? forward30IconDisabled : forward30Icon}
+                        additionalStyles={{width: 45, height: 32}}
+                      />
                     </View>
                   </View>
                 </View>
@@ -323,22 +340,30 @@ class SoundBoard extends Component {
           <View style={ showDashboardStyles.soundBoardView }>
             <View style={{ flexDirection: 'row', flex: 1 }}>
               <View style={ showDashboardStyles.buttonView }>
-                <Button type="surface" size="large" theme={ showState.is_timing ? "gray" : "red" } onPress={ this.startRecording }>
-                  <Text>{showState.is_timing ? recIconDisabled : recIcon}</Text>
-                  <Text style={[layoutStyles.buttonText, { color: showState.is_timing ? '#AAA' : '#FFF' }]}>Rec</Text>
-                </Button>
+                <Button
+                  onPress={this.startRecording}
+                  buttonText="Rec"
+                  textColor={showState.is_timing ? '#AAA' : '#FFF'}
+                  backgroundColor={showState.is_timing ? "gray" : "red"}
+                  icon={showState.is_timing ? recIconDisabled : recIcon}
+                  additionalStyles={{width: 100, height: 40}}
+                />
               </View>
               <View style={ showDashboardStyles.buttonView }>
                 { !showState.is_timing &&
-                  <Button type="surface" size="large" theme="gray" onPress={ this.startTiming }>
-                    <Text>{timerIcon}</Text>
-                    <Text style={layoutStyles.buttonText}>Time</Text>
-                  </Button> }
+                <Button
+                  onPress={this.startTiming}
+                  buttonText="Time"
+                  icon={timerIcon}
+                  additionalStyles={{width: 100, height: 40}}
+                /> }
                 { showState.is_timing &&
-                  <Button type="surface" size="large" theme="gray" selfStyle={ { borderColor: '#FF0000', borderWidth: 2 } } onPress={ this.stopTiming }>
-                    <Text>{stopIcon}</Text>
-                    <Text style={layoutStyles.buttonText}>Stop</Text>
-                  </Button> }
+                <Button
+                  onPress={this.stopTiming}
+                  buttonText="Stop"
+                  icon={stopIcon}
+                  additionalStyles={{borderColor: '#FF0000', borderWidth: 2, height: 40}}
+                /> }
               </View>
               <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                 <TouchableHighlight underlayColor='rgba(0,0,0,0)' onPress={ this.showTimer }>

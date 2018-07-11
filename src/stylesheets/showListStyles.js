@@ -43,6 +43,8 @@ export default showListStyles = StyleSheet.create({
     color: '#FFFFFF'
   },
   recIconBadgeView: {
-    paddingBottom: 14
+    paddingBottom: 14,
+    top: 5,
+    left: 10
   }
 });
