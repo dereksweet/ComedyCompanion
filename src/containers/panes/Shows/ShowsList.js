@@ -4,10 +4,8 @@ import React, {Component} from 'react';
 import { View, Text, ListView, ScrollView, TouchableHighlight, Platform, Switch, Modal } from 'react-native';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
-import {Button} from 'react-native-buttons';
 import FooterButton from '../../../components/FooterButton';
 import SearchBar from 'react-native-material-design-searchbar';
-import {AudioRecorder, AudioUtils} from 'react-native-audio';
 import moment from 'moment';
 
 import ShowDashboard from './ShowDashboard';

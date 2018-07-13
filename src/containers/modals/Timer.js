@@ -4,7 +4,6 @@ import React, {Component} from 'react';
 import { View, Text, TouchableHighlight } from 'react-native';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
-import {Button} from 'react-native-buttons';
 import FooterButton from '../../components/FooterButton';
 
 import { formatDisplayTime } from '../../helpers/formattingHelper';
