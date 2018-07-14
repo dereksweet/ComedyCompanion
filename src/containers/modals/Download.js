@@ -243,7 +243,7 @@ class Download extends Component {
                   style={{fontWeight: '100', fontSize: 10}}>(must be signed into iCloud on device)</Text></Text>
               </View>
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <View style={{flex: 1, height: 50}}>
+                <View style={{flex: 1, height: 45}}>
                   <Button
                     onPress={this.confirmWriteToiCloud}
                     buttonText="Write to iCloud"
@@ -251,7 +251,7 @@ class Download extends Component {
                     additionalStyles={layoutStyles.confirmButton}
                   />
                 </View>
-                <View style={{flex: 1, height: 50}}>
+                <View style={{flex: 1, height: 45}}>
                   <Button
                     onPress={this.confirmReadFromiCloud}
                     buttonText="Read from iCloud"
@@ -303,7 +303,7 @@ class Download extends Component {
                 />
               </View>
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <View style={{flex: 1, height: 50}}>
+                <View style={{flex: 1, height: 45}}>
                   <Button
                     onPress={this.sendExportEmail}
                     buttonText="Send Email"
