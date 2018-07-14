@@ -4,9 +4,8 @@ import React, {Component} from 'react';
 import { View, Text, ListView, ScrollView, TouchableHighlight, Platform, Switch, Modal } from 'react-native';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
-import {Button} from 'react-native-buttons';
+import FooterButton from '../../../components/FooterButton';
 import SearchBar from 'react-native-material-design-searchbar';
-import {AudioRecorder, AudioUtils} from 'react-native-audio';
 import moment from 'moment';
 
 import ShowDashboard from './ShowDashboard';
@@ -86,13 +85,23 @@ class ShowsList extends Component {
             </View>
             <View style={{ alignItems: 'flex-end', flexDirection: 'row' }}>
               <View style={ showListStyles.recIconBadgeView }>{ show._has_recording && recIconBadge }</View>
-              <View style={ showListStyles.showInfoView }>
-                <TouchableHighlight underlayColor="#EEEEEE" onPress={ () => viewSetList(show._id) } style={{ flex: 1, marginLeft: 10 }}>
-                  <View style={{ flex: 1, alignItems: 'flex-end', backgroundColor: '#EEFFEE', padding: 10, borderColor: '#EEEEEE', borderWidth: 1 }}>
-                    <Text style={{ textAlign: 'center', fontSize: 10 }}>Show Dashboard</Text>
-                  </View>
-                </TouchableHighlight>
-              </View>
+              <TouchableHighlight underlayColor="#EEEEEE" onPress={ () => viewSetList(show._id) } style={{ marginLeft: 10 }}>
+                <View style={{
+                  flex: 1,
+                  alignItems: 'flex-end',
+                  backgroundColor: '#fff',
+                  padding: 10,
+                  borderColor: '#ccc',
+                  borderWidth: 1,
+                  borderRadius: 3,
+                  shadowColor: 'black',
+                  shadowOffset: {width: 1,height: 1},
+                  shadowOpacity: 0.2,
+                  shadowRadius: 3
+                }}>
+                  <Text style={{ textAlign: 'center', fontSize: 10 }}>Set List & Timer/Rec</Text>
+                </View>
+              </TouchableHighlight>
             </View>
           </View>
         </TouchableHighlight>
@@ -139,6 +148,7 @@ class ShowsList extends Component {
             ref={(searchBar) => { this.searchBar = searchBar }}
             onSearchChange={ venueFilterChanged }
             height={40}
+            inputStyle={{borderWidth: 0, borderBottomWidth: 1, borderColor: '#ddd'}}
             placeholder={'Search...'}
             autoCorrect={false}
             padding={0}
@@ -166,12 +176,11 @@ class ShowsList extends Component {
                visible={this.state.show_dashboard_visible}
                onRequestClose={() => { }}>
           <ShowDashboard />
-          <View style={{ flexDirection: 'row', height: 47, borderTopColor: '#999999', borderTopWidth: 1 }}>
-            <View style={ { flex: 1, flexDirection: 'row' } }>
-              <Button type="surface" size="large" theme="gray" selfStyle={ layoutStyles.cancelButton } onPress={ hideSetList }>
-                <Text style={layoutStyles.buttonText}>Close</Text>
-              </Button>
-            </View>
+          <View style={{ flexDirection: 'row', width: '100%' }}>
+            <FooterButton
+              onPress={hideSetList}
+              buttonText="Close"
+            />
           </View>
         </Modal>
       </View>

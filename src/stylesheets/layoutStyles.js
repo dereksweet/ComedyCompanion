@@ -22,8 +22,6 @@ export default layoutStyles = StyleSheet.create({
     height: 40,
     backgroundColor: '#EEEEFF',
     width: '100%',
-    borderBottomColor: '#DDDDDD',
-    borderBottomWidth: 1,
     borderTopColor: '#DDDDDD',
     borderTopWidth: 1,
     flexDirection: 'row'
@@ -50,7 +48,7 @@ export default layoutStyles = StyleSheet.create({
     flex: 1,
     borderTopColor: '#CCCCCC',
     borderTopWidth: 1,
-    width: '100%'
+    alignSelf: 'stretch'
   },
   modalContentSection: {
     borderBottomWidth: 1,
@@ -134,16 +132,13 @@ export default layoutStyles = StyleSheet.create({
     height: 47
   },
   confirmButton: {
-    backgroundColor: '#009900',
-    borderColor: '#008800',
-    width: '100%',
+    flex: 1,
     height: 47
   },
   deleteButton: {
-    backgroundColor: '#DD0000',
-    borderColor: '#CC0000',
-    width: '100%',
-    height: 47
+    flex: 1,
+    width: 100,
+    height: 50
   },
   errorInput: {
     borderColor: '#FF0000',

@@ -4,7 +4,8 @@ import React, {Component} from 'react';
 import {View, ScrollView, Text, TextInput, AsyncStorage, Platform} from 'react-native';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {Button} from 'react-native-buttons';
+import Button from '../../components/Button';
+import FooterButton from '../../components/FooterButton';
 import iCloudStorage from 'react-native-icloudstore';
 import {SegmentedControls} from 'react-native-radio-buttons';
 
@@ -242,20 +243,22 @@ class Download extends Component {
                   style={{fontWeight: '100', fontSize: 10}}>(must be signed into iCloud on device)</Text></Text>
               </View>
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <View style={{flex: 4, height: 50}}>
-                  <Button type="surface" size="large" theme="blue" selfStyle={layoutStyles.confirmButton}
-                          onPress={this.confirmWriteToiCloud}>
-                    <Text style={{color: '#FFFFFF'}}>Write to iCloud</Text>
-                  </Button>
+                <View style={{flex: 1, height: 45}}>
+                  <Button
+                    onPress={this.confirmWriteToiCloud}
+                    buttonText="Write to iCloud"
+                    backgroundColor='green'
+                    additionalStyles={layoutStyles.confirmButton}
+                  />
                 </View>
-                <View style={{flex: 4, height: 50}}>
-                  <Button type="surface" size="large" theme="blue"
-                          selfStyle={[layoutStyles.confirmButton, {marginLeft: 10}]}
-                          onPress={this.confirmReadFromiCloud}>
-                    <Text style={{color: '#FFFFFF'}}>Read from iCloud</Text>
-                  </Button>
+                <View style={{flex: 1, height: 45}}>
+                  <Button
+                    onPress={this.confirmReadFromiCloud}
+                    buttonText="Read from iCloud"
+                    backgroundColor='green'
+                    additionalStyles={[layoutStyles.confirmButton, {marginLeft: 10}]}
+                  />
                 </View>
-                <View style={{flex: 1}} />
               </View>
               <View style={{paddingTop: 5}}>
                 <Text style={{fontWeight: '100', fontSize: 10}}>Note: Your audio recordings are not backed up /
@@ -300,11 +303,13 @@ class Download extends Component {
                 />
               </View>
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <View style={{flex: 1, height: 50}}>
-                  <Button type="surface" size="large" theme="blue" selfStyle={layoutStyles.confirmButton}
-                          onPress={this.sendExportEmail}>
-                    <Text style={{color: '#FFFFFF'}}>Send Email</Text>
-                  </Button>
+                <View style={{flex: 1, height: 45}}>
+                  <Button
+                    onPress={this.sendExportEmail}
+                    buttonText="Send Email"
+                    backgroundColor='green'
+                    additionalStyles={layoutStyles.confirmButton}
+                  />
                 </View>
                 <View style={{flex: 2}} />
               </View>
@@ -323,18 +328,18 @@ class Download extends Component {
               <Text>{this.state.cloudShowsCount} Shows</Text>
               <Text style={{textAlign: 'center', paddingTop: 25, fontWeight: 'bold'}}>ARE YOU SURE YOU WANT TO REPLACE EVERYTHING WITH WHAT IS ON ICLOUD AND LOSE ALL YOUR AUDIO RECORDINGS?</Text>
               <View style={{paddingTop: 25, flexDirection: 'row'}}>
-                <View style={{flex: 1}}>
-                  <Button type="surface" size="large" theme="red" selfStyle={layoutStyles.deleteButton}
-                          onPress={this.cancelReadFromiCloud}>
-                    <Text style={{color: '#FFFFFF', fontWeight: 'bold'}}>NO</Text>
-                  </Button>
-                </View>
-                <View style={{flex: 1, marginRight: 10}}>
-                  <Button type="surface" size="large" theme="blue"
-                          selfStyle={[layoutStyles.confirmButton, {marginLeft: 10}]} onPress={this.readFromiCloud}>
-                    <Text style={{color: '#FFFFFF', fontWeight: 'bold'}}>YES</Text>
-                  </Button>
-                </View>
+                <Button
+                  onPress={this.cancelReadFromiCloud}
+                  buttonText="NO"
+                  backgroundColor='red'
+                  additionalStyles={[layoutStyles.deleteButton, {marginRight: 10}]}
+                />
+                <Button
+                  onPress={this.readFromiCloud}
+                  buttonText="YES"
+                  backgroundColor='green'
+                  additionalStyles={layoutStyles.confirmButton}
+                />
               </View>
             </View>
             }
@@ -361,18 +366,18 @@ class Download extends Component {
               <Text>{this.state.localShowsCount} Shows</Text>
               <Text style={{textAlign: 'center', paddingTop: 25, fontWeight: 'bold'}}>ARE YOU SURE YOU WANT TO OVERWRITE EVERYTHING ON ICLOUD? YOUR AUDIO RECORDINGS WILL NOT BE BACKED UP!</Text>
               <View style={{paddingTop: 25, flexDirection: 'row'}}>
-                <View style={{flex: 1}}>
-                  <Button type="surface" size="large" theme="red" selfStyle={layoutStyles.deleteButton}
-                          onPress={this.cancelWriteToiCloud}>
-                    <Text style={{color: '#FFFFFF', fontWeight: 'bold'}}>NO</Text>
-                  </Button>
-                </View>
-                <View style={{flex: 1, marginRight: 10}}>
-                  <Button type="surface" size="large" theme="blue"
-                          selfStyle={[layoutStyles.confirmButton, {marginLeft: 10}]} onPress={this.writeToiCloud}>
-                    <Text style={{color: '#FFFFFF', fontWeight: 'bold'}}>YES</Text>
-                  </Button>
-                </View>
+                <Button
+                  onPress={this.cancelWriteToiCloud}
+                  buttonText="NO"
+                  backgroundColor='red'
+                  additionalStyles={[layoutStyles.deleteButton, {marginRight: 10}]}
+                />
+                <Button
+                  onPress={this.writeToiCloud}
+                  buttonText="YES"
+                  backgroundColor='green'
+                  additionalStyles={layoutStyles.confirmButton}
+                />
               </View>
             </View>
             }
@@ -389,13 +394,11 @@ class Download extends Component {
             }
           </View>
           }
-          <View style={{flexDirection: 'row', height: 47, borderTopColor: '#999999', borderTopWidth: 1}}>
-            <View style={{flex: 1, flexDirection: 'row'}}>
-              <Button type="surface" size="large" theme="gray" selfStyle={layoutStyles.cancelButton}
-                      onPress={this.close}>
-                <Text style={layoutStyles.buttonText}>Close</Text>
-              </Button>
-            </View>
+          <View style={{ flexDirection: 'row', width: '100%' }}>
+            <FooterButton
+              onPress={this.close}
+              buttonText="Close"
+            />
           </View>
         </View>
       </View>

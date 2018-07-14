@@ -1,12 +1,11 @@
 'use strict';
 
 import React, {Component} from 'react';
-import { View, Text, ScrollView, TouchableHighlight } from 'react-native';
+import { View, Text } from 'react-native';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
-import {Button} from 'react-native-buttons';
+import Button from '../../../components/Button';
 
-import {AudioRecorder, AudioUtils} from 'react-native-audio';
 import KeepAwake from 'react-native-keep-awake';
 
 import SoundBoard from './ShowDashboard/SoundBoard';
@@ -122,16 +121,18 @@ class ShowDashboard extends Component {
               <Text style={{ textAlign: 'center', fontSize: 20 }}>Are you SURE you want to delete this recording?</Text>
             </View>
             <View style={{ paddingTop: 25, flexDirection: 'row' }}>
-              <View style={{ flex: 1 }}>
-                <Button type="surface" size="large" theme="red" selfStyle={ layoutStyles.deleteButton } onPress={ showActions.toggleDeleteRecordingConfirm }>
-                  <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>NO</Text>
-                </Button>
-              </View>
-              <View style={{ flex: 1, marginRight: 10 }}>
-                <Button type="surface" size="large" theme="blue" selfStyle={ [layoutStyles.confirmButton, { marginLeft: 10 }] } onPress={ this.deleteRecording }>
-                  <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>YES</Text>
-                </Button>
-              </View>
+              <Button
+                onPress={showActions.toggleDeleteRecordingConfirm}
+                buttonText="NO"
+                backgroundColor='red'
+                additionalStyles={[layoutStyles.deleteButton, {marginRight: 10}]}
+              />
+              <Button
+                onPress={this.deleteRecording}
+                buttonText="YES"
+                backgroundColor='green'
+                additionalStyles={layoutStyles.confirmButton}
+              />
             </View>
           </View>
         }
@@ -141,16 +142,18 @@ class ShowDashboard extends Component {
               <Text style={{ textAlign: 'center', fontSize: 20 }}>Are you SURE you want to replace this recording?</Text>
             </View>
             <View style={{ paddingTop: 25, flexDirection: 'row' }}>
-              <View style={{ flex: 1 }}>
-                <Button type="surface" size="large" theme="red" selfStyle={ layoutStyles.deleteButton } onPress={ showActions.toggleReplaceRecordingConfirm }>
-                  <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>NO</Text>
-                </Button>
-              </View>
-              <View style={{ flex: 1, marginRight: 10 }}>
-                <Button type="surface" size="large" theme="blue" selfStyle={ [layoutStyles.confirmButton, { marginLeft: 10 }] } onPress={ this.replaceRecording }>
-                  <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>YES</Text>
-                </Button>
-              </View>
+              <Button
+                onPress={showActions.toggleReplaceRecordingConfirm}
+                buttonText="NO"
+                backgroundColor='red'
+                additionalStyles={[layoutStyles.deleteButton, {marginRight: 10}]}
+              />
+              <Button
+                onPress={this.replaceRecording}
+                buttonText="YES"
+                backgroundColor='green'
+                additionalStyles={layoutStyles.confirmButton}
+              />
             </View>
           </View>
         }
@@ -171,11 +174,12 @@ class ShowDashboard extends Component {
               </Text>
             </View>
             <View style={{ paddingTop: 25, flexDirection: 'row' }}>
-              <View style={{ flex: 1 }}>
-                <Button type="surface" size="large" theme="red" selfStyle={ layoutStyles.confirmButton } onPress={ this.toggleRecordingInfo }>
-                  <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>OK</Text>
-                </Button>
-              </View>
+              <Button
+                onPress={this.toggleRecordingInfo}
+                buttonText="OK"
+                backgroundColor='green'
+                additionalStyles={{flex:1, marginRight: 30, marginLeft: 30}}
+              />
             </View>
           </View>
         }

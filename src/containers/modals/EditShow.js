@@ -4,7 +4,8 @@ import React, {Component} from 'react';
 import { View, ScrollView, TouchableHighlight, TouchableWithoutFeedback, Text, TextInput, Platform, Keyboard, Button as NativeButton } from 'react-native';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
-import {Button} from 'react-native-buttons';
+import Button from '../../components/Button';
+import FooterButton from '../../components/FooterButton';
 import DatePicker from 'react-native-datepicker';
 import moment from 'moment';
 
@@ -235,24 +236,23 @@ class EditShow extends Component {
                 <View style={ [layoutStyles.modalContentSection, {flex: 1} ] }>
 
                 </View>
-                <View style={ { flexDirection: 'row', height: 47, width: '100%' }}>
+                <View style={{ flexDirection: 'row', width: '100%' }}>
                   { (showState.show._id != -1) &&
-                  <View style={ { flex: 1 } }>
-                    <Button type="surface" size="large" theme="red" selfStyle={ layoutStyles.deleteButton } onPress={ toggleDeleteConfirm }>
-                      <Text style={layoutStyles.buttonText}>Delete</Text>
-                    </Button>
-                  </View>
+                  <FooterButton
+                    onPress={toggleDeleteConfirm}
+                    buttonText="Delete"
+                    backgroundColor='red'
+                  />
                   }
-                  <View style={ { flex: 1 } }>
-                    <Button type="surface" size="large" theme="gray" selfStyle={ layoutStyles.cancelButton } onPress={ cancel }>
-                      <Text style={layoutStyles.buttonText}>Cancel</Text>
-                    </Button>
-                  </View>
-                  <View style={ { flex: 1 } }>
-                    <Button type="surface" size="large" theme="blue" selfStyle={ layoutStyles.confirmButton } onPress={ save }>
-                      <Text style={layoutStyles.buttonText}>Save</Text>
-                    </Button>
-                  </View>
+                  <FooterButton
+                    onPress={cancel}
+                    buttonText="Cancel"
+                  />
+                  <FooterButton
+                    onPress={save}
+                    buttonText="Save"
+                    backgroundColor='green'
+                  />
                 </View>
                 { this.state.show_delete_confirm &&
                   <View style={ layoutStyles.confirmBox }>
@@ -260,16 +260,18 @@ class EditShow extends Component {
                       <Text style={{ textAlign: 'center', fontSize: 20 }}>Are you SURE you want to delete this show?</Text>
                     </View>
                     <View style={{ paddingTop: 25, flexDirection: 'row' }}>
-                      <View style={{ flex: 1 }}>
-                        <Button type="surface" size="large" theme="red" selfStyle={ layoutStyles.deleteButton } onPress={ toggleDeleteConfirm }>
-                          <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>NO</Text>
-                        </Button>
-                      </View>
-                      <View style={{ flex: 1, marginRight: 10 }}>
-                        <Button type="surface" size="large" theme="blue" selfStyle={ [layoutStyles.confirmButton, { marginLeft: 10 }] } onPress={ destroy }>
-                          <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>YES</Text>
-                        </Button>
-                      </View>
+                      <Button
+                        onPress={toggleDeleteConfirm}
+                        buttonText="NO"
+                        backgroundColor='red'
+                        additionalStyles={[layoutStyles.deleteButton, {marginRight: 10}]}
+                      />
+                      <Button
+                        onPress={destroy}
+                        buttonText="YES"
+                        backgroundColor='green'
+                        additionalStyles={layoutStyles.confirmButton}
+                      />
                     </View>
                   </View>
                 }

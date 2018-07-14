@@ -4,7 +4,7 @@ import React, {Component} from 'react';
 import { View, ScrollView, Text, Switch, AsyncStorage, Platform } from 'react-native';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
-import {Button} from 'react-native-buttons';
+import FooterButton from '../../components/FooterButton';
 import { SegmentedControls } from 'react-native-radio-buttons';
 
 import Setting from '../../models/setting';
@@ -216,12 +216,11 @@ class Settings extends Component {
               </View>
             </View>
           </ScrollView>
-          <View style={{ flexDirection: 'row', height: 47, borderTopColor: '#999999', borderTopWidth: 1 }}>
-            <View style={ { flex: 1, flexDirection: 'row' } }>
-              <Button type="surface" size="large" theme="gray" selfStyle={ layoutStyles.cancelButton } onPress={ close }>
-                <Text style={layoutStyles.buttonText}>Close</Text>
-              </Button>
-            </View>
+          <View style={{ flexDirection: 'row', width: '100%' }}>
+            <FooterButton
+              onPress={close}
+              buttonText="Close"
+            />
           </View>
         </View>
       </View>

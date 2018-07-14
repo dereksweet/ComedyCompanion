@@ -1,23 +1,22 @@
 'use strict';
 
 import React, {Component} from 'react';
-import { View, Text, TouchableHighlight, TouchableWithoutFeedback, Switch, TextInput, KeyboardAvoidingView, Platform, Keyboard } from 'react-native';
+import { View, Text, TouchableWithoutFeedback, Switch, TextInput, Platform, Keyboard } from 'react-native';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
-import {Button} from 'react-native-buttons';
 
 import * as routingActions from '../../actions/routingActions';
 import * as jokeActions from '../../actions/jokeActions';
-import * as jokeListActions from '../../actions/jokeListActions';
 
 import ShakingView from '../../components/ShakingView';
 import MultilineTextInput from '../../components/MultilineTextinput';
+import Button from '../../components/Button';
+import FooterButton from '../../components/FooterButton';
 
 import JokeListHelper from '../../helpers/jokeListHelper';
 
 import layoutStyles from '../../stylesheets/layoutStyles';
 import editJokeStyles from '../../stylesheets/editJokeStyles';
-import editSetListStyles from "../../stylesheets/editSetListStyles";
 
 class EditJoke extends Component {
   constructor(props) {
@@ -175,13 +174,13 @@ class EditJoke extends Component {
         <View style={layoutStyles.statusBarBuffer} />
         <View style={layoutStyles.modalContent} onLayout={(event) => this.measureModalView(event)}>
           <TouchableWithoutFeedback onPress={ Keyboard.dismiss }>
-            <View style={{ height: this.contentHeight() }}>
+            <View style={{height: this.contentHeight()}}>
               <View style={ [layoutStyles.modalContentSection, { flexDirection: 'row', alignItems: 'center' }] }>
                 <Text style={ layoutStyles.inputLabel }>In Development:</Text>
                 <Switch onValueChange={ () => { jokeActions.toggleInDevelopment(); setDirty(); }}
                         value={jokeState.joke._in_development} />
                 <View style={{flex: 1, flexDirection: 'row', justifyContent: 'flex-end'}}>
-                  <Text style={ layoutStyles.inputLabel }></Text>
+                  <Text style={layoutStyles.inputLabel} />
                 </View>
                 <TextInput style={ [editJokeStyles.timeInput, this.state.minutes_input_valid ? {} : layoutStyles.errorInput] }
                            underlineColorAndroid='transparent'
@@ -213,24 +212,24 @@ class EditJoke extends Component {
                            onChangeText={(text) => { jokeActions.setNotes(text); setDirty(); }}
                            value={ jokeState.joke._notes } />
               </View>
-              <View style={{ flexDirection: 'row', height: 47, width: '100%' }}>
+
+              <View style={{ flexDirection: 'row', width: '100%' }}>
                 { (jokeState.joke._id !== -1) &&
-                <View style={{ flex: 1 }}>
-                  <Button type="surface" size="large" theme="red" selfStyle={ layoutStyles.deleteButton } onPress={ toggleDeleteConfirm }>
-                    <Text style={layoutStyles.buttonText}>Delete</Text>
-                  </Button>
-                </View>
+                  <FooterButton
+                    onPress={toggleDeleteConfirm}
+                    buttonText="Delete"
+                    backgroundColor='red'
+                  />
                 }
-                <View style={{ flex: 1 } }>
-                  <Button type="surface" size="large" theme="gray" selfStyle={ layoutStyles.cancelButton } onPress={ toggleCancelConfirm }>
-                    <Text style={layoutStyles.buttonText}>Cancel</Text>
-                  </Button>
-                </View>
-                <View style={{ flex: 1 }}>
-                  <Button type="surface" size="large" theme="blue" selfStyle={ layoutStyles.confirmButton } onPress={ save }>
-                    <Text style={layoutStyles.buttonText}>Save</Text>
-                  </Button>
-                </View>
+                <FooterButton
+                  onPress={toggleCancelConfirm}
+                  buttonText="Cancel"
+                />
+                <FooterButton
+                  onPress={save}
+                  buttonText="Save"
+                  backgroundColor='green'
+                />
               </View>
             </View>
           </TouchableWithoutFeedback>
@@ -240,16 +239,18 @@ class EditJoke extends Component {
                 <Text style={{ textAlign: 'center', fontSize: 20 }}>Are you SURE you want to delete this joke?</Text>
               </View>
               <View style={{ paddingTop: 25, flexDirection: 'row' }}>
-                <View style={{ flex: 1 }}>
-                  <Button type="surface" size="large" theme="red" selfStyle={ layoutStyles.deleteButton } onPress={ toggleDeleteConfirm }>
-                    <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>NO</Text>
-                  </Button>
-                </View>
-                <View style={{ flex: 1, marginRight: 10 }}>
-                  <Button type="surface" size="large" theme="blue" selfStyle={ [layoutStyles.confirmButton, { marginLeft: 10 }] } onPress={ destroy }>
-                    <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>YES</Text>
-                  </Button>
-                </View>
+                <Button
+                  onPress={toggleDeleteConfirm}
+                  buttonText="NO"
+                  backgroundColor='red'
+                  additionalStyles={[layoutStyles.deleteButton, {marginRight: 10}]}
+                />
+                <Button
+                  onPress={destroy}
+                  buttonText="YES"
+                  backgroundColor='green'
+                  additionalStyles={layoutStyles.confirmButton}
+                />
               </View>
             </View>
           }
@@ -259,16 +260,18 @@ class EditJoke extends Component {
                 <Text style={{ textAlign: 'center', fontSize: 20 }}>You have changes that will be lost. Are you SURE you want to cancel?</Text>
               </View>
               <View style={{ paddingTop: 25, flexDirection: 'row' }}>
-                <View style={{ flex: 1 }}>
-                  <Button type="surface" size="large" theme="red" selfStyle={ layoutStyles.deleteButton } onPress={ toggleCancelConfirm }>
-                    <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>NO</Text>
-                  </Button>
-                </View>
-                <View style={{ flex: 1, marginRight: 10 }}>
-                  <Button type="surface" size="large" theme="blue" selfStyle={ [layoutStyles.confirmButton, { marginLeft: 10 }] } onPress={ cancel }>
-                    <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>YES</Text>
-                  </Button>
-                </View>
+                <Button
+                  onPress={toggleCancelConfirm}
+                  buttonText="NO"
+                  backgroundColor='red'
+                  additionalStyles={[layoutStyles.deleteButton, {marginRight: 10}]}
+                />
+                <Button
+                  onPress={cancel}
+                  buttonText="YES"
+                  backgroundColor='green'
+                  additionalStyles={layoutStyles.confirmButton}
+                />
               </View>
             </View>
           }

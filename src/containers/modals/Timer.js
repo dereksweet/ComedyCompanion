@@ -4,7 +4,7 @@ import React, {Component} from 'react';
 import { View, Text, TouchableHighlight } from 'react-native';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
-import {Button} from 'react-native-buttons';
+import FooterButton from '../../components/FooterButton';
 
 import { formatDisplayTime } from '../../helpers/formattingHelper';
 
@@ -53,12 +53,12 @@ class About extends Component {
               <Text style={{ fontSize: normalizeWidth(horiz ? 75 : 90), transform: [{ rotate: horiz ? '0deg' : '90deg'}] }}>{ formatDisplayTime(showState.display_time_seconds) }</Text>
             </TouchableHighlight>
           </View>
-          <View style={{ flexDirection: 'row', height: 47, borderTopColor: '#999999', borderTopWidth: 1 }}>
-            <View style={ { flex: 1, flexDirection: 'row' } }>
-              <Button type="surface" size="large" theme="gray" selfStyle={ layoutStyles.cancelButton } onPress={ close }>
-                <Text style={layoutStyles.buttonText}>Close</Text>
-              </Button>
-            </View>
+
+          <View style={{ flexDirection: 'row', width: '100%' }}>
+            <FooterButton
+              onPress={close}
+              buttonText="Close"
+            />
           </View>
         </View>
       </View>

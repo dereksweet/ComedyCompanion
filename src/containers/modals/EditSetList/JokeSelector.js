@@ -90,6 +90,7 @@ class JokeSelector extends Component {
             ref={(searchBar) => { this.searchBar = searchBar }}
             onSearchChange={ nameFilterChanged }
             height={40}
+            inputStyle={{borderWidth: 0, borderBottomWidth: 1, borderColor: '#ddd'}}
             placeholder={'Search...'}
             inputProps={{ value: jokeListState.name_filter_selector }}
             autoCorrect={false}

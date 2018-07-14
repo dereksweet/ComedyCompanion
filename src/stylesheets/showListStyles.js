@@ -6,7 +6,7 @@ export default showListStyles = StyleSheet.create({
     minHeight: 30,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#FAFAFA',
+    backgroundColor: '#f7f7f7',
     paddingTop: 10,
     paddingBottom: 10,
     paddingLeft: 10,
@@ -43,6 +43,8 @@ export default showListStyles = StyleSheet.create({
     color: '#FFFFFF'
   },
   recIconBadgeView: {
-    paddingBottom: 14
+    paddingBottom: 14,
+    top: 5,
+    left: 10
   }
 });
