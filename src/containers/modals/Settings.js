@@ -118,7 +118,7 @@ class Settings extends Component {
               <View style={ {borderBottomColor: '#999999', borderBottomWidth: 1, paddingBottom: 5, marginBottom: 10} }>
                 <Text style={ layoutStyles.settingsSectionTitle }>Jokes Settings</Text>
               </View>
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <View style={layoutStyles.centeredFlexRow}>
                 <Text style={ jokeListStyles.sortByText }>Sort by: </Text>
                 <SegmentedControls
                   options={
@@ -132,7 +132,7 @@ class Settings extends Component {
                   testOptionEqual={(selectedValue, option) => selectedValue === option.value}
                 />
               </View>
-              <View style={{ flexDirection: 'row', alignItems: 'center', paddingTop: 10 }}>
+              <View style={layoutStyles.centeredFlexRowTopPadded}>
                 <Text style={ jokeListStyles.sortInText }>Sort in: </Text>
                 <SegmentedControls
                   options={
@@ -151,7 +151,7 @@ class Settings extends Component {
               <View style={ {borderBottomColor: '#999999', borderBottomWidth: 1, paddingBottom: 5, marginBottom: 10} }>
                 <Text style={ layoutStyles.settingsSectionTitle }>Set Lists Settings</Text>
               </View>
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <View style={layoutStyles.centeredFlexRow}>
                 <Text style={ setListListStyles.sortByText }>Sort by: </Text>
                 <SegmentedControls
                   options={
@@ -166,7 +166,7 @@ class Settings extends Component {
                   testOptionEqual={(selectedValue, option) => selectedValue === option.value}
                 />
               </View>
-              <View style={{ flexDirection: 'row', alignItems: 'center', paddingTop: 10 }}>
+              <View style={layoutStyles.centeredFlexRowTopPadded}>
                 <Text style={ setListListStyles.sortInText }>Sort in: </Text>
                 <SegmentedControls
                   options={
@@ -185,7 +185,7 @@ class Settings extends Component {
               <View style={ {borderBottomColor: '#999999', borderBottomWidth: 1, paddingBottom: 5, marginBottom: 10} }>
                 <Text style={ layoutStyles.settingsSectionTitle }>Shows Settings</Text>
               </View>
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <View style={layoutStyles.centeredFlexRow}>
                 <Text style={ showListStyles.sortByText }>Sort by: </Text>
                 <SegmentedControls
                   options={
@@ -200,7 +200,7 @@ class Settings extends Component {
                   testOptionEqual={(selectedValue, option) => selectedValue === option.value}
                 />
               </View>
-              <View style={{ flexDirection: 'row', alignItems: 'center', paddingTop: 10 }}>
+              <View style={layoutStyles.centeredFlexRowTopPadded}>
                 <Text style={ showListStyles.sortInText }>Sort in: </Text>
                 <SegmentedControls
                   options={
@@ -216,7 +216,7 @@ class Settings extends Component {
               </View>
             </View>
           </ScrollView>
-          <View style={{ flexDirection: 'row', width: '100%' }}>
+          <View style={layoutStyles.flexRowStretched}>
             <FooterButton
               onPress={close}
               buttonText="Close"

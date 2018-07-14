@@ -242,7 +242,7 @@ class Download extends Component {
                 <Text style={layoutStyles.settingsSectionTitle}>iCloud Sync <Text
                   style={{fontWeight: '100', fontSize: 10}}>(must be signed into iCloud on device)</Text></Text>
               </View>
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <View style={layoutStyles.centeredFlexRow}>
                 <View style={{flex: 1, height: 45}}>
                   <Button
                     onPress={this.confirmWriteToiCloud}
@@ -277,7 +277,7 @@ class Download extends Component {
                   show up in your inbox momentarily. Note: Formatted emails may look terrible on some Android
                   devices.</Text>
               </View>
-              <View style={{flexDirection: 'row', alignItems: 'center', marginBottom: 10}}>
+              <View style={layoutStyles.centeredFlexRowBottomMargin}>
                 <Text style={layoutStyles.inputLabel}>Email:</Text>
                 <TextInput
                   style={[downloadStyles.exportEmailInput, this.state.export_email_valid ? {} : layoutStyles.errorInput]}
@@ -289,7 +289,7 @@ class Download extends Component {
                   autoCapitalize="none"
                   value={downloadState.export_email}/>
               </View>
-              <View style={{flexDirection: 'row', alignItems: 'center', marginBottom: 10}}>
+              <View style={layoutStyles.centeredFlexRowBottomMargin}>
                 <SegmentedControls
                   options={
                     [{label: 'Formatted', value: 'formatted'},
@@ -302,7 +302,7 @@ class Download extends Component {
                   testOptionEqual={(selectedValue, option) => selectedValue === option.value}
                 />
               </View>
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <View style={layoutStyles.centeredFlexRow}>
                 <View style={{flex: 1, height: 45}}>
                   <Button
                     onPress={this.sendExportEmail}
@@ -394,7 +394,7 @@ class Download extends Component {
             }
           </View>
           }
-          <View style={{ flexDirection: 'row', width: '100%' }}>
+          <View style={layoutStyles.flexRowStretched}>
             <FooterButton
               onPress={this.close}
               buttonText="Close"

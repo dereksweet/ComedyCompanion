@@ -127,7 +127,7 @@ class JokesList extends Component {
           style={layoutStyles.flexListView}
         />
         <View style={ layoutStyles.toolbar }>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <View style={layoutStyles.centeredFlexRow}>
             <Text style={ layoutStyles.inputLabel }>In Development:</Text>
             <Switch onValueChange={ inDevelopmentChanged }
                     value={jokeListState.in_development} />

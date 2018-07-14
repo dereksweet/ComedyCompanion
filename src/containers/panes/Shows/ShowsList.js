@@ -160,7 +160,7 @@ class ShowsList extends Component {
           style={layoutStyles.flexListView}
         />
         <View style={ layoutStyles.toolbar }>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <View style={layoutStyles.centeredFlexRow}>
             <Text></Text>
           </View>
           <View style={{ flex: 1, alignItems: 'flex-end' }}>
@@ -173,7 +173,7 @@ class ShowsList extends Component {
                visible={this.state.show_dashboard_visible}
                onRequestClose={() => { }}>
           <ShowDashboard />
-          <View style={{ flexDirection: 'row', width: '100%' }}>
+          <View style={layoutStyles.flexRowStretched}>
             <FooterButton
               onPress={hideSetList}
               buttonText="Close"

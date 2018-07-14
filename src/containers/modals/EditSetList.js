@@ -127,27 +127,31 @@ class EditSetList extends Component {
         <View style={layoutStyles.modalContent} onLayout={(event) => this.measureModalView(event)}>
           <TouchableWithoutFeedback onPress={ Keyboard.dismiss }>
             <View style={{ height: this.contentHeight() }}>
-              <View style={ [layoutStyles.modalContentSection, { flexDirection: 'row', alignItems: 'center', backgroundColor: '#EEEEEE'  }] }>
+              <View style={ [layoutStyles.modalContentSection, layoutStyles.centeredFlexRow, { backgroundColor: '#EEEEEE'  }] }>
                 <Text style={ layoutStyles.inputLabel }>Name:</Text>
-                <TextInput style={ [editSetListStyles.nameInput, this.state.name_input_valid ? {} : layoutStyles.errorInput] }
-                           underlineColorAndroid='transparent'
-                           placeholder="Name your set list here..."
-                           onChangeText={(text) => setListActions.setSLName(text)}
-                           value={ setListState.set_list._name } />
+                <TextInput
+                  style={ [editSetListStyles.nameInput, this.state.name_input_valid ? {} : layoutStyles.errorInput] }
+                  underlineColorAndroid='transparent'
+                  placeholder="Name your set list here..."
+                  onChangeText={(text) => setListActions.setSLName(text)}
+                  value={setListState.set_list._name}
+                />
               </View>
-              <View style={ [layoutStyles.modalContentSection, { flexDirection: 'row', alignItems: 'center', backgroundColor: '#EEEEEE'  }] }>
-                <View style={ { flex: 1, flexDirection: 'row', alignItems: 'center'  } }>
+              <View style={[layoutStyles.modalContentSection, layoutStyles.centeredFlexRow, {backgroundColor: '#EEEEEE'}]}>
+                <View style={[layoutStyles.centeredFlexRow, {flex: 1}]}>
                   <View>
-                    <Text style={ layoutStyles.inputLabel }>Length:</Text>
-                    <Text style={ [layoutStyles.inputLabel, {marginLeft: 5}] }>(min)</Text>
+                    <Text style={layoutStyles.inputLabel}>Length:</Text>
+                    <Text style={[layoutStyles.inputLabel, {marginLeft: 5}]}>(min)</Text>
                   </View>
-                  <TextInput style={ editSetListStyles.lengthInput }
-                             underlineColorAndroid='transparent'
-                             placeholderTextColor='red'
-                             placeholder=""
-                             onChangeText={(text) => setListActions.setSLLength(text)}
-                             keyboardType="numeric"
-                             value={ setListState.set_list._length ? setListState.set_list._length.toString() : '' } />
+                  <TextInput
+                    style={editSetListStyles.lengthInput}
+                    underlineColorAndroid='transparent'
+                    placeholderTextColor='red'
+                    placeholder=""
+                    onChangeText={(text) => setListActions.setSLLength(text)}
+                    keyboardType="numeric"
+                    value={setListState.set_list._length ? setListState.set_list._length.toString() : ''}
+                  />
                   { setListLengthString !== '0' &&
                     <View>
                       <Text style={layoutStyles.postLabel}>Estimated: </Text>
@@ -172,7 +176,7 @@ class EditSetList extends Component {
                   <SetListJokes />
                 </View>
               </View>
-              <View style={{ flexDirection: 'row', width: '100%' }}>
+              <View style={layoutStyles.flexRowStretched}>
                 { (setListState.set_list._id !== -1) &&
                 <FooterButton
                   onPress={toggleDeleteConfirm}

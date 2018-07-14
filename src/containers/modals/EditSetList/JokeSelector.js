@@ -4,12 +4,12 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import SearchBar from 'react-native-material-design-searchbar';
 
-import Joke from '../../../models/joke';
+import * as jokeListActions from '../../../actions/jokeListActions';
+import * as setListActions from '../../../actions/setListActions';
 
 import JokeListHelper from '../../../helpers/jokeListHelper';
 
-import * as jokeListActions from '../../../actions/jokeListActions';
-import * as setListActions from '../../../actions/setListActions';
+import Joke from '../../../models/joke';
 
 import layoutStyles from '../../../stylesheets/layoutStyles';
 import jokeListStyles from '../../../stylesheets/jokeListStyles';
@@ -97,10 +97,12 @@ class JokeSelector extends Component {
           style={layoutStyles.flexListView}
         />
         <View style={layoutStyles.toolbar}>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <View style={layoutStyles.centeredFlexRow}>
             <Text style={layoutStyles.inputLabel}>In Dev:</Text>
-            <Switch onValueChange={this.inDevelopmentChanged}
-                    value={jokeListState.in_development_selector}/>
+            <Switch
+              onValueChange={this.inDevelopmentChanged}
+              value={jokeListState.in_development_selector}
+            />
           </View>
         </View>
       </View>

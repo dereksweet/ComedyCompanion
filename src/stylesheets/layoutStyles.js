@@ -8,10 +8,32 @@ export default layoutStyles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'stretch'
   },
+  centerCenter: {
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  centeredFlexRow: {
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  centeredFlexRowTopPadded: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingTop: 10
+  },
+  centeredFlexRowBottomMargin: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10
+  },
   centeredFlex: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  flexRowStretched: {
+    flexDirection: 'row',
+    width: '100%'
   },
   statusBarBuffer: {
     height: (Platform.OS === 'ios') ? 20 : 0,

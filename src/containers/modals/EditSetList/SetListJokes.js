@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { View, Text, ListView, ScrollView, TouchableHighlight } from 'react-native';
+import { View, Text, TouchableHighlight } from 'react-native';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 import SortableListView from 'react-native-sortable-listview';
@@ -7,9 +7,10 @@ import SortableListView from 'react-native-sortable-listview';
 import * as setListActions from '../../../actions/setListActions';
 import * as routingActions from '../../../actions/routingActions';
 
+import JokeListHelper from "../../../helpers/jokeListHelper";
+
 import jokeListStyles from '../../../stylesheets/jokeListStyles';
 import editSetListStyles from '../../../stylesheets/editSetListStyles';
-import JokeListHelper from "../../../helpers/jokeListHelper";
 
 class JokeSelector extends Component {
   constructor(props) {
@@ -24,7 +25,7 @@ class JokeSelector extends Component {
   totalRowHeights() {
     let sum = 0;
 
-    for (var key in this.rowHeights) {
+    for (let key in this.rowHeights) {
       sum += this.rowHeights[key];
     }
 
@@ -44,7 +45,7 @@ class JokeSelector extends Component {
   measureRow(joke_id, event) {
     this.rowHeights[joke_id] = event.nativeEvent.layout.height;
 
-    if (Object.keys(this.rowHeights).length == this.props.setListState.set_list._jokes.length) {
+    if (Object.keys(this.rowHeights).length === this.props.setListState.set_list._jokes.length) {
       if ((this.jokeAdded) && (this.totalRowHeights() >= this.listViewHeight)) {
         this.listView.refs.list.scrollToEnd();
         this.jokeAdded = false;
@@ -53,7 +54,7 @@ class JokeSelector extends Component {
   }
 
   rowMoved(e) {
-    const { setListState, setListActions } = this.props;
+    const {setListState, setListActions} = this.props;
 
     setListState.set_list._jokes.splice(e.to, 0, setListState.set_list._jokes.splice(e.from, 1)[0]);
     setListActions.setSL(setListState.set_list);
@@ -74,7 +75,7 @@ class JokeSelector extends Component {
         underlayColor={'#ccc'}
         delayLongPress={500}
         onPress={ () => this.selectJoke(rowData) }
-        style={ [editSetListStyles.setListJokeRow, {borderBottomWidth: 1, borderBottomColor: '#CCCCCC'}] }
+        style={editSetListStyles.setListJokeRow}
         {...this.props.sortHandlers}>
         <View style={ {alignItems: 'center'} }>
           <Text style={ [jokeListStyles.jokeName, { textAlign: 'center' }] }>{ rowData._name }</Text>
@@ -84,7 +85,7 @@ class JokeSelector extends Component {
   };
 
   render() {
-    const { setListState, setListActions } = this.props;
+    const {setListState} = this.props;
 
     let data = {};
     setListState.set_list._jokes.forEach((joke, i) => {
@@ -94,13 +95,13 @@ class JokeSelector extends Component {
     let order = Object.keys(data);
 
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{flex: 1}}>
         <View style={editSetListStyles.setListJokesHeader}>
           <Text>Set List</Text>
-          <Text style={ editSetListStyles.jokeInstructions }>tap to remove</Text>
-          <Text style={ editSetListStyles.jokeInstructions }>hold to reorder</Text>
+          <Text style={editSetListStyles.jokeInstructions}>tap to remove</Text>
+          <Text style={editSetListStyles.jokeInstructions}>hold to reorder</Text>
         </View>
-        <View onLayout={ this.measureView.bind(this) } style={{ flex: 1 }}>
+        <View onLayout={this.measureView.bind(this)} style={{flex: 1}}>
           <SortableListView
             style={{flex: 1}}
             ref={(listView) => this.listView = listView}

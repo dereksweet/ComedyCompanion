@@ -56,6 +56,8 @@ export default editSetListStyles = StyleSheet.create({
     paddingBottom: 10,
     paddingLeft: 10,
     paddingRight: 10,
-    flexDirection: 'row'
+    flexDirection: 'row',
+    borderBottomWidth: 1,
+    borderBottomColor: '#CCCCCC'
   }
 });

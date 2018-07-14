@@ -97,7 +97,7 @@ class SetListsList extends Component {
           style={layoutStyles.flexListView}
         />
         <View style={ layoutStyles.toolbar }>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <View style={layoutStyles.centeredFlexRow}>
             <Text></Text>
           </View>
           <View style={{ flex: 1, alignItems: 'flex-end' }}>

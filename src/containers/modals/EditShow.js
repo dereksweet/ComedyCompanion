@@ -180,7 +180,7 @@ class EditShow extends Component {
           { !this.state.show_set_list_select &&
             <TouchableWithoutFeedback onPress={ Keyboard.dismiss }>
               <View style={{ height: this.contentHeight() }}>
-                <View style={ [layoutStyles.modalContentSection, { flexDirection: 'row', alignItems: 'center'  }] }>
+                <View style={ [layoutStyles.modalContentSection, layoutStyles.centeredFlexRow] }>
                   <Text style={ layoutStyles.inputLabel }>Venue:</Text>
                   <TextInput style={ [editShowStyles.venueInput, this.state.venue_input_valid ? {} : layoutStyles.errorInput] }
                              underlineColorAndroid='transparent'
@@ -188,7 +188,7 @@ class EditShow extends Component {
                              onChangeText={(text) => showActions.setShowVenue(text)}
                              value={ showState.show._venue } />
                 </View>
-                <View style={ [layoutStyles.modalContentSection, { flexDirection: 'row', alignItems: 'center'  }] }>
+                <View style={ [layoutStyles.modalContentSection, layoutStyles.centeredFlexRow] }>
                   <Text style={ layoutStyles.inputLabel }>City:</Text>
                   <TextInput style={ editShowStyles.cityInput }
                              underlineColorAndroid='transparent'
@@ -202,7 +202,7 @@ class EditShow extends Component {
                              maxLength={ 2 }
                              value={ showState.show._state} />
                 </View>
-                <View style={ [layoutStyles.modalContentSection, { flexDirection: 'row', alignItems: 'center'  }] }>
+                <View style={ [layoutStyles.modalContentSection, layoutStyles.centeredFlexRow] }>
                   <Text style={ layoutStyles.inputLabel }>Date:</Text>
                   <DatePicker
                     style={{width: 200}}
@@ -227,7 +227,7 @@ class EditShow extends Component {
                     onDateChange={(date) => { showActions.setShowDate(new Date(date))}}
                   />
                 </View>
-                <View style={ [layoutStyles.modalContentSection, { flexDirection: 'row', alignItems: 'center'  }] }>
+                <View style={ [layoutStyles.modalContentSection, layoutStyles.centeredFlexRow] }>
                   <Text style={ layoutStyles.inputLabel }>Set List:</Text>
                   <View style={ { flex: 1, alignItems: 'flex-start' } }>
                     <NativeButton title={ showState.show._set_list._id != -1 ? showState.show._set_list._name : 'No Set List Selected' }
@@ -237,7 +237,7 @@ class EditShow extends Component {
                 <View style={ [layoutStyles.modalContentSection, {flex: 1} ] }>
 
                 </View>
-                <View style={{ flexDirection: 'row', width: '100%' }}>
+                <View style={layoutStyles.flexRowStretched}>
                   { (showState.show._id != -1) &&
                   <FooterButton
                     onPress={toggleDeleteConfirm}

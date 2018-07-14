@@ -175,7 +175,7 @@ class EditJoke extends Component {
         <View style={layoutStyles.modalContent} onLayout={(event) => this.measureModalView(event)}>
           <TouchableWithoutFeedback onPress={ Keyboard.dismiss }>
             <View style={{height: this.contentHeight()}}>
-              <View style={ [layoutStyles.modalContentSection, { flexDirection: 'row', alignItems: 'center' }] }>
+              <View style={ [layoutStyles.modalContentSection, layoutStyles.centeredFlexRow] }>
                 <Text style={ layoutStyles.inputLabel }>In Development:</Text>
                 <Switch onValueChange={ () => { jokeActions.toggleInDevelopment(); setDirty(); }}
                         value={jokeState.joke._in_development} />
@@ -196,7 +196,7 @@ class EditJoke extends Component {
                            onChangeText={(text) => jokeActions.setSeconds(text)}
                            value={ jokeState.joke._seconds !== null ? jokeState.joke._seconds.toString() : '' } />
               </View>
-              <View style={ [layoutStyles.modalContentSection, { flexDirection: 'row', alignItems: 'center'  }] }>
+              <View style={ [layoutStyles.modalContentSection, layoutStyles.centeredFlexRow] }>
                 <Text style={ layoutStyles.inputLabel }>Name:</Text>
                 <TextInput style={ [editJokeStyles.nameInput, this.state.name_input_valid ? {} : layoutStyles.errorInput] }
                            underlineColorAndroid='transparent'
@@ -213,7 +213,7 @@ class EditJoke extends Component {
                            value={ jokeState.joke._notes } />
               </View>
 
-              <View style={{ flexDirection: 'row', width: '100%' }}>
+              <View style={layoutStyles.flexRowStretched}>
                 { (jokeState.joke._id !== -1) &&
                   <FooterButton
                     onPress={toggleDeleteConfirm}

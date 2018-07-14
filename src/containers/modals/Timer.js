@@ -54,7 +54,7 @@ class About extends Component {
             </TouchableHighlight>
           </View>
 
-          <View style={{ flexDirection: 'row', width: '100%' }}>
+          <View style={layoutStyles.flexRowStretched}>
             <FooterButton
               onPress={close}
               buttonText="Close"
