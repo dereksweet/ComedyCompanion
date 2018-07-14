@@ -73,10 +73,7 @@ class JokesList extends Component {
       return (
         <View
           key={`${sectionID}-${rowID}`}
-          style={{
-            height: 1,
-            backgroundColor: '#CCCCCC',
-          }}
+          style={layoutStyles.listViewSeparator}
         />
       );
     };
@@ -127,7 +124,7 @@ class JokesList extends Component {
           renderRow={ renderRow }
           renderSeparator={ renderSeparator }
           enableEmptySections={ true }
-          style={{ backgroundColor: '#FFFFFF', flex: 1 }}
+          style={layoutStyles.flexListView}
         />
         <View style={ layoutStyles.toolbar }>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>

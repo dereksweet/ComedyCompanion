@@ -18,6 +18,14 @@ export default layoutStyles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     width: '100%'
   },
+  flexListView: {
+    backgroundColor: '#FFFFFF',
+    flex: 1
+  },
+  listViewSeparator: {
+    height: 1,
+    backgroundColor: '#CCCCCC'
+  },
   statusBar: {
     height: 40,
     backgroundColor: '#EEEEFF',
@@ -143,5 +151,10 @@ export default layoutStyles = StyleSheet.create({
   errorInput: {
     borderColor: '#FF0000',
     borderWidth: 2
+  },
+  searchBarInput: {
+    borderWidth: 0,
+    borderBottomWidth: 1,
+    borderColor: '#ddd'
   }
 });

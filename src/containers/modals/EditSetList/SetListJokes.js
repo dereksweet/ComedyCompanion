@@ -1,5 +1,3 @@
-'use strict';
-
 import React, {Component} from 'react';
 import { View, Text, ListView, ScrollView, TouchableHighlight } from 'react-native';
 import {bindActionCreators} from 'redux';
@@ -10,7 +8,7 @@ import * as setListActions from '../../../actions/setListActions';
 import * as routingActions from '../../../actions/routingActions';
 
 import jokeListStyles from '../../../stylesheets/jokeListStyles';
-import setListListStyles from '../../../stylesheets/setListListStyles';
+import editSetListStyles from '../../../stylesheets/editSetListStyles';
 import JokeListHelper from "../../../helpers/jokeListHelper";
 
 class JokeSelector extends Component {
@@ -61,14 +59,32 @@ class JokeSelector extends Component {
     setListActions.setSL(setListState.set_list);
   }
 
+  selectJoke = (joke) => {
+    const { setListActions } = this.props;
+
+    delete this.rowHeights[joke._id];
+    setListActions.removeJokeFromSL(joke);
+    JokeListHelper.refreshJokeListSelector();
+  };
+
+  renderRow = (rowData, sectionID, rowID, highlightRow) => {
+    return (
+      <TouchableHighlight
+        onLayout={ this.measureRow.bind(this, rowData._id) }
+        underlayColor={'#ccc'}
+        delayLongPress={500}
+        onPress={ () => this.selectJoke(rowData) }
+        style={ [editSetListStyles.setListJokeRow, {borderBottomWidth: 1, borderBottomColor: '#CCCCCC'}] }
+        {...this.props.sortHandlers}>
+        <View style={ {alignItems: 'center'} }>
+          <Text style={ [jokeListStyles.jokeName, { textAlign: 'center' }] }>{ rowData._name }</Text>
+        </View>
+      </TouchableHighlight>
+    );
+  };
+
   render() {
     const { setListState, setListActions } = this.props;
-
-    const selectJoke = (joke) => {
-      delete this.rowHeights[joke._id];
-      setListActions.removeJokeFromSL(joke);
-      JokeListHelper.refreshJokeListSelector();
-    };
 
     let data = {};
     setListState.set_list._jokes.forEach((joke, i) => {
@@ -77,28 +93,12 @@ class JokeSelector extends Component {
 
     let order = Object.keys(data);
 
-    const renderRow = (rowData, sectionID, rowID, highlightRow) => {
-      return (
-        <TouchableHighlight
-          onLayout={ this.measureRow.bind(this, rowData._id) }
-          underlayColor={'#ccc'}
-          delayLongPress={500}
-          onPress={ () => selectJoke(rowData) }
-          style={ [setListListStyles.setListJokeRow, {borderBottomWidth: 1, borderBottomColor: '#CCCCCC'}] }
-          {...this.props.sortHandlers}>
-          <View style={ {alignItems: 'center'} }>
-            <Text style={ [jokeListStyles.jokeName, { textAlign: 'center' }] }>{ rowData._name }</Text>
-          </View>
-        </TouchableHighlight>
-      );
-    };
-
     return (
       <View style={{ flex: 1 }}>
-        <View style={{ backgroundColor: '#EEEEFF', height: 50, alignItems: 'center', justifyContent: 'center', borderBottomWidth: 1, borderBottomColor: '#CCCCCC' }}>
-          <Text style={{ color: '#000000' }}>Set List</Text>
-          <Text style={ setListListStyles.jokeInstructions }>tap to remove</Text>
-          <Text style={ setListListStyles.jokeInstructions }>hold to reorder</Text>
+        <View style={editSetListStyles.setListJokesHeader}>
+          <Text>Set List</Text>
+          <Text style={ editSetListStyles.jokeInstructions }>tap to remove</Text>
+          <Text style={ editSetListStyles.jokeInstructions }>hold to reorder</Text>
         </View>
         <View onLayout={ this.measureView.bind(this) } style={{ flex: 1 }}>
           <SortableListView
@@ -107,7 +107,7 @@ class JokeSelector extends Component {
             data={data}
             order={order}
             onRowMoved={this.rowMoved}
-            renderRow={renderRow}
+            renderRow={this.renderRow}
           />
        </View>
       </View>

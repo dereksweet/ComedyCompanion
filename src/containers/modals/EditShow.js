@@ -169,9 +169,10 @@ class EditShow extends Component {
               </ScrollView>
               <View style={{ flexDirection: 'row', height: 47, borderTopColor: '#999999', borderTopWidth: 1 }}>
                 <View style={ { flex: 1, flexDirection: 'row' } }>
-                  <Button type="surface" size="large" theme="gray" selfStyle={ layoutStyles.cancelButton } onPress={ hideSetListSelect }>
-                    <Text style={layoutStyles.buttonText}>Cancel</Text>
-                  </Button>
+                  <FooterButton
+                    onPress={hideSetListSelect}
+                    buttonText="Cancel"
+                  />
                 </View>
               </View>
             </View>
