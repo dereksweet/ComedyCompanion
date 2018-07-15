@@ -1,9 +1,9 @@
-'use strict';
-
 import React, {Component} from 'react';
 import { View, Text, TouchableWithoutFeedback, Switch, TextInput, Platform, Keyboard } from 'react-native';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
+
+import BaseModal from './BaseModal';
 
 import * as routingActions from '../../actions/routingActions';
 import * as jokeActions from '../../actions/jokeActions';
@@ -35,248 +35,230 @@ class EditJoke extends Component {
     this.dirty = false;
   }
 
-  componentWillMount () {
-    var eventVerb = Platform.OS === 'ios'? 'Will' : 'Did';
-
-    this.keyboardDidShowListener = Keyboard.addListener('keyboard' + eventVerb + 'Show', this.keyboardDidShow.bind(this));
-    this.keyboardDidHideListener = Keyboard.addListener('keyboard' + eventVerb + 'Hide', this.keyboardDidHide.bind(this));
-  }
-
-  keyboardDidShow (e) {
-    this.setState({
-      keyboard_height: e.endCoordinates.height
-    });
-  }
-
-  keyboardDidHide (e) {
-    this.setState({
-      keyboard_height: 0
-    });
-  }
-
   componentWillUnmount () {
-    this.keyboardDidShowListener.remove();
-    this.keyboardDidHideListener.remove();
-
     JokeListHelper.refreshJokeList();
     JokeListHelper.refreshJokeListEmpty();
   }
 
-  measureModalView(event) {
-    this.setState({
-      modal_height: event.nativeEvent.layout.height
-    });
-  }
+  validateFields = () => {
+    const {jokeState} = this.props;
 
-  contentHeight() {
-    return this.state.modal_height - (Platform.OS === 'ios'? this.state.keyboard_height : 0);
-  }
+    let fields_valid = true;
 
-  render() {
-    const { jokeState, jokeActions, routingActions } = this.props;
+    if (jokeState.joke._name === '') {
+      fields_valid = false;
+      this.setState({
+        name_input_valid: false
+      });
+    }
 
-    const validateFields = () => {
-      let fields_valid = true;
+    try {
+      const intMinutes = parseInt(jokeState.joke._minutes);
 
-      if (jokeState.joke._name === '') {
-        fields_valid = false;
-        this.setState({
-          name_input_valid: false
-        });
-      }
-
-      try {
-        const intMinutes = parseInt(jokeState.joke._minutes);
-
-        if (intMinutes > 59 || intMinutes < 0) {
-          fields_valid = false;
-          this.setState({
-            minutes_input_valid: false
-          });
-        }
-      } catch(error) {
+      if (intMinutes > 59 || intMinutes < 0) {
         fields_valid = false;
         this.setState({
           minutes_input_valid: false
         });
       }
+    } catch (error) {
+      fields_valid = false;
+      this.setState({
+        minutes_input_valid: false
+      });
+    }
 
-      try {
-        const intSeconds = parseInt(jokeState.joke._seconds);
+    try {
+      const intSeconds = parseInt(jokeState.joke._seconds);
 
-        if (intSeconds > 59 || intSeconds < 0) {
-          fields_valid = false;
-          this.setState({
-            seconds_input_valid: false
-          });
-        }
-      } catch(error) {
+      if (intSeconds > 59 || intSeconds < 0) {
         fields_valid = false;
         this.setState({
           seconds_input_valid: false
         });
       }
-
-      if (!fields_valid) {
-        this.editJokeView.performShake();
-      }
-
-      return fields_valid;
-    };
-
-    const save = () => {
-      if (validateFields()) {
-        jokeState.joke.save(() => {
-          JokeListHelper.refreshJokeList();
-          JokeListHelper.refreshJokeListEmpty();
-        });
-        cancel();
-      }
-    };
-
-    const cancel = () => {
-      Keyboard.dismiss();
-      routingActions.closeModal();
-    };
-
-    const destroy = () => {
-      jokeState.joke.destroy();
-      routingActions.closeModal();
-    };
-
-    const toggleDeleteConfirm = () => {
-      Keyboard.dismiss();
-
+    } catch (error) {
+      fields_valid = false;
       this.setState({
-        show_delete_confirm: !this.state.show_delete_confirm
+        seconds_input_valid: false
+      });
+    }
+
+    if (!fields_valid) {
+      this.editJokeView.performShake();
+    }
+
+    return fields_valid;
+  };
+
+  save = () => {
+    const {jokeState} = this.props;
+
+    if (this.validateFields()) {
+      jokeState.joke.save(() => {
+        JokeListHelper.refreshJokeList();
+        JokeListHelper.refreshJokeListEmpty();
+      });
+      this.cancel();
+    }
+  };
+
+  cancel = () => {
+    const {routingActions} = this.props;
+
+    Keyboard.dismiss();
+    routingActions.closeModal();
+  };
+
+  destroy = () => {
+    const {jokeState, routingActions} = this.props;
+
+    jokeState.joke.destroy();
+    routingActions.closeModal();
+  };
+
+  toggleDeleteConfirm = () => {
+    Keyboard.dismiss();
+
+    this.setState({
+      show_delete_confirm: !this.state.show_delete_confirm
+    })
+  };
+
+  toggleCancelConfirm = () => {
+    Keyboard.dismiss();
+
+    if (this.dirty) {
+      this.setState({
+        show_cancel_confirm: !this.state.show_cancel_confirm
       })
-    };
+    } else {
+      this.cancel();
+    }
+  };
 
-    const toggleCancelConfirm = () => {
-      Keyboard.dismiss();
+  setDirty = () => {
+    this.dirty = true;
+  };
 
-      if (this.dirty) {
-        this.setState({
-          show_cancel_confirm: !this.state.show_cancel_confirm
-        })
-      } else {
-        cancel();
-      }
-    };
-
-    const setDirty = () => {
-      this.dirty = true;
-    };
+  render() {
+    const {jokeState, jokeActions} = this.props;
 
     return (
-      <ShakingView ref={(editJokeView) => this.editJokeView = editJokeView}
-                   style={[layoutStyles.modal, layoutStyles.centeredFlex]}>
-        <View style={layoutStyles.statusBarBuffer} />
-        <View style={layoutStyles.modalContent} onLayout={(event) => this.measureModalView(event)}>
-          <TouchableWithoutFeedback onPress={ Keyboard.dismiss }>
-            <View style={{height: this.contentHeight()}}>
-              <View style={ [layoutStyles.modalContentSection, layoutStyles.centeredFlexRow] }>
-                <Text style={ layoutStyles.inputLabel }>In Development:</Text>
-                <Switch onValueChange={ () => { jokeActions.toggleInDevelopment(); setDirty(); }}
-                        value={jokeState.joke._in_development} />
-                <View style={{flex: 1, flexDirection: 'row', justifyContent: 'flex-end'}}>
-                  <Text style={layoutStyles.inputLabel} />
-                </View>
-                <TextInput style={ [editJokeStyles.timeInput, this.state.minutes_input_valid ? {} : layoutStyles.errorInput] }
-                           underlineColorAndroid='transparent'
-                           placeholder="min"
-                           keyboardType="numeric"
-                           onChangeText={(text) => jokeActions.setMinutes(text)}
-                           value={ jokeState.joke._minutes !== null ? jokeState.joke._minutes.toString() : '' } />
-                <Text style={[layoutStyles.inputLabel, { paddingLeft: 5, paddingRight: 5 }]}>:</Text>
-                <TextInput style={ [editJokeStyles.timeInput, this.state.seconds_input_valid ? {} : layoutStyles.errorInput] }
-                           underlineColorAndroid='transparent'
-                           placeholder="sec"
-                           keyboardType="numeric"
-                           onChangeText={(text) => jokeActions.setSeconds(text)}
-                           value={ jokeState.joke._seconds !== null ? jokeState.joke._seconds.toString() : '' } />
-              </View>
-              <View style={ [layoutStyles.modalContentSection, layoutStyles.centeredFlexRow] }>
-                <Text style={ layoutStyles.inputLabel }>Name:</Text>
-                <TextInput style={ [editJokeStyles.nameInput, this.state.name_input_valid ? {} : layoutStyles.errorInput] }
-                           underlineColorAndroid='transparent'
-                           placeholder="Name your joke here..."
-                           onChangeText={(text) => { jokeActions.setName(text); setDirty(); }}
-                           value={ jokeState.joke._name } />
-              </View>
-              <View style={ [layoutStyles.modalContentSection, { flex: 1 } ] }>
-                <MultilineTextInput style={ editJokeStyles.notesInput }
-                           underlineColorAndroid='transparent'
-                           placeholder="Type your joke notes here..."
-                           autoComplete={ false }
-                           onChangeText={(text) => { jokeActions.setNotes(text); setDirty(); }}
-                           value={ jokeState.joke._notes } />
-              </View>
-
-              <View style={layoutStyles.flexRowStretched}>
-                { (jokeState.joke._id !== -1) &&
-                  <FooterButton
-                    onPress={toggleDeleteConfirm}
-                    buttonText="Delete"
-                    backgroundColor='red'
-                  />
-                }
-                <FooterButton
-                  onPress={toggleCancelConfirm}
-                  buttonText="Cancel"
-                />
-                <FooterButton
-                  onPress={save}
-                  buttonText="Save"
-                  backgroundColor='green'
-                />
-              </View>
-            </View>
-          </TouchableWithoutFeedback>
-          { this.state.show_delete_confirm &&
-            <View style={ layoutStyles.confirmBox }>
-              <View style={{ paddingBottom: 40, paddingLeft: 20, paddingRight: 20 }}>
-                <Text style={{ textAlign: 'center', fontSize: 20 }}>Are you SURE you want to delete this joke?</Text>
-              </View>
-              <View style={{ paddingTop: 25, flexDirection: 'row' }}>
-                <Button
-                  onPress={toggleDeleteConfirm}
-                  buttonText="NO"
-                  backgroundColor='red'
-                  additionalStyles={[layoutStyles.deleteButton, {marginRight: 10}]}
-                />
-                <Button
-                  onPress={destroy}
-                  buttonText="YES"
-                  backgroundColor='green'
-                  additionalStyles={layoutStyles.confirmButton}
-                />
-              </View>
-            </View>
-          }
-          { this.state.show_cancel_confirm &&
-            <View style={ layoutStyles.confirmBox }>
-              <View style={{ paddingBottom: 40, paddingLeft: 20, paddingRight: 20 }}>
-                <Text style={{ textAlign: 'center', fontSize: 20 }}>You have changes that will be lost. Are you SURE you want to cancel?</Text>
-              </View>
-              <View style={{ paddingTop: 25, flexDirection: 'row' }}>
-                <Button
-                  onPress={toggleCancelConfirm}
-                  buttonText="NO"
-                  backgroundColor='red'
-                  additionalStyles={[layoutStyles.deleteButton, {marginRight: 10}]}
-                />
-                <Button
-                  onPress={cancel}
-                  buttonText="YES"
-                  backgroundColor='green'
-                  additionalStyles={layoutStyles.confirmButton}
-                />
-              </View>
-            </View>
-          }
+      <BaseModal ref={(editJokeView) => this.editJokeView = editJokeView}>
+        <View style={[layoutStyles.modalContentSection, layoutStyles.centeredFlexRow]}>
+          <Text style={layoutStyles.inputLabel}>In Development:</Text>
+          <Switch onValueChange={() => {
+            jokeActions.toggleInDevelopment();
+            this.setDirty();
+          }}
+                  value={jokeState.joke._in_development}/>
+          <View style={{flex: 1, flexDirection: 'row', justifyContent: 'flex-end'}}>
+            <Text style={layoutStyles.inputLabel}/>
+          </View>
+          <TextInput
+            style={[editJokeStyles.timeInput, this.state.minutes_input_valid ? {} : layoutStyles.errorInput]}
+            underlineColorAndroid='transparent'
+            placeholder="min"
+            keyboardType="numeric"
+            onChangeText={(text) => jokeActions.setMinutes(text)}
+            value={jokeState.joke._minutes !== null ? jokeState.joke._minutes.toString() : ''}/>
+          <Text style={[layoutStyles.inputLabel, {paddingLeft: 5, paddingRight: 5}]}>:</Text>
+          <TextInput
+            style={[editJokeStyles.timeInput, this.state.seconds_input_valid ? {} : layoutStyles.errorInput]}
+            underlineColorAndroid='transparent'
+            placeholder="sec"
+            keyboardType="numeric"
+            onChangeText={(text) => jokeActions.setSeconds(text)}
+            value={jokeState.joke._seconds !== null ? jokeState.joke._seconds.toString() : ''}/>
         </View>
-      </ShakingView>
+        <View style={[layoutStyles.modalContentSection, layoutStyles.centeredFlexRow]}>
+          <Text style={layoutStyles.inputLabel}>Name:</Text>
+          <TextInput
+            style={[editJokeStyles.nameInput, this.state.name_input_valid ? {} : layoutStyles.errorInput]}
+            underlineColorAndroid='transparent'
+            placeholder="Name your joke here..."
+            onChangeText={(text) => {
+              jokeActions.setName(text);
+              this.setDirty();
+            }}
+            value={jokeState.joke._name}/>
+        </View>
+        <View style={[layoutStyles.modalContentSection, {flex: 1}]}>
+          <MultilineTextInput style={editJokeStyles.notesInput}
+                              underlineColorAndroid='transparent'
+                              placeholder="Type your joke notes here..."
+                              autoComplete={false}
+                              onChangeText={(text) => {
+                                jokeActions.setNotes(text);
+                                this.setDirty();
+                              }}
+                              value={jokeState.joke._notes}/>
+        </View>
+
+        <View style={layoutStyles.flexRowStretched}>
+          {(jokeState.joke._id !== -1) &&
+          <FooterButton
+            onPress={this.toggleDeleteConfirm}
+            buttonText="Delete"
+            backgroundColor='red'
+          />
+          }
+          <FooterButton
+            onPress={this.toggleCancelConfirm}
+            buttonText="Cancel"
+          />
+          <FooterButton
+            onPress={this.save}
+            buttonText="Save"
+            backgroundColor='green'
+          />
+        </View>
+
+        {this.state.show_delete_confirm &&
+        <View style={layoutStyles.confirmBox}>
+          <View style={{paddingBottom: 40, paddingLeft: 20, paddingRight: 20}}>
+            <Text style={{textAlign: 'center', fontSize: 20}}>Are you SURE you want to delete this joke?</Text>
+          </View>
+          <View style={{paddingTop: 25, flexDirection: 'row'}}>
+            <Button
+              onPress={this.toggleDeleteConfirm}
+              buttonText="NO"
+              backgroundColor='red'
+              additionalStyles={[layoutStyles.deleteButton, {marginRight: 10}]}
+            />
+            <Button
+              onPress={this.destroy}
+              buttonText="YES"
+              backgroundColor='green'
+              additionalStyles={layoutStyles.confirmButton}
+            />
+          </View>
+        </View>
+        }
+        {this.state.show_cancel_confirm &&
+        <View style={layoutStyles.confirmBox}>
+          <View style={{paddingBottom: 40, paddingLeft: 20, paddingRight: 20}}>
+            <Text style={{textAlign: 'center', fontSize: 20}}>You have changes that will be lost. Are you SURE you
+              want to cancel?</Text>
+          </View>
+          <View style={{paddingTop: 25, flexDirection: 'row'}}>
+            <Button
+              onPress={this.toggleCancelConfirm}
+              buttonText="NO"
+              backgroundColor='red'
+              additionalStyles={[layoutStyles.deleteButton, {marginRight: 10}]}
+            />
+            <Button
+              onPress={this.cancel}
+              buttonText="YES"
+              backgroundColor='green'
+              additionalStyles={layoutStyles.confirmButton}
+            />
+          </View>
+        </View>
+        }
+      </BaseModal>
     );
   }
 }

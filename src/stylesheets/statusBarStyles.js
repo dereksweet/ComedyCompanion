@@ -5,7 +5,7 @@ export default statusBarStyles = StyleSheet.create({
     marginTop: 2
   },
   statusBarIcon: {
-    width: 36,
+    width: 40,
     alignItems: 'center'
   },
   statusBarButton: {

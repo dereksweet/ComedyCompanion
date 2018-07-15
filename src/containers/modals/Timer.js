@@ -1,16 +1,17 @@
-'use strict';
-
 import React, {Component} from 'react';
-import { View, Text, TouchableHighlight } from 'react-native';
+import {View, Text, TouchableHighlight} from 'react-native';
 import {bindActionCreators} from 'redux';
-import { connect } from 'react-redux';
-import FooterButton from '../../components/FooterButton';
+import {connect} from 'react-redux';
 
-import { formatDisplayTime } from '../../helpers/formattingHelper';
-
-import {normalizeWidth} from '../../helpers/sizeHelper';
+import BaseModal from './BaseModal';
 
 import * as routingActions from '../../actions/routingActions';
+
+import FooterButton from '../../components/FooterButton';
+
+import {formatDisplayTime} from '../../helpers/formattingHelper';
+import {normalizeWidth} from '../../helpers/sizeHelper';
+
 import layoutStyles from "../../stylesheets/layoutStyles";
 
 class About extends Component {
@@ -45,23 +46,20 @@ class About extends Component {
     const horiz = this.state.orientation == 'v';
 
     return (
-      <View style={[layoutStyles.modal, layoutStyles.centeredFlex]}>
-        <View style={layoutStyles.statusBarBuffer} />
-        <View style={layoutStyles.modalContent}>
-          <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <TouchableHighlight style={{ flex: 1, width: '100%', alignItems: 'center', justifyContent: 'center' }} underlayColor="rgba(0,0,0,0)" onPress={ this.toggleOrientation }>
-              <Text style={{ fontSize: normalizeWidth(horiz ? 75 : 90), transform: [{ rotate: horiz ? '0deg' : '90deg'}] }}>{ formatDisplayTime(showState.display_time_seconds) }</Text>
-            </TouchableHighlight>
-          </View>
-
-          <View style={layoutStyles.flexRowStretched}>
-            <FooterButton
-              onPress={close}
-              buttonText="Close"
-            />
-          </View>
+      <BaseModal>
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+          <TouchableHighlight style={{ flex: 1, width: '100%', alignItems: 'center', justifyContent: 'center' }} underlayColor="rgba(0,0,0,0)" onPress={ this.toggleOrientation }>
+            <Text style={{ fontSize: normalizeWidth(horiz ? 75 : 90), transform: [{ rotate: horiz ? '0deg' : '90deg'}] }}>{ formatDisplayTime(showState.display_time_seconds) }</Text>
+          </TouchableHighlight>
         </View>
-      </View>
+
+        <View style={layoutStyles.flexRowStretched}>
+          <FooterButton
+            onPress={close}
+            buttonText="Close"
+          />
+        </View>
+      </BaseModal>
     );
   }
 }

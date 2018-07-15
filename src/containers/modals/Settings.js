@@ -1,5 +1,3 @@
-'use strict';
-
 import React, {Component} from 'react';
 import { View, ScrollView, Text, Switch, AsyncStorage, Platform } from 'react-native';
 import {bindActionCreators} from 'redux';
@@ -7,16 +5,18 @@ import { connect } from 'react-redux';
 import FooterButton from '../../components/FooterButton';
 import { SegmentedControls } from 'react-native-radio-buttons';
 
-import Setting from '../../models/setting';
-
-import JokeListHelper from '../../helpers/jokeListHelper';
-import SetListListHelper from '../../helpers/setListListHelper';
-import ShowListHelper from '../../helpers/showListHelper';
+import BaseModal from './BaseModal';
 
 import * as routingActions from '../../actions/routingActions';
 import * as jokeListActions from '../../actions/jokeListActions';
 import * as setListListActions from '../../actions/setListListActions';
 import * as showListActions from '../../actions/showListActions';
+
+import JokeListHelper from '../../helpers/jokeListHelper';
+import SetListListHelper from '../../helpers/setListListHelper';
+import ShowListHelper from '../../helpers/showListHelper';
+
+import Setting from '../../models/setting';
 
 import layoutStyles from '../../stylesheets/layoutStyles';
 import jokeListStyles from '../../stylesheets/jokeListStyles';
@@ -110,120 +110,117 @@ class Settings extends Component {
     };
 
     return (
-      <View style={[layoutStyles.modal, layoutStyles.centeredFlex]}>
-        <View style={layoutStyles.statusBarBuffer} />
-        <View style={layoutStyles.modalContent}>
-          <ScrollView style={{ flex: 1 }}>
-            <View style={[layoutStyles.modalContentSection]}>
-              <View style={ {borderBottomColor: '#999999', borderBottomWidth: 1, paddingBottom: 5, marginBottom: 10} }>
-                <Text style={ layoutStyles.settingsSectionTitle }>Jokes Settings</Text>
-              </View>
-              <View style={layoutStyles.centeredFlexRow}>
-                <Text style={ jokeListStyles.sortByText }>Sort by: </Text>
-                <SegmentedControls
-                  options={
-                  [{ label: 'Updated', value: '_updated_at' },
-                   { label: 'Name', value: '_name' }]
-                }
-                  onSelection={ (sort_field) => jokeSortFieldButtonClicked(sort_field) }
-                  selectedOption={ jokeListState.sort_field }
-                  containerStyle={{ flex: 1 }}
-                  extractText={ (option) => option.label }
-                  testOptionEqual={(selectedValue, option) => selectedValue === option.value}
-                />
-              </View>
-              <View style={layoutStyles.centeredFlexRowTopPadded}>
-                <Text style={ jokeListStyles.sortInText }>Sort in: </Text>
-                <SegmentedControls
-                  options={
-                  [{ label: 'Ascending Order', value: 'ASC' },
-                   { label: 'Descending Order', value: 'DESC' }]
-                }
-                  onSelection={ (sort_order) => jokeSortOrderButtonClicked(sort_order) }
-                  selectedOption={ jokeListState.sort_order }
-                  containerStyle={{ flex: 1 }}
-                  extractText={ (option) => option.label }
-                  testOptionEqual={(selectedValue, option) => selectedValue === option.value}
-                />
-              </View>
+      <BaseModal scrollable={true}>
+        <ScrollView style={{ flex: 1 }}>
+          <View style={[layoutStyles.modalContentSection]}>
+            <View style={ {borderBottomColor: '#999999', borderBottomWidth: 1, paddingBottom: 5, marginBottom: 10} }>
+              <Text style={ layoutStyles.settingsSectionTitle }>Jokes Settings</Text>
             </View>
-            <View style={[layoutStyles.modalContentSection]}>
-              <View style={ {borderBottomColor: '#999999', borderBottomWidth: 1, paddingBottom: 5, marginBottom: 10} }>
-                <Text style={ layoutStyles.settingsSectionTitle }>Set Lists Settings</Text>
-              </View>
-              <View style={layoutStyles.centeredFlexRow}>
-                <Text style={ setListListStyles.sortByText }>Sort by: </Text>
-                <SegmentedControls
-                  options={
-                  [{ label: 'Updated', value: '_updated_at' },
-                   { label: 'Name', value: '_name' },
-                   { label: 'Length', value: '_length' }]
-                }
-                  onSelection={ (sort_field) => setListSortFieldButtonClicked(sort_field) }
-                  selectedOption={ setListListState.sort_field }
-                  containerStyle={{ flex: 1 }}
-                  extractText={ (option) => option.label }
-                  testOptionEqual={(selectedValue, option) => selectedValue === option.value}
-                />
-              </View>
-              <View style={layoutStyles.centeredFlexRowTopPadded}>
-                <Text style={ setListListStyles.sortInText }>Sort in: </Text>
-                <SegmentedControls
-                  options={
-                  [{ label: 'Ascending Order', value: 'ASC' },
-                   { label: 'Descending Order', value: 'DESC' }]
-                }
-                  onSelection={ (sort_order) => setListSortOrderButtonClicked(sort_order) }
-                  selectedOption={ setListListState.sort_order }
-                  containerStyle={{ flex: 1 }}
-                  extractText={ (option) => option.label }
-                  testOptionEqual={(selectedValue, option) => selectedValue === option.value}
-                />
-              </View>
+            <View style={layoutStyles.centeredFlexRow}>
+              <Text style={ jokeListStyles.sortByText }>Sort by: </Text>
+              <SegmentedControls
+                options={
+                [{ label: 'Updated', value: '_updated_at' },
+                 { label: 'Name', value: '_name' }]
+              }
+                onSelection={ (sort_field) => jokeSortFieldButtonClicked(sort_field) }
+                selectedOption={ jokeListState.sort_field }
+                containerStyle={{ flex: 1 }}
+                extractText={ (option) => option.label }
+                testOptionEqual={(selectedValue, option) => selectedValue === option.value}
+              />
             </View>
-            <View style={[layoutStyles.modalContentSection]}>
-              <View style={ {borderBottomColor: '#999999', borderBottomWidth: 1, paddingBottom: 5, marginBottom: 10} }>
-                <Text style={ layoutStyles.settingsSectionTitle }>Shows Settings</Text>
-              </View>
-              <View style={layoutStyles.centeredFlexRow}>
-                <Text style={ showListStyles.sortByText }>Sort by: </Text>
-                <SegmentedControls
-                  options={
-                  [{ label: 'Venue', value: '_venue' },
-                   { label: 'City', value: '_city' },
-                   { label: 'Date', value: '_date' }]
-                }
-                  onSelection={ (sort_field) => showSortFieldButtonClicked(sort_field) }
-                  selectedOption={ showListState.sort_field }
-                  containerStyle={{ flex: 1 }}
-                  extractText={ (option) => option.label }
-                  testOptionEqual={(selectedValue, option) => selectedValue === option.value}
-                />
-              </View>
-              <View style={layoutStyles.centeredFlexRowTopPadded}>
-                <Text style={ showListStyles.sortInText }>Sort in: </Text>
-                <SegmentedControls
-                  options={
-                  [{ label: 'Ascending Order', value: 'ASC' },
-                   { label: 'Descending Order', value: 'DESC' }]
-                }
-                  onSelection={ (sort_order) => showSortOrderButtonClicked(sort_order) }
-                  selectedOption={ showListState.sort_order }
-                  containerStyle={{ flex: 1 }}
-                  extractText={ (option) => option.label }
-                  testOptionEqual={(selectedValue, option) => selectedValue === option.value}
-                />
-              </View>
+            <View style={layoutStyles.centeredFlexRowTopPadded}>
+              <Text style={ jokeListStyles.sortInText }>Sort in: </Text>
+              <SegmentedControls
+                options={
+                [{ label: 'Ascending Order', value: 'ASC' },
+                 { label: 'Descending Order', value: 'DESC' }]
+              }
+                onSelection={ (sort_order) => jokeSortOrderButtonClicked(sort_order) }
+                selectedOption={ jokeListState.sort_order }
+                containerStyle={{ flex: 1 }}
+                extractText={ (option) => option.label }
+                testOptionEqual={(selectedValue, option) => selectedValue === option.value}
+              />
             </View>
-          </ScrollView>
-          <View style={layoutStyles.flexRowStretched}>
-            <FooterButton
-              onPress={close}
-              buttonText="Close"
-            />
           </View>
+          <View style={[layoutStyles.modalContentSection]}>
+            <View style={ {borderBottomColor: '#999999', borderBottomWidth: 1, paddingBottom: 5, marginBottom: 10} }>
+              <Text style={ layoutStyles.settingsSectionTitle }>Set Lists Settings</Text>
+            </View>
+            <View style={layoutStyles.centeredFlexRow}>
+              <Text style={ setListListStyles.sortByText }>Sort by: </Text>
+              <SegmentedControls
+                options={
+                [{ label: 'Updated', value: '_updated_at' },
+                 { label: 'Name', value: '_name' },
+                 { label: 'Length', value: '_length' }]
+              }
+                onSelection={ (sort_field) => setListSortFieldButtonClicked(sort_field) }
+                selectedOption={ setListListState.sort_field }
+                containerStyle={{ flex: 1 }}
+                extractText={ (option) => option.label }
+                testOptionEqual={(selectedValue, option) => selectedValue === option.value}
+              />
+            </View>
+            <View style={layoutStyles.centeredFlexRowTopPadded}>
+              <Text style={ setListListStyles.sortInText }>Sort in: </Text>
+              <SegmentedControls
+                options={
+                [{ label: 'Ascending Order', value: 'ASC' },
+                 { label: 'Descending Order', value: 'DESC' }]
+              }
+                onSelection={ (sort_order) => setListSortOrderButtonClicked(sort_order) }
+                selectedOption={ setListListState.sort_order }
+                containerStyle={{ flex: 1 }}
+                extractText={ (option) => option.label }
+                testOptionEqual={(selectedValue, option) => selectedValue === option.value}
+              />
+            </View>
+          </View>
+          <View style={[layoutStyles.modalContentSection]}>
+            <View style={ {borderBottomColor: '#999999', borderBottomWidth: 1, paddingBottom: 5, marginBottom: 10} }>
+              <Text style={ layoutStyles.settingsSectionTitle }>Shows Settings</Text>
+            </View>
+            <View style={layoutStyles.centeredFlexRow}>
+              <Text style={ showListStyles.sortByText }>Sort by: </Text>
+              <SegmentedControls
+                options={
+                [{ label: 'Venue', value: '_venue' },
+                 { label: 'City', value: '_city' },
+                 { label: 'Date', value: '_date' }]
+              }
+                onSelection={ (sort_field) => showSortFieldButtonClicked(sort_field) }
+                selectedOption={ showListState.sort_field }
+                containerStyle={{ flex: 1 }}
+                extractText={ (option) => option.label }
+                testOptionEqual={(selectedValue, option) => selectedValue === option.value}
+              />
+            </View>
+            <View style={layoutStyles.centeredFlexRowTopPadded}>
+              <Text style={ showListStyles.sortInText }>Sort in: </Text>
+              <SegmentedControls
+                options={
+                [{ label: 'Ascending Order', value: 'ASC' },
+                 { label: 'Descending Order', value: 'DESC' }]
+              }
+                onSelection={ (sort_order) => showSortOrderButtonClicked(sort_order) }
+                selectedOption={ showListState.sort_order }
+                containerStyle={{ flex: 1 }}
+                extractText={ (option) => option.label }
+                testOptionEqual={(selectedValue, option) => selectedValue === option.value}
+              />
+            </View>
+          </View>
+        </ScrollView>
+        <View style={layoutStyles.flexRowStretched}>
+          <FooterButton
+            onPress={close}
+            buttonText="Close"
+          />
         </View>
-      </View>
+      </BaseModal>
     );
   }
 }

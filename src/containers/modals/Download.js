@@ -7,6 +7,8 @@ import FooterButton from '../../components/FooterButton';
 import iCloudStorage from 'react-native-icloudstore';
 import {SegmentedControls} from 'react-native-radio-buttons';
 
+import BaseModal from './BaseModal';
+
 import * as routingActions from '../../actions/routingActions';
 import * as downloadActions from '../../actions/downloadActions';
 
@@ -229,180 +231,177 @@ class Download extends Component {
     const {downloadState} = this.props;
 
     return (
-      <View style={[layoutStyles.modal, layoutStyles.centeredFlex]}>
-        <View style={layoutStyles.statusBarBuffer}/>
-        <View style={layoutStyles.modalContent}>
-          <ScrollView>
-            {Platform.OS === 'ios' &&
-            <View style={[layoutStyles.modalContentSection]}>
-              <View style={downloadStyles.sectionHeader}>
-                <Text style={layoutStyles.settingsSectionTitle}>iCloud Sync <Text
-                  style={downloadStyles.smallText}>(must be signed into iCloud on device)</Text></Text>
-              </View>
-              <View style={layoutStyles.centeredFlexRow}>
-                <View style={downloadStyles.buttonView}>
-                  <Button
-                    onPress={this.confirmWriteToiCloud}
-                    buttonText="Write to iCloud"
-                    backgroundColor='green'
-                    additionalStyles={layoutStyles.confirmButton}
-                  />
-                </View>
-                <View style={downloadStyles.buttonView}>
-                  <Button
-                    onPress={this.confirmReadFromiCloud}
-                    buttonText="Read from iCloud"
-                    backgroundColor='green'
-                    additionalStyles={[layoutStyles.confirmButton, {marginLeft: 10}]}
-                  />
-                </View>
-              </View>
-              <View style={{paddingTop: 5}}>
-                <Text style={downloadStyles.smallText}>Note: Your audio recordings are not backed up / restored</Text>
-              </View>
+      <BaseModal scrollable={true}>
+        <ScrollView>
+          {Platform.OS === 'ios' &&
+          <View style={[layoutStyles.modalContentSection]}>
+            <View style={downloadStyles.sectionHeader}>
+              <Text style={layoutStyles.settingsSectionTitle}>iCloud Sync <Text
+                style={downloadStyles.smallText}>(must be signed into iCloud on device)</Text></Text>
             </View>
-            }
-            <View style={[layoutStyles.modalContentSection]}>
-              <View style={downloadStyles.sectionHeader}>
-                <Text style={layoutStyles.settingsSectionTitle}>
-                  Email Export <Text style={downloadStyles.smallText}>(must have email set up on device)</Text>
-                </Text>
-              </View>
-              <View style={{marginBottom: 10}}>
-                <Text style={{fontSize: 12}}>
-                  Send yourself an email with all of your jokes and set lists detailed. Just enter your email and
-                  select a type below and click "Send Email" and it should show up in your inbox momentarily.
-                  Note: Formatted emails may look terrible on some Android devices.
-                </Text>
-              </View>
-              <View style={layoutStyles.centeredFlexRowBottomMargin}>
-                <Text style={layoutStyles.inputLabel}>Email:</Text>
-                <TextInput
-                  style={[downloadStyles.exportEmailInput, this.state.export_email_valid ? {} : layoutStyles.errorInput]}
-                  underlineColorAndroid='transparent'
-                  placeholder="Email Address here..."
-                  onChangeText={(text) => this.updateExportEmail(text)}
-                  autoCapitalize="none"
-                  value={downloadState.export_email}
-                />
-              </View>
-              <View style={layoutStyles.centeredFlexRowBottomMargin}>
-                <SegmentedControls
-                  options={[
-                    {label: 'Formatted', value: 'formatted'},
-                    {label: 'Plain Text', value: 'plain_text'}
-                  ]}
-                  onSelection={(export_email_type) => this.exportEmailTypeButtonClicked(export_email_type.value)}
-                  selectedOption={downloadState.export_email_type}
-                  containerStyle={{flex: 1}}
-                  extractText={(option) => option.label}
-                  testOptionEqual={(selectedValue, option) => selectedValue === option.value}
-                />
-              </View>
-              <View style={layoutStyles.centeredFlexRow}>
-                <View style={downloadStyles.buttonView}>
-                  <Button
-                    onPress={this.sendExportEmail}
-                    buttonText="Send Email"
-                    backgroundColor='green'
-                    additionalStyles={layoutStyles.confirmButton}
-                  />
-                </View>
-                <View style={{flex: 2}} />
-              </View>
-              <View style={{paddingTop: 5}}>
-                <Text style={downloadStyles.smallText}>Note: Your audio recordings are not emailed to you</Text>
-              </View>
-            </View>
-          </ScrollView>
-          {this.state.showReadConfirm &&
-          <View style={layoutStyles.confirmBox}>
-            {this.state.readLoadComplete && !this.state.reading &&
-            <View style={downloadStyles.popupWindow}>
-              <Text style={{textAlign: 'center'}}>This is what is stored on your iCloud:</Text>
-              <Text style={{paddingTop: 25}}>{this.state.cloudJokesCount} Jokes</Text>
-              <Text>{this.state.cloudSetListsCount} Set Lists</Text>
-              <Text>{this.state.cloudShowsCount} Shows</Text>
-              <Text style={downloadStyles.popupWarningText}>
-                ARE YOU SURE YOU WANT TO REPLACE EVERYTHING WITH WHAT IS ON ICLOUD AND LOSE ALL YOUR AUDIO RECORDINGS?
-              </Text>
-              <View style={{paddingTop: 25, flexDirection: 'row'}}>
+            <View style={layoutStyles.centeredFlexRow}>
+              <View style={downloadStyles.buttonView}>
                 <Button
-                  onPress={this.cancelReadFromiCloud}
-                  buttonText="NO"
-                  backgroundColor='red'
-                  additionalStyles={[layoutStyles.deleteButton, {marginRight: 10}]}
-                />
-                <Button
-                  onPress={this.readFromiCloud}
-                  buttonText="YES"
+                  onPress={this.confirmWriteToiCloud}
+                  buttonText="Write to iCloud"
                   backgroundColor='green'
                   additionalStyles={layoutStyles.confirmButton}
                 />
               </View>
+              <View style={downloadStyles.buttonView}>
+                <Button
+                  onPress={this.confirmReadFromiCloud}
+                  buttonText="Read from iCloud"
+                  backgroundColor='green'
+                  additionalStyles={[layoutStyles.confirmButton, {marginLeft: 10}]}
+                />
+              </View>
             </View>
-            }
-            {!this.state.readLoadComplete && !this.state.reading &&
-            <View style={downloadStyles.popupWindow}>
-              <Text style={{textAlign: 'center'}}>Preloading iCloud Data</Text>
-              <Text style={{textAlign: 'center'}}>Please Wait...</Text>
+            <View style={{paddingTop: 5}}>
+              <Text style={downloadStyles.smallText}>Note: Your audio recordings are not backed up / restored</Text>
             </View>
-            }
-            {this.state.reading &&
-            <View style={downloadStyles.popupWindow}>
-              <Text style={{textAlign: 'center'}}>Reading from iCloud</Text>
-            </View>
-            }
           </View>
           }
-          {this.state.showWriteConfirm &&
-          <View style={layoutStyles.confirmBox}>
-            {this.state.writeLoadComplete && !this.state.writing &&
-            <View style={downloadStyles.popupWindow}>
-              <Text style={{textAlign: 'center'}}>This is what is stored on your device:</Text>
-              <Text style={{paddingTop: 25}}>{this.state.localJokesCount} Jokes</Text>
-              <Text>{this.state.localSetListsCount} Set Lists</Text>
-              <Text>{this.state.localShowsCount} Shows</Text>
-              <Text style={downloadStyles.popupWarningText}>
-                ARE YOU SURE YOU WANT TO OVERWRITE EVERYTHING ON ICLOUD? YOUR AUDIO RECORDINGS WILL NOT BE BACKED UP!
+          <View style={[layoutStyles.modalContentSection]}>
+            <View style={downloadStyles.sectionHeader}>
+              <Text style={layoutStyles.settingsSectionTitle}>
+                Email Export <Text style={downloadStyles.smallText}>(must have email set up on device)</Text>
               </Text>
-              <View style={{paddingTop: 25, flexDirection: 'row'}}>
+            </View>
+            <View style={{marginBottom: 10}}>
+              <Text style={{fontSize: 12}}>
+                Send yourself an email with all of your jokes and set lists detailed. Just enter your email and
+                select a type below and click "Send Email" and it should show up in your inbox momentarily.
+                Note: Formatted emails may look terrible on some Android devices.
+              </Text>
+            </View>
+            <View style={layoutStyles.centeredFlexRowBottomMargin}>
+              <Text style={layoutStyles.inputLabel}>Email:</Text>
+              <TextInput
+                style={[downloadStyles.exportEmailInput, this.state.export_email_valid ? {} : layoutStyles.errorInput]}
+                underlineColorAndroid='transparent'
+                placeholder="Email Address here..."
+                onChangeText={(text) => this.updateExportEmail(text)}
+                autoCapitalize="none"
+                value={downloadState.export_email}
+              />
+            </View>
+            <View style={layoutStyles.centeredFlexRowBottomMargin}>
+              <SegmentedControls
+                options={[
+                  {label: 'Formatted', value: 'formatted'},
+                  {label: 'Plain Text', value: 'plain_text'}
+                ]}
+                onSelection={(export_email_type) => this.exportEmailTypeButtonClicked(export_email_type.value)}
+                selectedOption={downloadState.export_email_type}
+                containerStyle={{flex: 1}}
+                extractText={(option) => option.label}
+                testOptionEqual={(selectedValue, option) => selectedValue === option.value}
+              />
+            </View>
+            <View style={layoutStyles.centeredFlexRow}>
+              <View style={downloadStyles.buttonView}>
                 <Button
-                  onPress={this.cancelWriteToiCloud}
-                  buttonText="NO"
-                  backgroundColor='red'
-                  additionalStyles={[layoutStyles.deleteButton, {marginRight: 10}]}
-                />
-                <Button
-                  onPress={this.writeToiCloud}
-                  buttonText="YES"
+                  onPress={this.sendExportEmail}
+                  buttonText="Send Email"
                   backgroundColor='green'
                   additionalStyles={layoutStyles.confirmButton}
                 />
               </View>
+              <View style={{flex: 2}} />
             </View>
-            }
-            {!this.state.writeLoadComplete && !this.state.writing &&
-            <View style={downloadStyles.popupWindow}>
-              <Text style={{textAlign: 'center'}}>Preloading Device Data</Text>
-              <Text style={{textAlign: 'center'}}>Please Wait...</Text>
+            <View style={{paddingTop: 5}}>
+              <Text style={downloadStyles.smallText}>Note: Your audio recordings are not emailed to you</Text>
             </View>
-            }
-            {this.state.writing &&
-            <View style={downloadStyles.popupWindow}>
-              <Text style={{textAlign: 'center'}}>Writing to iCloud</Text>
+          </View>
+        </ScrollView>
+        {this.state.showReadConfirm &&
+        <View style={layoutStyles.confirmBox}>
+          {this.state.readLoadComplete && !this.state.reading &&
+          <View style={downloadStyles.popupWindow}>
+            <Text style={{textAlign: 'center'}}>This is what is stored on your iCloud:</Text>
+            <Text style={{paddingTop: 25}}>{this.state.cloudJokesCount} Jokes</Text>
+            <Text>{this.state.cloudSetListsCount} Set Lists</Text>
+            <Text>{this.state.cloudShowsCount} Shows</Text>
+            <Text style={downloadStyles.popupWarningText}>
+              ARE YOU SURE YOU WANT TO REPLACE EVERYTHING WITH WHAT IS ON ICLOUD AND LOSE ALL YOUR AUDIO RECORDINGS?
+            </Text>
+            <View style={{paddingTop: 25, flexDirection: 'row'}}>
+              <Button
+                onPress={this.cancelReadFromiCloud}
+                buttonText="NO"
+                backgroundColor='red'
+                additionalStyles={[layoutStyles.deleteButton, {marginRight: 10}]}
+              />
+              <Button
+                onPress={this.readFromiCloud}
+                buttonText="YES"
+                backgroundColor='green'
+                additionalStyles={layoutStyles.confirmButton}
+              />
             </View>
-            }
           </View>
           }
-          <View style={layoutStyles.flexRowStretched}>
-            <FooterButton
-              onPress={this.close}
-              buttonText="Close"
-            />
+          {!this.state.readLoadComplete && !this.state.reading &&
+          <View style={downloadStyles.popupWindow}>
+            <Text style={{textAlign: 'center'}}>Preloading iCloud Data</Text>
+            <Text style={{textAlign: 'center'}}>Please Wait...</Text>
           </View>
+          }
+          {this.state.reading &&
+          <View style={downloadStyles.popupWindow}>
+            <Text style={{textAlign: 'center'}}>Reading from iCloud</Text>
+          </View>
+          }
         </View>
-      </View>
+        }
+        {this.state.showWriteConfirm &&
+        <View style={layoutStyles.confirmBox}>
+          {this.state.writeLoadComplete && !this.state.writing &&
+          <View style={downloadStyles.popupWindow}>
+            <Text style={{textAlign: 'center'}}>This is what is stored on your device:</Text>
+            <Text style={{paddingTop: 25}}>{this.state.localJokesCount} Jokes</Text>
+            <Text>{this.state.localSetListsCount} Set Lists</Text>
+            <Text>{this.state.localShowsCount} Shows</Text>
+            <Text style={downloadStyles.popupWarningText}>
+              ARE YOU SURE YOU WANT TO OVERWRITE EVERYTHING ON ICLOUD? YOUR AUDIO RECORDINGS WILL NOT BE BACKED UP!
+            </Text>
+            <View style={{paddingTop: 25, flexDirection: 'row'}}>
+              <Button
+                onPress={this.cancelWriteToiCloud}
+                buttonText="NO"
+                backgroundColor='red'
+                additionalStyles={[layoutStyles.deleteButton, {marginRight: 10}]}
+              />
+              <Button
+                onPress={this.writeToiCloud}
+                buttonText="YES"
+                backgroundColor='green'
+                additionalStyles={layoutStyles.confirmButton}
+              />
+            </View>
+          </View>
+          }
+          {!this.state.writeLoadComplete && !this.state.writing &&
+          <View style={downloadStyles.popupWindow}>
+            <Text style={{textAlign: 'center'}}>Preloading Device Data</Text>
+            <Text style={{textAlign: 'center'}}>Please Wait...</Text>
+          </View>
+          }
+          {this.state.writing &&
+          <View style={downloadStyles.popupWindow}>
+            <Text style={{textAlign: 'center'}}>Writing to iCloud</Text>
+          </View>
+          }
+        </View>
+        }
+        <View style={layoutStyles.flexRowStretched}>
+          <FooterButton
+            onPress={this.close}
+            buttonText="Close"
+          />
+        </View>
+      </BaseModal>
     );
   }
 }
