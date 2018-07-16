@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import { View, ScrollView, TouchableHighlight, TouchableWithoutFeedback, Text, TextInput, Platform, Keyboard, Button as NativeButton } from 'react-native';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
-import Button from '../../components/Button';
 import FooterButton from '../../components/FooterButton';
 import DatePicker from 'react-native-datepicker';
 import moment from 'moment';
@@ -12,6 +11,8 @@ import BaseModal from './BaseModal';
 import * as routingActions from '../../actions/routingActions';
 import * as showActions from '../../actions/showActions';
 import * as showListActions from '../../actions/showListActions';
+
+import ConfirmBox from '../../components/ConfirmBox';
 
 import ShowListHelper from '../../helpers/showListHelper';
 
@@ -221,27 +222,11 @@ class EditShow extends Component {
             />
           </View>
           {this.state.show_delete_confirm &&
-          <View style={layoutStyles.confirmBox}>
-            <View style={layoutStyles.confirmBoxTextView}>
-              <Text style={layoutStyles.confirmBoxText}>
-                Are you SURE you want to delete this show?
-              </Text>
-            </View>
-            <View style={layoutStyles.confirmBoxButtonsView}>
-              <Button
-                onPress={toggleDeleteConfirm}
-                buttonText="NO"
-                backgroundColor='red'
-                additionalStyles={[layoutStyles.deleteButton, {marginRight: 10}]}
-              />
-              <Button
-                onPress={destroy}
-                buttonText="YES"
-                backgroundColor='green'
-                additionalStyles={layoutStyles.confirmButton}
-              />
-            </View>
-          </View>
+          <ConfirmBox
+            confirmText='Are you SURE you want to delete this show?'
+            noOnPress={toggleDeleteConfirm}
+            yesOnPress={destroy}
+          />
           }
         </View>
         }

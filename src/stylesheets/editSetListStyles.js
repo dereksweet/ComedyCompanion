@@ -59,5 +59,16 @@ export default editSetListStyles = StyleSheet.create({
     flexDirection: 'row',
     borderBottomWidth: 1,
     borderBottomColor: '#CCCCCC'
+  },
+  jokeListViews: {
+    flex: 1,
+    flexDirection: 'row',
+    borderTopColor: '#CCCCCC',
+    borderTopWidth: 1
+  },
+  jokeSelectorView: {
+    flex: 1,
+    borderRightColor: '#CCCCCC',
+    borderRightWidth: 1
   }
 });

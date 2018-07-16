@@ -8,7 +8,7 @@ import BaseModal from './BaseModal';
 import * as jokeActions from '../../actions/jokeActions';
 import * as routingActions from '../../actions/routingActions';
 
-import Button from '../../components/Button';
+import ConfirmBox from '../../components/ConfirmBox';
 import FooterButton from '../../components/FooterButton';
 import MultilineTextInput from '../../components/MultilineTextinput';
 
@@ -220,50 +220,18 @@ class EditJoke extends Component {
         </View>
 
         {this.state.show_delete_confirm &&
-        <View style={layoutStyles.confirmBox}>
-          <View style={layoutStyles.confirmBoxTextView}>
-            <Text style={layoutStyles.confirmBoxText}>
-              Are you SURE you want to delete this joke?
-            </Text>
-          </View>
-          <View style={layoutStyles.confirmBoxButtonsView}>
-            <Button
-              onPress={this.toggleDeleteConfirm}
-              buttonText="NO"
-              backgroundColor='red'
-              additionalStyles={[layoutStyles.deleteButton, {marginRight: 10}]}
-            />
-            <Button
-              onPress={this.destroy}
-              buttonText="YES"
-              backgroundColor='green'
-              additionalStyles={layoutStyles.confirmButton}
-            />
-          </View>
-        </View>
+        <ConfirmBox
+          confirmText='Are you SURE you want to delete this joke?'
+          noOnPress={this.toggleDeleteConfirm}
+          yesOnPress={this.destroy}
+        />
         }
         {this.state.show_cancel_confirm &&
-        <View style={layoutStyles.confirmBox}>
-          <View style={layoutStyles.confirmBoxTextView}>
-            <Text style={layoutStyles.confirmBoxText}>
-              You have changes that will be lost. Are you SURE you want to cancel?
-            </Text>
-          </View>
-          <View style={layoutStyles.confirmBoxButtonsView}>
-            <Button
-              onPress={this.toggleCancelConfirm}
-              buttonText="NO"
-              backgroundColor='red'
-              additionalStyles={[layoutStyles.deleteButton, {marginRight: 10}]}
-            />
-            <Button
-              onPress={this.cancel}
-              buttonText="YES"
-              backgroundColor='green'
-              additionalStyles={layoutStyles.confirmButton}
-            />
-          </View>
-        </View>
+        <ConfirmBox
+          confirmText='You have changes that will be lost. Are you SURE you want to cancel?'
+          noOnPress={this.toggleCancelConfirm}
+          yesOnPress={this.cancel}
+        />
         }
       </BaseModal>
     );

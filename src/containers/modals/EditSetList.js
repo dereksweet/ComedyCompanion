@@ -11,6 +11,7 @@ import * as routingActions from '../../actions/routingActions';
 import * as setListActions from '../../actions/setListActions';
 
 import Button from '../../components/Button';
+import ConfirmBox from '../../components/ConfirmBox';
 import FooterButton from '../../components/FooterButton';
 
 import SetListListHelper from '../../helpers/setListListHelper';
@@ -137,8 +138,8 @@ class EditSetList extends Component {
           />
           }
         </View>
-        <View style={{flex: 1, flexDirection: 'row', borderTopColor: '#CCCCCC', borderTopWidth: 1}}>
-          <View style={{flex: 1, borderRightColor: '#CCCCCC', borderRightWidth: 1}}>
+        <View style={editSetListStyles.jokeListViews}>
+          <View style={editSetListStyles.jokeSelectorView}>
             <JokeSelector />
           </View>
           <View style={{flex: 1}}>
@@ -164,27 +165,11 @@ class EditSetList extends Component {
           />
         </View>
         {this.state.show_delete_confirm &&
-        <View style={layoutStyles.confirmBox}>
-          <View style={layoutStyles.confirmBoxTextView}>
-            <Text style={layoutStyles.confirmBoxText}>
-              Are you SURE you want to delete this set list?
-            </Text>
-          </View>
-          <View style={layoutStyles.confirmBoxButtonsView}>
-            <Button
-              onPress={this.toggleDeleteConfirm}
-              buttonText="NO"
-              backgroundColor='red'
-              additionalStyles={[layoutStyles.deleteButton, {marginRight: 10}]}
-            />
-            <Button
-              onPress={this.destroy}
-              buttonText="YES"
-              backgroundColor='green'
-              additionalStyles={layoutStyles.confirmButton}
-            />
-          </View>
-        </View>
+        <ConfirmBox
+          confirmText='Are you SURE you want to delete this set list?'
+          noOnPress={this.toggleDeleteConfirm}
+          yesOnPress={this.destroy}
+        />
         }
       </BaseModal>
     );

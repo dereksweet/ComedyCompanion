@@ -9,6 +9,7 @@ import SetListViewer from './ShowDashboard/SetListViewer';
 
 import * as showActions from '../../../actions/showActions';
 
+import ConfirmBox from '../../../components/ConfirmBox';
 import Button from '../../../components/Button';
 
 import { formatDisplayTime, formatBytesInMegabytes, formatBytesInGigabytes } from '../../../helpers/formattingHelper';
@@ -113,77 +114,45 @@ class ShowDashboard extends Component {
         <View style={layoutStyles.statusBarBuffer} />
         <SoundBoard startTimerInterval={ this.startTimerInterval } stopTimerInterval={ this.stopTimerInterval } />
         <SetListViewer />
-        { showState.delete_recording_confirm &&
-          <View style={layoutStyles.confirmBox}>
-            <View style={layoutStyles.confirmBoxTextView}>
-              <Text style={layoutStyles.confirmBoxText}>
-                Are you SURE you want to delete this recording?
-              </Text>
-            </View>
-            <View style={layoutStyles.confirmBoxButtonsView}>
-              <Button
-                onPress={showActions.toggleDeleteRecordingConfirm}
-                buttonText="NO"
-                backgroundColor='red'
-                additionalStyles={[layoutStyles.deleteButton, {marginRight: 10}]}
-              />
-              <Button
-                onPress={this.deleteRecording}
-                buttonText="YES"
-                backgroundColor='green'
-                additionalStyles={layoutStyles.confirmButton}
-              />
-            </View>
-          </View>
+        {showState.delete_recording_confirm &&
+        <ConfirmBox
+          confirmText='Are you SURE you want to delete this recording?'
+          noOnPress={showActions.toggleDeleteRecordingConfirm}
+          yesOnPress={this.deleteRecording}
+        />
         }
-        { showState.replace_recording_confirm &&
-          <View style={ layoutStyles.confirmBox }>
-            <View style={layoutStyles.confirmBoxTextView}>
-              <Text style={layoutStyles.confirmBoxText}>
-                Are you SURE you want to replace this recording?
-              </Text>
-            </View>
-            <View style={layoutStyles.confirmBoxButtonsView}>
-              <Button
-                onPress={showActions.toggleReplaceRecordingConfirm}
-                buttonText="NO"
-                backgroundColor='red'
-                additionalStyles={[layoutStyles.deleteButton, {marginRight: 10}]}
-              />
-              <Button
-                onPress={this.replaceRecording}
-                buttonText="YES"
-                backgroundColor='green'
-                additionalStyles={layoutStyles.confirmButton}
-              />
-            </View>
-          </View>
+        {showState.replace_recording_confirm &&
+        <ConfirmBox
+          confirmText='Are you SURE you want to replace this recording?'
+          noOnPress={showActions.toggleReplaceRecordingConfirm}
+          yesOnPress={this.replaceRecording}
+        />
         }
-        { showState.show_recording_info &&
-          <View style={ layoutStyles.confirmBox }>
-            <View style={layoutStyles.confirmBoxTextView}>
-              <Text style={layoutStyles.confirmBoxTextSmall}>
-                <Text style={{ fontWeight: 'bold' }}>Recording Length</Text>: { formatDisplayTime(showState.show._show_time_seconds) }
-              </Text>
-              <Text style={layoutStyles.confirmBoxTextSmall}>
-                <Text style={{ fontWeight: 'bold' }}>Recording Size</Text>: { formatBytesInMegabytes(showState.audio_service.state.file_info.size) }
-              </Text>
-              <Text style={layoutStyles.confirmBoxTextSmall}>
-                <Text style={{ fontWeight: 'bold' }}>Remaining Space</Text>: { formatBytesInGigabytes(showState.audio_service.state.fs_info.freeSpace) }
-              </Text>
-              <Text style={[layoutStyles.confirmBoxTextSmall, {paddingTop: 10, paddingBottom: 10}]}>
-                You could hold { Math.floor(showState.audio_service.state.fs_info.freeSpace / showState.audio_service.state.file_info.size).toLocaleString() } more recordings this size
-              </Text>
-            </View>
-            <View style={layoutStyles.confirmBoxButtonsView}>
-              <Button
-                onPress={this.toggleRecordingInfo}
-                buttonText="OK"
-                backgroundColor='green'
-                additionalStyles={layoutStyles.okButton}
-              />
-            </View>
+        {showState.show_recording_info &&
+        <View style={ layoutStyles.confirmBox }>
+          <View style={layoutStyles.confirmBoxTextView}>
+            <Text style={layoutStyles.confirmBoxTextSmall}>
+              <Text style={{ fontWeight: 'bold' }}>Recording Length</Text>: { formatDisplayTime(showState.show._show_time_seconds) }
+            </Text>
+            <Text style={layoutStyles.confirmBoxTextSmall}>
+              <Text style={{ fontWeight: 'bold' }}>Recording Size</Text>: { formatBytesInMegabytes(showState.audio_service.state.file_info.size) }
+            </Text>
+            <Text style={layoutStyles.confirmBoxTextSmall}>
+              <Text style={{ fontWeight: 'bold' }}>Remaining Space</Text>: { formatBytesInGigabytes(showState.audio_service.state.fs_info.freeSpace) }
+            </Text>
+            <Text style={[layoutStyles.confirmBoxTextSmall, {paddingTop: 10, paddingBottom: 10}]}>
+              You could hold { Math.floor(showState.audio_service.state.fs_info.freeSpace / showState.audio_service.state.file_info.size).toLocaleString() } more recordings this size
+            </Text>
           </View>
+          <View style={layoutStyles.confirmBoxButtonsView}>
+            <Button
+              onPress={this.toggleRecordingInfo}
+              buttonText="OK"
+              backgroundColor='green'
+              additionalStyles={layoutStyles.okButton}
+            />
+          </View>
+        </View>
         }
       </View>
     );
