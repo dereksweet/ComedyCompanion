@@ -1,9 +1,7 @@
-'use strict';
-
 import React, {Component} from 'react';
-import { View, Text, TextInput, TouchableWithoutFeedback, Platform, Keyboard } from 'react-native';
+import {View, Text, TextInput} from 'react-native';
 import {bindActionCreators} from 'redux';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 
 import BaseModal from './BaseModal';
 import JokeSelector from './EditSetList/JokeSelector';
@@ -35,61 +33,71 @@ class EditSetList extends Component {
     SetListListHelper.refreshSLListEmpty();
   }
 
-  render() {
-    const { setListState, routingActions, setListActions } = this.props;
+  validateFields = () => {
+    const {setListState} = this.props;
 
-    const validateFields = () => {
-      let fields_valid = true;
+    let fields_valid = true;
 
-      if (setListState.set_list._name === '') {
-        fields_valid = false;
-        this.setState({
-          name_input_valid: false
-        });
-      }
-
-      if (!fields_valid) {
-        this.editSetListView.shakingView.performShake();
-      }
-
-      return fields_valid;
-    };
-
-    const cancel = () => {
-      routingActions.closeModal();
-    };
-
-    const save = () => {
-      if (validateFields()) {
-        setListState.set_list.save(() => {
-          SetListListHelper.refreshSLList();
-          SetListListHelper.refreshSLListEmpty();
-        });
-        cancel();
-      }
-    };
-
-    const destroy = () => {
-      setListState.set_list.destroy();
-      cancel();
-    };
-
-    const toggleDeleteConfirm = () => {
+    if (setListState.set_list._name === '') {
+      fields_valid = false;
       this.setState({
-        show_delete_confirm: !this.state.show_delete_confirm
-      })
-    };
+        name_input_valid: false
+      });
+    }
 
-    const duplicateSetList = () => {
-      setListActions.duplicateSL();
-    };
+    if (!fields_valid) {
+      this.editSetListView.shakingView.performShake();
+    }
+
+    return fields_valid;
+  };
+
+  cancel = () => {
+    const {routingActions} = this.props;
+
+    routingActions.closeModal();
+  };
+
+  save = () => {
+    const {setListState} = this.props;
+
+    if (this.validateFields()) {
+      setListState.set_list.save(() => {
+        SetListListHelper.refreshSLList();
+        SetListListHelper.refreshSLListEmpty();
+      });
+      this.cancel();
+    }
+  };
+
+  destroy = () => {
+    const {setListState} = this.props;
+
+    setListState.set_list.destroy();
+    this.cancel();
+  };
+
+  toggleDeleteConfirm = () => {
+    this.setState({
+      show_delete_confirm: !this.state.show_delete_confirm
+    })
+  };
+
+  duplicateSetList = () => {
+    const {setListActions} = this.props;
+
+    setListActions.duplicateSL();
+  };
+
+  render() {
+    const {setListState, setListActions} = this.props;
 
     const setListLengthString = setListState.set_list.setListLength();
 
     return (
       <BaseModal ref={(editSetListView) => this.editSetListView = editSetListView}>
-        <View style={ [layoutStyles.modalContentSection, layoutStyles.centeredFlexRow, { backgroundColor: '#EEEEEE'  }] }>
-          <Text style={ layoutStyles.inputLabel }>Name:</Text>
+        <View style={[layoutStyles.modalContentSection, layoutStyles.centeredFlexRow, {backgroundColor: '#EEEEEE'}]}>
+          <Text style={layoutStyles.inputLabel}>Name:</Text>
           <TextInput
             style={ [editSetListStyles.nameInput, this.state.name_input_valid ? {} : layoutStyles.errorInput] }
             underlineColorAndroid='transparent'
@@ -113,44 +121,44 @@ class EditSetList extends Component {
               keyboardType="numeric"
               value={setListState.set_list._length ? setListState.set_list._length.toString() : ''}
             />
-            { setListLengthString !== '0' &&
-              <View>
-                <Text style={layoutStyles.postLabel}>Estimated: </Text>
-                <Text style={layoutStyles.postLabel}>{setListLengthString + ' min'}</Text>
-              </View>
+            {setListLengthString !== '0' &&
+            <View>
+              <Text style={layoutStyles.postLabel}>Estimated: </Text>
+              <Text style={layoutStyles.postLabel}>{setListLengthString + ' min'}</Text>
+            </View>
             }
           </View>
-          { setListState.set_list._id != -1 &&
-            <Button
-              onPress={duplicateSetList}
-              buttonText="Duplicate"
-              backgroundColor='orange'
-              additionalStyles={editSetListStyles.duplicateButton}
-            />
+          {setListState.set_list._id !== -1 &&
+          <Button
+            onPress={this.duplicateSetList}
+            buttonText="Duplicate"
+            backgroundColor='orange'
+            additionalStyles={editSetListStyles.duplicateButton}
+          />
           }
         </View>
-        <View style={{ flex: 1, flexDirection: 'row', borderTopColor: '#CCCCCC', borderTopWidth: 1 }}>
-          <View style={{ flex: 1, borderRightColor: '#CCCCCC', borderRightWidth: 1 }}>
+        <View style={{flex: 1, flexDirection: 'row', borderTopColor: '#CCCCCC', borderTopWidth: 1}}>
+          <View style={{flex: 1, borderRightColor: '#CCCCCC', borderRightWidth: 1}}>
             <JokeSelector />
           </View>
-          <View style={{ flex: 1 }}>
+          <View style={{flex: 1}}>
             <SetListJokes />
           </View>
         </View>
         <View style={layoutStyles.flexRowStretched}>
-          { (setListState.set_list._id !== -1) &&
+          {(setListState.set_list._id !== -1) &&
           <FooterButton
-            onPress={toggleDeleteConfirm}
+            onPress={this.toggleDeleteConfirm}
             buttonText="Delete"
             backgroundColor='red'
           />
           }
           <FooterButton
-            onPress={cancel}
+            onPress={this.cancel}
             buttonText="Cancel"
           />
           <FooterButton
-            onPress={save}
+            onPress={this.save}
             buttonText="Save"
             backgroundColor='green'
           />
@@ -164,13 +172,13 @@ class EditSetList extends Component {
           </View>
           <View style={layoutStyles.confirmBoxButtonsView}>
             <Button
-              onPress={toggleDeleteConfirm}
+              onPress={this.toggleDeleteConfirm}
               buttonText="NO"
               backgroundColor='red'
               additionalStyles={[layoutStyles.deleteButton, {marginRight: 10}]}
             />
             <Button
-              onPress={destroy}
+              onPress={this.destroy}
               buttonText="YES"
               backgroundColor='green'
               additionalStyles={layoutStyles.confirmButton}

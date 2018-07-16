@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import { View, Text, Switch, TextInput, Keyboard } from 'react-native';
+import {View, Text, Switch, TextInput, Keyboard} from 'react-native';
 import {bindActionCreators} from 'redux';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 
 import BaseModal from './BaseModal';
 
