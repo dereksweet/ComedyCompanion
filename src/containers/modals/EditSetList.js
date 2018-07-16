@@ -157,10 +157,12 @@ class EditSetList extends Component {
         </View>
         {this.state.show_delete_confirm &&
         <View style={layoutStyles.confirmBox}>
-          <View style={{paddingBottom: 40, paddingLeft: 20, paddingRight: 20}}>
-            <Text style={{textAlign: 'center', fontSize: 20}}>Are you SURE you want to delete this set list?</Text>
+          <View style={layoutStyles.confirmBoxTextView}>
+            <Text style={layoutStyles.confirmBoxText}>
+              Are you SURE you want to delete this set list?
+            </Text>
           </View>
-          <View style={{paddingTop: 25, flexDirection: 'row'}}>
+          <View style={layoutStyles.confirmBoxButtonsView}>
             <Button
               onPress={toggleDeleteConfirm}
               buttonText="NO"

@@ -1,11 +1,7 @@
-'use strict';
-
 import React, {Component} from 'react';
 import { View, Text } from 'react-native';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
-import Button from '../../../components/Button';
-
 import KeepAwake from 'react-native-keep-awake';
 
 import SoundBoard from './ShowDashboard/SoundBoard';
@@ -13,10 +9,12 @@ import SetListViewer from './ShowDashboard/SetListViewer';
 
 import * as showActions from '../../../actions/showActions';
 
-import Show from '../../../models/show';
+import Button from '../../../components/Button';
 
 import { formatDisplayTime, formatBytesInMegabytes, formatBytesInGigabytes } from '../../../helpers/formattingHelper';
 import ShowListHelper from '../../../helpers/showListHelper';
+
+import Show from '../../../models/show';
 
 import layoutStyles from '../../../stylesheets/layoutStyles';
 
@@ -116,11 +114,13 @@ class ShowDashboard extends Component {
         <SoundBoard startTimerInterval={ this.startTimerInterval } stopTimerInterval={ this.stopTimerInterval } />
         <SetListViewer />
         { showState.delete_recording_confirm &&
-          <View style={ layoutStyles.confirmBox }>
-            <View style={{ paddingBottom: 40, paddingLeft: 20, paddingRight: 20 }}>
-              <Text style={{ textAlign: 'center', fontSize: 20 }}>Are you SURE you want to delete this recording?</Text>
+          <View style={layoutStyles.confirmBox}>
+            <View style={layoutStyles.confirmBoxTextView}>
+              <Text style={layoutStyles.confirmBoxText}>
+                Are you SURE you want to delete this recording?
+              </Text>
             </View>
-            <View style={{ paddingTop: 25, flexDirection: 'row' }}>
+            <View style={layoutStyles.confirmBoxButtonsView}>
               <Button
                 onPress={showActions.toggleDeleteRecordingConfirm}
                 buttonText="NO"
@@ -138,10 +138,12 @@ class ShowDashboard extends Component {
         }
         { showState.replace_recording_confirm &&
           <View style={ layoutStyles.confirmBox }>
-            <View style={{ paddingBottom: 40, paddingLeft: 20, paddingRight: 20 }}>
-              <Text style={{ textAlign: 'center', fontSize: 20 }}>Are you SURE you want to replace this recording?</Text>
+            <View style={layoutStyles.confirmBoxTextView}>
+              <Text style={layoutStyles.confirmBoxText}>
+                Are you SURE you want to replace this recording?
+              </Text>
             </View>
-            <View style={{ paddingTop: 25, flexDirection: 'row' }}>
+            <View style={layoutStyles.confirmBoxButtonsView}>
               <Button
                 onPress={showActions.toggleReplaceRecordingConfirm}
                 buttonText="NO"
@@ -159,26 +161,26 @@ class ShowDashboard extends Component {
         }
         { showState.show_recording_info &&
           <View style={ layoutStyles.confirmBox }>
-            <View style={{ paddingBottom: 40, paddingLeft: 20, paddingRight: 20 }}>
-              <Text style={{ textAlign: 'center', fontSize: 15 }}>
+            <View style={layoutStyles.confirmBoxTextView}>
+              <Text style={layoutStyles.confirmBoxTextSmall}>
                 <Text style={{ fontWeight: 'bold' }}>Recording Length</Text>: { formatDisplayTime(showState.show._show_time_seconds) }
               </Text>
-              <Text style={{ textAlign: 'center', fontSize: 15 }}>
+              <Text style={layoutStyles.confirmBoxTextSmall}>
                 <Text style={{ fontWeight: 'bold' }}>Recording Size</Text>: { formatBytesInMegabytes(showState.audio_service.state.file_info.size) }
               </Text>
-              <Text style={{ textAlign: 'center', fontSize: 15 }}>
+              <Text style={layoutStyles.confirmBoxTextSmall}>
                 <Text style={{ fontWeight: 'bold' }}>Remaining Space</Text>: { formatBytesInGigabytes(showState.audio_service.state.fs_info.freeSpace) }
               </Text>
-              <Text style={{ textAlign: 'center', fontSize: 15, paddingTop: 10, paddingBottom: 10 }}>
+              <Text style={[layoutStyles.confirmBoxTextSmall, {paddingTop: 10, paddingBottom: 10}]}>
                 You could hold { Math.floor(showState.audio_service.state.fs_info.freeSpace / showState.audio_service.state.file_info.size).toLocaleString() } more recordings this size
               </Text>
             </View>
-            <View style={{ paddingTop: 25, flexDirection: 'row' }}>
+            <View style={layoutStyles.confirmBoxButtonsView}>
               <Button
                 onPress={this.toggleRecordingInfo}
                 buttonText="OK"
                 backgroundColor='green'
-                additionalStyles={{flex:1, marginRight: 30, marginLeft: 30}}
+                additionalStyles={layoutStyles.okButton}
               />
             </View>
           </View>

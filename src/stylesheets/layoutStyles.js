@@ -143,6 +143,23 @@ export default layoutStyles = StyleSheet.create({
     shadowOpacity: 0.5,
     shadowRadius: 10
   },
+  confirmBoxTextView: {
+    paddingBottom: 40,
+    paddingLeft: 20,
+    paddingRight: 20
+  },
+  confirmBoxText: {
+    textAlign: 'center',
+    fontSize: 20
+  },
+  confirmBoxTextSmall: {
+    textAlign: 'center',
+    fontSize: 15
+  },
+  confirmBoxButtonsView: {
+    paddingTop: 25,
+    flexDirection: 'row'
+  },
   loadingScreen: {
     position: 'absolute',
     top: 0,
@@ -169,6 +186,11 @@ export default layoutStyles = StyleSheet.create({
     flex: 1,
     width: 100,
     height: 50
+  },
+  okButton: {
+    flex:1,
+    marginRight: 30,
+    marginLeft: 30
   },
   errorInput: {
     borderColor: '#FF0000',

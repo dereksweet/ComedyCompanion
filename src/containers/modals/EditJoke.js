@@ -1,22 +1,21 @@
 import React, {Component} from 'react';
-import { View, Text, TouchableWithoutFeedback, Switch, TextInput, Platform, Keyboard } from 'react-native';
+import { View, Text, Switch, TextInput, Keyboard } from 'react-native';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 
 import BaseModal from './BaseModal';
 
-import * as routingActions from '../../actions/routingActions';
 import * as jokeActions from '../../actions/jokeActions';
+import * as routingActions from '../../actions/routingActions';
 
-import ShakingView from '../../components/ShakingView';
-import MultilineTextInput from '../../components/MultilineTextinput';
 import Button from '../../components/Button';
 import FooterButton from '../../components/FooterButton';
+import MultilineTextInput from '../../components/MultilineTextinput';
 
 import JokeListHelper from '../../helpers/jokeListHelper';
 
-import layoutStyles from '../../stylesheets/layoutStyles';
 import editJokeStyles from '../../stylesheets/editJokeStyles';
+import layoutStyles from '../../stylesheets/layoutStyles';
 
 class EditJoke extends Component {
   constructor(props) {
@@ -148,21 +147,22 @@ class EditJoke extends Component {
       <BaseModal ref={(editJokeView) => this.editJokeView = editJokeView}>
         <View style={[layoutStyles.modalContentSection, layoutStyles.centeredFlexRow]}>
           <Text style={layoutStyles.inputLabel}>In Development:</Text>
-          <Switch onValueChange={() => {
-            jokeActions.toggleInDevelopment();
-            this.setDirty();
-          }}
-                  value={jokeState.joke._in_development}/>
-          <View style={{flex: 1, flexDirection: 'row', justifyContent: 'flex-end'}}>
-            <Text style={layoutStyles.inputLabel}/>
-          </View>
+          <Switch
+            value={jokeState.joke._in_development}
+            onValueChange={() => {
+              jokeActions.toggleInDevelopment();
+              this.setDirty();
+            }}
+          />
+          <View style={{flex: 1}} />
           <TextInput
             style={[editJokeStyles.timeInput, this.state.minutes_input_valid ? {} : layoutStyles.errorInput]}
             underlineColorAndroid='transparent'
             placeholder="min"
             keyboardType="numeric"
             onChangeText={(text) => jokeActions.setMinutes(text)}
-            value={jokeState.joke._minutes !== null ? jokeState.joke._minutes.toString() : ''}/>
+            value={jokeState.joke._minutes !== null ? jokeState.joke._minutes.toString() : ''}
+          />
           <Text style={[layoutStyles.inputLabel, {paddingLeft: 5, paddingRight: 5}]}>:</Text>
           <TextInput
             style={[editJokeStyles.timeInput, this.state.seconds_input_valid ? {} : layoutStyles.errorInput]}
@@ -170,11 +170,13 @@ class EditJoke extends Component {
             placeholder="sec"
             keyboardType="numeric"
             onChangeText={(text) => jokeActions.setSeconds(text)}
-            value={jokeState.joke._seconds !== null ? jokeState.joke._seconds.toString() : ''}/>
+            value={jokeState.joke._seconds !== null ? jokeState.joke._seconds.toString() : ''}
+          />
         </View>
         <View style={[layoutStyles.modalContentSection, layoutStyles.centeredFlexRow]}>
           <Text style={layoutStyles.inputLabel}>Name:</Text>
           <TextInput
+            value={jokeState.joke._name}
             style={[editJokeStyles.nameInput, this.state.name_input_valid ? {} : layoutStyles.errorInput]}
             underlineColorAndroid='transparent'
             placeholder="Name your joke here..."
@@ -182,18 +184,20 @@ class EditJoke extends Component {
               jokeActions.setName(text);
               this.setDirty();
             }}
-            value={jokeState.joke._name}/>
+          />
         </View>
         <View style={[layoutStyles.modalContentSection, {flex: 1}]}>
-          <MultilineTextInput style={editJokeStyles.notesInput}
-                              underlineColorAndroid='transparent'
-                              placeholder="Type your joke notes here..."
-                              autoComplete={false}
-                              onChangeText={(text) => {
-                                jokeActions.setNotes(text);
-                                this.setDirty();
-                              }}
-                              value={jokeState.joke._notes}/>
+          <MultilineTextInput
+            value={jokeState.joke._notes}
+            style={editJokeStyles.notesInput}
+            underlineColorAndroid='transparent'
+            placeholder="Type your joke notes here..."
+            autoComplete={false}
+            onChangeText={(text) => {
+              jokeActions.setNotes(text);
+              this.setDirty();
+            }}
+          />
         </View>
 
         <View style={layoutStyles.flexRowStretched}>
@@ -217,10 +221,12 @@ class EditJoke extends Component {
 
         {this.state.show_delete_confirm &&
         <View style={layoutStyles.confirmBox}>
-          <View style={{paddingBottom: 40, paddingLeft: 20, paddingRight: 20}}>
-            <Text style={{textAlign: 'center', fontSize: 20}}>Are you SURE you want to delete this joke?</Text>
+          <View style={layoutStyles.confirmBoxTextView}>
+            <Text style={layoutStyles.confirmBoxText}>
+              Are you SURE you want to delete this joke?
+            </Text>
           </View>
-          <View style={{paddingTop: 25, flexDirection: 'row'}}>
+          <View style={layoutStyles.confirmBoxButtonsView}>
             <Button
               onPress={this.toggleDeleteConfirm}
               buttonText="NO"
@@ -238,11 +244,12 @@ class EditJoke extends Component {
         }
         {this.state.show_cancel_confirm &&
         <View style={layoutStyles.confirmBox}>
-          <View style={{paddingBottom: 40, paddingLeft: 20, paddingRight: 20}}>
-            <Text style={{textAlign: 'center', fontSize: 20}}>You have changes that will be lost. Are you SURE you
-              want to cancel?</Text>
+          <View style={layoutStyles.confirmBoxTextView}>
+            <Text style={layoutStyles.confirmBoxText}>
+              You have changes that will be lost. Are you SURE you want to cancel?
+            </Text>
           </View>
-          <View style={{paddingTop: 25, flexDirection: 'row'}}>
+          <View style={layoutStyles.confirmBoxButtonsView}>
             <Button
               onPress={this.toggleCancelConfirm}
               buttonText="NO"
