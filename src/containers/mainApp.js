@@ -107,66 +107,62 @@ class MainApp extends Component {
       <View style={layoutStyles.mainContainer}>
         <View style={{flex: 1}}>
           <StatusBar setActivePane={this.setActivePane}/>
-          <SlidingPaneWrapper style={{}} ref={(slidingPaneWrapper) => {
-            this.slidingPaneWrapper = slidingPaneWrapper
-          }}>
-            <SlidingPane style={[{borderColor: '#DDDDDD', borderWidth: 1}]}
-                         ref={(jokesPane) => {
-                           this.jokesPane = jokesPane
-                         }}>
+          <SlidingPaneWrapper style={{}} ref={(slidingPaneWrapper) => {this.slidingPaneWrapper = slidingPaneWrapper}}>
+            <SlidingPane style={layoutStyles.slidingPane}
+                         ref={(jokesPane) => {this.jokesPane = jokesPane}}>
               <Jokes/>
             </SlidingPane>
-            <SlidingPane style={[{borderColor: '#DDDDDD', borderWidth: 1}]}
-                         ref={(setListsPane) => {
-                           this.setListsPane = setListsPane
-                         }}>
+            <SlidingPane style={layoutStyles.slidingPane}
+                         ref={(setListsPane) => {this.setListsPane = setListsPane}}>
               <SetLists/>
             </SlidingPane>
-            <SlidingPane style={[{borderColor: '#DDDDDD', borderWidth: 1}]}
-                         ref={(showsPane) => {
-                           this.showsPane = showsPane
-                         }}>
+            <SlidingPane style={layoutStyles.slidingPane}
+                         ref={(showsPane) => {this.showsPane = showsPane}}>
               <Shows/>
             </SlidingPane>
           </SlidingPaneWrapper>
         </View>
-        <Modal style={layoutStyles.modal}
-               animationType={"slide"}
-               transparent={false}
-               visible={routingState.modal_visible}
-               onRequestClose={() => {
-               }}>
+        <Modal
+          style={layoutStyles.modal}
+          animationType={"slide"}
+          transparent={false}
+          visible={routingState.modal_visible}
+          onRequestClose={() => {
+          }}>
           {routingState.pane === 'jokes' && <EditJoke/>}
           {routingState.pane === 'set_lists' && <EditSetList/>}
           {routingState.pane === 'shows' && <EditShow/>}
         </Modal>
-        <Modal style={layoutStyles.modal}
-               animationType={"fade"}
-               transparent={false}
-               visible={routingState.settings_visible}
-               onRequestClose={() => {
-               }}>
+        <Modal
+          style={layoutStyles.modal}
+          animationType={"fade"}
+          transparent={false}
+          visible={routingState.settings_visible}
+          onRequestClose={() => {
+          }}>
           <Settings/>
         </Modal>
-        <Modal style={layoutStyles.modal}
-               animationType={"fade"}
-               transparent={false}
-               visible={routingState.about_visible}
-               onRequestClose={() => {
-               }}>
+        <Modal
+          style={layoutStyles.modal}
+          animationType={"fade"}
+          transparent={false}
+          visible={routingState.about_visible}
+          onRequestClose={() => {
+          }}>
           <About/>
         </Modal>
-        <Modal style={layoutStyles.modal}
-               animationType={"fade"}
-               transparent={false}
-               visible={routingState.download_visible}
-               onRequestClose={() => {
-               }}>
+        <Modal
+          style={layoutStyles.modal}
+          animationType={"fade"}
+          transparent={false}
+          visible={routingState.download_visible}
+          onRequestClose={() => {
+          }}>
           <Download/>
         </Modal>
         {routingState.show_loading &&
         <View style={layoutStyles.loadingScreen}>
-          <Image style={{width: 300, height: 300, marginTop: 15}} source={require('../images/Loading.png')}/>
+          <Image style={layoutStyles.loadingImage} source={require('../images/Loading.png')}/>
         </View>
         }
       </View>

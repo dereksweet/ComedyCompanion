@@ -343,7 +343,7 @@ class SoundBoard extends Component {
                 additionalStyles={{borderColor: '#FF0000', borderWidth: 2, height: 40}}
               />}
             </View>
-            <View style={layouStyles.centeredFlex}>
+            <View style={layoutStyles.centeredFlex}>
               <TouchableHighlight underlayColor='rgba(0,0,0,0)' onPress={this.showTimer}>
                 <Text style={showDashboardStyles.timerText}>{formatDisplayTime(showState.display_time_seconds)}</Text>
               </TouchableHighlight>

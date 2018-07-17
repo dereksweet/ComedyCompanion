@@ -1,41 +1,35 @@
-'use strict';
-
 import React, {Component} from 'react';
-import { View, Text, TouchableHighlight } from 'react-native';
+import {View} from 'react-native';
 import {bindActionCreators} from 'redux';
-import { connect } from 'react-redux';
-
-import * as setListListActions from '../../actions/setListListActions';
+import {connect} from 'react-redux';
 
 import NoSetLists from './SetLists/NoSetLists';
 import SetListsList from './SetLists/SetListsList';
+
+import * as setListListActions from '../../actions/setListListActions';
 
 import SetListListHelper from '../../helpers/setListListHelper';
 
 import layoutStyles from '../../stylesheets/layoutStyles';
 
 class SetLists extends Component {
-  constructor(props) {
-    super(props);
+  componentDidMount() {
+    SetListListHelper.refreshSLListEmpty();
   }
 
   shouldComponentUpdate(nextProps) {
     const differentEmpty = this.props.setListListState.empty !== nextProps.setListListState.empty;
+
     return differentEmpty;
   }
 
-  componentDidMount() {
-    // SetListListHelper.refreshSLList();
-    SetListListHelper.refreshSLListEmpty();
-  }
-
   render() {
-    const { setListListState } = this.props;
+    const {setListListState} = this.props;
 
     return (
       <View style={layoutStyles.centeredFlex}>
-        { (setListListState.empty) && <NoSetLists /> }
-        { (!setListListState.empty) && <SetListsList /> }
+        {(setListListState.empty) && <NoSetLists />}
+        {(!setListListState.empty) && <SetListsList />}
       </View>
     );
   }

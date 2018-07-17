@@ -1,41 +1,35 @@
-'use strict';
-
 import React, {Component} from 'react';
-import { View, Text, TouchableHighlight } from 'react-native';
+import {View} from 'react-native';
 import {bindActionCreators} from 'redux';
-import { connect } from 'react-redux';
-
-import * as showListActions from '../../actions/showListActions';
+import {connect} from 'react-redux';
 
 import NoShows from './Shows/NoShows';
 import ShowsList from './Shows/ShowsList';
+
+import * as showListActions from '../../actions/showListActions';
 
 import ShowListHelper from '../../helpers/showListHelper';
 
 import layoutStyles from '../../stylesheets/layoutStyles';
 
 class Shows extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
-    // ShowListHelper.refreshShowList();
     ShowListHelper.refreshShowListEmpty();
   }
 
   shouldComponentUpdate(nextProps) {
     const differentEmpty = this.props.showListState.empty !== nextProps.showListState.empty;
+
     return differentEmpty;
   }
 
   render() {
-    const { showListState } = this.props;
+    const {showListState} = this.props;
 
     return (
       <View style={layoutStyles.centeredFlex}>
-        { (showListState.empty) && <NoShows /> }
-        { (!showListState.empty) && <ShowsList /> }
+        {(showListState.empty) && <NoShows />}
+        {(!showListState.empty) && <ShowsList />}
       </View>
     );
   }
