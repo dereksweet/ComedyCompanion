@@ -100,7 +100,7 @@ class SetListsList extends Component {
           <View style={layoutStyles.centeredFlexRow}>
             <Text></Text>
           </View>
-          <View style={{ flex: 1, alignItems: 'flex-end' }}>
+          <View style={layoutStyles.flexEnd}>
             { renderAddButton() }
           </View>
         </View>

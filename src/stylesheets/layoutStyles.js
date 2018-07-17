@@ -31,6 +31,10 @@ export default layoutStyles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
+  flexEnd: {
+    flex: 1,
+    alignItems: 'flex-end'
+  },
   flexRowStretched: {
     flexDirection: 'row',
     width: '100%'
