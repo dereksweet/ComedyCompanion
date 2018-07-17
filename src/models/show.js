@@ -1,5 +1,7 @@
 import SweetModel from 'react-native-sweet-record';
+
 import SetList from './set_list';
+
 import AudioService from '../services/AudioService';
 
 import uuidV4 from 'uuid/v4';
@@ -29,7 +31,7 @@ export default class Show extends SweetModel {
   }
 
   static modelFields() {
-    return [{ field: '_set_list', class: SetList, array: false}];
+    return [{field: '_set_list', class: SetList, array: false}];
   }
 
   constructor(data = {
@@ -63,7 +65,7 @@ export default class Show extends SweetModel {
 
   destroy() {
     if (this._has_recording) {
-      let audio_service = new AudioService({ show_id: this._id });
+      let audio_service = new AudioService({show_id: this._id});
       audio_service.deleteAudioFile();
     }
 
