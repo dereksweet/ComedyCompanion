@@ -63,12 +63,7 @@ class JokesList extends Component {
   };
 
   renderSeparator = (sectionID, rowID, adjacentRowHighlighted) => {
-    return (
-      <View
-        key={`${sectionID}-${rowID}`}
-        style={layoutStyles.listViewSeparator}
-      />
-    );
+    return <View key={`${sectionID}-${rowID}`} style={layoutStyles.listViewSeparator} />;
   };
 
   renderAddButton = () => {

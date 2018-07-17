@@ -1,5 +1,3 @@
-'use strict';
-
 import React, {Component} from 'react';
 import { View, Text } from 'react-native';
 import {bindActionCreators} from 'redux';
@@ -8,27 +6,23 @@ import { connect } from 'react-redux';
 import * as jokeActions from '../../../actions/jokeActions';
 import * as routingActions from '../../../actions/routingActions';
 
-import Joke from '../../../models/joke';
-
-import layoutStyles from '../../../stylesheets/layoutStyles';
-
 import Button from '../../../components/Button';
 
 import {largeJokesIcon, addJokeIcon} from '../../../helpers/icons';
 
-class NoJokes extends Component {
-  constructor(props) {
-    super(props);
-  }
+import Joke from '../../../models/joke';
 
-  render() {
+import layoutStyles from '../../../stylesheets/layoutStyles';
+
+class NoJokes extends Component {
+  addJoke = () => {
     const { routingActions, jokeActions } = this.props;
 
-    const addJoke = () => {
-      jokeActions.setJoke(new Joke());
-      routingActions.openModal();
-    };
+    jokeActions.setJoke(new Joke());
+    routingActions.openModal();
+  };
 
+  render() {
     return (
       <View style={layoutStyles.centeredFlex}>
         {largeJokesIcon}
@@ -36,7 +30,7 @@ class NoJokes extends Component {
         <Text style={{paddingBottom: 20}}>Click the button below to add one..</Text>
         <View style={{paddingBottom: 100, alignItems: 'center'}}>
           <Button
-            onPress={addJoke}
+            onPress={this.addJoke}
             buttonText="Add Joke"
             backgroundColor='green'
             additionalStyles={{width: 150, height: 45}}
