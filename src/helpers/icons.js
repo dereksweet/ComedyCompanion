@@ -1,6 +1,6 @@
 import React from 'react';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import { normalizeWidth } from '../helpers/sizeHelper';
+import {normalizeWidth} from '../helpers/sizeHelper';
 
 export const jokesIcon = (<MaterialIcon name="insert-drive-file" size={25} color="#000" style={statusBarStyles.navLinkIcon} />);
 export const largeJokesIcon = (<MaterialIcon name="insert-drive-file" size={50} color="#000" style={statusBarStyles.navLinkIcon} />);

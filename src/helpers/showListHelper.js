@@ -1,15 +1,13 @@
-'use strict';
-
 import React, {Component} from 'react';
+
+import {store} from '../App';
 
 import * as showListActions from '../actions/showListActions';
 
 import Show from '../models/show';
 
-import {store} from '../App';
-
 export default class ShowListHelper extends Component {
-  static refreshShowList({ venue_filter = null, sort_field = null, sort_order = null } = {}) {
+  static refreshShowList({venue_filter = null, sort_field = null, sort_order = null} = {}) {
     const showListState = store.getState().show_list;
 
     const my_venue_filter = venue_filter || showListState.venue_filter;
@@ -17,7 +15,7 @@ export default class ShowListHelper extends Component {
     const my_sort_order = sort_order || showListState.sort_order;
 
     Show.where(
-      { '_venue': "LIKE|'" + my_venue_filter + "'", '_city': "LIKE|'" + my_venue_filter + "'" },
+      {'_venue': "LIKE|'" + my_venue_filter + "'", '_city': "LIKE|'" + my_venue_filter + "'"},
       'OR',
       my_sort_field,
       my_sort_order

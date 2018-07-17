@@ -44,9 +44,18 @@ export default layoutStyles = StyleSheet.create({
     flex: 1,
     alignItems: 'flex-end'
   },
+  flexRowEnd: {
+    flexDirection: 'row',
+    alignItems: 'flex-end'
+  },
   flexRowStretched: {
     flexDirection: 'row',
     width: '100%'
+  },
+  flexRowStretchedEnd: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-end'
   },
   statusBarBuffer: {
     height: (Platform.OS === 'ios') ? 20 : 0,
@@ -207,5 +216,14 @@ export default layoutStyles = StyleSheet.create({
     borderWidth: 0,
     borderBottomWidth: 1,
     borderColor: '#ddd'
+  },
+  loadingImage: {
+    width: 300,
+    height: 300,
+    marginTop: 15
+  },
+  slidingPane: {
+    borderColor: '#DDDDDD',
+    borderWidth: 1
   }
 });

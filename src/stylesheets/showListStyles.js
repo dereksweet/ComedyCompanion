@@ -46,5 +46,18 @@ export default showListStyles = StyleSheet.create({
     paddingBottom: 14,
     top: 5,
     left: 10
+  },
+  setListAndTimerRecButton: {
+    flex: 1,
+    alignItems: 'flex-end',
+    backgroundColor: '#fff',
+    padding: 10,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 3,
+    shadowColor: 'black',
+    shadowOffset: {width: 1, height: 1},
+    shadowOpacity: 0.2,
+    shadowRadius: 3
   }
 });
