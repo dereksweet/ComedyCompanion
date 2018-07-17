@@ -1,4 +1,4 @@
-import { StyleSheet, Platform } from 'react-native';
+import {StyleSheet, Platform} from 'react-native';
 
 export default layoutStyles = StyleSheet.create({
   mainContainer: {
@@ -97,12 +97,6 @@ export default layoutStyles = StyleSheet.create({
     marginLeft: 10,
     textAlignVertical: 'center',
     fontSize: 11
-  },
-  settingsSectionTitle: {
-    fontSize: 13,
-    fontWeight: 'bold',
-    paddingRight: 10,
-    textAlignVertical: 'center'
   },
   toolbar: {
     width: '100%',

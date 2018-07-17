@@ -1,6 +1,6 @@
-import { StyleSheet, Platform } from 'react-native';
+import {StyleSheet} from 'react-native';
 
-export default SLListStyles = StyleSheet.create({
+export default setListListStyles = StyleSheet.create({
   setListRow: {
     width: '100%',
     minHeight: 30,

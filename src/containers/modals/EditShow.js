@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { View, ScrollView, TouchableHighlight, TouchableWithoutFeedback, Text, TextInput, Platform, Keyboard, Button as NativeButton } from 'react-native';
+import { View, ScrollView, TouchableHighlight, Text, TextInput, Keyboard, Button as NativeButton } from 'react-native';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 import FooterButton from '../../components/FooterButton';
@@ -49,121 +49,133 @@ class EditShow extends Component {
     ShowListHelper.refreshShowListEmpty();
   }
 
+  validateFields = () => {
+    const {showState} = this.props;
+
+    let fields_valid = true;
+
+    if (showState.show._venue === '') {
+      fields_valid = false;
+      this.setState({
+        venue_input_valid: false
+      });
+    }
+
+    if (!fields_valid) {
+      this.editShowView.performShake();
+    }
+
+    return fields_valid;
+  };
+
+  selectSetList = (set_list_id) => {
+    const {showActions} = this.props;
+
+    SetList.get(set_list_id).then((set_list) => {
+      showActions.setShowSetList(set_list);
+      this.hideSetListSelect();
+    })
+  };
+
+  showSetListSelect = () => {
+    this.setState({
+      show_set_list_select: true
+    });
+  };
+
+  hideSetListSelect = () => {
+    this.setState({
+      show_set_list_select: false
+    });
+  };
+
+  save = () => {
+    if (this.validateFields()) {
+      showState.show.save(() => {
+        ShowListHelper.refreshShowList();
+        ShowListHelper.refreshShowListEmpty();
+      });
+      this.cancel();
+    }
+  };
+
+  cancel = () => {
+    const {routingActions} = this.props;
+
+    Keyboard.dismiss();
+    routingActions.closeModal();
+  };
+
+  destroy = () => {
+    const {showState, routingActions} = this.props;
+
+    showState.show.destroy();
+    routingActions.closeModal();
+  };
+
+  toggleDeleteConfirm = () => {
+    this.setState({
+      show_delete_confirm: !this.state.show_delete_confirm
+    })
+  };
+
   render() {
-    const { showState, showActions, routingActions } = this.props;
-
-    const validateFields = () => {
-      let fields_valid = true;
-
-      if (showState.show._venue === '') {
-        fields_valid = false;
-        this.setState({
-          venue_input_valid: false
-        });
-      }
-
-      if (!fields_valid) {
-        this.editShowView.performShake();
-      }
-
-      return fields_valid;
-    };
-
-    const selectSetList = (set_list_id) => {
-      SetList.get(set_list_id).then((set_list) => {
-        showActions.setShowSetList(set_list);
-        hideSetListSelect();
-      })
-    };
-
-    const save = () => {
-      if (validateFields()) {
-        showState.show.save(() => {
-          ShowListHelper.refreshShowList();
-          ShowListHelper.refreshShowListEmpty();
-        });
-        cancel();
-      }
-    };
-
-    const cancel = () => {
-      Keyboard.dismiss();
-      routingActions.closeModal();
-    };
-
-    const destroy = () => {
-      showState.show.destroy();
-      routingActions.closeModal();
-    };
-
-    const toggleDeleteConfirm = () => {
-      this.setState({
-        show_delete_confirm: !this.state.show_delete_confirm
-      })
-    };
-
-    const showSetListSelect = () => {
-      this.setState({
-        show_set_list_select: true
-      });
-    };
-
-    const hideSetListSelect = () => {
-      this.setState({
-        show_set_list_select: false
-      });
-    };
+    const {showState, showActions} = this.props;
 
     return (
       <BaseModal ref={(editShowView) => this.editShowView = editShowView}>
-        { this.state.show_set_list_select &&
-          <View style={{ flex: 1 }}>
-            <View style={{ width: '100%', backgroundColor: '#FFFFFF', borderBottomWidth: 1, borderBottomColor: '#CCCCCC', paddingBottom: 10, paddingTop: 10, alignItems: 'center' }}>
-              <Text style={{ fontWeight: 'bold', fontSize: 14 }}>Choose Set List</Text>
-            </View>
-            <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-              { this.state.set_lists.map((set_list) => {
-                  return <View key={ set_list._id } style={ { flex: 1, backgroundColor: '#EEEEFF', borderBottomColor: '#CCCCCC', borderBottomWidth: 2, maxHeight: 40 } }>
-                           <TouchableHighlight onPress={ () => selectSetList(set_list._id) }>
-                             <Text style={{ color: '#000000', padding: 10, textAlign: 'center' }}>{set_list._name}</Text>
-                           </TouchableHighlight>
-                         </View>
-                })
-              }
-            </ScrollView>
-            <View style={{ flexDirection: 'row', height: 47, borderTopColor: '#999999', borderTopWidth: 1 }}>
-              <View style={ { flex: 1, flexDirection: 'row' } }>
-                <FooterButton
-                  onPress={hideSetListSelect}
-                  buttonText="Cancel"
-                />
-              </View>
-            </View>
+        {this.state.show_set_list_select &&
+        <View style={{flex: 1}}>
+          <View style={editShowStyles.setListSelectTitleView}>
+            <Text style={editShowStyles.setListSelectTitle}>Choose Set List</Text>
           </View>
+          <ScrollView contentContainerStyle={{flexGrow: 1}}>
+            {this.state.set_lists.map((set_list) => {
+              return <View key={set_list._id} style={editShowStyles.setListView}>
+                <TouchableHighlight onPress={() => this.selectSetList(set_list._id)}>
+                  <Text style={editShowStyles.setList}>{set_list._name}</Text>
+                </TouchableHighlight>
+              </View>
+            })
+            }
+          </ScrollView>
+          <View style={layoutStyles.flexRowStretched}>
+            <FooterButton
+              onPress={this.hideSetListSelect}
+              buttonText="Cancel"
+            />
+          </View>
+        </View>
         }
         {!this.state.show_set_list_select &&
         <View style={{flex: 1}}>
           <View style={[layoutStyles.modalContentSection, layoutStyles.centeredFlexRow]}>
             <Text style={layoutStyles.inputLabel}>Venue:</Text>
-            <TextInput style={[editShowStyles.venueInput, this.state.venue_input_valid ? {} : layoutStyles.errorInput]}
-                       underlineColorAndroid='transparent'
-                       placeholder="Venue name here..."
-                       onChangeText={(text) => showActions.setShowVenue(text)}
-                       value={showState.show._venue}/>
+            <TextInput
+              style={[editShowStyles.venueInput, this.state.venue_input_valid ? {} : layoutStyles.errorInput]}
+              underlineColorAndroid='transparent'
+              placeholder="Venue name here..."
+              onChangeText={(text) => showActions.setShowVenue(text)}
+              value={showState.show._venue}
+            />
           </View>
           <View style={[layoutStyles.modalContentSection, layoutStyles.centeredFlexRow]}>
             <Text style={layoutStyles.inputLabel}>City:</Text>
-            <TextInput style={editShowStyles.cityInput}
-                       underlineColorAndroid='transparent'
-                       placeholder="City name here..."
-                       onChangeText={(text) => showActions.setShowCity(text)}
-                       value={showState.show._city}/>
+            <TextInput
+              style={editShowStyles.cityInput}
+              underlineColorAndroid='transparent'
+              placeholder="City name here..."
+              onChangeText={(text) => showActions.setShowCity(text)}
+              value={showState.show._city}
+            />
             <Text style={[layoutStyles.inputLabel, {paddingLeft: 10}]}>State:</Text>
-            <TextInput style={editShowStyles.stateInput}
-                       underlineColorAndroid='transparent'
-                       onChangeText={(text) => showActions.setShowState(text.toUpperCase())}
-                       maxLength={2}
-                       value={showState.show._state}/>
+            <TextInput
+              style={editShowStyles.stateInput}
+              underlineColorAndroid='transparent'
+              onChangeText={(text) => showActions.setShowState(text.toUpperCase())}
+              maxLength={2}
+              value={showState.show._state}
+            />
           </View>
           <View style={[layoutStyles.modalContentSection, layoutStyles.centeredFlexRow]}>
             <Text style={layoutStyles.inputLabel}>Date:</Text>
@@ -197,26 +209,25 @@ class EditShow extends Component {
             <View style={{flex: 1, alignItems: 'flex-start'}}>
               <NativeButton
                 title={showState.show._set_list._id != -1 ? showState.show._set_list._name : 'No Set List Selected'}
-                onPress={showSetListSelect}/>
+                onPress={this.showSetListSelect}
+              />
             </View>
           </View>
-          <View style={[layoutStyles.modalContentSection, {flex: 1}]}>
-
-          </View>
+          <View style={[layoutStyles.modalContentSection, {flex: 1}]} />
           <View style={layoutStyles.flexRowStretched}>
-            {(showState.show._id != -1) &&
+            {(showState.show._id !== -1) &&
             <FooterButton
-              onPress={toggleDeleteConfirm}
+              onPress={this.toggleDeleteConfirm}
               buttonText="Delete"
               backgroundColor='red'
             />
             }
             <FooterButton
-              onPress={cancel}
+              onPress={this.cancel}
               buttonText="Cancel"
             />
             <FooterButton
-              onPress={save}
+              onPress={this.save}
               buttonText="Save"
               backgroundColor='green'
             />
@@ -224,8 +235,8 @@ class EditShow extends Component {
           {this.state.show_delete_confirm &&
           <ConfirmBox
             confirmText='Are you SURE you want to delete this show?'
-            noOnPress={toggleDeleteConfirm}
-            yesOnPress={destroy}
+            noOnPress={this.toggleDeleteConfirm}
+            yesOnPress={this.destroy}
           />
           }
         </View>

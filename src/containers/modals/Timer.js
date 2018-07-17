@@ -21,8 +21,6 @@ class About extends Component {
     this.state = {
       orientation: 'v'
     };
-
-    this.toggleOrientation = this.toggleOrientation.bind(this);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -32,30 +30,35 @@ class About extends Component {
     return orientationChanged || displayTimeChanged;
   }
 
-  toggleOrientation() {
-    this.setState({ orientation: this.state.orientation == 'v' ? 'h' : 'v' });
-  }
+  toggleOrientation = () => {
+    this.setState({orientation: this.state.orientation === 'v' ? 'h' : 'v'});
+  };
+
+  close = () => {
+    const {routingActions} = this.props;
+
+    routingActions.toggleTimer();
+  };
 
   render() {
-    const { showState, routingActions } = this.props;
+    const {showState} = this.props;
 
-    const close = () => {
-      routingActions.toggleTimer();
-    };
-
-    const horiz = this.state.orientation == 'v';
+    const horiz = this.state.orientation === 'v';
 
     return (
       <BaseModal>
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-          <TouchableHighlight style={{ flex: 1, width: '100%', alignItems: 'center', justifyContent: 'center' }} underlayColor="rgba(0,0,0,0)" onPress={ this.toggleOrientation }>
-            <Text style={{ fontSize: normalizeWidth(horiz ? 75 : 90), transform: [{ rotate: horiz ? '0deg' : '90deg'}] }}>{ formatDisplayTime(showState.display_time_seconds) }</Text>
+        <View style={layoutStyles.centeredFlex}>
+          <TouchableHighlight
+            style={[layoutStyles.centeredFlex, {width: '100%'}]} underlayColor="rgba(0,0,0,0)"
+            onPress={this.toggleOrientation}>
+            <Text style={{fontSize: normalizeWidth(horiz ? 75 : 90), transform: [{rotate: horiz ? '0deg' : '90deg'}]}}>
+              {formatDisplayTime(showState.display_time_seconds)}
+            </Text>
           </TouchableHighlight>
         </View>
-
         <View style={layoutStyles.flexRowStretched}>
           <FooterButton
-            onPress={close}
+            onPress={this.close}
             buttonText="Close"
           />
         </View>

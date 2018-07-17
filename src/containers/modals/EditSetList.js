@@ -100,7 +100,7 @@ class EditSetList extends Component {
         <View style={[layoutStyles.modalContentSection, layoutStyles.centeredFlexRow, {backgroundColor: '#EEEEEE'}]}>
           <Text style={layoutStyles.inputLabel}>Name:</Text>
           <TextInput
-            style={ [editSetListStyles.nameInput, this.state.name_input_valid ? {} : layoutStyles.errorInput] }
+            style={[editSetListStyles.nameInput, this.state.name_input_valid ? {} : layoutStyles.errorInput]}
             underlineColorAndroid='transparent'
             placeholder="Name your set list here..."
             onChangeText={(text) => setListActions.setSLName(text)}

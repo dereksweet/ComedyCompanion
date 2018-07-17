@@ -1,4 +1,4 @@
-import { StyleSheet, Platform } from 'react-native';
+import {StyleSheet} from 'react-native';
 
 export default jokeListStyles = StyleSheet.create({
   jokeRow: {
@@ -30,17 +30,5 @@ export default jokeListStyles = StyleSheet.create({
     paddingTop: 5,
     fontSize: 8,
     alignItems: 'flex-end'
-  },
-  sortByText: {
-    fontSize: 12,
-    paddingRight: 10
-  },
-  sortInText: {
-    fontSize: 12,
-    paddingRight: 13
-  },
-  sortButtonText: {
-    fontSize: 10,
-    color: '#FFFFFF',
   }
 });
