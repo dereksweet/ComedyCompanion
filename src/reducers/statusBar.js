@@ -12,7 +12,6 @@ export default function statusBar(state = initialState, action = {}) {
         ...state,
         hamburger_active: !state.hamburger_active
       };
-      break;
     default:
       return state;
   }

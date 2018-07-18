@@ -1,4 +1,4 @@
-import { StyleSheet, Platform } from 'react-native';
+import {StyleSheet} from 'react-native';
 
 export default editSetListStyles = StyleSheet.create({
   nameInput: {
@@ -19,5 +19,56 @@ export default editSetListStyles = StyleSheet.create({
     paddingRight: 10,
     backgroundColor: '#FFFFFF',
     textAlign: 'center'
+  },
+  duplicateButton: {
+    width: 100,
+    height: 40
+  },
+  jokeSelectorRow: {
+    width: '100%',
+    minHeight: 30,
+    alignItems: 'center',
+    backgroundColor: '#FAFAFA',
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingLeft: 10,
+    paddingRight: 10
+  },
+  jokeInstructions: {
+    fontSize: 11,
+    color: '#999999'
+  },
+  setListJokesHeader: {
+    backgroundColor: '#EEEEFF',
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderBottomWidth: 1,
+    borderBottomColor: '#CCCCCC'
+  },
+  setListJokeRow: {
+    width: '100%',
+    minHeight: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#FAFAFA',
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingLeft: 10,
+    paddingRight: 10,
+    flexDirection: 'row',
+    borderBottomWidth: 1,
+    borderBottomColor: '#CCCCCC'
+  },
+  jokeListViews: {
+    flex: 1,
+    flexDirection: 'row',
+    borderTopColor: '#CCCCCC',
+    borderTopWidth: 1
+  },
+  jokeSelectorView: {
+    flex: 1,
+    borderRightColor: '#CCCCCC',
+    borderRightWidth: 1
   }
 });

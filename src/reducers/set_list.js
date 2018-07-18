@@ -13,7 +13,6 @@ export default function set_list(state = initialState, action = {}) {
         ...state,
         set_list: action.set_list
       };
-      break;
     case types.SET_SL_NAME:
       state.set_list._name = action.name;
 
@@ -21,7 +20,6 @@ export default function set_list(state = initialState, action = {}) {
         ...state,
         set_list: state.set_list
       };
-      break;
     case types.SET_SL_LENGTH:
       state.set_list._length = action.length;
 
@@ -29,7 +27,6 @@ export default function set_list(state = initialState, action = {}) {
         ...state,
         set_list: state.set_list
       };
-      break;
     case types.ADD_JOKE_TO_SL:
       let add = true;
       state.set_list._jokes.forEach((joke) => {
@@ -47,9 +44,8 @@ export default function set_list(state = initialState, action = {}) {
         ...state,
         set_list: new_set_list
       };
-      break;
     case types.REMOVE_JOKE_FROM_SL:
-      if (state.set_list._jokes.indexOf(action.joke) != -1 ) {
+      if (state.set_list._jokes.indexOf(action.joke) !== -1) {
         state.set_list._jokes.splice(state.set_list._jokes.indexOf(action.joke), 1);
       }
 
@@ -57,7 +53,6 @@ export default function set_list(state = initialState, action = {}) {
         ...state,
         set_list: state.set_list
       };
-      break;
     case types.DUPLICATE_SL:
       state.set_list._id = -1;
       state.set_list._name = '';
@@ -66,7 +61,6 @@ export default function set_list(state = initialState, action = {}) {
         ...state,
         set_list: state.set_list
       };
-      break;
     default:
       return state;
   }

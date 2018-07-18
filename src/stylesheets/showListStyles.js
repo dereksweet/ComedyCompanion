@@ -6,7 +6,7 @@ export default showListStyles = StyleSheet.create({
     minHeight: 30,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#FAFAFA',
+    backgroundColor: '#f7f7f7',
     paddingTop: 10,
     paddingBottom: 10,
     paddingLeft: 10,
@@ -43,6 +43,21 @@ export default showListStyles = StyleSheet.create({
     color: '#FFFFFF'
   },
   recIconBadgeView: {
-    paddingBottom: 14
+    paddingBottom: 14,
+    top: 5,
+    left: 10
+  },
+  setListAndTimerRecButton: {
+    flex: 1,
+    alignItems: 'flex-end',
+    backgroundColor: '#fff',
+    padding: 10,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 3,
+    shadowColor: 'black',
+    shadowOffset: {width: 1, height: 1},
+    shadowOpacity: 0.2,
+    shadowRadius: 3
   }
 });

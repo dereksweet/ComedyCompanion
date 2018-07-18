@@ -1,21 +1,21 @@
 import * as types from './actionTypes';
 
 export function setPane(pane) {
-    let title = '';
+  let title = '';
 
-    switch(pane) {
-      case 'jokes':
-        title = 'Jokes';
-        break;
-      case 'set_lists':
-        title = 'Set Lists';
-        break;
-      case 'shows':
-        title = 'Shows';
-        break;
-      default :
-        title = 'Unknown Route';
-    }
+  switch (pane) {
+    case 'jokes':
+      title = 'Jokes';
+      break;
+    case 'set_lists':
+      title = 'Set Lists';
+      break;
+    case 'shows':
+      title = 'Shows';
+      break;
+    default :
+      title = 'Unknown Route';
+  }
 
   return {
     type: types.SET_PANE,

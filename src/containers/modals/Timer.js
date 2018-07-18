@@ -1,16 +1,17 @@
-'use strict';
-
 import React, {Component} from 'react';
-import { View, Text, TouchableHighlight } from 'react-native';
+import {View, Text, TouchableHighlight} from 'react-native';
 import {bindActionCreators} from 'redux';
-import { connect } from 'react-redux';
-import {Button} from 'react-native-buttons';
+import {connect} from 'react-redux';
 
-import { formatDisplayTime } from '../../helpers/formattingHelper';
-
-import {normalizeWidth} from '../../helpers/sizeHelper';
+import BaseModal from './BaseModal';
 
 import * as routingActions from '../../actions/routingActions';
+
+import FooterButton from '../../components/FooterButton';
+
+import {formatDisplayTime} from '../../helpers/formattingHelper';
+import {normalizeWidth} from '../../helpers/sizeHelper';
+
 import layoutStyles from "../../stylesheets/layoutStyles";
 
 class About extends Component {
@@ -20,8 +21,6 @@ class About extends Component {
     this.state = {
       orientation: 'v'
     };
-
-    this.toggleOrientation = this.toggleOrientation.bind(this);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -31,37 +30,39 @@ class About extends Component {
     return orientationChanged || displayTimeChanged;
   }
 
-  toggleOrientation() {
-    this.setState({ orientation: this.state.orientation == 'v' ? 'h' : 'v' });
-  }
+  toggleOrientation = () => {
+    this.setState({orientation: this.state.orientation === 'v' ? 'h' : 'v'});
+  };
+
+  close = () => {
+    const {routingActions} = this.props;
+
+    routingActions.toggleTimer();
+  };
 
   render() {
-    const { showState, routingActions } = this.props;
+    const {showState} = this.props;
 
-    const close = () => {
-      routingActions.toggleTimer();
-    };
-
-    const horiz = this.state.orientation == 'v';
+    const horiz = this.state.orientation === 'v';
 
     return (
-      <View style={[layoutStyles.modal, layoutStyles.centeredFlex]}>
-        <View style={layoutStyles.statusBarBuffer} />
-        <View style={layoutStyles.modalContent}>
-          <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <TouchableHighlight style={{ flex: 1, width: '100%', alignItems: 'center', justifyContent: 'center' }} underlayColor="rgba(0,0,0,0)" onPress={ this.toggleOrientation }>
-              <Text style={{ fontSize: normalizeWidth(horiz ? 75 : 90), transform: [{ rotate: horiz ? '0deg' : '90deg'}] }}>{ formatDisplayTime(showState.display_time_seconds) }</Text>
-            </TouchableHighlight>
-          </View>
-          <View style={{ flexDirection: 'row', height: 47, borderTopColor: '#999999', borderTopWidth: 1 }}>
-            <View style={ { flex: 1, flexDirection: 'row' } }>
-              <Button type="surface" size="large" theme="gray" selfStyle={ layoutStyles.cancelButton } onPress={ close }>
-                <Text style={layoutStyles.buttonText}>Close</Text>
-              </Button>
-            </View>
-          </View>
+      <BaseModal>
+        <View style={layoutStyles.centeredFlex}>
+          <TouchableHighlight
+            style={[layoutStyles.centeredFlex, {width: '100%'}]} underlayColor="rgba(0,0,0,0)"
+            onPress={this.toggleOrientation}>
+            <Text style={{fontSize: normalizeWidth(horiz ? 75 : 90), transform: [{rotate: horiz ? '0deg' : '90deg'}]}}>
+              {formatDisplayTime(showState.display_time_seconds)}
+            </Text>
+          </TouchableHighlight>
         </View>
-      </View>
+        <View style={layoutStyles.flexRowStretched}>
+          <FooterButton
+            onPress={this.close}
+            buttonText="Close"
+          />
+        </View>
+      </BaseModal>
     );
   }
 }

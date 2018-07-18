@@ -1,4 +1,4 @@
-import { StyleSheet, Platform } from 'react-native';
+import {StyleSheet, Platform} from 'react-native';
 
 export default layoutStyles = StyleSheet.create({
   mainContainer: {
@@ -8,22 +8,72 @@ export default layoutStyles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'stretch'
   },
+  centerCenter: {
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  centeredFlexRow: {
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  centeredFlexRowTopPadded: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingTop: 10
+  },
+  centeredFlexRowBottomMargin: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10
+  },
   centeredFlex: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  flexRow: {
+    flex: 1,
+    flexDirection: 'row'
+  },
+  flexRowCentered: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center'
+  },
+  flexEnd: {
+    flex: 1,
+    alignItems: 'flex-end'
+  },
+  flexRowEnd: {
+    flexDirection: 'row',
+    alignItems: 'flex-end'
+  },
+  flexRowStretched: {
+    flexDirection: 'row',
+    width: '100%'
+  },
+  flexRowStretchedEnd: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-end'
   },
   statusBarBuffer: {
     height: (Platform.OS === 'ios') ? 20 : 0,
     backgroundColor: '#FFFFFF',
     width: '100%'
   },
+  flexListView: {
+    backgroundColor: '#FFFFFF',
+    flex: 1
+  },
+  listViewSeparator: {
+    height: 1,
+    backgroundColor: '#CCCCCC'
+  },
   statusBar: {
     height: 40,
     backgroundColor: '#EEEEFF',
     width: '100%',
-    borderBottomColor: '#DDDDDD',
-    borderBottomWidth: 1,
     borderTopColor: '#DDDDDD',
     borderTopWidth: 1,
     flexDirection: 'row'
@@ -50,7 +100,7 @@ export default layoutStyles = StyleSheet.create({
     flex: 1,
     borderTopColor: '#CCCCCC',
     borderTopWidth: 1,
-    width: '100%'
+    alignSelf: 'stretch'
   },
   modalContentSection: {
     borderBottomWidth: 1,
@@ -69,12 +119,6 @@ export default layoutStyles = StyleSheet.create({
     marginLeft: 10,
     textAlignVertical: 'center',
     fontSize: 11
-  },
-  settingsSectionTitle: {
-    fontSize: 13,
-    fontWeight: 'bold',
-    paddingRight: 10,
-    textAlignVertical: 'center'
   },
   toolbar: {
     width: '100%',
@@ -115,6 +159,23 @@ export default layoutStyles = StyleSheet.create({
     shadowOpacity: 0.5,
     shadowRadius: 10
   },
+  confirmBoxTextView: {
+    paddingBottom: 40,
+    paddingLeft: 20,
+    paddingRight: 20
+  },
+  confirmBoxText: {
+    textAlign: 'center',
+    fontSize: 20
+  },
+  confirmBoxTextSmall: {
+    textAlign: 'center',
+    fontSize: 15
+  },
+  confirmBoxButtonsView: {
+    paddingTop: 25,
+    flexDirection: 'row'
+  },
   loadingScreen: {
     position: 'absolute',
     top: 0,
@@ -130,20 +191,39 @@ export default layoutStyles = StyleSheet.create({
   cancelButton: {
     backgroundColor: '#999999',
     borderColor: '#888888',
-    width: '100%'
+    width: '100%',
+    height: 47
   },
   confirmButton: {
-    backgroundColor: '#009900',
-    borderColor: '#008800',
-    width: '100%'
+    flex: 1,
+    height: 47
   },
   deleteButton: {
-    backgroundColor: '#DD0000',
-    borderColor: '#CC0000',
-    width: '100%'
+    flex: 1,
+    width: 100,
+    height: 50
+  },
+  okButton: {
+    flex:1,
+    marginRight: 30,
+    marginLeft: 30
   },
   errorInput: {
     borderColor: '#FF0000',
     borderWidth: 2
+  },
+  searchBarInput: {
+    borderWidth: 0,
+    borderBottomWidth: 1,
+    borderColor: '#ddd'
+  },
+  loadingImage: {
+    width: 300,
+    height: 300,
+    marginTop: 15
+  },
+  slidingPane: {
+    borderColor: '#DDDDDD',
+    borderWidth: 1
   }
 });

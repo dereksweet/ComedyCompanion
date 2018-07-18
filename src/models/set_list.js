@@ -1,4 +1,5 @@
 import SweetModel from 'react-native-sweet-record';
+
 import Joke from './joke';
 
 import uuidV4 from 'uuid/v4';
@@ -25,7 +26,7 @@ export default class SetList extends SweetModel {
   }
 
   static modelFields() {
-    return [{ field: '_jokes', class: Joke, array: true}];
+    return [{field: '_jokes', class: Joke, array: true}];
   }
 
   containsJoke(joke) {

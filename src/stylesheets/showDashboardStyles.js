@@ -22,6 +22,24 @@ export default showDashbordStyles = StyleSheet.create({
     paddingTop: 10, 
     alignItems: 'center'
   },
+  setListView: {
+    flex: 1,
+    backgroundColor: '#EEEEFF',
+    borderBottomColor: '#CCCCCC',
+    borderBottomWidth: 2
+  },
+  jokeName: {
+    color: '#000000',
+    padding: 10,
+    textAlign: 'center'
+  },
+  jokeNotesView: {
+    backgroundColor: '#EEEEEE',
+    borderTopColor: '#CCCCCC',
+    borderTopWidth: 1,
+    borderBottomColor: '#CCCCCC',
+    borderBottomWidth: 1
+  },
   timerText: {
     fontSize: normalizeWidth(30),
     fontWeight: 'bold',
@@ -36,5 +54,12 @@ export default showDashbordStyles = StyleSheet.create({
     width: normalizeWidth(35),
     marginLeft: 10,
     justifyContent: 'center'
+  },
+  swipeBackText: {
+    color: '#CCCCCC',
+    marginTop: 3,
+    fontSize: normalizeWidth(10),
+    alignSelf: 'center',
+    alignItems: 'center'
   }
 });

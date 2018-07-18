@@ -1,5 +1,3 @@
-import { Dimensions, Platform, PixelRatio } from 'react-native';
-
 export function formatDisplayTime(total_seconds) {
   const hours = Math.floor(total_seconds / 3600);
   const minutes = Math.floor((total_seconds - (hours * 3600)) / 60);

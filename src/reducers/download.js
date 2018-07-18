@@ -12,13 +12,11 @@ export default function joke(state = initialState, action = {}) {
         ...state,
         export_email: action.export_email
       };
-      break;
     case types.SET_EXPORT_EMAIL_TYPE:
       return {
         ...state,
         export_email_type: action.export_email_type
       };
-      break;
     default:
       return state;
   }

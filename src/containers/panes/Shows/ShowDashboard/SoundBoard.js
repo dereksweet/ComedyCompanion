@@ -1,14 +1,17 @@
-'use strict';
-
 import React, {Component} from 'react';
-import { View, Text, TouchableHighlight, Modal } from 'react-native';
+import {View, Text, TouchableHighlight, Modal} from 'react-native';
 import {bindActionCreators} from 'redux';
-import { connect } from 'react-redux';
-import {Button} from 'react-native-buttons';
+import {connect} from 'react-redux';
 import Swipeout from 'react-native-swipeout';
+import KeepAwake from 'react-native-keep-awake';
 
-import { normalizeWidth } from '../../../../helpers/sizeHelper';
-import { formatDisplayTime } from '../../../../helpers/formattingHelper';
+import * as showActions from '../../../../actions/showActions';
+import * as routingActions from '../../../../actions/routingActions';
+
+import Button from '../../../../components/Button';
+
+import {formatDisplayTime} from '../../../../helpers/formattingHelper';
+import ShowListHelper from '../../../../helpers/showListHelper';
 
 import Timer from '../../../modals/Timer';
 
@@ -16,13 +19,6 @@ import Show from '../../../../models/show';
 
 import layoutStyles from '../../../../stylesheets/layoutStyles';
 import showDashboardStyles from '../../../../stylesheets/showDashboardStyles';
-
-import * as showActions from '../../../../actions/showActions';
-import * as routingActions from '../../../../actions/routingActions';
-
-import ShowListHelper from '../../../../helpers/showListHelper';
-
-import KeepAwake from 'react-native-keep-awake';
 
 import {
   backIcon,
@@ -39,48 +35,16 @@ import {
   back30IconDisabled,
   forward30Icon,
   forward30IconDisabled,
-  playIcon } from '../../../../helpers/icons';
-
-import {AudioRecorder, AudioUtils} from 'react-native-audio';
+  playIcon
+} from '../../../../helpers/icons';
 
 class SoundBoard extends Component {
-  constructor(props) {
-    super(props);
-
-    this.startTiming = this.startTiming.bind(this);
-    this.stopTiming = this.stopTiming.bind(this);
-    this.startRecording = this.startRecording.bind(this);
-    this.stopRecording = this.stopRecording.bind(this);
-    this.pressPlayPauseStop = this.pressPlayPauseStop.bind(this);
-    this.stopPlaying = this.stopPlaying.bind(this);
-    this.startPlaying = this.startPlaying.bind(this);
-    this.rewind = this.rewind.bind(this);
-    this.fastForward = this.fastForward.bind(this);
-    this.back30 = this.back30.bind(this);
-    this.forward30 = this.forward30.bind(this);
-    this.deleteRecording = this.deleteRecording.bind(this);
-    this.stopRunningProcesses = this.stopRunningProcesses.bind(this);
-    this.showRecordingInfo = this.showRecordingInfo.bind(this);
-    this.showTimer = this.showTimer.bind(this);
-  }
-
   componentDidMount() {
     this.props.showActions.setDisplayTimer(this.props.showState.show._show_time_seconds);
   }
 
   componentWillUnmount() {
     this.stopRunningProcesses();
-  }
-
-  stopRunningProcesses() {
-    if (this.props.showState.is_timing)
-      this.stopTiming();
-
-    if (this.props.showState.is_recording)
-      this.stopRecording();
-
-    if (this.props.showState.is_playing)
-      this.stopPlaying();
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -96,44 +60,47 @@ class SoundBoard extends Component {
     return showTimerChanged || showPlayingChanged || displayTimeChanged || hasRecordingChanged || isRecordingChanged || isPlayingChanged || isTimingChanged || timerVisibleChanged;
   }
 
-  startTiming() {
+  stopRunningProcesses = () => {
+    if (this.props.showState.is_timing)
+      this.stopTiming();
+
+    if (this.props.showState.is_recording)
+      this.stopRecording();
+
+    if (this.props.showState.is_playing)
+      this.stopPlaying();
+  };
+
+  startTiming = () => {
     this.props.showActions.setDisplayTimer(0.0);
-
     this.props.showActions.startShowTimer();
-
     this.props.startTimerInterval();
 
     KeepAwake.activate();
-  }
+  };
 
-  stopTiming() {
+  stopTiming = () => {
     this.props.showActions.stopShowTimer();
-
     this.props.stopTimerInterval();
-
     this.props.showState.show.save();
 
     KeepAwake.deactivate();
-  }
+  };
 
-  startRecording() {
+  startRecording = () => {
     if ((!this.props.showState.is_timing) && (!this.props.showState.is_playing)) {
       this.props.showActions.setHasRecording(true);
       this.props.showActions.startRecording();
-
       this.props.showActions.setDisplayTimer(0.0);
-
       this.props.startTimerInterval();
-
       this.props.showState.audio_service.record();
 
       KeepAwake.activate();
     }
-  }
+  };
 
-  stopRecording() {
+  stopRecording = () => {
     this.props.showActions.stopRecording();
-
     this.props.stopTimerInterval();
 
     let recordingTime = Math.floor(this.props.showState.audio_service.state.currentTime);
@@ -152,9 +119,9 @@ class SoundBoard extends Component {
     this.props.showState.audio_service.updateFSInfo();
 
     ShowListHelper.refreshShowList();
-  }
+  };
 
-  startPlaying() {
+  startPlaying = () => {
     const current_timer = this.props.showState.display_time_seconds;
     const recording_length = this.props.showState.show._show_time_seconds;
 
@@ -164,25 +131,21 @@ class SoundBoard extends Component {
     }
 
     this.props.showActions.startPlaying();
-
     this.props.startTimerInterval();
-
     this.props.showState.audio_service.play(this.stopPlaying);
 
     KeepAwake.activate();
-  }
+  };
 
-  stopPlaying() {
+  stopPlaying = () => {
     this.props.showActions.stopPlaying();
-
     this.props.stopTimerInterval();
-
     this.props.showState.audio_service.pause();
 
     KeepAwake.deactivate();
-  }
+  };
 
-  rewind() {
+  rewind = () => {
     if (!this.props.showState.is_recording) {
       if (this.props.showState.is_playing) {
         this.stopPlaying();
@@ -191,18 +154,18 @@ class SoundBoard extends Component {
       this.props.showActions.setDisplayTimer(0.0);
       this.props.showState.audio_service.setCurrentTime(0.0);
     }
-  }
+  };
 
-  fastForward() {
+  fastForward = () => {
     if (!this.props.showState.is_recording) {
       const recording_length = Math.floor(this.props.showState.show._show_time_seconds);
 
       this.props.showActions.setDisplayTimer(recording_length);
       this.props.showState.audio_service.setCurrentTime(recording_length);
     }
-  }
+  };
 
-  back30() {
+  back30 = () => {
     if (!this.props.showState.is_recording) {
       const minus_30 = this.props.showState.display_time_seconds - 30;
 
@@ -211,10 +174,9 @@ class SoundBoard extends Component {
       this.props.showActions.setDisplayTimer(new_seconds);
       this.props.showState.audio_service.setCurrentTime(new_seconds);
     }
+  };
 
-  }
-
-  forward30() {
+  forward30 = () => {
     if (!this.props.showState.is_recording) {
       const plus_30 = this.props.showState.display_time_seconds + 30;
       const recording_length = Math.floor(this.props.showState.show._show_time_seconds);
@@ -224,135 +186,177 @@ class SoundBoard extends Component {
       this.props.showActions.setDisplayTimer(new_seconds);
       this.props.showState.audio_service.setCurrentTime(new_seconds);
     }
-  }
+  };
 
-  pressPlayPauseStop() {
+  pressPlayPauseStop = () => {
     if (this.props.showState.is_recording)
       this.stopRecording();
     else if (this.props.showState.is_playing)
       this.stopPlaying();
     else
       this.startPlaying();
-  }
+  };
 
-  deleteRecording() {
+  deleteRecording = () => {
     if (!this.props.showState.is_recording && !this.props.showState.is_playing) {
       this.props.showActions.toggleDeleteRecordingConfirm();
     }
-  }
+  };
 
-  showRecordingInfo() {
+  showRecordingInfo = () => {
     this.props.showActions.toggleRecordingInfo();
-  }
+  };
 
-  showTimer() {
+  showTimer = () => {
     if (this.props.showState.is_recording || this.props.showState.is_timing) {
       this.props.routingActions.toggleTimer();
     }
-  }
+  };
 
   render() {
-    const { showState, routingState, showActions } = this.props;
+    const {showState, routingState, showActions} = this.props;
 
-    const swipeoutButtons = showState.show._has_recording ? [{ text: 'Info', backgroundColor: '#CCCCCC', underLayColor: '#999999', onPress: this.showRecordingInfo }, { text: 'Delete', backgroundColor: '#FF0000', underlayColor: '#DD0000', onPress: this.deleteRecording }] : [];
+    const swipeoutButtons = showState.show._has_recording ? [
+      {
+        text: 'Info',
+        backgroundColor: '#CCCCCC',
+        underLayColor: '#999999',
+        onPress: this.showRecordingInfo
+      },
+      {
+        text: 'Delete',
+        backgroundColor: '#FF0000',
+        underlayColor: '#DD0000',
+        onPress: this.deleteRecording
+      }
+    ] : [];
 
     return (
       <View>
-        { showState.show._has_recording &&
-          <Swipeout right={ swipeoutButtons } autoClose={ true }>
-            <View style={ showDashboardStyles.soundBoardView }>
-              <View style={{ flex: 1, flexDirection: 'row' }}>
-                <View style={ showDashboardStyles.buttonView }>
-                  <View style={{ flex: 1, flexDirection: 'row', marginTop: 10 }}>
-                  { !showState.is_recording &&
-                    <Button type="surface" size="large" theme={ showState.is_playing ? "gray" : "red" } onPress={ showState.is_playing ? () => {} : showActions.toggleReplaceRecordingConfirm }>
-                      <Text>{showState.is_playing ? recIconDisabled : recIcon}</Text>
-                      <Text style={[layoutStyles.buttonText, { color: showState.is_timing ? '#AAA' : '#FFF' }]}>Rec</Text>
-                    </Button> }
-                  { showState.is_recording &&
-                    <Button type="surface" size="large" theme="red" selfStyle={ { borderColor: '#FF0000', borderWidth: 2 } } onPress={ this.stopRecording }>
-                      <Text>{stopIcon}</Text>
-                      <Text style={layoutStyles.buttonText}>Stop</Text>
-                    </Button> }
-                  </View>
-                  <View style={{ marginBottom: 10 }}>
-                    <Text style={{ color: '#CCCCCC', marginTop: 3, fontSize: normalizeWidth(10), alignSelf: 'center', alignItems: 'center' }}>swipe { backIcon } to del</Text>
-                  </View>
+        {showState.show._has_recording &&
+        <Swipeout right={swipeoutButtons} autoClose={true}>
+          <View style={showDashboardStyles.soundBoardView}>
+            <View style={layoutStyles.flexRow}>
+              <View style={showDashboardStyles.buttonView}>
+                <View style={[layoutStyles.flexRow, {marginTop: 10}]}>
+                  {!showState.is_recording &&
+                  <Button
+                    onPress={showState.is_playing ? () => {} : showActions.toggleReplaceRecordingConfirm}
+                    buttonText="Rec"
+                    backgroundColor={showState.is_playing ? "gray" : "red"}
+                    icon={showState.is_playing ? recIconDisabled : recIcon}
+                    additionalStyles={{width: 100, height: 40}}
+                  />
+                  }
+                  {showState.is_recording &&
+                  <Button
+                    onPress={showState.is_playing ? () => {} : this.stopRecording}
+                    buttonText="Stop"
+                    backgroundColor="red"
+                    icon={stopIcon}
+                    additionalStyles={{width: 100, height: 40, borderColor: '#FF0000', borderWidth: 2}}
+                  />
+                  }
                 </View>
-                <View style={{ flex: 1 }}>
-                  <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center' }}>
-                    <View style={ showDashboardStyles.playbackControlView }>
-                      <Button type="surface" size="default" theme="gray" onPress={ this.rewind }>
-                        <Text style={{ left: -2, width: 20 }}>{showState.is_recording ? rewindIconDisabled : rewindIcon}</Text>
-                      </Button>
-                    </View>
-                    <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-                      <TouchableHighlight underlayColor='rgba(0,0,0,0)' onPress={ this.showTimer }>
-                        <Text style={ [showDashboardStyles.timerText, { marginLeft: 10, color: showState.is_recording ? '#DD4444' : '#FFFFFF' }] }>{ formatDisplayTime(showState.display_time_seconds) }</Text>
-                      </TouchableHighlight>
-                    </View>
-                    <View style={ showDashboardStyles.playbackControlView }>
-                      <Button type="surface" size="default" theme="gray" onPress={ this.fastForward }>
-                        <Text style={{ left: -2, width: 20 }}>{showState.is_recording ? fastForwardIconDisabled : fastForwardIcon}</Text>
-                      </Button>
-                    </View>
-                  </View>
-                  <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center' }}>
-                    <View style={ [showDashboardStyles.playbackControlView, { marginBottom: 5 }] }>
-                      <Button type="surface" size="default" theme="gray" onPress={ this.back30 }>
-                        <Text style={{ left: -2, width: 20 }}>{showState.is_recording ? back30IconDisabled : back30Icon}</Text>
-                      </Button>
-                    </View>
-                    <View style={ [showDashboardStyles.playbackControlView, { marginBottom: 5 }] }>
-                      <Button type="surface" size="default" theme="gray" onPress={ this.pressPlayPauseStop }>
-                        <Text style={{ left: -2, width: 20 }}>{ showState.is_recording ? stopIcon : showState.is_playing ? pauseIcon : playIcon}</Text>
-                      </Button>
-                    </View>
-                    <View style={ [showDashboardStyles.playbackControlView, { marginBottom: 5 }] }>
-                      <Button type="surface" size="default" theme="gray" onPress={ this.forward30 }>
-                        <Text style={{ left: -2, width: 20 }}>{showState.is_recording ? forward30IconDisabled : forward30Icon}</Text>
-                      </Button>
-                    </View>
-                  </View>
+                <View style={{marginBottom: 10}}>
+                  <Text style={showDashboardStyles.swipeBackText}>swipe { backIcon } to del</Text>
                 </View>
               </View>
-            </View>
-          </Swipeout>
-        }
-        { !showState.show._has_recording &&
-          <View style={ showDashboardStyles.soundBoardView }>
-            <View style={{ flexDirection: 'row', flex: 1 }}>
-              <View style={ showDashboardStyles.buttonView }>
-                <Button type="surface" size="large" theme={ showState.is_timing ? "gray" : "red" } onPress={ this.startRecording }>
-                  <Text>{showState.is_timing ? recIconDisabled : recIcon}</Text>
-                  <Text style={[layoutStyles.buttonText, { color: showState.is_timing ? '#AAA' : '#FFF' }]}>Rec</Text>
-                </Button>
-              </View>
-              <View style={ showDashboardStyles.buttonView }>
-                { !showState.is_timing &&
-                  <Button type="surface" size="large" theme="gray" onPress={ this.startTiming }>
-                    <Text>{timerIcon}</Text>
-                    <Text style={layoutStyles.buttonText}>Time</Text>
-                  </Button> }
-                { showState.is_timing &&
-                  <Button type="surface" size="large" theme="gray" selfStyle={ { borderColor: '#FF0000', borderWidth: 2 } } onPress={ this.stopTiming }>
-                    <Text>{stopIcon}</Text>
-                    <Text style={layoutStyles.buttonText}>Stop</Text>
-                  </Button> }
-              </View>
-              <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                <TouchableHighlight underlayColor='rgba(0,0,0,0)' onPress={ this.showTimer }>
-                  <Text style={ showDashboardStyles.timerText }>{ formatDisplayTime(showState.display_time_seconds) }</Text>
-                </TouchableHighlight>
+              <View style={{flex: 1}}>
+                <View style={layoutStyles.flexRowCentered}>
+                    <View style={showDashboardStyles.playbackControlView}>
+                      <Button
+                        onPress={this.rewind}
+                        icon={showState.is_recording ? rewindIconDisabled : rewindIcon}
+                        additionalStyles={{width: 45, height: 32}}
+                      />
+                    </View>
+                  <View style={layoutStyles.centerCenter}>
+                    <TouchableHighlight underlayColor='rgba(0,0,0,0)' onPress={ this.showTimer }>
+                      <Text style={[showDashboardStyles.timerText, {marginLeft: 10, color: showState.is_recording ? '#DD4444' : '#FFFFFF'}]}>
+                        {formatDisplayTime(showState.display_time_seconds)}
+                      </Text>
+                    </TouchableHighlight>
+                  </View>
+                  <View style={showDashboardStyles.playbackControlView}>
+                    <Button
+                      onPress={this.fastForward}
+                      icon={showState.is_recording ? fastForwardIconDisabled : fastForwardIcon}
+                      additionalStyles={{width: 45, height: 32}}
+                    />
+                  </View>
+                </View>
+                <View style={layoutStyles.flexRowCentered}>
+                  <View style={[showDashboardStyles.playbackControlView, {marginBottom: 5}]}>
+                    <Button
+                      onPress={this.back30}
+                      icon={showState.is_recording ? back30IconDisabled : back30Icon}
+                      additionalStyles={{width: 45, height: 32}}
+                    />
+                  </View>
+                  <View style={[showDashboardStyles.playbackControlView, {marginBottom: 5}]}>
+                    <Button
+                      onPress={this.pressPlayPauseStop}
+                      icon={showState.is_recording ? stopIcon : showState.is_playing ? pauseIcon : playIcon}
+                      additionalStyles={{width: 45, height: 32}}
+                    />
+                  </View>
+                  <View style={[showDashboardStyles.playbackControlView, {marginBottom: 5}]}>
+                    <Button
+                      onPress={this.forward30}
+                      icon={showState.is_recording ? forward30IconDisabled : forward30Icon}
+                      additionalStyles={{width: 45, height: 32}}
+                    />
+                  </View>
+                </View>
               </View>
             </View>
           </View>
+        </Swipeout>
         }
-        <Modal style={ layoutStyles.modal }
-               animationType={ "fade" }
-               transparent={false}
-               visible={routingState.timer_visible}
-               onRequestClose={() => { }}>
+        {!showState.show._has_recording &&
+        <View style={showDashboardStyles.soundBoardView}>
+          <View style={layoutStyles.flexRow}>
+            <View style={showDashboardStyles.buttonView}>
+              <Button
+                onPress={this.startRecording}
+                buttonText="Rec"
+                textColor={showState.is_timing ? '#AAA' : '#FFF'}
+                backgroundColor={showState.is_timing ? "gray" : "red"}
+                icon={showState.is_timing ? recIconDisabled : recIcon}
+                additionalStyles={{width: 100, height: 40}}
+              />
+            </View>
+            <View style={showDashboardStyles.buttonView}>
+              {!showState.is_timing &&
+              <Button
+                onPress={this.startTiming}
+                buttonText="Time"
+                icon={timerIcon}
+                additionalStyles={{width: 100, height: 40}}
+              />}
+              {showState.is_timing &&
+              <Button
+                onPress={this.stopTiming}
+                buttonText="Stop"
+                icon={stopIcon}
+                additionalStyles={{borderColor: '#FF0000', borderWidth: 2, height: 40}}
+              />}
+            </View>
+            <View style={layoutStyles.centeredFlex}>
+              <TouchableHighlight underlayColor='rgba(0,0,0,0)' onPress={this.showTimer}>
+                <Text style={showDashboardStyles.timerText}>{formatDisplayTime(showState.display_time_seconds)}</Text>
+              </TouchableHighlight>
+            </View>
+          </View>
+        </View>
+        }
+        <Modal
+          style={layoutStyles.modal}
+          animationType={"fade"}
+          transparent={false}
+          visible={routingState.timer_visible}
+          onRequestClose={() => {}}>
           <Timer />
         </Modal>
       </View>

@@ -1,43 +1,41 @@
-'use strict';
-
 import React, {Component} from 'react';
 import { View, Text } from 'react-native';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
-import {Button} from 'react-native-buttons';
 
 import * as jokeActions from '../../../actions/jokeActions';
 import * as routingActions from '../../../actions/routingActions';
+
+import Button from '../../../components/Button';
+
+import {largeJokesIcon, addJokeIcon} from '../../../helpers/icons';
 
 import Joke from '../../../models/joke';
 
 import layoutStyles from '../../../stylesheets/layoutStyles';
 
-import {largeJokesIcon, addJokeIcon} from '../../../helpers/icons';
-
 class NoJokes extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
+  addJoke = () => {
     const { routingActions, jokeActions } = this.props;
 
-    const addJoke = () => {
-      jokeActions.setJoke(new Joke());
-      routingActions.openModal();
-    };
+    jokeActions.setJoke(new Joke());
+    routingActions.openModal();
+  };
 
+  render() {
     return (
       <View style={layoutStyles.centeredFlex}>
         {largeJokesIcon}
-        <Text style={ {paddingTop: 25} }>You do not appear to have any jokes yet!</Text>
-        <Text style={ {paddingBottom: 20} }>Click the button below to add one..</Text>
-        <View style={ {paddingBottom: 100, alignItems: 'center'} }>
-          <Button type="surface" size="large" theme="red" onPress={ addJoke }>
-            <Text>{addJokeIcon}</Text>
-            <Text style={layoutStyles.buttonText}>Add Joke</Text>
-          </Button>
+        <Text style={{paddingTop: 25}}>You do not appear to have any jokes yet!</Text>
+        <Text style={{paddingBottom: 20}}>Click the button below to add one..</Text>
+        <View style={{paddingBottom: 100, alignItems: 'center'}}>
+          <Button
+            onPress={this.addJoke}
+            buttonText="Add Joke"
+            backgroundColor='green'
+            additionalStyles={{width: 150, height: 45}}
+            icon={addJokeIcon}
+          />
         </View>
       </View>
     );

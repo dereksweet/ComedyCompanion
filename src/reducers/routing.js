@@ -27,7 +27,7 @@ export default function routing(state = initialState, action = {}) {
       };
     case types.ADD_VISIBLE_PANE:
       let add_visible_panes = state.visible_panes;
-      if (add_visible_panes.indexOf(action.pane) == -1) {
+      if (add_visible_panes.indexOf(action.pane) === -1) {
         add_visible_panes.push(action.pane);
       }
 
@@ -39,55 +39,48 @@ export default function routing(state = initialState, action = {}) {
       let remove_visible_panes = state.visible_panes;
       let index = remove_visible_panes.indexOf(action.pane);
       if (index != -1) {
-          remove_visible_panes.splice(index, 1);
+        remove_visible_panes.splice(index, 1);
       }
 
       return {
-          ...state,
-          visible_panes: remove_visible_panes
+        ...state,
+        visible_panes: remove_visible_panes
       };
     case types.OPEN_MODAL:
       return {
         ...state,
         modal_visible: true
       };
-      break;
     case types.CLOSE_MODAL:
       return {
         ...state,
         modal_visible: false
       };
-      break;
     case types.TOGGLE_SETTINGS:
       return {
         ...state,
         settings_visible: !state.settings_visible
       };
-      break;
     case types.TOGGLE_ABOUT:
       return {
         ...state,
         about_visible: !state.about_visible
       };
-      break;
     case types.TOGGLE_DOWNLOAD:
       return {
         ...state,
         download_visible: !state.download_visible
       };
-      break;
     case types.HIDE_LOADING:
       return {
         ...state,
         show_loading: false
       };
-      break;
     case types.TOGGLE_TIMER:
       return {
         ...state,
         timer_visible: !state.timer_visible
       };
-      break;
     default:
       return state;
   }

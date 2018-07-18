@@ -1,12 +1,7 @@
-'use strict';
-
 import React, {Component} from 'react';
-import { View, Text, ScrollView, TouchableHighlight } from 'react-native';
+import {View, Text} from 'react-native';
 import {bindActionCreators} from 'redux';
-import { connect } from 'react-redux';
-import {Button} from 'react-native-buttons';
-
-import {AudioRecorder, AudioUtils} from 'react-native-audio';
+import {connect} from 'react-redux';
 import KeepAwake from 'react-native-keep-awake';
 
 import SoundBoard from './ShowDashboard/SoundBoard';
@@ -14,10 +9,13 @@ import SetListViewer from './ShowDashboard/SetListViewer';
 
 import * as showActions from '../../../actions/showActions';
 
-import Show from '../../../models/show';
+import ConfirmBox from '../../../components/ConfirmBox';
+import Button from '../../../components/Button';
 
-import { formatDisplayTime, formatBytesInMegabytes, formatBytesInGigabytes } from '../../../helpers/formattingHelper';
+import {formatDisplayTime, formatBytesInMegabytes, formatBytesInGigabytes} from '../../../helpers/formattingHelper';
 import ShowListHelper from '../../../helpers/showListHelper';
+
+import Show from '../../../models/show';
 
 import layoutStyles from '../../../stylesheets/layoutStyles';
 
@@ -25,36 +23,7 @@ class ShowDashboard extends Component {
   constructor(props) {
     super(props);
 
-    this.deleteRecording = this.deleteRecording.bind(this);
-    this.replaceRecording = this.replaceRecording.bind(this);
-    this.updateDisplayTimer = this.updateDisplayTimer.bind(this);
-    this.startTimerInterval = this.startTimerInterval.bind(this);
-    this.stopTimerInterval = this.stopTimerInterval.bind(this);
-    this.toggleRecordingInfo = this.toggleRecordingInfo.bind(this);
-
     this.timerInterval = null;
-  }
-
-  updateDisplayTimer() {
-    if (this.props.showState.is_playing) {
-      this.props.showState.audio_service.state.sound.getCurrentTime((time) => {
-        this.props.showActions.setDisplayTimer(time);
-      });
-    } else if (this.props.showState.is_recording) {
-      this.props.showActions.setDisplayTimer(this.props.showState.audio_service.state.currentTime);
-    } else {
-      let new_show_time_seconds = Math.floor((new Date() - this.props.showState.timer_start) / 1000);
-      this.props.showActions.updateShowTimer(new_show_time_seconds);
-      this.props.showActions.setDisplayTimer(new_show_time_seconds);
-    }
-  };
-
-  startTimerInterval() {
-    this.timerInterval = setInterval(this.updateDisplayTimer, 100);
-  }
-
-  stopTimerInterval() {
-    clearInterval(this.timerInterval);
   }
 
   componentDidMount() {
@@ -74,7 +43,29 @@ class ShowDashboard extends Component {
     return deleteRecordingConfirmChanged || replaceRecordingConfirmChanged || showRecordingInfoChanged || fileSizeChanged || freeSpaceChanged;
   }
 
-  deleteRecording() {
+  updateDisplayTimer = () => {
+    if (this.props.showState.is_playing) {
+      this.props.showState.audio_service.state.sound.getCurrentTime((time) => {
+        this.props.showActions.setDisplayTimer(time);
+      });
+    } else if (this.props.showState.is_recording) {
+      this.props.showActions.setDisplayTimer(this.props.showState.audio_service.state.currentTime);
+    } else {
+      let new_show_time_seconds = Math.floor((new Date() - this.props.showState.timer_start) / 1000);
+      this.props.showActions.updateShowTimer(new_show_time_seconds);
+      this.props.showActions.setDisplayTimer(new_show_time_seconds);
+    }
+  };
+
+  startTimerInterval = () => {
+    this.timerInterval = setInterval(this.updateDisplayTimer, 100);
+  };
+
+  stopTimerInterval = () => {
+    clearInterval(this.timerInterval);
+  };
+
+  deleteRecording = () => {
     this.props.showActions.setHasRecording(false);
     this.props.showActions.toggleDeleteRecordingConfirm();
     this.props.showActions.resetShowTimer();
@@ -89,95 +80,69 @@ class ShowDashboard extends Component {
     this.props.showState.audio_service.deleteAudioFile();
 
     ShowListHelper.refreshShowList();
-  }
+  };
 
-  replaceRecording() {
+  replaceRecording = () => {
     this.props.showActions.toggleReplaceRecordingConfirm();
-
     this.props.showActions.setDisplayTimer(0.0);
-
     this.props.showActions.startRecording();
     this.startTimerInterval();
-
     this.props.showState.audio_service.record();
 
     KeepAwake.activate();
-  }
+  };
 
-  toggleRecordingInfo() {
+  toggleRecordingInfo = () => {
     this.props.showActions.toggleRecordingInfo();
-  }
+  };
 
   render() {
-    const { showState, showActions } = this.props;
+    const {showState, showActions} = this.props;
 
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{flex: 1}}>
         <View style={layoutStyles.statusBarBuffer} />
-        <SoundBoard startTimerInterval={ this.startTimerInterval } stopTimerInterval={ this.stopTimerInterval } />
+        <SoundBoard startTimerInterval={this.startTimerInterval} stopTimerInterval={this.stopTimerInterval}/>
         <SetListViewer />
-        { showState.delete_recording_confirm &&
-          <View style={ layoutStyles.confirmBox }>
-            <View style={{ paddingBottom: 40, paddingLeft: 20, paddingRight: 20 }}>
-              <Text style={{ textAlign: 'center', fontSize: 20 }}>Are you SURE you want to delete this recording?</Text>
-            </View>
-            <View style={{ paddingTop: 25, flexDirection: 'row' }}>
-              <View style={{ flex: 1 }}>
-                <Button type="surface" size="large" theme="red" selfStyle={ layoutStyles.deleteButton } onPress={ showActions.toggleDeleteRecordingConfirm }>
-                  <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>NO</Text>
-                </Button>
-              </View>
-              <View style={{ flex: 1, marginRight: 10 }}>
-                <Button type="surface" size="large" theme="blue" selfStyle={ [layoutStyles.confirmButton, { marginLeft: 10 }] } onPress={ this.deleteRecording }>
-                  <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>YES</Text>
-                </Button>
-              </View>
-            </View>
-          </View>
+        {showState.delete_recording_confirm &&
+        <ConfirmBox
+          confirmText='Are you SURE you want to delete this recording?'
+          noOnPress={showActions.toggleDeleteRecordingConfirm}
+          yesOnPress={this.deleteRecording}
+        />
         }
-        { showState.replace_recording_confirm &&
-          <View style={ layoutStyles.confirmBox }>
-            <View style={{ paddingBottom: 40, paddingLeft: 20, paddingRight: 20 }}>
-              <Text style={{ textAlign: 'center', fontSize: 20 }}>Are you SURE you want to replace this recording?</Text>
-            </View>
-            <View style={{ paddingTop: 25, flexDirection: 'row' }}>
-              <View style={{ flex: 1 }}>
-                <Button type="surface" size="large" theme="red" selfStyle={ layoutStyles.deleteButton } onPress={ showActions.toggleReplaceRecordingConfirm }>
-                  <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>NO</Text>
-                </Button>
-              </View>
-              <View style={{ flex: 1, marginRight: 10 }}>
-                <Button type="surface" size="large" theme="blue" selfStyle={ [layoutStyles.confirmButton, { marginLeft: 10 }] } onPress={ this.replaceRecording }>
-                  <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>YES</Text>
-                </Button>
-              </View>
-            </View>
-          </View>
+        {showState.replace_recording_confirm &&
+        <ConfirmBox
+          confirmText='Are you SURE you want to replace this recording?'
+          noOnPress={showActions.toggleReplaceRecordingConfirm}
+          yesOnPress={this.replaceRecording}
+        />
         }
-        { showState.show_recording_info &&
-          <View style={ layoutStyles.confirmBox }>
-            <View style={{ paddingBottom: 40, paddingLeft: 20, paddingRight: 20 }}>
-              <Text style={{ textAlign: 'center', fontSize: 15 }}>
-                <Text style={{ fontWeight: 'bold' }}>Recording Length</Text>: { formatDisplayTime(showState.show._show_time_seconds) }
-              </Text>
-              <Text style={{ textAlign: 'center', fontSize: 15 }}>
-                <Text style={{ fontWeight: 'bold' }}>Recording Size</Text>: { formatBytesInMegabytes(showState.audio_service.state.file_info.size) }
-              </Text>
-              <Text style={{ textAlign: 'center', fontSize: 15 }}>
-                <Text style={{ fontWeight: 'bold' }}>Remaining Space</Text>: { formatBytesInGigabytes(showState.audio_service.state.fs_info.freeSpace) }
-              </Text>
-              <Text style={{ textAlign: 'center', fontSize: 15, paddingTop: 10, paddingBottom: 10 }}>
-                You could hold { Math.floor(showState.audio_service.state.fs_info.freeSpace / showState.audio_service.state.file_info.size).toLocaleString() } more recordings this size
-              </Text>
-            </View>
-            <View style={{ paddingTop: 25, flexDirection: 'row' }}>
-              <View style={{ flex: 1 }}>
-                <Button type="surface" size="large" theme="red" selfStyle={ layoutStyles.confirmButton } onPress={ this.toggleRecordingInfo }>
-                  <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>OK</Text>
-                </Button>
-              </View>
-            </View>
+        {showState.show_recording_info &&
+        <View style={layoutStyles.confirmBox}>
+          <View style={layoutStyles.confirmBoxTextView}>
+            <Text style={layoutStyles.confirmBoxTextSmall}>
+              <Text style={{fontWeight: 'bold'}}>Recording Length</Text>: {formatDisplayTime(showState.show._show_time_seconds)}
+            </Text>
+            <Text style={layoutStyles.confirmBoxTextSmall}>
+              <Text style={{fontWeight: 'bold'}}>Recording Size</Text>: {formatBytesInMegabytes(showState.audio_service.state.file_info.size)}
+            </Text>
+            <Text style={layoutStyles.confirmBoxTextSmall}>
+              <Text style={{fontWeight: 'bold'}}>Remaining Space</Text>: {formatBytesInGigabytes(showState.audio_service.state.fs_info.freeSpace)}
+            </Text>
+            <Text style={[layoutStyles.confirmBoxTextSmall, {paddingTop: 10, paddingBottom: 10}]}>
+              You could hold {Math.floor(showState.audio_service.state.fs_info.freeSpace / showState.audio_service.state.file_info.size).toLocaleString()} more recordings this size
+            </Text>
           </View>
+          <View style={layoutStyles.confirmBoxButtonsView}>
+            <Button
+              onPress={this.toggleRecordingInfo}
+              buttonText="OK"
+              backgroundColor='green'
+              additionalStyles={layoutStyles.okButton}
+            />
+          </View>
+        </View>
         }
       </View>
     );

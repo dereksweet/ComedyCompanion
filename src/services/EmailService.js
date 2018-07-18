@@ -1,23 +1,20 @@
-'use strict';
-
 import React, {Component} from 'react';
-import { Platform, AlertIOS } from 'react-native';
 import Mailer from 'react-native-mail';
 import moment from 'moment';
 
+import {store} from '../App';
+
 import Joke from '../models/joke';
 import SetList from '../models/set_list';
-
-import {store} from '../App';
 
 export default class EmailService extends Component {
   constructor(props) {
     super(props);
 
     this.completion_hash = {
-      'solid_bits':false,
-      'in_development_bits':false,
-      'set_lists':false
+      'solid_bits': false,
+      'in_development_bits': false,
+      'set_lists': false
     };
 
     this.email = props['email'];
@@ -31,17 +28,17 @@ export default class EmailService extends Component {
   deliverEmail() {
     let body = this.solid_bits + this.in_development_bits + this.set_lists;
 
-    if (this.email_type == 'formatted') {
-      body = body.replace(/(\r\n|\n|\r)/g,"<br>");
+    if (this.email_type === 'formatted') {
+      body = body.replace(/(\r\n|\n|\r)/g, "<br>");
     }
 
     Mailer.mail({
       subject: 'Comedy Companion Export - ' + moment(new Date()).format("MMM DD, YYYY"),
       recipients: [this.email],
       body: body,
-      isHTML: this.email_type == 'formatted'
+      isHTML: this.email_type === 'formatted'
     }, (error, event) => {
-      if(error) {
+      if (error) {
         alert('Could not send mail. Please send a mail to dereksweet@gmail.com');
       }
     });
@@ -60,7 +57,7 @@ export default class EmailService extends Component {
   formatJoke(joke) {
     let joke_body = '';
 
-    if (this.email_type == 'formatted') {
+    if (this.email_type === 'formatted') {
       joke_body += '<p>';
       joke_body += '  <b><span style="border-bottom: 1px solid #CCCCCC; color: #333333">' + joke._name + '</span></b><br>';
       joke_body += '  <br>';
@@ -79,7 +76,7 @@ export default class EmailService extends Component {
   formatSetList(set_list) {
     let set_list_body = '';
 
-    if (this.email_type == 'formatted') {
+    if (this.email_type === 'formatted') {
       set_list_body += '<p>';
       set_list_body += '  <b><span style="border-bottom: 1px solid #CCCCCC; color: #333333; margin-bottom: 5px;">' + set_list._name + '</span></b><br>';
       set_list_body += '  <i>Length: ' + set_list._length + '</i><br>';
@@ -108,7 +105,7 @@ export default class EmailService extends Component {
     const jokeListState = store.getState().joke_list;
     const setListListState = store.getState().set_list_list;
 
-    if (this.email_type == 'formatted') {
+    if (this.email_type === 'formatted') {
       this.solid_bits = '<h2 style="background-color: #EEEEEE; border-bottom: 3px solid #CCCCCC; border-top: 3px solid #CCCCCC; padding: 10px;">Jokes (Solid Bits)</h2>';
       this.in_development_bits = '<br><br><h2 style="background-color: #EEEEEE; border-bottom: 3px solid #CCCCCC; border-top: 3px solid #CCCCCC; padding: 10px;">Jokes (In Development)</h2>';
       this.set_lists = '<br><br><h2 style="background-color: #EEEEEE; border-bottom: 3px solid #CCCCCC; border-top: 3px solid #CCCCCC; padding: 10px;">Set Lists</h2>';
@@ -118,12 +115,12 @@ export default class EmailService extends Component {
       this.set_lists = "\n\n======================\nSet Lists\n======================\n";
     }
 
-    Joke.where({ '_in_development':'EQ|false'},'AND', jokeListState.sort_field, jokeListState.sort_order).then((jokes) => {
+    Joke.where({'_in_development': 'EQ|false'}, 'AND', jokeListState.sort_field, jokeListState.sort_order).then((jokes) => {
       jokes.forEach((joke) => {
         this.solid_bits += this.formatJoke(joke);
 
-        if (jokes.indexOf(joke) != (jokes.length - 1)) {
-          if (this.email_type == 'formatted') {
+        if (jokes.indexOf(joke) !== (jokes.length - 1)) {
+          if (this.email_type === 'formatted') {
             this.solid_bits += '<hr><hr>'
           } else {
             this.solid_bits += "\n-----\n";
@@ -135,12 +132,12 @@ export default class EmailService extends Component {
       this.setComplete('solid_bits');
     });
 
-    Joke.where({ '_in_development':'EQ|true'},'AND', jokeListState.sort_field, jokeListState.sort_order).then((jokes) => {
+    Joke.where({'_in_development': 'EQ|true'}, 'AND', jokeListState.sort_field, jokeListState.sort_order).then((jokes) => {
       jokes.forEach((joke) => {
         this.in_development_bits += this.formatJoke(joke);
 
-        if (jokes.indexOf(joke) != (jokes.length - 1)) {
-          if (this.email_type == 'formatted') {
+        if (jokes.indexOf(joke) !== (jokes.length - 1)) {
+          if (this.email_type === 'formatted') {
             this.in_development_bits += '<hr><hr>'
           } else {
             this.in_development_bits += "-----\n";
@@ -156,8 +153,8 @@ export default class EmailService extends Component {
       set_lists.forEach((set_list) => {
         this.set_lists += this.formatSetList(set_list);
 
-        if (set_lists.indexOf(set_list) != (set_lists.length - 1)) {
-          if (this.email_type == 'formatted') {
+        if (set_lists.indexOf(set_list) !== (set_lists.length - 1)) {
+          if (this.email_type === 'formatted') {
             this.set_lists += '<hr><hr>'
           } else {
             this.set_lists += "-----\n";
@@ -168,9 +165,5 @@ export default class EmailService extends Component {
 
       this.setComplete('set_lists');
     });
-  }
-
-  render() {
-    return false;
   }
 }

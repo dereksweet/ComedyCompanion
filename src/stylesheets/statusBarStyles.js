@@ -1,26 +1,27 @@
-import { StyleSheet, Platform } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 export default statusBarStyles = StyleSheet.create({
   hamburger: {
-    marginTop: 2,
-    borderRightColor: '#CCCCCC',
-    borderRightWidth: 1
+    marginTop: 2
   },
   statusBarIcon: {
     width: 40,
-    borderLeftColor: '#CCCCCC',
-    borderLeftWidth: 1,
     alignItems: 'center'
   },
+  statusBarButton: {
+    flex: 1,
+    alignItems: 'center',
+    paddingTop: 7
+  },
   title: {
-    marginTop: 10,
+    marginTop: 11,
     marginLeft: 10,
     marginRight: 10
   },
   navBar: {
-    backgroundColor: '#EEFFEE',
-    borderBottomColor: '#DDDDDD',
-    borderBottomWidth: 1,
+    backgroundColor: '#DDDDFF',
+    borderTopWidth: 1,
+    borderColor: '#ccc',
     flexDirection : 'row',
     overflow: 'hidden'
   },

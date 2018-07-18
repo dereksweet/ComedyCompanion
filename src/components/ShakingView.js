@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { Animated } from 'react-native';
+import React, {Component} from 'react';
+import {Animated} from 'react-native';
 
-export default class ShakingView extends React.Component {
+export default class ShakingView extends Component {
   constructor(props) {
     super(props);
 
@@ -9,6 +9,7 @@ export default class ShakingView extends React.Component {
       leftAnim: new Animated.Value(0)
     };
   }
+
   performShake() {
     Animated.sequence([
       Animated.timing(
@@ -21,9 +22,10 @@ export default class ShakingView extends React.Component {
       ),
       Animated.timing(
         this.state.leftAnim,
-        {toValue:0, duration: 50}
+        {toValue: 0, duration: 50}
       )]).start();
   }
+
   render() {
     return (
       <Animated.View

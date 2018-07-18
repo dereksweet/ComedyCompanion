@@ -4,7 +4,7 @@ import {TextInput} from 'react-native';
 import debounce from 'debounce';
 
 /**
- * This is a workaround for the buggy react-native TextInput multiline on Android.
+ * This is a workaround obtained elsewhere for the buggy react-native TextInput multiline on Android.
  *
  * Can be removed once https://github.com/facebook/react-native/issues/12717
  * is fixed.
@@ -17,8 +17,8 @@ export default class MultilineTextInput extends PureComponent {
     super(props);
 
     this.state = {
-      selection: { 
-        start: 0, 
+      selection: {
+        start: 0,
         end: 0
       },
 
@@ -27,7 +27,7 @@ export default class MultilineTextInput extends PureComponent {
     };
 
     this.allowKeyboardTimeout = null;
-    
+
     // Prevent 2 newlines for some Android versions, because they dispatch onSubmitEditing twice
     this.onSubmitEditing = debounce(this.onSubmitEditing.bind(this), 100, true);
 
@@ -72,32 +72,32 @@ export default class MultilineTextInput extends PureComponent {
       }
 
       this.setState({allow_keyboard: false});
-      this.allowKeyboardTimeout = setTimeout(() => this.setState({ allow_keyboard: true }), 500);
+      this.allowKeyboardTimeout = setTimeout(() => this.setState({allow_keyboard: true}), 500);
     }
   }
 
   onMultilineFocus() {
-    this.setState({ allow_scroll_code: false });
+    this.setState({allow_scroll_code: false});
   }
 
   onMultilineBlur() {
-    this.setState({ allow_scroll_code: true });
+    this.setState({allow_scroll_code: true});
   }
 
   render() {
     return (
       <TextInput
         multiline
-        editable={ this.state.allow_keyboard }
+        editable={this.state.allow_keyboard}
         blurOnSubmit={false}
         selection={this.state.selection}
         value={this.props.value}
         onSelectionChange={event => this.setState({selection: event.nativeEvent.selection})}
         onChangeText={this.props.onChangeText}
         onSubmitEditing={this.onSubmitEditing}
-        onScroll={ this.onMultilineScroll }
-        onFocus={ this.onMultilineFocus }
-        onBlur={ this.onMultilineBlur }
+        onScroll={this.onMultilineScroll}
+        onFocus={this.onMultilineFocus}
+        onBlur={this.onMultilineBlur}
         {...this.props}
       />
     );
