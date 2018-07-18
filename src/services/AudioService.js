@@ -1,7 +1,5 @@
-'use strict';
-
 import React, {Component} from 'react';
-import { Platform, PermissionsAndroid } from 'react-native';
+import {Platform, PermissionsAndroid} from 'react-native';
 import Sound from 'react-native-sound';
 import {AudioRecorder, AudioUtils} from 'react-native-audio';
 import RNFS from 'react-native-fs';
@@ -51,13 +49,7 @@ export default class AudioRecorderService extends Component {
     });
   }
 
-  componentDidMount() {
-
-  }
-
-  prepareRecordingPath(){
-    // console.log('preparing Recording at path: ' + this.state.auto_path);
-
+  prepareRecordingPath() {
     AudioRecorder.prepareRecordingAtPath(this.state.audio_path, {
       SampleRate: 22050,
       Channels: 1,
@@ -177,7 +169,7 @@ export default class AudioRecorderService extends Component {
       return;
     }
 
-    if(this.state.stoppedRecording){
+    if (this.state.stoppedRecording) {
       // console.log('preparing path');
       this.prepareRecordingPath(this.state.audioPath);
     }
@@ -205,8 +197,8 @@ export default class AudioRecorderService extends Component {
   deleteAudioFile() {
 
     RNFS.exists(this.state.audio_path)
-      .then( (result) => {
-        if(result){
+      .then((result) => {
+        if (result) {
           return RNFS.unlink(this.state.audio_path)
             .then(() => {
               // console.log('FILE DELETED');
@@ -240,7 +232,7 @@ export default class AudioRecorderService extends Component {
         this.state.fs_info = fs_info;
       });
   }
-  
+
   render() {
     return false;
   }
