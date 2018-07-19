@@ -90,6 +90,8 @@ class EditShow extends Component {
   };
 
   save = () => {
+    const {showState} = this.props;
+
     if (this.validateFields()) {
       showState.show.save(() => {
         ShowListHelper.refreshShowList();
