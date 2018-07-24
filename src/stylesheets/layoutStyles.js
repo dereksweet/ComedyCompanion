@@ -135,7 +135,8 @@ export default layoutStyles = StyleSheet.create({
     height: 40,
     borderLeftColor: '#CCCCCC',
     borderLeftWidth: 1,
-    alignItems: 'center'
+    alignItems: 'center',
+    paddingLeft: 6
   },
   addButton: {
     flex: 1,
