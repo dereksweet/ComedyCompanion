@@ -135,8 +135,7 @@ export default layoutStyles = StyleSheet.create({
     height: 40,
     borderLeftColor: '#CCCCCC',
     borderLeftWidth: 1,
-    alignItems: 'center',
-    paddingLeft: 6
+    alignItems: 'center'
   },
   addButton: {
     flex: 1,
@@ -228,3 +227,4 @@ export default layoutStyles = StyleSheet.create({
     borderWidth: 1
   }
 });
+
