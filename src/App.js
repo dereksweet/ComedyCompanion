@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { createStore, applyMiddleware, combineReducers, bindActionCreators } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import * as reducers from './reducers';
 import MainApp from './containers/mainApp';
@@ -14,9 +15,11 @@ export const store = createStoreWithMiddleware(reducer);
 export default class App extends Component {
   render() {
     return (
-      <Provider store={store}>
-        <MainApp />
-      </Provider>
+      <SafeAreaProvider>
+        <Provider store={store}>
+          <MainApp />
+        </Provider>
+      </SafeAreaProvider>
     );
   }
 }

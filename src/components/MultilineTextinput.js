@@ -1,4 +1,5 @@
-import React, {PropTypes, PureComponent} from 'react';
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import {TextInput} from 'react-native';
 import debounce from 'debounce';
 
@@ -16,8 +17,8 @@ export default class MultilineTextInput extends PureComponent {
     super(props);
 
     this.state = {
-      selection: { 
-        start: 0, 
+      selection: {
+        start: 0,
         end: 0
       },
 
@@ -26,7 +27,7 @@ export default class MultilineTextInput extends PureComponent {
     };
 
     this.allowKeyboardTimeout = null;
-    
+
     // Prevent 2 newlines for some Android versions, because they dispatch onSubmitEditing twice
     this.onSubmitEditing = debounce(this.onSubmitEditing.bind(this), 100, true);
 

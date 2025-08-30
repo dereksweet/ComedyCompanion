@@ -2,7 +2,7 @@ import SweetModel from 'react-native-sweet-record';
 import SetList from './set_list';
 import AudioService from '../services/AudioService';
 
-import uuidV4 from 'uuid/v4';
+import { v4 as uuidV4 } from 'uuid';
 
 const defaults = {
   _uuid: uuidV4(),

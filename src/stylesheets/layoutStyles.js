@@ -10,8 +10,8 @@ export default layoutStyles = StyleSheet.create({
     alignItems: 'center'
   },
   statusBarBuffer: {
-    height: (Platform.OS === 'ios') ? 20 : 0,
-    backgroundColor: '#FFFFFF',
+    height: 8,
+    backgroundColor: 'transparent',
     width: '100%'
   },
   statusBar: {
@@ -41,7 +41,8 @@ export default layoutStyles = StyleSheet.create({
   },
   modal: {
     backgroundColor: "#EEEEEE",
-    height: '100%'
+    height: '100%',
+    paddingBottom: 10
   },
   modalContent: {
     flex: 1,

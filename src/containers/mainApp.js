@@ -5,6 +5,7 @@ const VERSION=1.4;
 import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import { View, Image, Modal } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { connect } from 'react-redux';
 
 import {SlidingPane, SlidingPaneWrapper} from 'react-native-sliding-panes';
@@ -40,6 +41,10 @@ class MainApp extends Component {
     super(props);
   }
 
+  componentDidMount() {
+    this.setupSlidingPanes();
+  }
+
   componentWillMount() {
     Setting.get(1).then((setting) => {
       if (setting) {
@@ -57,7 +62,7 @@ class MainApp extends Component {
       this.props.showListActions.setShowListSortOrder(this.setting._shows_sort_order);
       this.props.downloadActions.setExportEmail(this.setting._export_email);
       this.props.downloadActions.setExportEmailType(this.setting._export_email_type);
-      
+
       JokeListHelper.refreshJokeList();
       SetListListHelper.refreshSLList();
       ShowListHelper.refreshShowList();
@@ -72,9 +77,7 @@ class MainApp extends Component {
     });
   }
 
-  componentDidMount() {
-    this.setupSlidingPanes();
-  }
+
 
   setupSlidingPanes() {
     this.jokesPane.warpCenter();
@@ -104,7 +107,7 @@ class MainApp extends Component {
     };
 
     return (
-      <View style={[layoutStyles.centeredFlex, layoutStyles.mainContainer]}>
+      <SafeAreaView edges={['top','bottom']} style={[layoutStyles.centeredFlex, layoutStyles.mainContainer]}>
         <View style={{ flex: 1 }}>
           <StatusBar setActivePane={setActivePane} />
           <SlidingPaneWrapper style={{}} ref={(slidingPaneWrapper) => { this.slidingPaneWrapper = slidingPaneWrapper }}>
@@ -157,7 +160,7 @@ class MainApp extends Component {
             <Image style={{ width: 300, height: 300, marginTop: 15 }} source={ require('../images/Loading.png') } />
           </View>
         }
-      </View>
+      </SafeAreaView>
     );
   }
 }

@@ -1,66 +1,97 @@
-![fulllogo_small](https://cloud.githubusercontent.com/assets/955108/26615904/c215fc70-4587-11e7-9329-23cecb5d83be.png)
+This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
-Developed in 100% React Native, "The Comedy Companion" is the world's first productivity tool for Stand-Up Comedians. Manage your jokes, organize them into set lists, and track performances all in one place.
+# Getting Started
 
-### Upcoming Features
+> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
 
-- Cloud Storage for Android Users
-- Customizable Categories, and filtering on those categories
-- Running rating of Joke performance by swiping left for good, right for bad on a given show
-- Web Browser editing of jokes through a websocket API
+## Step 1: Start Metro
 
-### Currently Available Features (v1.4)
+First, you will need to run **Metro**, the JavaScript build tool for React Native.
 
-- Email Export of Jokes, Set Lists, and Show recordings
-- Associate an Audio Recording with any Given Show
-- Track solid bits as well as those you're currently working on
-- Associate detailed notes with each bit
-- Associate a length in minutes and seconds with each joke and estimate set list lengths as you build them
-- Create set lists with ease, dragging and dropping jokes into place, and track their estimated length
-- Track every show you perform, which set list was used, the venue performed at including city and state
-- Reorder everything on the fly as well as search for specific keywords in your bits
-- Back everything up to your personal iCloud account for security and ease of transferring data between multiple iPhones and iPads (iOS Users Only)
+To start the Metro dev server, run the following command from the root of your React Native project:
 
-### Installation Instructions
+```sh
+# Using npm
+npm start
 
-Installation should be ridiculously simple once you are set up for React Native development ([Getting Started With React Native](https://facebook.github.io/react-native/docs/getting-started.html)) . Simply clone the repository into whatever folder you like, go into that folder and type:
-
-```
-npm install
+# OR using Yarn
+yarn start
 ```
 
-Once all the packages are done installing you should be able to simply type `react-native-run-ios` or `react-native-run-android` and the app should boot up in a simulator.
+## Step 2: Build and run your app
 
-### Development Instructions
+With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
 
-Please make all your pull requests on the `develop` branch. They will be merged in after review and releases will be cut from development to master whenever a group of features is deemed ready to go.
+### Android
 
-### Thank-yous go out to...
+```sh
+# Using npm
+npm run android
 
-[**g-harel**](https://github.com/g-harel) - [**open-source-logos**](https://github.com/g-harel/open-source-logos) - The guy that drew our awesome little devil mascot/icon. Great work! Thanks so much!
+# OR using Yarn
+yarn android
+```
 
-[**GeekyAnts**](https://github.com/GeekyAnts) - [**react-native-hamburger**](https://github.com/GeekyAnts/react-native-hamburger) - Hamburger menu you see in the top left corner with the awesome animation when touched
+### iOS
 
-[**manicakes**](https://github.com/manicakes) - [**react-native-icloudstore**](https://github.com/manicakes/react-native-icloudstore) - What allows iOS users to back up their jokes to their iCloud
+For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
 
-[**ananddayalan**](https://github.com/ananddayalan) - [**react-native-material-design-searchbar**](https://github.com/ananddayalan/react-native-material-design-searchbar) - The searchbar used on the Jokes and Shows pages
+The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
 
-[**ArnaudRinquin**](https://github.com/ArnaudRinquin) - [**react-native-radio-buttons**](https://github.com/ArnaudRinquin/react-native-radio-buttons) - The segmented controls that you see on the Options screen for controlling sort options
+```sh
+bundle install
+```
 
-[**dereksweet**](https://github.com/dereksweet) - [**react-native-sliding-panes**](https://github.com/dereksweet/react-native-sliding-panes) - Hey it's me! This is the component that controls the 3 primary sliding panes for Jokes, Set Lists, and Shows
+Then, and every time you update your native dependencies, run:
 
-[**dereksweet**](https://github.com/dereksweet) - [**react-native-sweet-record**](https://github.com/dereksweet/react-native-sweet-record) - Hey it's me, again! This is the component that is used for all persistent data storage in the app.
+```sh
+bundle exec pod install
+```
 
-[**deanmcpherson**](https://github.com/deanmcpherson) - [**react-native-sortable-listview**](https://github.com/deanmcpherson/react-native-sortable-listview) - The awesome sortable ListView on the right side of the Set List Editor
+For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
 
-[**xgfe**](https://github.com/xgfe) - [**react-native-ui-xg**](https://github.com/xgfe/react-native-ui-xg) - The nicely styled buttons that you see throughout the app
+```sh
+# Using npm
+npm run ios
 
-[**oblador**](https://github.com/oblador) - [**react-native-vector-icons**](https://github.com/oblador/react-native-vector-icons) - The package that serves up all the icons you see throughout the app
+# OR using Yarn
+yarn ios
+```
 
-[**jsierles**](https://github.com/jsierles) - [**react-native-audio**](https://github.com/jsierles/react-native-audio) - The amazing package that allows the audio for shows to be recorded. Awesome work. 
+If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
 
-[**zmxv**](https://github.com/zmxv) - [**react-native-sound**](https://github.com/zmxv/react-native-sound) - Another amazing package that allows for the playback of the audio recordings. Thanks man!
+This is one way to run your app — you can also build it directly from Android Studio or Xcode.
 
-[**corbt**](https://github.com/corbt) - [**react-native-keep-awake**](https://github.com/corbt/react-native-keep-awake) - Great little tool that prevents the device from going to sleep due to inactivity while recording/timing shows. Just what was needed. 
+## Step 3: Modify your app
 
-[**chirag04**](https://github.com/chirag04) - [**react-native-mail**](https://github.com/chirag04/react-native-mail) - The React Native package that allows the exporting of jokes and set lists via the device's own email capabilities. Great job dude!
+Now that you have successfully run the app, let's make changes!
+
+Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+
+When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
+
+- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
+- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
+
+## Congratulations! :tada:
+
+You've successfully run and modified your React Native App. :partying_face:
+
+### Now what?
+
+- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
+- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
+
+# Troubleshooting
+
+If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+
+# Learn More
+
+To learn more about React Native, take a look at the following resources:
+
+- [React Native Website](https://reactnative.dev) - learn more about React Native.
+- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
+- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
+- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
+- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.

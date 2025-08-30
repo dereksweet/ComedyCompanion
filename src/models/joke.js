@@ -1,6 +1,6 @@
 import SweetModel from 'react-native-sweet-record';
 
-import uuidV4 from 'uuid/v4';
+import { v4 as uuidV4 } from 'uuid';
 
 const defaults = {
   _uuid: uuidV4(),
