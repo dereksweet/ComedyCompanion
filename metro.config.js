@@ -15,7 +15,6 @@ const config = {
   },
   resolver: {
     extraNodeModules: {
-
       'react-native-material-design-searchbar': shim('react-native-material-design-searchbar.js'),
       'react-native-radio-buttons': shim('react-native-radio-buttons.js'),
       'react-native-sortable-listview': shim('react-native-sortable-listview/index.js'),

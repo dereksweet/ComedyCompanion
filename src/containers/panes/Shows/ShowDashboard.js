@@ -4,7 +4,7 @@ import React, {Component} from 'react';
 import { View, Text, ScrollView, TouchableHighlight } from 'react-native';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
-import {Button} from 'react-native-ui-xg';
+import {Button} from '../../../components/ui';
 
 import {AudioRecorder, AudioUtils} from 'react-native-audio';
 import KeepAwake from 'react-native-keep-awake';

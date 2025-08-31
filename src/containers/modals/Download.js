@@ -4,7 +4,7 @@ import React, {Component} from 'react';
 import { View, ScrollView, Text, TextInput, AsyncStorage, Platform } from 'react-native';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
-import {Button} from 'react-native-ui-xg';
+import {Button} from '../../components/ui';
 import iCloudStorage from 'react-native-icloudstore';
 import { SegmentedControls } from 'react-native-radio-buttons';
 
@@ -240,7 +240,7 @@ class Download extends Component {
 
   render() {
     const { downloadState } = this.props;
-    
+
     return (
       <View style={[layoutStyles.modal, layoutStyles.centeredFlex]}>
         <View style={layoutStyles.statusBarBuffer} />
