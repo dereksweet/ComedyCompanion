@@ -33,7 +33,7 @@ class Shows extends Component {
     const { showListState } = this.props;
 
     return (
-      <View style={layoutStyles.centeredFlex}>
+      <View style={{ flex: 1 }}>
         { (showListState.empty) && <NoShows /> }
         { (!showListState.empty) && <ShowsList /> }
       </View>

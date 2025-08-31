@@ -33,7 +33,7 @@ class SetLists extends Component {
     const { setListListState } = this.props;
 
     return (
-      <View style={layoutStyles.centeredFlex}>
+      <View style={{ flex: 1 }}>
         { (setListListState.empty) && <NoSetLists /> }
         { (!setListListState.empty) && <SetListsList /> }
       </View>

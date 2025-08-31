@@ -33,7 +33,7 @@ class Jokes extends Component {
     const { jokeListState } = this.props;
 
     return (
-      <View style={layoutStyles.centeredFlex}>
+      <View style={{ flex: 1 }}>
         { (jokeListState.empty) && <NoJokes /> }
         { (!jokeListState.empty) && <JokesList /> }
       </View>

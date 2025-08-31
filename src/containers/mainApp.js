@@ -107,7 +107,7 @@ class MainApp extends Component {
     };
 
     return (
-      <SafeAreaView edges={['top','bottom']} style={[layoutStyles.centeredFlex, layoutStyles.mainContainer]}>
+      <SafeAreaView edges={['top','bottom']} style={[layoutStyles.mainContainer, { flex: 1 }]}>
         <View style={{ flex: 1 }}>
           <StatusBar setActivePane={setActivePane} />
           <SlidingPaneWrapper style={{}} ref={(slidingPaneWrapper) => { this.slidingPaneWrapper = slidingPaneWrapper }}>
