@@ -19,7 +19,7 @@
     "react-native": "0.81.1",
     "react-native-fs": "^2.20.0",
     "react-native-get-random-values": "^1.11.0",
-    "react-native-hamburger": "file:src/shims/react-native-hamburger",
+    "react-native-animated-hamburger": "0.0.2",
     "react-native-mail": "file:src/shims/react-native-mail",
     "react-native-safe-area-context": "^5.5.2",
     "react-native-sliding-panes": "^2.0.0",

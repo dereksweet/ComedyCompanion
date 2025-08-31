@@ -18,7 +18,6 @@ const config = {
       'react-native-ui-xg': shim('react-native-ui-xg.js'),
       'react-native-material-design-searchbar': shim('react-native-material-design-searchbar.js'),
       'react-native-radio-buttons': shim('react-native-radio-buttons.js'),
-      'react-native-hamburger': shim('react-native-hamburger.js'),
       'react-native-sortable-listview': shim('react-native-sortable-listview/index.js'),
       'react-native-icloudstore': shim('react-native-icloudstore.js'),
       'react-native-keep-awake': shim('react-native-keep-awake.js'),
