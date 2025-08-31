@@ -22,7 +22,7 @@
     "react-native-hamburger": "file:src/shims/react-native-hamburger",
     "react-native-mail": "file:src/shims/react-native-mail",
     "react-native-safe-area-context": "^5.5.2",
-    "react-native-sliding-panes": "file:src/shims/react-native-sliding-panes",
+    "react-native-sliding-panes": "^2.0.0",
     "react-native-sortable-listview": "file:src/shims/react-native-sortable-listview",
     "react-native-sweet-record": "file:src/shims/sweet-record",
     "react-native-vector-icons": "10.3.0",
