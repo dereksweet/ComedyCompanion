@@ -17,7 +17,7 @@
     "prop-types": "^15.8.1",
     "react": "19.1.0",
     "react-native": "0.81.1",
-    "react-native-fs": "file:src/shims/react-native-fs",
+    "react-native-fs": "^2.20.0",
     "react-native-get-random-values": "^1.11.0",
     "react-native-hamburger": "file:src/shims/react-native-hamburger",
     "react-native-mail": "file:src/shims/react-native-mail",
