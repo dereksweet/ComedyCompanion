@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { createStore, applyMiddleware, combineReducers, bindActionCreators } from 'redux';
 import { Provider } from 'react-redux';
-import thunk from 'redux-thunk';
+import { thunk } from 'redux-thunk';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import * as reducers from './reducers';

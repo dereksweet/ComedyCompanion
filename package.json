@@ -22,12 +22,13 @@
     "react-native-hamburger": "file:src/shims/react-native-hamburger",
     "react-native-mail": "file:src/shims/react-native-mail",
     "react-native-safe-area-context": "^5.5.2",
+    "react-native-sliding-panes": "file:src/shims/react-native-sliding-panes",
     "react-native-sortable-listview": "file:src/shims/react-native-sortable-listview",
     "react-native-sweet-record": "file:src/shims/sweet-record",
     "react-native-vector-icons": "10.3.0",
     "react-redux": "^9.1.2",
-    "redux": "^4.2.1",
-    "redux-thunk": "^2.4.2",
+    "redux": "^5.0.1",
+    "redux-thunk": "^3.1.0",
     "uuid": "^9.0.1"
   },
   "devDependencies": {
